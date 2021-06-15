@@ -6,4 +6,6 @@
     <string name="accept_payments_easily_and_instantly_with_emcash">Accept payments easily and instantly with EmCash</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
+    <string name="hello_merchant">Hello Merchant,</string>
+    <string name="welcome_please_enter_the_following_n_details_to_login_to_your_account">Welcome, please enter the following  details to login to your account</string>
 </resources>

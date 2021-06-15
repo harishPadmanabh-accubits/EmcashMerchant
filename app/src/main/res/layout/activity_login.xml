@@ -19,15 +19,94 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_blue_gradient_bg" />
 
-    <com.app.emcashmerchant.utils.widget.FormEditText
-        android:id="@+id/fet_email"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_login"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="24sp"
-        app:form_type="email"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tv_heading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="100dp"
+            android:fontFamily="@font/biennale_bold"
+            android:lineHeight="15dp"
+            android:text="@string/hello_merchant"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_description"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/biennale_light"
+            android:lineHeight="20dp"
+            android:text="@string/welcome_please_enter_the_following_n_details_to_login_to_your_account"
+            android:textColor="@color/black"
+            android:layout_marginTop="24sp"
+            android:textSize="16dp"
+            app:layout_constraintStart_toStartOf="@+id/tv_heading"
+            app:layout_constraintTop_toBottomOf="@+id/tv_heading" />
+
+        <com.app.emcashmerchant.utils.widget.FormEditText
+            android:id="@+id/fet_email"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="60dp"
+            android:layout_marginEnd="20dp"
+            app:form_type="email"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_description" />
+
+        <com.app.emcashmerchant.utils.widget.FormEditText
+            android:id="@+id/fet_password"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="12dp"
+            app:form_type="password"
+            app:layout_constraintEnd_toEndOf="@+id/fet_email"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fet_email" />
+
+        <Button
+            android:id="@+id/btn_forgot_pswd"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/biennale_light"
+            android:text="Forgot Password?"
+            android:textAllCaps="false"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="@+id/fet_password"
+            app:layout_constraintTop_toBottomOf="@+id/fet_password" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_login"
+            style="@style/BlueRoundedButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="24dp"
+            android:onClick="onClick"
+            android:text="@string/login"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_forgot_pswd" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
 
 

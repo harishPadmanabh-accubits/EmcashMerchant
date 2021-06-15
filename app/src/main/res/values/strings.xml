@@ -4,4 +4,6 @@
     <string name="login">Login</string>
     <string name="manage_your_business_payment_easily">Manage your business payment easily</string>
     <string name="accept_payments_easily_and_instantly_with_emcash">Accept payments easily and instantly with EmCash</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
 </resources>

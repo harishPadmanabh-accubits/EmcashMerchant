@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
 import com.app.emcashmerchant.R
+import com.app.emcashmerchant.utils.extensions.afterTextChanged
+import com.app.emcashmerchant.utils.extensions.isEmailValid
 import com.app.emcashmerchant.utils.extensions.obtainViewModel
 import kotlinx.android.synthetic.main.activity_login.*
 
@@ -17,7 +19,17 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
         getViewModel()
         observe()
+        checkForValidEmail()
 
+    }
+
+    private fun checkForValidEmail() {
+        fet_email.formInput.afterTextChanged { email->
+            if(email.isEmailValid())
+                fet_email.showCheckMark()
+            else
+                fet_email.hideCheckMark()
+        }
     }
 
     private fun observe() {

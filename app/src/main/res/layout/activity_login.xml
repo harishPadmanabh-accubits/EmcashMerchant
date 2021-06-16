@@ -34,11 +34,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="100dp"
-            android:fontFamily="@font/biennale_bold"
-            android:lineHeight="15dp"
             android:text="@string/hello_merchant"
-            android:textColor="@color/black"
-            android:textSize="20dp"
+            style="@style/HeadingText"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -46,12 +43,9 @@
             android:id="@+id/tv_description"
             android:layout_width="280dp"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/biennale_light"
-            android:lineHeight="20dp"
             android:text="@string/welcome_please_enter_the_following_n_details_to_login_to_your_account"
-            android:textColor="@color/black"
             android:layout_marginTop="24sp"
-            android:textSize="16dp"
+            style="@style/SubHeadingText"
             app:layout_constraintStart_toStartOf="@+id/tv_heading"
             app:layout_constraintTop_toBottomOf="@+id/tv_heading" />
 
@@ -96,13 +90,13 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="50dp"
             android:layout_marginEnd="24dp"
             android:onClick="onClick"
             android:text="@string/login"
+            android:layout_marginBottom="34dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_forgot_pswd" />
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

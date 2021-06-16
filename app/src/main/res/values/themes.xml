@@ -24,8 +24,21 @@
         <item name="android:insetBottom">0dp</item>
         <item name="cornerRadius">22dp</item>
         <item name="lineHeight">20dp</item>
-        <item name="fontFamily">@font/biennale_regular</item>
+        <item name="fontFamily">@font/biennale_book</item>
         <item name="android:foreground">?selectableItemBackground</item>
+    </style>
+
+    <style name="HeadingText" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">18sp</item>
+        <item name="fontFamily">@font/biennale_semi_bold</item>
+        <item name="lineHeight">20dp</item>
+    </style>
+    <style name="SubHeadingText" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">14sp</item>
+        <item name="fontFamily">@font/biennale_book</item>
+        <item name="lineHeight">15dp</item>
     </style>
 
 </resources>

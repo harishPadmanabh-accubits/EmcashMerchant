@@ -49,6 +49,7 @@ class FormEditText(context: Context, attrs: AttributeSet) : ConstraintLayout(con
 
             }
             FormType.PASSWORD -> {
+                var isPasswordVisible = false
                 et_form_input.apply {
                     hint = context.getString(R.string.password)
                     inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD
@@ -56,6 +57,14 @@ class FormEditText(context: Context, attrs: AttributeSet) : ConstraintLayout(con
                 }
                 iv_form_action_image.loadImageWithResId(R.drawable.ic_eye_hide)
                 iv_form_action_image.show()
+                iv_form_action_image.setOnClickListener {
+                    if(isPasswordVisible){
+                        setPasswordVisibilty(false)
+                    }else{
+                        setPasswordVisibilty(true)
+                        isPasswordVisible=true
+                    }
+                }
 
 
             }
@@ -90,6 +99,8 @@ class FormEditText(context: Context, attrs: AttributeSet) : ConstraintLayout(con
             iv_form_action_image.loadImageWithResId(R.drawable.ic_baseline_remove_red_eye_24)
 
         }
+
+    fun getFormInputEditText() = formInput
 
 
 

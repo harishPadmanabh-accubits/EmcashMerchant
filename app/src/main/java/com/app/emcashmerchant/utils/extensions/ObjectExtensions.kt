@@ -32,9 +32,17 @@ import timber.log.Timber
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.regex.Pattern
 
 private const val TIME_STAMP_FORMAT = "EEEE, MMMM d, yyyy - hh:mm:ss a"
 private const val DATE_FORMAT = "yyyy-MM-dd"
+
+fun String.isEmailValid(): Boolean {
+    val expression = "^[\\w.-]+@([\\w\\-]+\\.)+[A-Z]{2,8}$"
+    val pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE)
+    val matcher = pattern.matcher(this)
+    return matcher.matches()
+}
 
 fun Long.getTimeStamp(): String {
     val date = Date(this)

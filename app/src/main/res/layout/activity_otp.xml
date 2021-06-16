@@ -2,8 +2,93 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cl_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.login.OtpActivity">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_gradient"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_blue_gradient_bg" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_otp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_heading"
+            style="@style/HeadingText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="100dp"
+            android:text="@string/enter_otp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_description"
+            style="@style/SubHeadingText"
+            android:lineSpacingMultiplier="2.0"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24sp"
+            android:text="Please enter the OTP sent to your registered mobile number (406) 555-0120"
+            app:layout_constraintStart_toStartOf="@+id/tv_heading"
+            app:layout_constraintTop_toBottomOf="@+id/tv_heading" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cv_otp_desc"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="28dp"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="28dp"
+            android:layout_marginEnd="24dp"
+            app:cardBackgroundColor="@color/sky_blue_light"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="2dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_description">
+
+            <TextView
+                style="@style/SubHeadingText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:lineSpacingExtra="1sp"
+                android:paddingStart="24dp"
+                android:paddingTop="12dp"
+                android:paddingEnd="24dp"
+                android:paddingBottom="12dp"
+                android:text="@string/otp_desc" />
+
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.app.emcashmerchant.utils.widget.OtpLayout
+            android:id="@+id/otp_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            app:layout_constraintEnd_toEndOf="@+id/cv_otp_desc"
+            app:layout_constraintStart_toStartOf="@+id/cv_otp_desc"
+            app:layout_constraintTop_toBottomOf="@+id/cv_otp_desc" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

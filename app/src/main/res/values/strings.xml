@@ -8,4 +8,6 @@
     <string name="password">Password</string>
     <string name="hello_merchant">Hello Merchant,</string>
     <string name="welcome_please_enter_the_following_n_details_to_login_to_your_account">Welcome, please enter the following  details to login to your account</string>
+    <string name="enter_otp">Enter OTP</string>
+    <string name="otp_desc"><![CDATA[OTP verification is only a one-time activity & further logins only require a PIN login.]]></string>
 </resources>

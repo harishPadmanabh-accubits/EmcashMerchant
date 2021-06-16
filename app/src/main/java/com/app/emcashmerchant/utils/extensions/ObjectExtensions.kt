@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.DisplayMetrics
+import android.view.KeyEvent
 import android.view.View
 import android.view.WindowManager
 import android.widget.EditText
@@ -241,6 +242,14 @@ fun EditText.afterTextChanged(afterTextChanged: (String) -> Unit) {
             afterTextChanged.invoke(editable.toString())
         }
     })
+}
+
+fun EditText.onDeletePressed(changeFocusTo:EditText){
+    this.setOnKeyListener { view, i, keyEvent ->
+        if(i == KeyEvent.KEYCODE_DEL)
+           changeFocusTo.requestFocus()
+        return@setOnKeyListener false
+    }
 }
 
 //set default value for live data

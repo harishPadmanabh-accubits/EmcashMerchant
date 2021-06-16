@@ -38,7 +38,22 @@
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">14sp</item>
         <item name="fontFamily">@font/biennale_book</item>
-        <item name="lineHeight">15dp</item>
+        <item name="lineHeight">20dp</item>
     </style>
+    <style name="OtpFieldStyle" parent="Widget.AppCompat.EditText">
+        <item name="android:background">@drawable/white_rounded</item>
+        <item name="android:cursorVisible">true</item>
+        <item name="maxLines">1</item>
+        <item name="android:maxLength">1</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="fontFamily">@font/biennale_book</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:editable">true</item>
+        <item name="android:inputType">number</item>
+    </style>
+
+
+
 
 </resources>

@@ -8,6 +8,7 @@ import com.app.emcashmerchant.R
 import com.app.emcashmerchant.utils.extensions.afterTextChanged
 import com.app.emcashmerchant.utils.extensions.isEmailValid
 import com.app.emcashmerchant.utils.extensions.obtainViewModel
+import com.app.emcashmerchant.utils.extensions.openActivity
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
@@ -53,5 +54,7 @@ class LoginActivity : AppCompatActivity() {
         viewModel = obtainViewModel(LoginViewModel::class.java)
     }
 
-    fun onClick(view: View) {}
+    fun onClick(view: View) {
+        openActivity(OtpActivity::class.java)
+    }
 }

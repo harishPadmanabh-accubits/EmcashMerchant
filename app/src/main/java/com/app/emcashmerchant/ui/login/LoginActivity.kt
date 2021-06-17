@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
 import com.app.emcashmerchant.R
+import com.app.emcashmerchant.ui.forgotPassword.SecurityQuestionsActivity
 import com.app.emcashmerchant.utils.extensions.afterTextChanged
 import com.app.emcashmerchant.utils.extensions.isEmailValid
 import com.app.emcashmerchant.utils.extensions.obtainViewModel
@@ -55,6 +56,13 @@ class LoginActivity : AppCompatActivity() {
     }
 
     fun onClick(view: View) {
-        openActivity(OtpActivity::class.java)
+        when(view.id){
+            R.id.btn_login->{
+                openActivity(OtpActivity::class.java)
+            }
+            R.id.btn_forgot_pswd->{
+                openActivity(SecurityQuestionsActivity::class.java)
+            }
+        }
     }
 }

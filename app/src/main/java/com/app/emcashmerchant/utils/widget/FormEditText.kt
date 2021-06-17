@@ -2,6 +2,8 @@ package com.app.emcashmerchant.utils.widget
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.text.InputFilter
+import android.text.InputFilter.LengthFilter
 import android.text.InputType
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
@@ -16,6 +18,7 @@ import com.app.emcashmerchant.utils.extensions.loadImageWithResId
 import com.app.emcashmerchant.utils.extensions.show
 import kotlinx.android.synthetic.main.form_texttfield.view.*
 
+
 @SuppressLint("Recycle", "CustomViewStyleable")
 class FormEditText(context: Context, attrs: AttributeSet) : ConstraintLayout(context,attrs) {
 
@@ -24,7 +27,7 @@ class FormEditText(context: Context, attrs: AttributeSet) : ConstraintLayout(con
       var actionImg : AppCompatImageView
 
     enum class FormType{
-        EMAIL,PASSWORD
+        EMAIL,PASSWORD,PIN
     }
 
     var formType = FormType.EMAIL
@@ -66,6 +69,15 @@ class FormEditText(context: Context, attrs: AttributeSet) : ConstraintLayout(con
                     }
                 }
 
+
+            }
+            FormType.PIN->{
+                et_form_input.apply {
+                    hint = context.getString(R.string.pin)
+                    inputType = InputType.TYPE_CLASS_NUMBER
+                    maxLines = 1
+                    setFilters(arrayOf<InputFilter>(LengthFilter(4)))
+                }
 
             }
 

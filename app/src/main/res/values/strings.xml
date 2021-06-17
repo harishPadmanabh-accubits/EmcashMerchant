@@ -10,4 +10,12 @@
     <string name="welcome_please_enter_the_following_n_details_to_login_to_your_account">Welcome, please enter the following  details to login to your account</string>
     <string name="enter_otp">Enter OTP</string>
     <string name="otp_desc"><![CDATA[OTP verification is only a one-time activity & further logins only require a PIN login.]]></string>
+    <string name="resend_otp">Resend OTP</string>
+    <string name="didn_t_recieve_the_code">Didn\'t Recieve the code?</string>
+    <string name="enter_pin_number">Enter PIN Number</string>
+    <string name="enter_pin_desc">Please enter your 6-digit PIN number to securely login to your account.</string>
+    <string name="pin">PIN</string>
+    <string name="confirm">Confirm</string>
+    <string name="forgot_password">Forgot Password</string>
+    <string name="security_ques_desc">Complete the security question to reset the password.</string>
 </resources>

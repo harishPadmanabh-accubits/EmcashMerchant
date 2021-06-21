@@ -13,9 +13,7 @@ import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.app.emcashmerchant.R
-import com.app.emcashmerchant.utils.extensions.hide
-import com.app.emcashmerchant.utils.extensions.loadImageWithResId
-import com.app.emcashmerchant.utils.extensions.show
+import com.app.emcashmerchant.utils.extensions.*
 import kotlinx.android.synthetic.main.form_texttfield.view.*
 
 
@@ -25,9 +23,10 @@ class FormEditText(context: Context, attrs: AttributeSet) : ConstraintLayout(con
       var formInput : AppCompatEditText
       var actionFrame : FrameLayout
       var actionImg : AppCompatImageView
+      var isValidEmail = false
 
     enum class FormType{
-        EMAIL,PASSWORD,PIN
+        EMAIL,PASSWORD,PIN,NEW_PASSWORD,RE_ENTER_PASSWORD
     }
 
     var formType = FormType.EMAIL
@@ -35,9 +34,9 @@ class FormEditText(context: Context, attrs: AttributeSet) : ConstraintLayout(con
     init {
 
         inflate(context, R.layout.form_texttfield, this)
-        formInput = findViewById<AppCompatEditText>(R.id.et_form_input)
-        actionFrame = findViewById<FrameLayout>(R.id.fl_form_action)
-        actionImg = findViewById<AppCompatImageView>(R.id.iv_form_action_image)
+        formInput = findViewById(R.id.et_form_input)
+        actionFrame = findViewById(R.id.fl_form_action)
+        actionImg = findViewById(R.id.iv_form_action_image)
         val attributes = context.obtainStyledAttributes(attrs, R.styleable.FormTextField)
         val array = context.obtainStyledAttributes(attrs, R.styleable.FormTextField, 0, 0)
         formType = FormType.values()[array.getInt(R.styleable.FormTextField_form_type, 0)]
@@ -48,6 +47,7 @@ class FormEditText(context: Context, attrs: AttributeSet) : ConstraintLayout(con
                     hint = context.getString(R.string.email)
                     inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
                 }
+                checkForValidEmail()
 
 
             }
@@ -76,11 +76,63 @@ class FormEditText(context: Context, attrs: AttributeSet) : ConstraintLayout(con
                     hint = context.getString(R.string.pin)
                     inputType = InputType.TYPE_CLASS_NUMBER
                     maxLines = 1
-                    setFilters(arrayOf<InputFilter>(LengthFilter(4)))
+                    filters = arrayOf<InputFilter>(LengthFilter(4))
                 }
 
             }
 
+            FormType.NEW_PASSWORD->{
+                var isPasswordVisible = false
+                et_form_input.apply {
+                    hint = context.getString(R.string.newPassword)
+                    inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD
+                    transformationMethod = PasswordTransformationMethod.getInstance()
+                }
+                iv_form_action_image.loadImageWithResId(R.drawable.ic_eye_hide)
+                iv_form_action_image.show()
+                iv_form_action_image.setOnClickListener {
+                    if(isPasswordVisible){
+                        setPasswordVisibilty(false)
+                    }else{
+                        setPasswordVisibilty(true)
+                        isPasswordVisible=true
+                    }
+                }
+
+            }
+
+            FormType.RE_ENTER_PASSWORD->{
+                var isPasswordVisible = false
+                et_form_input.apply {
+                    hint = context.getString(R.string.re_enter_password)
+                    inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD
+                    transformationMethod = PasswordTransformationMethod.getInstance()
+                }
+                iv_form_action_image.loadImageWithResId(R.drawable.ic_eye_hide)
+                iv_form_action_image.show()
+                iv_form_action_image.setOnClickListener {
+                    if(isPasswordVisible){
+                        setPasswordVisibilty(false)
+                    }else{
+                        setPasswordVisibilty(true)
+                        isPasswordVisible=true
+                    }
+                }
+
+            }
+
+        }
+    }
+    private fun checkForValidEmail() {
+        formInput.afterTextChanged { email->
+            if(email.isEmailValid()){
+                showCheckMark()
+                isValidEmail = true
+            }
+            else{
+                hideCheckMark()
+                isValidEmail = false
+            }
         }
     }
 

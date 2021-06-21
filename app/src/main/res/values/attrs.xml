@@ -6,6 +6,8 @@
             <enum name="email" value="0"/>
             <enum name="password" value="1"/>
             <enum name="pin" value="2"/>
+            <enum name="new_password" value="3"/>
+            <enum name="re_enter_password" value="4"/>
         </attr>
     </declare-styleable>
 

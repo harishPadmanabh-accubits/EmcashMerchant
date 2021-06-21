@@ -21,17 +21,6 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
         getViewModel()
         observe()
-        checkForValidEmail()
-
-    }
-
-    private fun checkForValidEmail() {
-        fet_email.formInput.afterTextChanged { email->
-            if(email.isEmailValid())
-                fet_email.showCheckMark()
-            else
-                fet_email.hideCheckMark()
-        }
     }
 
     private fun observe() {

@@ -15,7 +15,16 @@
     <string name="enter_pin_number">Enter PIN Number</string>
     <string name="enter_pin_desc">Please enter your 6-digit PIN number to securely login to your account.</string>
     <string name="pin">PIN</string>
-    <string name="confirm">Confirm</string>
     <string name="forgot_password">Forgot Password</string>
     <string name="security_ques_desc">Complete the security question to reset the password.</string>
+    <string name="forget_pswd_enteremail_desc">Please enter your email address, an OTP will be sent to your address.</string>
+    <string name="otm_email_desc">Please enter the OTP sent to your email address</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="newPassword">New Password</string>
+    <string name="re_enter_password">Re-Enter Password</string>
+    <string name="verify">Verify</string>
+    <string name="confirm">Confirm</string>
+    <string name="take_me_back_to_login">Take me back to login</string>
+    <string name="password_reset_complete">Password reset complete</string>
+    <string name="pswd_changed">Your password has been changed You can now log back in</string>
 </resources>

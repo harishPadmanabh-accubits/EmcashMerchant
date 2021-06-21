@@ -38,7 +38,8 @@
                 android:layout_marginStart="26dp"
                 android:layout_marginTop="64dp"
                 android:onClick="onClick"
-                android:padding="12dp"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_bsck_arrow" />

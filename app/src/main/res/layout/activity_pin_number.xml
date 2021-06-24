@@ -34,9 +34,9 @@
             <TextView
                 android:id="@+id/tv_description"
                 style="@style/SubHeadingText"
-                android:layout_width="280dp"
+                android:layout_width="@dimen/dp_280"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="@dimen/dp24"
                 android:text="@string/enter_pin_desc"
                 app:layout_constraintStart_toStartOf="@+id/tv_heading"
                 app:layout_constraintTop_toBottomOf="@+id/tv_heading" />
@@ -46,7 +46,7 @@
                 style="@style/HeadingText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="@dimen/dp30"
                 android:text="@string/enter_pin_number"
                 app:layout_constraintStart_toStartOf="@+id/iv_back"
                 app:layout_constraintTop_toBottomOf="@+id/iv_back" />
@@ -55,22 +55,22 @@
                 android:id="@+id/iv_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="26dp"
+                android:layout_marginStart="@dimen/dp26"
                 android:layout_marginTop="64dp"
                 android:onClick="onClick"
-                android:padding="12dp"
+                android:padding="@dimen/dp12"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_bsck_arrow" />
+                app:srcCompat="@drawable/ic_back_arrow" />
 
 
             <com.app.emcashmerchant.utils.widget.FormEditText
                 android:id="@+id/fet_pin"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="26dp"
-                android:layout_marginTop="60dp"
-                android:layout_marginEnd="26dp"
+                android:layout_marginStart="@dimen/dp26"
+                android:layout_marginTop="@dimen/dp60"
+                android:layout_marginEnd="@dimen/dp26"
                 app:form_type="pin"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -81,9 +81,9 @@
                 style="@style/BlueRoundedButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginEnd="24dp"
-                android:layout_marginBottom="34dp"
+                android:layout_marginStart="@dimen/dp24"
+                android:layout_marginEnd="@dimen/dp24"
+                android:layout_marginBottom="@dimen/dp30"
                 android:onClick="onClick"
                 android:text="@string/confirm"
                 app:layout_constraintBottom_toBottomOf="parent"

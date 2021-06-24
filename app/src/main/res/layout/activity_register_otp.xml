@@ -5,7 +5,7 @@
     android:id="@+id/cl_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.login.OtpActivity">
+    tools:context=".ui.register.RegisterOtpActivity">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/iv_gradient"
@@ -36,6 +36,22 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp24"
+                android:layout_marginBottom="@dimen/dp24"
+                android:onClick="onClick"
+                android:src="@drawable/ic_back_arrow"
+                app:layout_constraintBottom_toTopOf="@+id/tv_heading"
+                app:layout_constraintEnd_toEndOf="@+id/tv_heading"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="1.0" />
+
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tv_heading"
                 style="@style/HeadingText"
@@ -50,52 +66,24 @@
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tv_description"
                 style="@style/SubHeadingText"
-                android:layout_width="@dimen/dp_280"
+                android:layout_width="280dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24sp"
                 android:lineSpacingMultiplier="2.0"
-                android:text="Please enter the OTP sent to your registered mobile number (406) 555-0120"
+                android:text="@string/please_enter_otp"
                 app:layout_constraintStart_toStartOf="@+id/tv_heading"
                 app:layout_constraintTop_toBottomOf="@+id/tv_heading" />
 
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cv_otp_desc"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="28dp"
-                android:layout_marginStart="28dp"
-                android:layout_marginTop="28dp"
-                android:layout_marginEnd="24dp"
-                app:cardBackgroundColor="@color/sky_blue_light"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="2dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_description">
-
-                <TextView
-                    style="@style/SubHeadingText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/dp2"
-                    android:lineSpacingExtra="1sp"
-                    android:paddingStart="@dimen/dp24"
-                    android:paddingTop="@dimen/dp12"
-                    android:paddingEnd="@dimen/dp24"
-                    android:paddingBottom="@dimen/dp24"
-                    android:text="@string/otp_desc" />
-
-
-            </com.google.android.material.card.MaterialCardView>
 
             <com.app.emcashmerchant.utils.widget.OtpLayout
                 android:id="@+id/otp_layout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp16"
-                app:layout_constraintEnd_toEndOf="@+id/cv_otp_desc"
-                app:layout_constraintStart_toStartOf="@+id/cv_otp_desc"
-                app:layout_constraintTop_toBottomOf="@+id/cv_otp_desc" />
+                android:layout_marginTop="@dimen/dp24"
+                android:layout_marginRight="@dimen/dp24"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/tv_description"
+                app:layout_constraintTop_toBottomOf="@+id/tv_description" />
 
             <LinearLayout
                 android:id="@+id/ll_resend_otp"
@@ -103,8 +91,8 @@
                 android:layout_height="wrap_content"
                 android:onClick="onClick"
                 android:orientation="horizontal"
-                android:paddingTop="@dimen/dp12"
-                android:paddingBottom="@dimen/dp12"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
                 app:layout_constraintStart_toStartOf="@+id/otp_layout"
                 app:layout_constraintTop_toBottomOf="@+id/otp_layout">
 
@@ -112,9 +100,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/biennale_book"
-                    android:text="Didn't Recieve the Code?"
+                    android:text="@string/didnt_recieve_the_code"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/sp12" />
+                    android:textSize="12sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -123,7 +111,7 @@
                     android:fontFamily="@font/biennale_book"
                     android:text="@string/resend_otp"
                     android:textColor="@color/app_blue"
-                    android:textSize="@dimen/sp12" />
+                    android:textSize="12sp" />
             </LinearLayout>
 
             <Button
@@ -131,12 +119,12 @@
                 style="@style/BlueRoundedButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp24"
-                android:layout_marginTop="@dimen/dp30"
-                android:layout_marginEnd="@dimen/dp24"
-                android:layout_marginBottom="@dimen/dp30"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="34dp"
                 android:onClick="onClick"
-                android:text="Verify"
+                android:text="@string/verify"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

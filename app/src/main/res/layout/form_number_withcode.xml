@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:background="@drawable/white_rounded"
+    android:gravity="center_vertical"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp48">
+
+     <com.hbb20.CountryCodePicker
+        android:id="@+id/picker_countrycode"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        style="@style/WhiteRoundTextField"
+        app:ccp_textSize="@dimen/sp14"
+         app:ccp_showFlag="true"
+         app:ccp_showNameCode="false"
+        app:ccp_autoDetectCountry="true"
+        />
+    <EditText
+        android:id="@+id/et_number"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@null"
+        android:hint="@string/phone_no"
+        android:layout_weight="1"
+        style="@style/NumberTextField"
+        />
+
+
+
+</LinearLayout>

@@ -1,6 +1,5 @@
 package com.app.emcashmerchant.ui.home.home_screen
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.transition.ChangeBounds
 import com.app.emcashmerchant.R
 import com.app.emcashmerchant.ui.home.home_screen.adapter.RecentPaymentsAdapter
 import com.app.emcashmerchant.utils.extensions.obtainViewModel
@@ -29,6 +30,12 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        sharedElementEnterTransition = ChangeBounds().apply {
+            duration = 750
+        }
+        sharedElementReturnTransition= ChangeBounds().apply {
+            duration = 750
+        }
         return inflater.inflate(R.layout.home_fragment, container, false)
     }
 
@@ -41,10 +48,12 @@ class HomeFragment : Fragment() {
 
     private fun setupViews(view: View) {
        //test setup badge
-        iv_notification_badge_view.setupBadge(3333)
+        iv_notification_badge_view.setupBadge(30)
 
         iv_shop_profile_image.setOnClickListener {
-            Navigation.findNavController(view).navigate(R.id.goto_settings_fragment)
+            val extras = FragmentNavigatorExtras(
+                it to "shop_image_transition")
+            Navigation.findNavController(view).navigate(R.id.goto_settings_fragment,null,null,extras)
         }
 
         tv_info_history.setOnClickListener {
@@ -73,7 +82,7 @@ class HomeFragment : Fragment() {
 
     private fun initViewModel(fragmentActivity: FragmentActivity?) {
         if (fragmentActivity != null)
-            fragmentActivity.obtainViewModel(HomeViewModel::class.java)
+            viewModel=fragmentActivity.obtainViewModel(HomeViewModel::class.java)
         else
             Timber.e("ViewModel init failed")
     }

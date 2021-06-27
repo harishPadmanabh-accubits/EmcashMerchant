@@ -19,6 +19,7 @@
         android:layout_height="34dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="36dp"
+        android:transitionName="shop_image_transition"
         android:src="@drawable/sample_shop_profile"
         app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.RoundImageStyle"
         app:layout_constraintStart_toStartOf="parent"

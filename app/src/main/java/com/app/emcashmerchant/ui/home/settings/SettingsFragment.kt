@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.Navigation
+import androidx.transition.ChangeBounds
 import com.app.emcashmerchant.R
 import kotlinx.android.synthetic.main.settings_fragment.*
 
@@ -23,6 +24,12 @@ class SettingsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        sharedElementEnterTransition = ChangeBounds().apply {
+            duration = 750
+        }
+        sharedElementReturnTransition= ChangeBounds().apply {
+            duration = 500
+        }
         return inflater.inflate(R.layout.settings_fragment, container, false)
     }
 

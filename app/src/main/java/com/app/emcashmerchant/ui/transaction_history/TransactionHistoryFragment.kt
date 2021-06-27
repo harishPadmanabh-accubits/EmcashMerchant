@@ -41,7 +41,7 @@ class TransactionHistoryFragment : Fragment() {
 
     private fun initViewModel(fragmentActivity: FragmentActivity?) {
         if (fragmentActivity != null)
-            fragmentActivity.obtainViewModel(TransactionHistoryViewModel::class.java)
+           viewModel = fragmentActivity.obtainViewModel(TransactionHistoryViewModel::class.java)
         else
             Timber.e("ViewModel init failed")
 

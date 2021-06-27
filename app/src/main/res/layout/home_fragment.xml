@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.home.home_screen.HomeFragment">
+<androidx.core.widget.NestedScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:id="@+id/cl_main"
+        android:layout_height="match_parent">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/iv_shop_profile_image"
+        android:layout_width="34dp"
+        android:layout_height="34dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="36dp"
+        android:src="@drawable/sample_shop_profile"
+        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.RoundImageStyle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.app.emcashmerchant.utils.widget.BadgeNotificationView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="26dp"
+        android:id="@+id/iv_notification_badge_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/iv_shop_profile_image" />
+
+    <FrameLayout
+        android:id="@+id/fl_info_card"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_shop_profile_image">
+
+        <include layout="@layout/layout_home_info_card" />
+    </FrameLayout>
+    <TextView
+        android:id="@+id/tv_transfer_payment"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/transfer_payment"
+        android:background="@drawable/blue_stroke_round"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textColor="@color/app_blue"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:textAlignment="center"
+        android:textSize="14sp"
+        android:fontFamily="@font/biennale_book"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fl_info_card" />
+
+    <TextView
+        android:id="@+id/tv_info_recent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="34dp"
+        android:text="@string/recent"
+        android:textSize="14sp"
+        android:fontFamily="@font/biennale_regular"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_transfer_payment" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_recent_payment_list"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="22dp"
+            android:layout_marginEnd="22dp"
+            android:nestedScrollingEnabled="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_info_recent" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_history_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="44dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rv_recent_payment_list"
+        app:srcCompat="@drawable/ic_history" />
+
+
+    <TextView
+        android:id="@+id/tv_info_history"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:text="@string/my_transaction_history"
+        android:textSize="14sp"
+        android:fontFamily="@font/biennale_regular"
+        android:textColor="@color/black"
+        android:letterSpacing=".02"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_history_icon"
+        app:layout_constraintStart_toEndOf="@+id/iv_history_icon"
+        app:layout_constraintTop_toTopOf="@+id/iv_history_icon" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/fab_new_payment"
+        android:layout_marginBottom="24dp"
+        android:fontFamily="@font/biennale_book"
+        android:text="@string/new_payment_request"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:paddingStart="30dp"
+        android:paddingEnd="30dp"
+        app:backgroundTint="@color/app_blue"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

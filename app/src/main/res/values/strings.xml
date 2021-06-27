@@ -27,4 +27,11 @@
     <string name="take_me_back_to_login">Take me back to login</string>
     <string name="password_reset_complete">Password reset complete</string>
     <string name="pswd_changed">Your password has been changed You can now log back in</string>
+    <string name="emcash_balance">EmCash Balance</string>
+    <string name="convert_to_cash">Convert to Cash</string>
+    <string name="transfer_payment">Transfer Payment</string>
+    <string name="recent">Recent</string>
+    <string name="my_transaction_history">My Transaction History</string>
+    <string name="new_payment_request">    New Payment Request</string>
+    <string name="change_profile_image">Change Profile Image</string>
 </resources>

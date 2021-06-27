@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home_screen_nav_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.app.emcashmerchant.ui.home.home_screen.HomeFragment"
+        android:label="home_fragment"
+        tools:layout="@layout/home_fragment" >
+        <action
+            android:id="@+id/goto_settings_fragment"
+            app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/goto_convert_cash"
+            app:destination="@id/convertToCashFragment" />
+        <action
+            android:id="@+id/goto_wallet_fragment"
+            app:destination="@id/walletFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.app.emcashmerchant.ui.home.settings.SettingsFragment"
+        android:label="settings_fragment"
+        tools:layout="@layout/settings_fragment" >
+        <action
+            android:id="@+id/goto_terms_fragment"
+            app:destination="@id/termsFragment" />
+        <action
+            android:id="@+id/goto_notifications_fragment"
+            app:destination="@id/notificationsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/termsFragment"
+        android:name="com.app.emcashmerchant.ui.home.terms.TermsFragment"
+        android:label="terms_fragment"
+        tools:layout="@layout/terms_fragment" />
+    <fragment
+        android:id="@+id/notificationsFragment"
+        android:name="com.app.emcashmerchant.ui.home.notifications.NotificationsFragment"
+        android:label="notifications_fragment"
+        tools:layout="@layout/notifications_fragment" />
+    <fragment
+        android:id="@+id/convertToCashFragment"
+        android:name="com.app.emcashmerchant.ui.convert_to_cash.ConvertToCashFragment"
+        android:label="convert_to_cash_fragment"
+        tools:layout="@layout/convert_to_cash_fragment" />
+    <fragment
+        android:id="@+id/walletFragment"
+        android:name="com.app.emcashmerchant.ui.wallet.WalletFragment"
+        android:label="wallet_fragment"
+        tools:layout="@layout/wallet_fragment" />
+</navigation>

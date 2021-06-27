@@ -290,6 +290,36 @@ fun ImageView.loadImageWithUrl(imageUrl : String?){
 
 }
 
+//load imageView with image url
+fun ImageView.loadImageWithUrl(imageUrl : String?,onError:(status:Boolean)->Unit){
+    try{
+        imageUrl?.let{imageUrl->
+            if (context!=null){
+                Glide.with(context)
+                    .load(imageUrl)
+                    .listener(object : RequestListener<Drawable> {
+                    override fun onLoadFailed(p0: GlideException?, p1: Any?, p2: Target<Drawable>?, p3: Boolean): Boolean {
+                        onError(true)
+                        return false
+                    }
+                    override fun onResourceReady(p0: Drawable?, p1: Any?, p2: Target<Drawable>?, p3: DataSource?, p4: Boolean): Boolean {
+                        //do something when picture already loaded
+                        onError(false)
+                        return false
+                    }
+                })
+                    .into(this)
+            }
+
+        }
+
+    }catch (e:Exception){
+        e.printStackTrace()
+    }
+
+
+}
+
 //load imageView with image drawable resource
 fun ImageView.loadImageWithResId(resID : Int?) = try{
 

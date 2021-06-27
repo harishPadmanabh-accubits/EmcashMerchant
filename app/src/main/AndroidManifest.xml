@@ -14,7 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EmcashMerchant"
         android:usesCleartextTraffic="true">
-
+        <activity android:name=".ui.transfer_payment.TransferPaymentActivity"></activity>
+        <activity android:name=".ui.transaction_history.TransactionsActivity" />
         <activity
             android:name=".ui.forgotPassword.PasswordResetCompleteActivity"
             android:screenOrientation="portrait"
@@ -53,9 +54,7 @@
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.introScreen.IntroActivity"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.home.HomeBaseActivity"
             android:screenOrientation="portrait"

@@ -19,6 +19,14 @@
         <action
             android:id="@+id/goto_wallet_fragment"
             app:destination="@id/walletFragment" />
+        <action
+            android:id="@+id/goto_transactions_history_fragment"
+            app:destination="@id/transactionHistoryFragment" />
+        <action
+            android:id="@+id/goto_notifications_fragment_from_home"
+            app:destination="@id/notificationsFragment" />
+        <action android:id="@+id/goto_transfer_payment_activity"
+            app:destination="@+id/tranferPaymentActivity"/>
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
@@ -52,4 +60,15 @@
         android:name="com.app.emcashmerchant.ui.wallet.WalletFragment"
         android:label="wallet_fragment"
         tools:layout="@layout/wallet_fragment" />
+    <fragment
+        android:id="@+id/transactionHistoryFragment"
+        android:name="com.app.emcashmerchant.ui.transaction_history.TransactionHistoryFragment"
+        android:label="transaction_history_fragment"
+        tools:layout="@layout/transaction_history_fragment" />
+
+    <activity
+        android:id="@+id/tranferPaymentActivity"
+        android:name="com.app.emcashmerchant.ui.transfer_payment.TransferPaymentActivity"
+        tools:layout="@layout/activity_transfer_payment"
+        android:label="@string/transfer_payment"/>
 </navigation>

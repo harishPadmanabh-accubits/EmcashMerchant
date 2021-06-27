@@ -34,4 +34,10 @@
     <string name="my_transaction_history">My Transaction History</string>
     <string name="new_payment_request">    New Payment Request</string>
     <string name="change_profile_image">Change Profile Image</string>
+    <string name="transaction_history">Transaction History</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="all">All</string>
+    <string name="inbound">Inbound</string>
+    <string name="outbound">Outbound</string>
 </resources>

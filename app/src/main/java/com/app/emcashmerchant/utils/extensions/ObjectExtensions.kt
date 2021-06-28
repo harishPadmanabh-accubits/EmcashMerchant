@@ -18,18 +18,19 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
-import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.app.emcashmerchant.BuildConfig
+import com.app.emcashmerchant.data.models.BaseResponse
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.google.gson.Gson
-import timber.log.Timber
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -378,5 +379,24 @@ fun View.invible(){
     visibility = View.INVISIBLE
 }
 
+fun <T : Any> Call<T>.awaitResponse(
+    onSuccess: (T?) -> Unit = {},
+    onFailure: (String?) -> Unit = {}
+) {
 
+    this.enqueue(object : Callback<T> {
+        override fun onResponse(call: Call<T>, response: Response<T>) {
+            val r = response
+            if (response.isSuccessful) {
+                onSuccess.invoke(response.body())
+            } else {
+                //val message = (response.body() as? BaseResponse)?.message
+                onFailure.invoke(response.message())
+            }
+        }
 
+        override fun onFailure(call: Call<T>, t: Throwable) {
+            onFailure.invoke( t.message)
+        }
+    })
+}

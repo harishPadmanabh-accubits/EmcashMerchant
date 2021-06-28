@@ -2,25 +2,32 @@ package com.app.emcashmerchant.data
 
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.security.crypto.EncryptedSharedPreferences
+import androidx.security.crypto.MasterKeys
 import com.app.emcashmerchant.R
+import com.app.emcashmerchant.utils.KEY_REF_ID
 import com.app.emcashmerchant.utils.extensions.putAny
 
 
 object AppPreferences {
-    private var preferences: SharedPreferences? = null
+
+    private lateinit var preferences: SharedPreferences
 
     fun init(context: Context): AppPreferences {
-        preferences = context.getSharedPreferences("${context.getString(
-            R.string.app_name
-        )}_prefs", Context.MODE_PRIVATE)
+        preferences = EncryptedSharedPreferences.create(
+            "${context.getString(R.string.app_name)}_prefernces",
+            MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC),
+            context,
+            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+        )
+
         return this
     }
 
-    fun setLastLaunchTime(time:Long){
-        preferences?.putAny("last_launch_time",time)
-    }
+    var refId: String?
+        get() = preferences.getString(KEY_REF_ID, "")
+        set(value) = preferences.edit().putString(KEY_REF_ID, value).apply()
 
-    fun getLastLaunchTime():Long? =
-        preferences?.getLong("last_launch_time",0L)
 
 }

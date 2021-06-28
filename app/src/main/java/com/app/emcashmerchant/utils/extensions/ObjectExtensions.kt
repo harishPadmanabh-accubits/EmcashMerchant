@@ -272,6 +272,7 @@ fun Context.showLongToast(message:String?) = message?.let {message->
     Toast.makeText(this, message, Toast.LENGTH_LONG).show()
 }
 
+
 //load imageView with image url
 fun ImageView.loadImageWithUrl(imageUrl : String?){
     try{
@@ -350,6 +351,8 @@ fun ImageView.loadImageWithError(imageUrl: String?, errorResId : Int) = try{
     e.printStackTrace()
 }
 
+
+
 //load imageView with image url  and @NON-NULL placeholder
 fun ImageView.loadImageWithPlaceHolder(imageUrl: String?, placeHolderResId : Int) = try{
 
@@ -405,3 +408,9 @@ fun <T : Any> Call<T>.awaitResponse(
         }
     })
 }
+
+
+
+
+
+

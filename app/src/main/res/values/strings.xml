@@ -72,6 +72,16 @@
     <string name="please_answer_security_question">Please answer the following security questions to improve your payment security</string>
     <string name="enter_your_answer">Enter your answer</string>
     <string name="your_answer_hint">Ans. Your answer goes here</string>
+    <string name="upload_documents">Upload Documents</string>
+    <string name="head_uplaod_documents">Please uplaod these documents to finish up the sign up process.</string>
+    <string name="accepted_document_formats">Accepted document formats :</string>
+    <string name="pdf_jpeg_or_png">PDF, JPEG or PNG.</string>
+    <string name="max_file_size">Max file size per file:</string>
+    <string name="_8mb">8mb</string>
+    <string name="trade_licence_document">Trade Licence Document</string>
+    <string name="commercial_reg_doc">Commercial Registration Document</string>
+    <string name="reg_request_completed">Registration request submitted successfully. Your account is under review. Please wait while the process is done.</string>
+    <string name="your_account_process">Your account is under process</string>
 
     <string-array name="security_question">
         <item>Select your Question</item>

@@ -1,7 +1,7 @@
 package com.app.emcashmerchant.data.repositories
 
 import android.content.Context
-import com.app.emcashmerchant.data.AppPreferences
+import com.app.emcashmerchant.data.SessionStorage
 import com.app.emcashmerchant.data.models.ResendOtpRequest
 import com.app.emcashmerchant.data.models.ResendOtpResponse
 import com.app.emcashmerchant.data.models.SignupInitialRequestBody
@@ -11,7 +11,7 @@ import com.app.emcashmerchant.utils.extensions.awaitResponse
 
 class AuthRepository(val context: Context) {
 
-    private val appPreferences = AppPreferences.init(context)
+//    private val appPreferences = SessionStorage(context)
     private val api = ApiManger(context).api
 
     fun performInitialSignup(
@@ -24,7 +24,7 @@ class AuthRepository(val context: Context) {
             }, onSuccess = {
                 val data = it?.data
                 data?.let {
-                    appPreferences.refId = it.referenceId
+//                    appPreferences.refId = it.referenceId
                     onApiCallback(true, null, data)
                 }
             })

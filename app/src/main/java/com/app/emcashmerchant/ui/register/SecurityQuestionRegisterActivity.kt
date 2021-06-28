@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import com.app.emcashmerchant.R
+import com.app.emcashmerchant.ui.home.HomeBaseActivity
 import com.app.emcashmerchant.utils.extensions.openActivity
 
 class SecurityQuestionRegisterActivity : AppCompatActivity() {

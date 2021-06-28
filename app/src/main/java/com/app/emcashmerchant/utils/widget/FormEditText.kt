@@ -26,7 +26,7 @@ class FormEditText(context: Context, attrs: AttributeSet) : ConstraintLayout(con
       var isValidEmail = false
 
     enum class FormType{
-        EMAIL,PASSWORD,PIN,NEW_PASSWORD,RE_ENTER_PASSWORD
+        EMAIL,PASSWORD,PIN,NEW_PASSWORD,RE_ENTER_PASSWORD,PIN_NUMBER,CONFIRM_PIN_NUMBER
     }
 
     var formType = FormType.EMAIL
@@ -80,7 +80,6 @@ class FormEditText(context: Context, attrs: AttributeSet) : ConstraintLayout(con
                 }
 
             }
-
             FormType.NEW_PASSWORD->{
                 var isPasswordVisible = false
                 et_form_input.apply {
@@ -100,7 +99,6 @@ class FormEditText(context: Context, attrs: AttributeSet) : ConstraintLayout(con
                 }
 
             }
-
             FormType.RE_ENTER_PASSWORD->{
                 var isPasswordVisible = false
                 et_form_input.apply {
@@ -120,6 +118,25 @@ class FormEditText(context: Context, attrs: AttributeSet) : ConstraintLayout(con
                 }
 
             }
+            FormType.PIN_NUMBER->{
+                et_form_input.apply {
+                    hint = context.getString(R.string.enter_pin_number)
+                    inputType = InputType.TYPE_CLASS_NUMBER
+                    maxLines = 1
+                    filters = arrayOf<InputFilter>(LengthFilter(4))
+                }
+
+            }
+            FormType.CONFIRM_PIN_NUMBER->{
+                et_form_input.apply {
+                    hint = context.getString(R.string.confirm_pin_number)
+                    inputType = InputType.TYPE_CLASS_NUMBER
+                    maxLines = 1
+                    filters = arrayOf<InputFilter>(LengthFilter(4))
+                }
+
+            }
+
 
         }
     }

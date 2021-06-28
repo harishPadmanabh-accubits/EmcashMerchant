@@ -6,15 +6,17 @@
     <string name="accept_payments_easily_and_instantly_with_emcash">Accept payments easily and instantly with EmCash</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
+
     <string name="hello_merchant">Hello Merchant,</string>
     <string name="welcome_please_enter_the_following_n_details_to_login_to_your_account">Welcome, please enter the following  details to login to your account</string>
     <string name="enter_otp">Enter OTP</string>
     <string name="otp_desc"><![CDATA[OTP verification is only a one-time activity & further logins only require a PIN login.]]></string>
     <string name="resend_otp">Resend OTP</string>
     <string name="didn_t_recieve_the_code">Didn\'t Recieve the code?</string>
-    <string name="enter_pin_number">Enter PIN Number</string>
+    <string name="enter_pin_number">Enter PIN Number*</string>
     <string name="enter_pin_desc">Please enter your 6-digit PIN number to securely login to your account.</string>
     <string name="pin">PIN</string>
+    <string name="ENTER_PIN">Enter PIN number*</string>
     <string name="forgot_password">Forgot Password</string>
     <string name="security_ques_desc">Complete the security question to reset the password.</string>
     <string name="forget_pswd_enteremail_desc">Please enter your email address, an OTP will be sent to your address.</string>
@@ -40,4 +42,42 @@
     <string name="all">All</string>
     <string name="inbound">Inbound</string>
     <string name="outbound">Outbound</string>
+    <string name="basic_details">Basic Details</string>
+    <string name="business_name">Business Name*</string>
+
+    <string name="contact_person_name">Contact Person Name*</string>
+    <string name="business_registered_name">Registered Name of Business*</string>
+    <string name="trade_license_number">Trade License Number*</string>
+    <string name="trade_license_authority">Trade License Issuing Authority*</string>
+    <string name="service_description">Service Description</string>
+
+    <string name="enter_basicdetails">Enter your basic details to get started.</string>
+
+    <string name="enter_password_alphnumeric">The password will be an alphanumeric one with at least 8 characters (1 Uppercase, 1 lowercase, 1 symbol minimum)</string>
+
+
+    <string name="email_id">Email ID*</string>
+    <string name="phone_no">Phone No*</string>
+    <string name="address">Address*</string>
+    <string name="create_pin_number">Create Pin Number</string>
+    <string name="create_password">Create Password</string>
+    <string name="enter_password">Enter password</string>
+    <string name="create_6_digit">Create a new 6-digit pin number  for your account</string>
+    <string name="mobile_number_error">Please enter you mobile number</string>
+    <string name="please_enter_otp">Please enter the OTP sent to your registered mobile number (406) 555-0120</string>
+    <string name="didnt_recieve_the_code">Didn\'t Recieve the Code?</string>
+    <string name="confirm_pin_number">Confirm PIN number*</string>
+    <string name="next">next</string>
+    <string name="security_questions">Security Questions</string>
+    <string name="please_answer_security_question">Please answer the following security questions to improve your payment security</string>
+    <string name="enter_your_answer">Enter your answer</string>
+    <string name="your_answer_hint">Ans. Your answer goes here</string>
+
+    <string-array name="security_question">
+        <item>Select your Question</item>
+        <item>In what town or city was your first full time","In what town or city was your first full time</item>
+        <item>In what town or city was your first full time","In what town or city was your first full time</item>
+
+    </string-array>
+
 </resources>

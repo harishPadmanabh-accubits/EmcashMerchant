@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/cl_root"
-    tools:context=".ui.forgotPassword.SecurityQuestionsActivity">
+    tools:context=".ui.register.SecurityQuestionRegisterActivity">
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/iv_gradient"
         android:layout_width="match_parent"
@@ -47,10 +47,13 @@
             <TextView
                 android:id="@+id/tv_description"
                 style="@style/SubHeadingText"
-                android:layout_width="@dimen/dp_280"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp24"
-                android:text="@string/security_ques_desc"
+                android:layout_marginTop="28dp"
+                android:text="@string/please_answer_security_question"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="@dimen/dp24"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/tv_heading"
                 app:layout_constraintTop_toBottomOf="@+id/tv_heading" />
 
@@ -60,7 +63,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp30"
-                android:text="@string/forgot_password"
+                android:text="@string/security_questions"
                 app:layout_constraintStart_toStartOf="@+id/iv_back"
                 app:layout_constraintTop_toBottomOf="@+id/iv_back" />
 
@@ -71,9 +74,9 @@
                 android:layout_marginStart="@dimen/dp26"
                 android:layout_marginTop="@dimen/dp48"
                 android:layout_marginEnd="@dimen/dp26"
-                android:entries="@array/security_question"
                 android:background="@drawable/white_rounded"
                 android:spinnerMode="dropdown"
+                android:entries="@array/security_question"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_description" />
@@ -94,7 +97,7 @@
                 android:layout_width="0dp"
                 android:layout_height="@dimen/dp48"
                 android:layout_marginTop="@dimen/dp12"
-                android:hint="Enter your answer"
+                android:hint="@string/your_answer_hint"
                 android:paddingLeft="@dimen/dp16"
                 android:inputType="text"
                 android:textAlignment="viewStart"
@@ -130,7 +133,7 @@
                 android:layout_width="0dp"
                 android:layout_height="@dimen/dp48"
                 android:layout_marginTop="@dimen/dp12"
-                android:hint="Enter your answer"
+                android:hint="@string/your_answer_hint"
                 android:paddingLeft="@dimen/dp16"
                 android:inputType="text"
                 android:textAlignment="viewStart"
@@ -148,7 +151,7 @@
                 android:layout_marginEnd="@dimen/dp24"
                 android:layout_marginBottom="@dimen/dp30"
                 android:onClick="onClick"
-                android:text="Next"
+                android:text="@string/next"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

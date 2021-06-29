@@ -6,4 +6,265 @@
     android:layout_height="match_parent"
     tools:context=".ui.register.UploadDocumentsActivity">
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_gradient"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_blue_gradient_bg" />
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp26"
+                android:layout_marginTop="@dimen/dp64"
+                android:onClick="onClick"
+                android:paddingTop="@dimen/dp12"
+                android:paddingBottom="@dimen/dp12"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_back_arrow" />
+
+            <TextView
+                android:id="@+id/tv_description"
+                style="@style/SubHeadingText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp26"
+                android:text="@string/head_uplaod_documents"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="@dimen/dp24"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/tv_heading"
+                app:layout_constraintTop_toBottomOf="@+id/tv_heading" />
+
+            <TextView
+                android:id="@+id/tv_heading"
+                style="@style/HeadingText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp30"
+                android:text="@string/upload_documents"
+                app:layout_constraintStart_toStartOf="@+id/iv_back"
+                app:layout_constraintTop_toBottomOf="@+id/iv_back" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_description1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp26"
+                android:layout_marginTop="@dimen/dp26"
+                android:layout_marginEnd="@dimen/dp24"
+                app:cardBackgroundColor="@color/sky_blue_light"
+                app:cardCornerRadius="@dimen/dp8"
+                app:cardElevation="@dimen/dp2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_description">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    >
+                    <TextView
+                        style="@style/SubHeadingText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/dp2"
+                        android:lineSpacingExtra="1sp"
+                        android:paddingStart="@dimen/dp6"
+                        android:paddingTop="@dimen/dp6"
+                        android:paddingEnd="@dimen/dp6"
+                        android:text="@string/accepted_document_formats" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/dp2"
+                        android:lineSpacingExtra="1sp"
+                        android:paddingStart="@dimen/dp6"
+                        android:paddingEnd="@dimen/dp6"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/sp14"
+                        android:fontFamily="@font/biennale_medium"
+                        android:paddingBottom="@dimen/dp6"
+                        android:text="@string/pdf_jpeg_or_png" />
+
+                </LinearLayout>
+
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/materialCardView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp26"
+                android:layout_marginTop="@dimen/dp12"
+                android:layout_marginEnd="@dimen/dp24"
+                app:cardBackgroundColor="@color/sky_blue_light"
+                app:cardCornerRadius="@dimen/dp8"
+                app:cardElevation="@dimen/dp2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cv_description1">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/SubHeadingText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/dp2"
+                        android:lineSpacingExtra="1sp"
+                        android:paddingStart="@dimen/dp6"
+                        android:paddingTop="@dimen/dp6"
+                        android:paddingEnd="@dimen/dp6"
+                        android:text="@string/max_file_size" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/dp2"
+                        android:fontFamily="@font/biennale_medium"
+                        android:lineSpacingExtra="1sp"
+                        android:paddingStart="@dimen/dp6"
+                        android:paddingEnd="@dimen/dp6"
+                        android:paddingBottom="@dimen/dp6"
+                        android:text="@string/_8mb"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/sp14" />
+
+                </LinearLayout>
+
+
+            </com.google.android.material.card.MaterialCardView>
+
+
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp26"
+                android:layout_marginTop="@dimen/dp40"
+                android:layout_marginEnd="@dimen/dp26"
+                app:layout_constraintEnd_toEndOf="@+id/materialCardView"
+                app:layout_constraintStart_toStartOf="@+id/materialCardView"
+                app:layout_constraintTop_toBottomOf="@+id/materialCardView"
+                android:orientation="vertical"
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/white_bluestroke"
+                    android:gravity="center_vertical"
+                    >
+                    <TextView
+                        style="@style/SubHeadingText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/trade_licence_document"
+                        android:padding="@dimen/dp16"
+                        android:layout_weight="1"
+                        />
+                    <ImageView
+                        android:layout_width="@dimen/dp12"
+                        android:layout_height="@dimen/dp12"
+                        android:src="@drawable/ic_upload_docs"
+                        android:layout_marginEnd="@dimen/dp16"
+                        />
+
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/white_bluestroke"
+                    android:layout_marginTop="@dimen/dp12"
+                    android:gravity="center_vertical"
+
+                    >
+                    <TextView
+                        style="@style/SubHeadingText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/commercial_reg_doc"
+                        android:padding="@dimen/dp16"
+                        />
+                    <ImageView
+                        android:layout_width="@dimen/dp12"
+                        android:layout_height="@dimen/dp12"
+                        android:src="@drawable/ic_upload_docs"
+                        android:layout_marginEnd="@dimen/dp16"
+                        />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/white_bluestroke"
+                    android:layout_marginTop="@dimen/dp12"
+                    android:gravity="center_vertical"
+
+                    >
+                    <TextView
+                        style="@style/SubHeadingText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Bank Statement/ Bank Account Details"
+                        android:padding="@dimen/dp16"
+                        />
+                    <ImageView
+                        android:layout_width="@dimen/dp12"
+                        android:layout_height="@dimen/dp12"
+                        android:src="@drawable/ic_upload_docs"
+                        android:layout_marginEnd="@dimen/dp16"
+                        />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_next"
+                style="@style/BlueRoundedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp24"
+                android:layout_marginEnd="@dimen/dp24"
+                android:layout_marginBottom="@dimen/dp30"
+                android:onClick="onClick"
+                android:text="@string/next"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+                app:layout_constraintVertical_bias="1.0" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

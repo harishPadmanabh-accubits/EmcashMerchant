@@ -1,17 +1,13 @@
 package com.app.emcashmerchant.data.repositories
 
 import android.content.Context
-import android.util.Log
 import com.app.emcashmerchant.data.AppPreferences
+import com.app.emcashmerchant.data.models.ResendOtpRequest
+import com.app.emcashmerchant.data.models.ResendOtpResponse
 import com.app.emcashmerchant.data.models.SignupInitialRequestBody
 import com.app.emcashmerchant.data.models.SignupInitialResponse
 import com.app.emcashmerchant.data.network.ApiManger
 import com.app.emcashmerchant.utils.extensions.awaitResponse
-import com.skydoves.sandwich.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import timber.log.Timber
 
 class AuthRepository(val context: Context) {
 
@@ -20,21 +16,38 @@ class AuthRepository(val context: Context) {
 
     fun performInitialSignup(
         signUpData: SignupInitialRequestBody,
-        onResult: (status: Boolean, message: String?, result: SignupInitialResponse.Data?) -> Unit
+        onApiCallback: (status: Boolean, message: String?, result: SignupInitialResponse.Data?) -> Unit
     ) {
         api.performInitialSignup(signUpData).awaitResponse(
             onFailure = {
-                onResult(false, it, null)
+                onApiCallback(false, it, null)
             }, onSuccess = {
                 val data = it?.data
                 data?.let {
                     appPreferences.refId = it.referenceId
-                    onResult(true, null, data)
+                    onApiCallback(true, null, data)
                 }
             })
     }
 
 
+    fun performResendOtp(
+        resendOtpRequest: ResendOtpRequest,
+        onApiCallback: (status: Boolean, message: String?, result: ResendOtpResponse.Data?) -> Unit
+    ) {
+        api.performResendOTP(resendOtpRequest).awaitResponse(
+            onFailure = {
+                onApiCallback(false,it,null)
+            },onSuccess = {
+                it?.data?.let {
+                    onApiCallback(true,null,it)
+                }
+            }
+        )
+    }
 }
+
+
+
 
 

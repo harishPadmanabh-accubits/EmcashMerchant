@@ -390,8 +390,13 @@ fun <T : Any> Call<T>.awaitResponse(
             if (response.isSuccessful) {
                 onSuccess.invoke(response.body())
             } else {
-                //val message = (response.body() as? BaseResponse)?.message
-                onFailure.invoke(response.message())
+                val gson = Gson()
+                val (error, message, status) = gson.fromJson(
+                    response.errorBody()!!.charStream(),
+                    BaseResponse::class.java
+                ).also {
+                    onFailure.invoke(it.message)
+                }
             }
         }
 

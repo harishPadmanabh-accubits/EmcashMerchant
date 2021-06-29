@@ -4,6 +4,8 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.app.emcashmerchant.data.models.ResendOtpRequest
+import com.app.emcashmerchant.data.models.ResendOtpResponse
 import com.app.emcashmerchant.data.models.SignupInitialRequestBody
 import com.app.emcashmerchant.data.models.SignupInitialResponse
 import com.app.emcashmerchant.data.network.ApiCallStatus
@@ -16,6 +18,7 @@ class RegisterViewModel(val app: Application) : AndroidViewModel(app) {
     val repository = AuthRepository(app)
 
     var initialSignupStatus = MutableLiveData<ApiMapper<SignupInitialResponse.Data>>()
+    var resendOtpStatus = MutableLiveData<ApiMapper<ResendOtpResponse.Data>>()
 
     fun performInitialSignup(
         address: String,
@@ -31,7 +34,7 @@ class RegisterViewModel(val app: Application) : AndroidViewModel(app) {
         tradeLicenseNumber: String,
         zipCode: String
     ) {
-        initialSignupStatus.value = ApiMapper(ApiCallStatus.LOADING,null,null)
+        initialSignupStatus.value = ApiMapper(ApiCallStatus.LOADING, null, null)
         val signupRequestBody = SignupInitialRequestBody(
             address,
             businessName,
@@ -48,13 +51,29 @@ class RegisterViewModel(val app: Application) : AndroidViewModel(app) {
         )
         repository.performInitialSignup(signupRequestBody) { status, message, result ->
             Timber.e("error $message")
-            when(status){
-                true->{
-                    initialSignupStatus.value = ApiMapper(ApiCallStatus.SUCCESS,result,null)
+            when (status) {
+                true -> {
+                    initialSignupStatus.value = ApiMapper(ApiCallStatus.SUCCESS, result, null)
                 }
-                false->{
-                    initialSignupStatus.value = ApiMapper(ApiCallStatus.ERROR,null,message)
+                false -> {
+                    initialSignupStatus.value = ApiMapper(ApiCallStatus.ERROR, null, message)
 
+                }
+            }
+        }
+    }
+
+    fun performResendOtp(refId: String) {
+        resendOtpStatus.value = ApiMapper(ApiCallStatus.LOADING, null, null)
+        val resendOtpRequest = ResendOtpRequest(refId)
+        repository.performResendOtp(resendOtpRequest) { status, message, result ->
+            Timber.e("error $message")
+            when (status) {
+                true -> {
+                    resendOtpStatus.value = ApiMapper(ApiCallStatus.SUCCESS, result, null)
+                }
+                false -> {
+                    resendOtpStatus.value = ApiMapper(ApiCallStatus.ERROR, null, message)
                 }
             }
         }

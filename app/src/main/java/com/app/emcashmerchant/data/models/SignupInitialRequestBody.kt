@@ -13,13 +13,13 @@ data class SignupInitialRequestBody(
     @SerializedName("email")
     val email: String,
     @SerializedName("firstName")
-    val firstName: String,
+    val firstName: String ="",
     @SerializedName("lastName")
-    val lastName: String,
+    val lastName: String = "",
     @SerializedName("phoneNumber")
     val phoneNumber: String,
     @SerializedName("registeredNameOfBusiness")
-    val registeredNameOfBusiness: String,
+    val registeredNameOfBusiness: String = "",
     @SerializedName("serviceDescription")
     val serviceDescription: String,
     @SerializedName("tradeLicenseIssuingAuthority")
@@ -27,5 +27,5 @@ data class SignupInitialRequestBody(
     @SerializedName("tradeLicenseNumber")
     val tradeLicenseNumber: String,
     @SerializedName("zipCode")
-    val zipCode: String
+    val zipCode: String = ""
 )

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+    <LinearLayout
+        android:id="@+id/lay_trade_licence_doc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onClick"
+        android:background="@drawable/white_bluestroke"
+        android:gravity="center_vertical"
+        >
+        <TextView
+            style="@style/SubHeadingText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/trade_licence_document"
+            android:padding="@dimen/dp16"
+            android:layout_weight="1"
+            />
+        <ImageView
+            android:id="@+id/iv_trade_file"
+            android:layout_width="@dimen/dp16"
+            android:layout_height="@dimen/dp16"
+            android:src="@drawable/ic_upload_docs"
+            android:layout_marginEnd="@dimen/dp16"
+            />
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/lay_comm_reg_doc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/white_bluestroke"
+        android:layout_marginTop="@dimen/dp12"
+        android:gravity="center_vertical"
+        android:onClick="onClick"
+
+        >
+        <TextView
+            style="@style/SubHeadingText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/commercial_reg_doc"
+            android:padding="@dimen/dp16"
+            />
+        <ImageView
+            android:id="@+id/iv_commReg_file"
+            android:layout_width="@dimen/dp16"
+            android:layout_height="@dimen/dp16"
+            android:src="@drawable/ic_upload_docs"
+            android:layout_marginEnd="@dimen/dp16"
+            />
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/lay_bank_details_doc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/white_bluestroke"
+        android:layout_marginTop="@dimen/dp12"
+        android:gravity="center_vertical"
+        android:onClick="onClick"
+        >
+        <TextView
+            style="@style/SubHeadingText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Bank Statement/ Bank Account Details"
+            android:padding="@dimen/dp16"
+            />
+        <ImageView
+            android:id="@+id/iv_bankStatement_file"
+            android:layout_width="@dimen/dp16"
+            android:layout_height="@dimen/dp16"
+            android:src="@drawable/ic_upload_docs"
+            android:layout_marginEnd="@dimen/dp16"
+            />
+
+    </LinearLayout>
+</LinearLayout>

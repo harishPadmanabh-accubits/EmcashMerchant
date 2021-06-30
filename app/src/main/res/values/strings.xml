@@ -82,6 +82,29 @@
     <string name="commercial_reg_doc">Commercial Registration Document</string>
     <string name="reg_request_completed">Registration request submitted successfully. Your account is under review. Please wait while the process is done.</string>
     <string name="your_account_process">Your account is under process</string>
+    <string name="please_fill_all_fields">Please fill all fields</string>
+    <string name="enter_valid_otp">Please Enter a valid OTP</string>
+    <string name="otp_resend_msg">An OTP Has Been Sent To Your Phone Number</string>
+    <string name="same_password_validation">Please enter same Password</string>
+    <string name="same_pin_number_validation">Please enter same Pin Number</string>
+    <string name="select_different">Please Select Different Question</string>
+    <string name="please_answer_both_question">Please Answer both question</string>
+    <string name="upload_all_documents">Please Upload All the Documents</string>
+    <string name="bank_doc_size">Bank Document size is above 8MB</string>
+    <string name="commercial_doc_size">Commercial Registration Document size is above 8MB</string>
+    <string name="trade_doc_size">Trade License Document size is above 8MB</string>
+    <string name="no_question">No Question,s Found</string>
+    <string name="min_length_password">Password Should Contain Minimum 8 Letters</string>
+    <string name="special_char_password">Password Should Contain 1 Special Character</string>
+    <string name="uppercase_password">Password Should Contain 1 Uppercase Character</string>
+    <string name="lowercase_password">Password Should Contain 1 Lowercase Character</string>
+    <string name="numeric_character_password">Password Should Contain  1 Numeric Character</string>
+    <string name="enter_valid_number">Please Enter a valid Mobile Number</string>
+    <string name="enter_valid_email">Please Enter a valid Email</string>
+    <string name="enter_valid_pin">Please Enter a Valid Pin Number</string>
+    <string name="terms_and_conditions">Terms and Conditions</string>
+    <string name="notifications">Notifications</string>
+    <string name="logout">Logout</string>
 
     <string-array name="security_question">
         <item>Select your Question</item>

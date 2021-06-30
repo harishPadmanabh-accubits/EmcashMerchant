@@ -1,4 +1,4 @@
-package com.app.emcashmerchant.data.models
+package com.app.emcashmerchant.data.modelrequest
 
 
 import com.google.gson.annotations.SerializedName
@@ -6,16 +6,12 @@ import com.google.gson.annotations.SerializedName
 data class SignupInitialRequestBody(
     @SerializedName("address")
     val address: String,
-    @SerializedName("businessName")
+    @SerializedName("name")
     val businessName: String,
-    @SerializedName("contactPersonName")
-    val contactPersonName: String,
     @SerializedName("email")
     val email: String,
-    @SerializedName("firstName")
-    val firstName: String ="",
-    @SerializedName("lastName")
-    val lastName: String = "",
+    @SerializedName("contactPersonName")
+    val contactPersonName: String,
     @SerializedName("phoneNumber")
     val phoneNumber: String,
     @SerializedName("registeredNameOfBusiness")

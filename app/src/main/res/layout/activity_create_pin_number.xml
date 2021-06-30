@@ -95,15 +95,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp24"
-                android:layout_marginTop="@dimen/dp30"
                 android:layout_marginEnd="@dimen/dp24"
                 android:layout_marginBottom="@dimen/dp30"
+                android:layout_marginTop="@dimen/dp32"
                 android:onClick="onClick"
                 android:text="@string/next"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ll_resend_otp"
+                app:layout_constraintTop_toBottomOf="@+id/fet_confirm_pin_number"
                 app:layout_constraintVertical_bias="1.0" />
 
 

@@ -174,77 +174,10 @@
                 app:layout_constraintTop_toBottomOf="@+id/materialCardView"
                 android:orientation="vertical"
                 >
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/white_bluestroke"
-                    android:gravity="center_vertical"
-                    >
-                    <TextView
-                        style="@style/SubHeadingText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/trade_licence_document"
-                        android:padding="@dimen/dp16"
-                        android:layout_weight="1"
-                        />
-                    <ImageView
-                        android:layout_width="@dimen/dp12"
-                        android:layout_height="@dimen/dp12"
-                        android:src="@drawable/ic_upload_docs"
-                        android:layout_marginEnd="@dimen/dp16"
-                        />
+                <include
+                    layout="@layout/lay_documents_upload"
+                    />
 
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/white_bluestroke"
-                    android:layout_marginTop="@dimen/dp12"
-                    android:gravity="center_vertical"
-
-                    >
-                    <TextView
-                        style="@style/SubHeadingText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/commercial_reg_doc"
-                        android:padding="@dimen/dp16"
-                        />
-                    <ImageView
-                        android:layout_width="@dimen/dp12"
-                        android:layout_height="@dimen/dp12"
-                        android:src="@drawable/ic_upload_docs"
-                        android:layout_marginEnd="@dimen/dp16"
-                        />
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/white_bluestroke"
-                    android:layout_marginTop="@dimen/dp12"
-                    android:gravity="center_vertical"
-
-                    >
-                    <TextView
-                        style="@style/SubHeadingText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Bank Statement/ Bank Account Details"
-                        android:padding="@dimen/dp16"
-                        />
-                    <ImageView
-                        android:layout_width="@dimen/dp12"
-                        android:layout_height="@dimen/dp12"
-                        android:src="@drawable/ic_upload_docs"
-                        android:layout_marginEnd="@dimen/dp16"
-                        />
-
-                </LinearLayout>
             </LinearLayout>
 
             <Button

@@ -15,12 +15,14 @@ class AccountUnderProcessActivity : AppCompatActivity() {
     fun onClick(view:View)
     {
         when(view.id) {
-            R.id.iv_back->{
-                onBackPressed()
-            }
             R.id.btn_goto_login->{
                 openActivity(LoginActivity::class.java)
             }
         }
+    }
+
+    override fun onBackPressed() {
+        openActivity(LoginActivity::class.java)
+
     }
 }

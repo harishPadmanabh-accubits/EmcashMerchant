@@ -71,7 +71,6 @@
                 android:layout_marginStart="@dimen/dp26"
                 android:layout_marginTop="@dimen/dp48"
                 android:layout_marginEnd="@dimen/dp26"
-                android:entries="@array/security_question"
                 android:background="@drawable/white_rounded"
                 android:spinnerMode="dropdown"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -90,7 +89,7 @@
 
             <EditText
                 android:id="@+id/et_ans_1"
-                style="@style/OtpFieldStyle"
+                style="@style/WhiteRoundTextField"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/dp48"
                 android:layout_marginTop="@dimen/dp12"
@@ -109,7 +108,6 @@
                 android:layout_marginTop="@dimen/dp48"
                 android:background="@drawable/white_rounded"
                 android:spinnerMode="dropdown"
-                android:entries="@array/security_question"
                 app:layout_constraintEnd_toEndOf="@+id/et_ans_1"
                 app:layout_constraintStart_toStartOf="@+id/et_ans_1"
                 app:layout_constraintTop_toBottomOf="@+id/et_ans_1" />
@@ -126,7 +124,7 @@
 
             <EditText
                 android:id="@+id/et_ans_2"
-                style="@style/OtpFieldStyle"
+                style="@style/WhiteRoundTextField"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/dp48"
                 android:layout_marginTop="@dimen/dp12"

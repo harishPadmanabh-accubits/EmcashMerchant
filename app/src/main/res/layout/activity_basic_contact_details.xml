@@ -91,7 +91,6 @@
                     android:layout_marginEnd="@dimen/dp20"
                     android:hint="@string/phone_no" />
 
-
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/et_address"
                     style="@style/WhiteRoundTextField"
@@ -100,10 +99,23 @@
                     android:layout_marginStart="@dimen/dp20"
                     android:layout_marginTop="@dimen/dp12"
                     android:layout_marginEnd="@dimen/dp20"
-                    android:layout_marginBottom="@dimen/dp12"
                     android:gravity="top"
                     android:hint="@string/address"
                     android:paddingTop="@dimen/dp12" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_pin"
+                    style="@style/WhiteRoundTextField"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp48"
+                    android:inputType="number"
+                    android:layout_marginStart="@dimen/dp20"
+                    android:layout_marginTop="@dimen/dp12"
+                    android:layout_marginEnd="@dimen/dp20"
+                    android:hint="Zip Code"
+                    android:layout_marginBottom="@dimen/dp12"
+
+                    />
 
             </LinearLayout>
 

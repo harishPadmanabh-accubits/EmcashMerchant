@@ -63,6 +63,7 @@ class FormEditText(context: Context, attrs: AttributeSet) : ConstraintLayout(con
                 iv_form_action_image.setOnClickListener {
                     if(isPasswordVisible){
                         setPasswordVisibilty(false)
+                        isPasswordVisible=false
                     }else{
                         setPasswordVisibilty(true)
                         isPasswordVisible=true
@@ -76,8 +77,10 @@ class FormEditText(context: Context, attrs: AttributeSet) : ConstraintLayout(con
                     hint = context.getString(R.string.pin)
                     inputType = InputType.TYPE_CLASS_NUMBER
                     maxLines = 1
-                    filters = arrayOf<InputFilter>(LengthFilter(4))
+                    filters = arrayOf<InputFilter>(LengthFilter(6))
                 }
+                checkForValidNumber()
+
 
             }
             FormType.NEW_PASSWORD->{
@@ -92,6 +95,8 @@ class FormEditText(context: Context, attrs: AttributeSet) : ConstraintLayout(con
                 iv_form_action_image.setOnClickListener {
                     if(isPasswordVisible){
                         setPasswordVisibilty(false)
+                        isPasswordVisible=false
+
                     }else{
                         setPasswordVisibilty(true)
                         isPasswordVisible=true
@@ -111,6 +116,8 @@ class FormEditText(context: Context, attrs: AttributeSet) : ConstraintLayout(con
                 iv_form_action_image.setOnClickListener {
                     if(isPasswordVisible){
                         setPasswordVisibilty(false)
+                        isPasswordVisible=false
+
                     }else{
                         setPasswordVisibilty(true)
                         isPasswordVisible=true
@@ -123,8 +130,9 @@ class FormEditText(context: Context, attrs: AttributeSet) : ConstraintLayout(con
                     hint = context.getString(R.string.enter_pin_number)
                     inputType = InputType.TYPE_CLASS_NUMBER
                     maxLines = 1
-                    filters = arrayOf<InputFilter>(LengthFilter(4))
+                    filters = arrayOf<InputFilter>(LengthFilter(6))
                 }
+                checkForValidNumber()
 
             }
             FormType.CONFIRM_PIN_NUMBER->{
@@ -132,8 +140,11 @@ class FormEditText(context: Context, attrs: AttributeSet) : ConstraintLayout(con
                     hint = context.getString(R.string.confirm_pin_number)
                     inputType = InputType.TYPE_CLASS_NUMBER
                     maxLines = 1
-                    filters = arrayOf<InputFilter>(LengthFilter(4))
+                    filters = arrayOf<InputFilter>(LengthFilter(6))
+
                 }
+                checkForValidNumber()
+
 
             }
 
@@ -153,7 +164,19 @@ class FormEditText(context: Context, attrs: AttributeSet) : ConstraintLayout(con
         }
     }
 
-    fun getInput()=et_form_input.text.toString()
+    private fun checkForValidNumber(){
+        formInput.afterTextChanged {pin->
+            if(pin.length==6){
+                showCheckMark()
+            }
+            else
+            {
+                hideCheckMark()
+            }
+        }
+    }
+
+    fun  getInput()=et_form_input.text.toString()
 
     fun showCheckMark() {
         iv_form_action_image.apply {

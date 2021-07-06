@@ -1,4 +1,4 @@
-package com.app.emcashmerchant.data.models
+package com.app.emcashmerchant.data.modelrequest
 
 
 import com.google.gson.annotations.SerializedName

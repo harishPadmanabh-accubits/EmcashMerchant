@@ -3,6 +3,7 @@ package com.app.emcashmerchant.ui.introScreen
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import com.app.emcashmerchant.R
 import com.app.emcashmerchant.ui.login.LoginActivity
 import com.app.emcashmerchant.ui.register.BasicDetailsActivity
@@ -29,5 +30,8 @@ class IntroActivity : AppCompatActivity() {
             R.id.btn_register -> openActivity(BasicDetailsActivity::class.java)
         }
 
+    }
+    override fun onBackPressed() {
+        ActivityCompat.finishAffinity(this)
     }
 }

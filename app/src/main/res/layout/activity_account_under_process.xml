@@ -51,8 +51,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/guideline2"
             app:layout_constraintVertical_bias="0.736"
-            app:srcCompat="@drawable/ic_baseline_check_circle_24"
-            app:tint="@color/green" />
+            app:srcCompat="@drawable/ic_check"
+             />
 
         <Button
             android:id="@+id/btn_goto_login"

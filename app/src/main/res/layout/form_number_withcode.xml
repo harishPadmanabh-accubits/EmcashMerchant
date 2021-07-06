@@ -23,6 +23,7 @@
         android:layout_height="match_parent"
         android:background="@null"
         android:hint="@string/phone_no"
+        android:maxLength="15"
         android:layout_weight="1"
         style="@style/NumberTextField"
         />

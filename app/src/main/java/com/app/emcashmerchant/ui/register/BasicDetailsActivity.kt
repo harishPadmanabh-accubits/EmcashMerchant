@@ -27,27 +27,26 @@ class BasicDetailsActivity : AppCompatActivity() {
     }
 
     private fun gotoContactDetails() {
-        val buisinessName = et_business_name.text.toString()
+        val businessName = et_business_name.text.toString()
         val contactPersonName = et_contact_person_name.text.toString()
         val tradeLicenceNumber = et_trade_license_number.text.toString()
         val tradeLicenseAuthority = et_license_issue_authority.text.toString()
         val serviceDesc = et_service_description.text.toString()
 
-        if (buisinessName.isNotEmpty() &&
-            contactPersonName.isNotEmpty() &&
-            tradeLicenceNumber.isNotEmpty() &&
-            tradeLicenseAuthority.isNotEmpty() &&
-            serviceDesc.isNotEmpty()
+        if (businessName.isNotEmpty() ||
+            contactPersonName.isNotEmpty() ||
+            tradeLicenceNumber.isNotEmpty() ||
+            tradeLicenseAuthority.isNotEmpty()
         ){
             openActivity(BasicContactDetailsActivity::class.java){
-                putString(KEY_BUISINESS_NAME,buisinessName)
+                putString(KEY_BUISINESS_NAME,businessName)
                 putString(KEY_CONTACT_PERSON,contactPersonName)
                 putString(KEY_TRADE_LICENSE_NUM,tradeLicenceNumber)
                 putString(KEY_LICENSE_AUTHORITY,tradeLicenseAuthority)
                 putString(KEY_SERVICE_DESC,serviceDesc)
             }
         }else{
-            showShortToast("Please fill all fields")
+            showShortToast(getString(R.string.please_fill_all_fields))
         }
 
 

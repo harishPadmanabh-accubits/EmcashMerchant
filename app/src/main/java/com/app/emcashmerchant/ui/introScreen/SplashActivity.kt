@@ -6,6 +6,7 @@ import android.os.Handler
 import com.app.emcashmerchant.R
 import com.app.emcashmerchant.data.SessionStorage
 import com.app.emcashmerchant.ui.home.HomeBaseActivity
+import com.app.emcashmerchant.ui.login.PinNumberActivity
 import com.app.emcashmerchant.utils.extensions.openActivity
 
 class SplashActivity : AppCompatActivity() {
@@ -23,7 +24,7 @@ class SplashActivity : AppCompatActivity() {
             if(sessionStorage.isLoggedIn)
             {
 
-                openActivity(HomeBaseActivity::class.java)
+                openActivity(PinNumberActivity::class.java)
             }
             else
             {

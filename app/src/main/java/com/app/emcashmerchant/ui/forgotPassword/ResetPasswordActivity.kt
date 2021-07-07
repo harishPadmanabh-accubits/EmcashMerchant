@@ -9,17 +9,22 @@ import com.app.emcashmerchant.data.SessionStorage
 import com.app.emcashmerchant.data.network.ApiCallStatus
 import com.app.emcashmerchant.utils.extensions.*
 import com.app.emcashmerchant.Authviewmodel.ForgotPasswordViewModel
+import com.app.emcashmerchant.utils.AppDialog
 import kotlinx.android.synthetic.main.activity_reset_password.*
 
 class ResetPasswordActivity : AppCompatActivity() {
     private lateinit var viewModel: ForgotPasswordViewModel
     private lateinit var sessionStorage: SessionStorage
+    lateinit var dialog: AppDialog
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_reset_password)
         initViews()
         initViewModel()
         setupObservers()
+        dialog= AppDialog(this)
+
     }
 
     fun onClick(view: View) {
@@ -51,13 +56,16 @@ class ResetPasswordActivity : AppCompatActivity() {
                 when (it.status) {
                     ApiCallStatus.LOADING -> {
                         //show loading
+                        dialog.show_dialog()
                     }
                     ApiCallStatus.SUCCESS -> {
+                        dialog.dismiss_dialog()
                         val data = it.data
                         openActivity(PasswordResetCompleteActivity::class.java)
 
                     }
                     ApiCallStatus.ERROR -> {
+                        dialog.dismiss_dialog()
                         showShortToast(it.errorMessage)
                     }
                 }
@@ -71,7 +79,7 @@ class ResetPasswordActivity : AppCompatActivity() {
     {
         if(isValidPassword(password,confirmPassword ))
         {
-            viewModel.performResetPassword(password,sessionStorage.getReferenceIdSession().toString())
+            viewModel.performResetPassword(password, sessionStorage.referenceId.toString())
         }
 
 

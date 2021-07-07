@@ -505,22 +505,22 @@ fun Context.isValidSinglePassword(password: String): Boolean {
     var flag = true
 
     if (password.length < 8) {
-        showLongToast(getString(R.string.min_length_password))
+        showLongToast(getString(R.string.incorrect_password))
         flag = false
 
     } else if (!specailCharPatten.matcher(password).find()) {
-        showLongToast(getString(R.string.special_char_password))
+        showLongToast(getString(R.string.incorrect_password))
         flag = false
 
     } else if (!UpperCasePatten.matcher(password).find()) {
-        showLongToast(getString(R.string.uppercase_password))
+        showLongToast(getString(R.string.incorrect_password))
         flag = false
     } else if (!lowerCasePatten.matcher(password).find()) {
-        showLongToast(getString(R.string.lowercase_password))
+        showLongToast(getString(R.string.incorrect_password))
         flag = false
     } else if (!digitCasePatten.matcher(password).find()) {
 
-        showLongToast(getString(R.string.numeric_character_password))
+        showLongToast(getString(R.string.incorrect_password))
         flag = false
     }
     return flag

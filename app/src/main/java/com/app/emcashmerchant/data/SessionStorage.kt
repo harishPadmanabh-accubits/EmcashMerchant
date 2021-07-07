@@ -15,22 +15,36 @@ class SessionStorage(var _context: Context) {
     var PRIVATE_MODE = 0
     private val prefName = "EmCashMerchant"
     private val keyReferenceId = "REFERENCE_ID"
+    private val keyReferenceInitial= "REFERENCE_ID_INITIAL"
+    private val keyReferenceOTP= "REFERENCE_ID_OTP"
+    private val keyReferenceSecurityQuestion= "REFERENCE_ID_SECURITY_QUESTION"
+
     private val keyAccessToken = "ACCESS_TOKEN"
     private val keyRefreshToken = "REFRESH_TOKEN"
     private val keyMerchantEmail = "MERCHANT_EMAIL"
     private val keyMerchantNumber = "MERCHANT_NUMBER"
-    private val keyMerchantName = "MERCHANT_Name"
+    private val keyMerchantName = "MERCHANT_NAME"
+    private val keyBalance = "MERCHANT_BALANCE"
 
 
 
-    fun setReferenceIdSession(s: String?) {
-        editor.putString(keyReferenceId, s)
-        editor.commit()
-    }
+    var referenceIdInitial:String?
+        get() = pref.getString(keyReferenceInitial, null)
+        set(value) = editor.putString(keyReferenceInitial, value).apply()
 
-    fun getReferenceIdSession(): String? {
-        return pref.getString(keyReferenceId, "")
-    }
+
+    var referenceIdOtp:String?
+        get() = pref.getString(keyReferenceOTP, null)
+        set(value) = editor.putString(keyReferenceOTP, value).apply()
+
+
+    var referenceIdSecurity:String?
+        get() = pref.getString(keyReferenceSecurityQuestion, null)
+        set(value) = editor.putString(keyReferenceSecurityQuestion, value).apply()
+
+    var referenceId:String?
+    get() = pref.getString(keyReferenceId, null)
+    set(value) = editor.putString(keyReferenceId, value).apply()
 
     var accesToken: String?
         get() = pref.getString(keyAccessToken, null)
@@ -53,23 +67,14 @@ class SessionStorage(var _context: Context) {
         get() = pref.getString(keyMerchantName, null)
         set(value) = editor.putString(keyMerchantName, value).apply()
 
+    var balance: String?
+        get() = pref.getString(keyBalance, null)
+        set(value) = editor.putString(keyBalance, value).apply()
+
     var isLoggedIn: Boolean
         get() = pref.getBoolean(keyMerchantNumber, false)
         set(value) = editor.putBoolean(keyMerchantNumber, value).apply()
 
-
-//    fun setLoginSession(s: String?) {
-//        editor.putBoolean(IS_LOGIN, true)
-//        editor.putString(KEY_LOGIN, s)
-//        editor.commit()
-//    }
-//
-//    val loginSession: HashMap<String, String?>
-//        get() {
-//            val user = HashMap<String, String?>()
-//            user[KEY_LOGIN] = pref.getString(KEY_LOGIN, null)
-//            return user
-//        }
 
 
     fun logoutUser() {
@@ -86,7 +91,6 @@ class SessionStorage(var _context: Context) {
     }
 
     init {
-//        pref = _context.getSharedPreferences(PREF_NAME, PRIVATE_MODE)
         pref = EncryptedSharedPreferences.create(
             prefName,
             masterKeyAlias, _context,

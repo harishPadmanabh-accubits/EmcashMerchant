@@ -3,14 +3,11 @@ package com.app.emcashmerchant.Authviewmodel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import com.app.emcashmerchant.data.modelrequest.ResendOtpRequest
-import com.app.emcashmerchant.data.modelrequest.SignupSecurityRequestBody
-import com.app.emcashmerchant.data.modelrequest.SignupInitialRequestBody
-import com.app.emcashmerchant.data.modelrequest.VerifyOtpRequest
 import com.app.emcashmerchant.data.models.*
 import com.app.emcashmerchant.data.network.ApiCallStatus
 import com.app.emcashmerchant.data.network.ApiMapper
-import com.app.emcashmerchant.AuthRepositories.AuthRepository
+import com.app.emcashmerchant.data.network.Repositories.AuthRepository
+import com.app.emcashmerchant.data.modelrequest.*
 import timber.log.Timber
 import java.io.File
 
@@ -26,8 +23,9 @@ class RegisterViewModel(val app: Application) : AndroidViewModel(app) {
     var commercialDocumentStatus = MutableLiveData<ApiMapper<SignupFinalResponse>>()
     var tradeDocumentStatus = MutableLiveData<ApiMapper<SignupFinalResponse>>()
     var bankDetailsDocumentStatus = MutableLiveData<ApiMapper<SignupFinalResponse>>()
+    var finalSignupResponseStatus = MutableLiveData<ApiMapper<FinalRegistartionResponse>>()
 
-    fun  performInitialSignup(
+    fun performInitialSignup(
         address: String,
         businessName: String,
         email: String,
@@ -120,9 +118,9 @@ class RegisterViewModel(val app: Application) : AndroidViewModel(app) {
     ) {
         securitySignupStatus.value = ApiMapper(ApiCallStatus.LOADING, null, null)
 
-        repository.performSecuritySignup(finalSignUpData){ status, message, result ->
-            when(status){
-                true->{
+        repository.performSecuritySignup(finalSignUpData) { status, message, result ->
+            when (status) {
+                true -> {
                     securitySignupStatus.value = ApiMapper(ApiCallStatus.SUCCESS, result, null)
 
 
@@ -136,11 +134,12 @@ class RegisterViewModel(val app: Application) : AndroidViewModel(app) {
     }
 
     fun uploadCommercialRegistrationDoc(
-        file: File){
+        file: File
+    ) {
         commercialDocumentStatus.value = ApiMapper(ApiCallStatus.LOADING, null, null)
-        repository.uploadCommercialRegistrationDoc(file){ status, message, result ->
-            when(status){
-                true->{
+        repository.uploadCommercialRegistrationDoc(file) { status, message, result ->
+            when (status) {
+                true -> {
                     commercialDocumentStatus.value = ApiMapper(ApiCallStatus.SUCCESS, result, null)
 
                 }
@@ -153,11 +152,12 @@ class RegisterViewModel(val app: Application) : AndroidViewModel(app) {
     }
 
     fun uploadBankDetailsDoc(
-        file: File){
+        file: File
+    ) {
         bankDetailsDocumentStatus.value = ApiMapper(ApiCallStatus.LOADING, null, null)
-        repository.uploadPerformBankDetailsDoc(file){ status, message, result ->
-            when(status){
-                true->{
+        repository.uploadPerformBankDetailsDoc(file) { status, message, result ->
+            when (status) {
+                true -> {
                     bankDetailsDocumentStatus.value = ApiMapper(ApiCallStatus.SUCCESS, result, null)
 
                 }
@@ -168,12 +168,14 @@ class RegisterViewModel(val app: Application) : AndroidViewModel(app) {
 
         }
     }
+
     fun uploadTradeLicenseDoc(
-        file: File){
+        file: File
+    ) {
         tradeDocumentStatus.value = ApiMapper(ApiCallStatus.LOADING, null, null)
-        repository.uploadPerformSignupTradeLicenseDoc(file){ status, message, result ->
-            when(status){
-                true->{
+        repository.uploadPerformSignupTradeLicenseDoc(file) { status, message, result ->
+            when (status) {
+                true -> {
                     tradeDocumentStatus.value = ApiMapper(ApiCallStatus.SUCCESS, result, null)
 
                 }
@@ -183,5 +185,22 @@ class RegisterViewModel(val app: Application) : AndroidViewModel(app) {
             }
 
         }
+    }
+
+    fun finalSignup() {
+        finalSignupResponseStatus.value = ApiMapper(ApiCallStatus.LOADING, null, null)
+        repository.performFinalSignup() { status, message, result ->
+            when (status) {
+                true -> {
+                    finalSignupResponseStatus.value = ApiMapper(ApiCallStatus.SUCCESS, result, null)
+
+                }
+                false -> {
+                    finalSignupResponseStatus.value = ApiMapper(ApiCallStatus.ERROR, null, message)
+                }
+            }
+
+        }
+
     }
 }

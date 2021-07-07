@@ -11,6 +11,7 @@ import com.app.emcashmerchant.utils.extensions.openActivity
 import com.app.emcashmerchant.utils.extensions.showLongToast
 import com.app.emcashmerchant.Authviewmodel.RegisterViewModel
 import com.app.emcashmerchant.utils.AppDialog
+import com.app.emcashmerchant.utils.extensions.showShortToast
 import kotlinx.android.synthetic.main.activity_register_otp.*
 
 class RegisterOtpActivity : AppCompatActivity() {
@@ -36,9 +37,7 @@ class RegisterOtpActivity : AppCompatActivity() {
         when (view.id) {
             R.id.btn_verify_otp -> {
                 if (otp.isNotEmpty() && otp.length == 4) {
-                    viewModel.performVerifyOtp(
-                        otp,
-                        sessionStorage.getReferenceIdSession().toString()
+                    viewModel.performVerifyOtp(otp, sessionStorage.referenceIdInitial.toString()
                     )
 
                 } else {
@@ -46,7 +45,7 @@ class RegisterOtpActivity : AppCompatActivity() {
                 }
             }
             R.id.ll_resend_otp -> {
-                viewModel.performResendOtp(sessionStorage.getReferenceIdSession().toString())
+                viewModel.performResendOtp( sessionStorage.referenceIdInitial.toString())
 
             }
             R.id.iv_back -> {
@@ -67,12 +66,14 @@ class RegisterOtpActivity : AppCompatActivity() {
                     ApiCallStatus.SUCCESS -> {
                         dialog.dismiss_dialog()
                         var data = it.data
-                        sessionStorage.setReferenceIdSession(data?.referenceId.toString())
+                        sessionStorage.referenceIdOtp=data?.referenceId
                         openActivity(CreatePasswordActivity::class.java)
 
                     }
                     ApiCallStatus.ERROR -> {
                         dialog.dismiss_dialog()
+                        showShortToast(it.errorMessage)
+
                     }
                 }
             })
@@ -91,6 +92,7 @@ class RegisterOtpActivity : AppCompatActivity() {
                     }
                     ApiCallStatus.ERROR -> {
                         dialog.dismiss_dialog()
+                        showShortToast(it.errorMessage)
 
                     }
                 }

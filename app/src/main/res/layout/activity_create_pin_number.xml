@@ -36,6 +36,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="26dp"
                 android:layout_marginTop="64dp"
+                android:padding="@dimen/dp12"
                 android:onClick="onClick"
                 android:paddingTop="12dp"
                 android:paddingBottom="12dp"

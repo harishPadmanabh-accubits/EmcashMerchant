@@ -31,25 +31,33 @@ class BasicDetailsActivity : AppCompatActivity() {
         val contactPersonName = et_contact_person_name.text.toString()
         val tradeLicenceNumber = et_trade_license_number.text.toString()
         val tradeLicenseAuthority = et_license_issue_authority.text.toString()
-        val serviceDesc = et_service_description.text.toString()
+        var serviceDesc = et_service_description.text.toString()
 
-        if (businessName.isNotEmpty() ||
-            contactPersonName.isNotEmpty() ||
-            tradeLicenceNumber.isNotEmpty() ||
-            tradeLicenseAuthority.isNotEmpty()
-        ){
-            openActivity(BasicContactDetailsActivity::class.java){
-                putString(KEY_BUISINESS_NAME,businessName)
-                putString(KEY_CONTACT_PERSON,contactPersonName)
-                putString(KEY_TRADE_LICENSE_NUM,tradeLicenceNumber)
-                putString(KEY_LICENSE_AUTHORITY,tradeLicenseAuthority)
-                putString(KEY_SERVICE_DESC,serviceDesc)
+        if (businessName.isEmpty()) {
+
+            showShortToast(getString(R.string.valid_business_name))
+
+        } else if (contactPersonName.isEmpty() || contactPersonName.length<3) {
+            showShortToast(getString(R.string.valid_contact_personname))
+
+        } else if (tradeLicenceNumber.isEmpty()) {
+            showShortToast(getString(R.string.valid_tradeliscencenumber))
+
+        } else if (tradeLicenseAuthority.isEmpty()) {
+            showShortToast(getString(R.string.valid_trade_lic_auth))
+
+        } else {
+            if (serviceDesc.isEmpty()) {
+                serviceDesc = ""
             }
-        }else{
-            showShortToast(getString(R.string.please_fill_all_fields))
+            openActivity(BasicContactDetailsActivity::class.java) {
+                putString(KEY_BUISINESS_NAME, businessName)
+                putString(KEY_CONTACT_PERSON, contactPersonName)
+                putString(KEY_TRADE_LICENSE_NUM, tradeLicenceNumber)
+                putString(KEY_LICENSE_AUTHORITY, tradeLicenseAuthority)
+                putString(KEY_SERVICE_DESC, serviceDesc)
+            }
         }
-
-
 
 
     }

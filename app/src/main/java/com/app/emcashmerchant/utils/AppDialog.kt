@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.Window
 import com.app.emcashmerchant.R
+import java.lang.Exception
 
 class AppDialog(context: Context) {
     companion object {
@@ -24,12 +25,22 @@ class AppDialog(context: Context) {
     }
 
     fun show_dialog(): Dialog {
-        m_Dialog.show()
+        try {
+            m_Dialog.show()
+
+        } catch (exception: Exception) {
+
+        }
         return m_Dialog
     }
 
     fun dismiss_dialog(): Dialog {
-        m_Dialog.dismiss()
+        try {
+            m_Dialog.dismiss()
+
+        } catch (exception: Exception) {
+
+        }
         return m_Dialog
     }
 }

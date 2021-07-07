@@ -1,12 +1,9 @@
-package com.app.emcashmerchant.AuthRepositories
+package com.app.emcashmerchant.data.network.Repositories
 
 import android.content.Context
 import android.webkit.MimeTypeMap
 import com.app.emcashmerchant.data.SessionStorage
-import com.app.emcashmerchant.data.modelrequest.ResendOtpRequest
-import com.app.emcashmerchant.data.modelrequest.SignupInitialRequestBody
-import com.app.emcashmerchant.data.modelrequest.SignupSecurityRequestBody
-import com.app.emcashmerchant.data.modelrequest.VerifyOtpRequest
+import com.app.emcashmerchant.data.modelrequest.*
 import com.app.emcashmerchant.data.models.*
 import com.app.emcashmerchant.data.network.ApiManger
 import com.app.emcashmerchant.utils.extensions.awaitResponse
@@ -33,9 +30,7 @@ class AuthRepository(val context: Context) {
             }, onSuccess = {
                 val data = it?.data
                 data?.let {
-                    sessionStorage.apply {
-                        setReferenceIdSession(it.referenceId)
-                    }
+                    sessionStorage.referenceId=it.referenceId
                     onApiCallback(true, null, data)
                 }
             })
@@ -67,7 +62,7 @@ class AuthRepository(val context: Context) {
                 onApiCallback(false, it, null)
             }, onSuccess = {
                 it?.data?.let {
-                    sessionStorage.setReferenceIdSession(it.referenceId.toString())
+                    sessionStorage.referenceId=it.referenceId
                     onApiCallback(true, null, it)
                 }
             }
@@ -108,9 +103,9 @@ class AuthRepository(val context: Context) {
         file: File,
         onApiCallback: (status: Boolean, message: String?, result: SignupFinalResponse?) -> Unit
     ) {
-
-        val extension = MimeTypeMap.getFileExtensionFromUrl(file.toString())
-        val referenceID = sessionStorage.getReferenceIdSession().toString().toRequestBody("text/plain".toMediaTypeOrNull())
+        val newFile:String=file.toString().replace("\\s".toRegex(), "")
+        val extension = MimeTypeMap.getFileExtensionFromUrl(newFile.toString())
+        val referenceID = sessionStorage.referenceIdSecurity.toString().toRequestBody("text/plain".toMediaTypeOrNull())
         val document = file.asRequestBody(getMediaType(extension).toMediaTypeOrNull())
         val filePart = MultipartBody.Part.createFormData("commercialRegistrationDoc", file.name, document)
 
@@ -131,8 +126,9 @@ class AuthRepository(val context: Context) {
         file: File,
         onApiCallback: (status: Boolean, message: String?, result: SignupFinalResponse?) -> Unit
     ) {
-        val extension = MimeTypeMap.getFileExtensionFromUrl(file.toString())
-        val referenceID = sessionStorage.getReferenceIdSession().toString().toRequestBody("text/plain".toMediaTypeOrNull())
+        val newFile:String=file.toString().replace("\\s".toRegex(), "")
+        val extension = MimeTypeMap.getFileExtensionFromUrl(newFile.toString())
+        val referenceID =  sessionStorage.referenceIdSecurity.toString().toRequestBody("text/plain".toMediaTypeOrNull())
         val document = file.asRequestBody(getMediaType(extension).toMediaTypeOrNull())
         val filePart = MultipartBody.Part.createFormData("bankDetailsDoc", file.name, document)
         api.performFinalSignupBankDetailsDoc(
@@ -152,11 +148,12 @@ class AuthRepository(val context: Context) {
         file: File,
         onApiCallback: (status: Boolean, message: String?, result: SignupFinalResponse?) -> Unit
     ) {
-
-        val extension = MimeTypeMap.getFileExtensionFromUrl(file.toString())
-        val referenceID = sessionStorage.getReferenceIdSession().toString().toRequestBody("text/plain".toMediaTypeOrNull())
+        val newFile:String=file.toString().replace("\\s".toRegex(), "")
+        val extension = MimeTypeMap.getFileExtensionFromUrl(newFile.toString())
+        val referenceID =  sessionStorage.referenceIdSecurity.toString().toRequestBody("text/plain".toMediaTypeOrNull())
         val document = file.asRequestBody(getMediaType(extension).toMediaTypeOrNull())
         val filePart = MultipartBody.Part.createFormData("tradeLicenseDoc", file.name, document)
+
 
         api.performFinalSignupTradeLicenseDoc(
             referenceID,
@@ -170,6 +167,26 @@ class AuthRepository(val context: Context) {
             }
         )
     }
+
+
+
+    fun performFinalSignup(
+        onApiCallback: (status: Boolean, message: String?, result: FinalRegistartionResponse?) -> Unit
+    ) {
+
+        val finalSignupRequest=FinalSignupRequest(sessionStorage.referenceIdSecurity.toString())
+        api.performFinalSignup(
+            finalSignupRequest
+        ).awaitResponse(
+            onFailure = {
+                onApiCallback(false, it, null)
+
+            }, onSuccess = {
+                onApiCallback(true, null, it)
+            }
+        )
+    }
+
 
 
 }

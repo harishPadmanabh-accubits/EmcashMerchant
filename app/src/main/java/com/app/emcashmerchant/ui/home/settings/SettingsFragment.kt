@@ -7,10 +7,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.transition.ChangeBounds
 import com.app.emcashmerchant.R
 import com.app.emcashmerchant.data.SessionStorage
@@ -37,6 +41,7 @@ class SettingsFragment : Fragment() {
     private lateinit var viewModel: SettingsViewModel
     private lateinit var sessionStorage: SessionStorage
     lateinit var dialog: AppDialog
+    var termsConditions:String?=null
     private var selectedImageUri: Uri? = null
 
     override fun onCreateView(
@@ -49,6 +54,8 @@ class SettingsFragment : Fragment() {
         sharedElementReturnTransition = ChangeBounds().apply {
             duration = 500
         }
+
+
         return inflater.inflate(R.layout.settings_fragment, container, false)
     }
 
@@ -65,6 +72,22 @@ class SettingsFragment : Fragment() {
         tv_updateprofileimage.setOnClickListener {
             selectProfileIMage()
         }
+        lay_terms_conditions.setOnClickListener {
+            if(termsConditions?.isNotEmpty()!!){
+                val  bundle= bundleOf("terms_conditions" to termsConditions )
+                Navigation.findNavController(view).navigate(R.id.goto_terms_fragment,bundle)
+            }
+
+
+        }
+
+        val callback = object : OnBackPressedCallback(true ) {
+            override fun handleOnBackPressed() {
+                findNavController().navigate(R.id.homeFragment)
+            }
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback(callback)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -73,6 +96,7 @@ class SettingsFragment : Fragment() {
         sessionStorage = SessionStorage(requireActivity())
         dialog = AppDialog(requireActivity())
         viewModel.getProfileDetails()
+        viewModel.getTermsConditions()
         tv_name.text = sessionStorage.merchantName
 
         observe()
@@ -109,6 +133,40 @@ class SettingsFragment : Fragment() {
                         sessionStorage.merchantName = it.data?.name
                         tv_name.text = sessionStorage.merchantName
 
+
+                    }
+                    ApiCallStatus.ERROR -> {
+                        dialog.dismiss_dialog()
+                        activity?.showShortToast(it.errorMessage)
+
+                    }
+                }
+            })
+            termsConditionsResponse.observe(requireActivity(), Observer {
+                when (it.status) {
+                    ApiCallStatus.LOADING -> {
+                        dialog.show_dialog()
+                    }
+                    ApiCallStatus.SUCCESS -> {
+                        termsConditions=it.data.toString()
+                        dialog.dismiss_dialog()
+
+                    }
+                    ApiCallStatus.ERROR -> {
+                        dialog.dismiss_dialog()
+                        activity?.showShortToast(it.errorMessage)
+
+                    }
+                }
+            })
+            updateStatus.observe(requireActivity(), Observer {
+                when (it.status) {
+                    ApiCallStatus.LOADING -> {
+                        dialog.show_dialog()
+                    }
+                    ApiCallStatus.SUCCESS -> {
+                        dialog.dismiss_dialog()
+                        activity?.showShortToast(getString(R.string.profile_pic_updated))
 
                     }
                     ApiCallStatus.ERROR -> {

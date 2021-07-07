@@ -47,6 +47,9 @@ class PinNumberActivity : AppCompatActivity() {
             R.id.iv_back -> {
             onBackPressed()
             }
+            R.id.ll_logout->{
+                sessionStorage.logoutUser()
+            }
         }
     }
 
@@ -87,4 +90,5 @@ class PinNumberActivity : AppCompatActivity() {
         ActivityCompat.finishAffinity(this)
 
     }
+
 }

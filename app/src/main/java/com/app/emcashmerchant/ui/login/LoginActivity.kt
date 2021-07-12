@@ -21,6 +21,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var sessionStorage: SessionStorage
     lateinit var dialog:AppDialog
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)

@@ -17,6 +17,8 @@
     <color name="red">#E52E2E</color>
     <color name="card_blue">#4D4FFF</color>
     <color name="grey">#E9E9E9</color>
+    <color name="grey_light">#F9F9F9</color>
+    <color name="blue_light">#F2F4FF</color>
 
 
 </resources>

@@ -4,11 +4,13 @@ package com.app.emcashmerchant.utils.extensions
 import android.app.Dialog
 import android.content.ContentResolver
 import android.content.Context
+import android.content.Context.LOCATION_SERVICE
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
+import android.location.LocationManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -28,6 +30,7 @@ import android.widget.Toast
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.lifecycle.MutableLiveData
 import com.app.emcashmerchant.BuildConfig
 import com.app.emcashmerchant.R
@@ -495,7 +498,7 @@ fun Context.isValidPassword(password: String, confirmPassword: String): Boolean 
     return flag
 }
 
-
+//password validation
 fun Context.isValidSinglePassword(password: String): Boolean {
     val specailCharPatten =
         Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE)
@@ -526,7 +529,7 @@ fun Context.isValidSinglePassword(password: String): Boolean {
     return flag
 }
 
-
+//get the extension from url
 fun getMediaType(extension: String): String {
     var mediatype: String = ""
     if (extension.equals("pdf")) {
@@ -541,8 +544,16 @@ fun getMediaType(extension: String): String {
     return mediatype
 }
 
+//email validity
 fun String.isEmailValidity(): Boolean {
     return !TextUtils.isEmpty(this) && android.util.Patterns.EMAIL_ADDRESS.matcher(this).matches()
+}
+
+ fun gpsEnabled(context: Context):Boolean {
+
+    val locationManager = context.getSystemService(LOCATION_SERVICE) as LocationManager
+    var gpsStatus = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+     return  gpsStatus
 }
 
 

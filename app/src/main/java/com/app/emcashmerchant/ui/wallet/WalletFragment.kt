@@ -7,6 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.app.emcashmerchant.R
+import com.app.emcashmerchant.ui.convertEmcashTocash.ConvertEmcashToCashActivity
+import com.app.emcashmerchant.ui.loadEmcash.LoadEmcashActivity
+import com.app.emcashmerchant.utils.extensions.openActivity
+import kotlinx.android.synthetic.main.wallet_fragment.*
 
 class WalletFragment : Fragment() {
 
@@ -27,6 +31,14 @@ class WalletFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(WalletViewModel::class.java)
         // TODO: Use the ViewModel
+
+        btn_convert.setOnClickListener {
+            requireActivity().openActivity(ConvertEmcashToCashActivity::class.java)
+        }
+
+        btn_load_emcash.setOnClickListener{
+            requireActivity().openActivity(LoadEmcashActivity::class.java);
+        }
     }
 
 }

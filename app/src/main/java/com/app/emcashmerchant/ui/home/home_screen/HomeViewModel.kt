@@ -1,7 +1,36 @@
 package com.app.emcashmerchant.ui.home.home_screen
 
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.MutableLiveData
+import com.app.emcashmerchant.data.models.WalletResponse
+import com.app.emcashmerchant.data.network.ApiCallStatus
+import com.app.emcashmerchant.data.network.ApiMapper
+import com.app.emcashmerchant.data.network.Repositories.HomeRepository
+import timber.log.Timber
 
-class HomeViewModel : ViewModel() {
-    // TODO: Implement the ViewModel
+class HomeViewModel(val app: Application) : AndroidViewModel(app) {
+    var walletDetails = MutableLiveData<ApiMapper<WalletResponse.Data>>()
+    val repository =
+        HomeRepository(app)
+
+    fun getWalletDetails(
+
+    ) {
+        walletDetails.value = ApiMapper(ApiCallStatus.LOADING, null, null)
+
+        repository.getWalletDetails() { status, message, result ->
+            Timber.e("error $message")
+            when (status) {
+                true -> {
+                    walletDetails.value = ApiMapper(ApiCallStatus.SUCCESS, result, null)
+                }
+                false -> {
+                    walletDetails.value = ApiMapper(ApiCallStatus.ERROR, null, message)
+
+                }
+            }
+        }
+    }
+
 }

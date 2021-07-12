@@ -35,14 +35,14 @@ class OtpActivity : AppCompatActivity() {
         val otp = otp_layout.obtainOTP()
         when (view.id) {
             R.id.ll_resend_otp -> {
-                viewModel.performResendOtp(sessionStorage.getReferenceIdSession().toString())
+                viewModel.performResendOtp( sessionStorage.referenceId.toString())
 
             }
             R.id.btn_verify_otp -> {
                 if (otp.isNotEmpty() && otp.length == 4) {
 
                     goToPinNumberPage(
-                        otp, sessionStorage.getReferenceIdSession().toString()
+                        otp,  sessionStorage.referenceId.toString()
                     )
 
                 } else {

@@ -6,7 +6,7 @@
     android:orientation="vertical"
     >
     <LinearLayout
-        android:id="@+id/lay_trade_licence_doc"
+        android:id="@+id/ll_trade_licence_doc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="onClick"
@@ -32,7 +32,7 @@
 
     </LinearLayout>
     <LinearLayout
-        android:id="@+id/lay_comm_reg_doc"
+        android:id="@+id/ll_comm_reg_doc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/white_bluestroke"
@@ -59,7 +59,7 @@
 
     </LinearLayout>
     <LinearLayout
-        android:id="@+id/lay_bank_details_doc"
+        android:id="@+id/ll_bank_details_doc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/white_bluestroke"

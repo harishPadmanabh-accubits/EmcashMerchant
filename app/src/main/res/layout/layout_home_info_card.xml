@@ -69,7 +69,6 @@
             android:layout_marginStart="21dp"
             android:layout_marginTop="14dp"
             android:fontFamily="@font/biennale_regular"
-            android:text="270"
             android:textColor="@color/white"
             android:textSize="28sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -79,14 +78,15 @@
             android:id="@+id/iv_vector"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="fitXY"
             android:alpha=".4"
+            android:scaleType="fitXY"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
             app:srcCompat="@drawable/wave" />
-
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

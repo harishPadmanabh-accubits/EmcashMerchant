@@ -7,14 +7,11 @@ import androidx.lifecycle.Observer
 import com.app.emcashmerchant.R
 import com.app.emcashmerchant.data.SessionStorage
 import com.app.emcashmerchant.data.network.ApiCallStatus
-import com.app.emcashmerchant.utils.KEY_ANSWER_1
-import com.app.emcashmerchant.utils.KEY_ANSWER_2
-import com.app.emcashmerchant.utils.KEY_QUESTION_ID_1
-import com.app.emcashmerchant.utils.KEY_QUESTION_ID_2
 import com.app.emcashmerchant.utils.extensions.obtainViewModel
 import com.app.emcashmerchant.utils.extensions.openActivity
 import com.app.emcashmerchant.utils.extensions.showShortToast
 import com.app.emcashmerchant.Authviewmodel.ForgotPasswordViewModel
+import com.app.emcashmerchant.utils.*
 import kotlinx.android.synthetic.main.activity_obtain_email.*
 
 class ObtainEmailActivity : AppCompatActivity() {
@@ -33,6 +30,7 @@ class ObtainEmailActivity : AppCompatActivity() {
         intent.getStringExtra(KEY_ANSWER_2)
     }
     private var email: String = ""
+    lateinit var dialog: AppDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +38,8 @@ class ObtainEmailActivity : AppCompatActivity() {
         initViews()
         initViewModel()
         setupObservers()
+        dialog= AppDialog(this)
+
     }
 
 
@@ -60,14 +60,19 @@ class ObtainEmailActivity : AppCompatActivity() {
             when (it.status) {
                 ApiCallStatus.LOADING -> {
                     //show loading
+                    dialog.show_dialog()
+
                 }
                 ApiCallStatus.SUCCESS -> {
+                    dialog.dismiss_dialog()
+
                     val data = it.data
-                    sessionStorage.setReferenceIdSession(data?.referenceId)
+                    sessionStorage.referenceId=data?.referenceId
                     openActivity(VerifyOtpActivity::class.java)
 
                 }
                 ApiCallStatus.ERROR -> {
+                    dialog.dismiss_dialog()
                     showShortToast(it.errorMessage)
                 }
             }

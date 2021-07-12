@@ -1,13 +1,12 @@
 package com.app.emcashmerchant.ui.register
 
-import android.app.Dialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import androidx.lifecycle.Observer
 import com.app.emcashmerchant.R
-import com.app.emcashmerchant.adapter.SecurityQuestionAdapter
+import com.app.emcashmerchant.ui.register.adapter.SecurityQuestionAdapter
 import com.app.emcashmerchant.data.SessionStorage
 import com.app.emcashmerchant.data.modelrequest.SignupSecurityRequestBody
 import com.app.emcashmerchant.data.models.SecurityQuestionsResponse
@@ -103,7 +102,7 @@ class SecurityQuestionRegisterActivity : AppCompatActivity() {
                     ApiCallStatus.SUCCESS -> {
                         dialog.dismiss_dialog()
                         var responseData = it.data
-                        sessionStorage.setReferenceIdSession(responseData?.data?.referenceId)
+                        sessionStorage.referenceIdSecurity=responseData?.data?.referenceId
                         openActivity(UploadDocumentsActivity::class.java)
                     }
                     ApiCallStatus.ERROR -> {
@@ -169,18 +168,21 @@ class SecurityQuestionRegisterActivity : AppCompatActivity() {
         answerTwo = et_ans_2.text.toString()
 
 
-        if (questionOneId == questionTwoId) {
+        if (questionOneId == questionTwoId && !questionOneId.equals("0")  &&  !questionTwoId.equals("0")) {
             showLongToast(getString(R.string.select_different))
-        } else if (questionOneId == null || questionTwoId == null || questionOneId.equals("0") || questionTwoId.equals(
-                "0"
-            )
-        ) {
+
+        } else if (questionOneId == null|| questionTwoId == null) {
+            showLongToast(getString(R.string.please_select_any_question))
+
+        }
+        else if( questionOneId.equals("0") ||  questionTwoId.equals("0")){
+            showLongToast(getString(R.string.please_select_any_question))
+        }
+        else if (answerOne.isEmpty()  || answerTwo.isEmpty() || answerOne.length<3 || answerOne.length<3) {
             showLongToast(getString(R.string.please_answer_both_question))
 
-        } else if (answerOne.isEmpty() || answerTwo.isEmpty() || answerOne.length < 3 || answerOne.length < 3) {
-            showLongToast(getString(R.string.please_answer_both_question))
-
-        } else {
+        }
+        else {
 
             SecuritySignUp()
 
@@ -191,7 +193,7 @@ class SecurityQuestionRegisterActivity : AppCompatActivity() {
     private fun SecuritySignUp() {
         val signupRequestBody =
             SignupSecurityRequestBody(
-                sessionStorage.getReferenceIdSession().toString(),
+                sessionStorage.referenceIdOtp.toString(),
                 password.toString(),
                 pinNumber.toString(),
                 questionOneId.toString(),

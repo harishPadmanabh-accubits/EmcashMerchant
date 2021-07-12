@@ -7,7 +7,7 @@ import com.app.emcashmerchant.data.modelrequest.*
 import com.app.emcashmerchant.data.models.*
 import com.app.emcashmerchant.data.network.ApiCallStatus
 import com.app.emcashmerchant.data.network.ApiMapper
-import com.app.emcashmerchant.AuthRepositories.ForgotPasswordRepository
+import com.app.emcashmerchant.data.network.Repositories.ForgotPasswordRepository
 import com.app.emcashmerchant.utils.extensions.default
 import timber.log.Timber
 

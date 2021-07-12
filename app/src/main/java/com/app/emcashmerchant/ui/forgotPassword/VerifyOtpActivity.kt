@@ -12,6 +12,7 @@ import com.app.emcashmerchant.utils.extensions.openActivity
 import com.app.emcashmerchant.utils.extensions.showLongToast
 import com.app.emcashmerchant.utils.extensions.showShortToast
 import com.app.emcashmerchant.Authviewmodel.ForgotPasswordViewModel
+import com.app.emcashmerchant.utils.AppDialog
 import kotlinx.android.synthetic.main.activity_verify_otp.otp_layout
 
 
@@ -19,12 +20,15 @@ class VerifyOtpActivity : AppCompatActivity() {
 
     private lateinit var viewModel: ForgotPasswordViewModel
     private lateinit var sessionStorage: SessionStorage
+    lateinit var dialog: AppDialog
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_verify_otp)
         initViews()
         initViewModel()
         setupObservers()
+        dialog= AppDialog(this)
 
     }
 
@@ -40,7 +44,7 @@ class VerifyOtpActivity : AppCompatActivity() {
                 verifyOtp(otp)
             }
             R.id.ll_resend_otp -> {
-                viewModel.performForgotPasswordOtpResend(sessionStorage.getReferenceIdSession().toString())
+                viewModel.performForgotPasswordOtpResend( sessionStorage.referenceId.toString())
             }
         }
     }
@@ -63,14 +67,17 @@ class VerifyOtpActivity : AppCompatActivity() {
                 when (it.status) {
                     ApiCallStatus.LOADING -> {
                         //show loading
+                        dialog.show_dialog()
                     }
                     ApiCallStatus.SUCCESS -> {
+                        dialog.dismiss_dialog()
                         val data = it.data
-                        sessionStorage.setReferenceIdSession(data?.referenceId)
+                        sessionStorage.referenceId=data?.referenceId
                         openActivity(ResetPasswordActivity::class.java)
 
                     }
                     ApiCallStatus.ERROR -> {
+                        dialog.dismiss_dialog()
                         showShortToast(it.errorMessage)
                     }
                 }
@@ -81,13 +88,16 @@ class VerifyOtpActivity : AppCompatActivity() {
                 when (it.status) {
                     ApiCallStatus.LOADING -> {
                         //show loading
+                        dialog.show_dialog()
                     }
                     ApiCallStatus.SUCCESS -> {
+                        dialog.dismiss_dialog()
                         val data = it.data
                         showLongToast(getString(R.string.otp_resend_msg))
 
                     }
                     ApiCallStatus.ERROR -> {
+                        dialog.dismiss_dialog()
                         showShortToast(it.errorMessage)
                     }
                 }
@@ -101,7 +111,7 @@ class VerifyOtpActivity : AppCompatActivity() {
         if (otp.isNotEmpty() && otp.length == 4) {
             viewModel.performForgotPasswordOtpVerify(
                 otp,
-                sessionStorage.getReferenceIdSession().toString()
+                sessionStorage.referenceId.toString()
             )
 
         } else {

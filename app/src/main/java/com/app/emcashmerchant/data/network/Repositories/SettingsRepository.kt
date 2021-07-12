@@ -1,12 +1,8 @@
-package com.app.emcashmerchant.ui.home.settings
+package com.app.emcashmerchant.data.network.Repositories
 
 import android.content.Context
 import android.webkit.MimeTypeMap
 import com.app.emcashmerchant.data.SessionStorage
-import com.app.emcashmerchant.data.modelrequest.ResendOtpRequest
-import com.app.emcashmerchant.data.modelrequest.SignupInitialRequestBody
-import com.app.emcashmerchant.data.modelrequest.SignupSecurityRequestBody
-import com.app.emcashmerchant.data.modelrequest.VerifyOtpRequest
 import com.app.emcashmerchant.data.models.*
 import com.app.emcashmerchant.data.network.ApiManger
 import com.app.emcashmerchant.utils.extensions.awaitResponse
@@ -14,7 +10,6 @@ import com.app.emcashmerchant.utils.extensions.getMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
-import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 
 
@@ -81,6 +76,27 @@ class SettingsRepository(val context: Context) {
             }
         )
     }
+
+    fun getTermsConditions(
+        onApiCallback: (status: Boolean, message: String?, result: TermsConditionsResponse?) -> Unit
+    ) {
+
+
+        api.getTermsConditions(
+
+        ).awaitResponse(
+            onFailure = {
+                onApiCallback(false, it, null)
+
+            }, onSuccess = {
+                it?.let {
+                    onApiCallback(true, null, it)
+
+                }
+            }
+        )
+    }
+
 
 }
 

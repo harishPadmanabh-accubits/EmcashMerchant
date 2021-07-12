@@ -50,7 +50,11 @@ class CreatePinNumberActivity : AppCompatActivity() {
             showLongToast(getString(R.string.same_pin_number_validation))
         } else if (pinnumber.isEmpty() || confirmPinNumber.isEmpty()) {
             showLongToast(getString(R.string.please_fill_all_fields))
-        } else {
+        }
+        else if(pinnumber.length<6 || confirmPinNumber.length<6){
+            showLongToast(getString(R.string.enter_6_digit_pin_number))
+        }
+        else {
             openActivity(SecurityQuestionRegisterActivity::class.java) {
                 putString(KEY_PIN, pinnumber)
                 putString(KEY_CONFIRM_PIN, confirmPinNumber)

@@ -1,4 +1,4 @@
-package com.app.emcashmerchant.adapter
+package com.app.emcashmerchant.ui.register.adapter
 
 import android.content.Context
 import android.view.LayoutInflater

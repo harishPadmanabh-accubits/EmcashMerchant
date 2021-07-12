@@ -6,7 +6,7 @@ import android.view.View
 import android.widget.AdapterView
 import androidx.lifecycle.Observer
 import com.app.emcashmerchant.R
-import com.app.emcashmerchant.adapter.SecurityQuestionAdapter
+import com.app.emcashmerchant.ui.register.adapter.SecurityQuestionAdapter
 import com.app.emcashmerchant.data.SessionStorage
 import com.app.emcashmerchant.data.models.SecurityQuestionsResponse
 import com.app.emcashmerchant.data.network.ApiCallStatus
@@ -28,6 +28,7 @@ class SecurityQuestionsActivity : AppCompatActivity() {
     var answerOne: String=""
     var answerTwo: String =""
 
+    lateinit var dialog: AppDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +36,8 @@ class SecurityQuestionsActivity : AppCompatActivity() {
         initViews()
         initViewModel()
         setupObservers()
+        dialog= AppDialog(this)
+
         viewModel.getSecurityQuestions()
     }
 
@@ -69,12 +72,15 @@ class SecurityQuestionsActivity : AppCompatActivity() {
                 when (it.status) {
                     ApiCallStatus.LOADING -> {
                         //show loading
+                        dialog.show_dialog()
                     }
                     ApiCallStatus.SUCCESS -> {
+                        dialog.dismiss_dialog()
                         var responseData = it.data
                         loadDataToSpinner(responseData?.data)
                     }
                     ApiCallStatus.ERROR -> {
+                        dialog.dismiss_dialog()
                         showShortToast(it.errorMessage)
                     }
                 }
@@ -136,12 +142,15 @@ class SecurityQuestionsActivity : AppCompatActivity() {
         answerOne = et_ans_1.text.toString()
         answerTwo = et_ans_2.text.toString()
 
-        if (questionOneId == questionTwoId  ) {
+        if (questionOneId == questionTwoId && !questionOneId.equals("0") && !questionTwoId.equals("0")) {
             showLongToast(getString(R.string.select_different))
-        } else if (questionOneId == null|| questionTwoId == null|| questionOneId.equals("0") ||  questionTwoId.equals("0")) {
-            showLongToast(getString(R.string.please_answer_both_question))
 
-        } else if (answerOne.isEmpty()  || answerTwo.isEmpty() || answerOne.length<3 || answerOne.length<3) {
+        } else if (questionOneId == null || questionTwoId == null) {
+            showLongToast(getString(R.string.please_select_any_question))
+
+        } else if (questionOneId.equals("0") || questionTwoId.equals("0")) {
+            showLongToast(getString(R.string.please_select_any_question))
+        } else if (answerOne.isEmpty() || answerTwo.isEmpty() || answerOne.length < 3 || answerOne.length < 3) {
             showLongToast(getString(R.string.please_answer_both_question))
 
         } else {

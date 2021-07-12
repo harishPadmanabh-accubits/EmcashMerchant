@@ -1,19 +1,18 @@
 package com.app.emcashmerchant.ui.login
 
-import android.app.Dialog
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import com.app.emcashmerchant.Authviewmodel.LoginViewModel
+import com.app.emcashmerchant.Authviewmodel.PasswordVisibilty
 import com.app.emcashmerchant.R
 import com.app.emcashmerchant.data.SessionStorage
 import com.app.emcashmerchant.data.network.ApiCallStatus
 import com.app.emcashmerchant.ui.forgotPassword.SecurityQuestionsActivity
 import com.app.emcashmerchant.ui.introScreen.IntroActivity
-import com.app.emcashmerchant.utils.extensions.*
-import com.app.emcashmerchant.Authviewmodel.LoginViewModel
-import com.app.emcashmerchant.Authviewmodel.PasswordVisibilty
 import com.app.emcashmerchant.utils.AppDialog
+import com.app.emcashmerchant.utils.extensions.*
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
@@ -55,7 +54,7 @@ class LoginActivity : AppCompatActivity() {
                     ApiCallStatus.SUCCESS -> {
                         dialog.dismiss_dialog()
                         val data = it.data
-                        sessionStorage.setReferenceIdSession(data?.referenceId)
+                        sessionStorage.referenceId=data?.referenceId
                         sessionStorage.merchantNumber = data?.phoneNumber
                         openActivity(OtpActivity::class.java)
 
@@ -109,5 +108,6 @@ class LoginActivity : AppCompatActivity() {
     private fun initViews() {
         sessionStorage = SessionStorage(this)
     }
+
 
 }

@@ -95,16 +95,32 @@
     <string name="trade_doc_size">Trade License Document size is above 8MB</string>
     <string name="no_question">No Question,s Found</string>
     <string name="min_length_password">Password Should Contain Minimum 8 Letters</string>
-    <string name="special_char_password">Password Should Contain 1 Special Character</string>
-    <string name="uppercase_password">Password Should Contain 1 Uppercase Character</string>
-    <string name="lowercase_password">Password Should Contain 1 Lowercase Character</string>
-    <string name="numeric_character_password">Password Should Contain  1 Numeric Character</string>
+    <string name="special_char_password">Password Should Contain atleast 1 Special Character</string>
+    <string name="uppercase_password">Password Should Contain atleast 1 Uppercase Character</string>
+    <string name="lowercase_password">Password Should Contain atleast 1 Lowercase Character</string>
+    <string name="numeric_character_password">Password Should Contain  atleast 1 Numeric Character</string>
     <string name="enter_valid_number">Please Enter a valid Mobile Number</string>
     <string name="enter_valid_email">Please Enter a valid Email</string>
     <string name="enter_valid_pin">Please Enter a Valid Pin Number</string>
     <string name="terms_and_conditions">Terms and Conditions</string>
     <string name="notifications">Notifications</string>
     <string name="logout">Logout</string>
+    <string name="terms_conditions"><![CDATA[Terms & Conditions]]></string>
+    <string name="enter_6_digit_pin_number">Please Enter a valid Pin Number</string>
+    <string name="valid_business_name">Please enter a valid Business name</string>
+    <string name="valid_contact_personname">Please enter a valid contact Person name</string>
+    <string name="valid_tradeliscencenumber">Please enter a valid Trade License number</string>
+    <string name="valid_trade_lic_auth">Please enter a valid Trade License Authority</string>
+    <string name="my_activites">My Activites</string>
+    <string name="load_emcash">Load Emcash</string>
+    <string name="emcashbalance">EmCashBalance</string>
+    <string name="valid_address">Please enter a valid Address</string>
+    <string name="bankdoc_empty">\"Please Select Bank Document \"</string>
+    <string name="commercial_doc_empty">\"Please Select a Commercial Registration Document \"</string>
+    <string name="trade_lisc_doc_empty">\"Please Select a Trade License Document \"</string>
+    <string name="incorrect_password">Incorrect Password</string>
+    <string name="please_select_any_question">Please select any question</string>
+    <string name="profile_pic_updated">Profile Picture Updated</string>
 
     <string-array name="security_question">
         <item>Select your Question</item>

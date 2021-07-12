@@ -33,25 +33,31 @@ interface ApiServices {
     ): Call<SignupSecurityResponse>
 
     @Multipart
-    @POST("v1/merchants/signup/final")
+    @POST("v1/merchants/signup/documents")
     fun performFinalSignupCommercialDoc(
         @Part("referenceId") description: RequestBody,
         @Part commercialRegistrationDoc: MultipartBody.Part
     ): Call<SignupFinalResponse>
 
     @Multipart
-    @POST("v1/merchants/signup/final")
+    @POST("v1/merchants/signup/documents")
     fun performFinalSignupBankDetailsDoc(
         @Part("referenceId") description: RequestBody,
         @Part bankDetailsDoc: MultipartBody.Part
     ): Call<SignupFinalResponse>
 
     @Multipart
-    @POST("v1/merchants/signup/final")
+    @POST("v1/merchants/signup/documents")
     fun performFinalSignupTradeLicenseDoc(
         @Part("referenceId") description: RequestBody,
         @Part tradeLicenseDoc: MultipartBody.Part
     ): Call<SignupFinalResponse>
+
+
+    @POST("v1/merchants/signup/final")
+    fun performFinalSignup(
+        @Body finalSignupRequest: FinalSignupRequest
+    ): Call<FinalRegistartionResponse>
 
 
     @POST("v1/merchants/auth/login")
@@ -116,5 +122,14 @@ interface ApiServices {
     fun getProfileDetails(
         @Header("Authorization") authentication: String
     ): Call<ProfileDetailsResponse>
+
+    @GET("v1/merchants/termsandconditions")
+    fun getTermsConditions(
+    ): Call<TermsConditionsResponse>
+
+    @GET("v1/merchants/wallet")
+    fun getWalletDetails(
+        @Header("Authorization") authentication: String
+    ): Call<WalletResponse>
 
 }

@@ -1,4 +1,4 @@
-package com.app.emcashmerchant.AuthRepositories
+package com.app.emcashmerchant.data.network.Repositories
 
 import android.content.Context
 import com.app.emcashmerchant.data.SessionStorage
@@ -72,7 +72,7 @@ class LoginAuthRepository(val context: Context) {
                 onApiCallback(false, it, null)
             }, onSuccess = {
                 it?.data?.let {
-                    sessionStorage.setReferenceIdSession(it.referenceId.toString())
+                    sessionStorage.referenceId=it.referenceId
                     onApiCallback(true, null, it)
                 }
             }

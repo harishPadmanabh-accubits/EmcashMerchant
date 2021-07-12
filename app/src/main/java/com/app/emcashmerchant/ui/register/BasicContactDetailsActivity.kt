@@ -59,7 +59,7 @@ class BasicContactDetailsActivity : AppCompatActivity() {
                     ApiCallStatus.SUCCESS -> {
                         dialog.dismiss_dialog()
                         val data = it.data
-                        sessionStorage.setReferenceIdSession(data?.referenceId)
+                        sessionStorage.referenceIdInitial=data?.referenceId
                         sessionStorage.merchantNumber = et_phone_num.obtainPhoneNumber().toString()
                         openActivity(RegisterOtpActivity::class.java)
 
@@ -91,10 +91,18 @@ class BasicContactDetailsActivity : AppCompatActivity() {
                     showShortToast(getString(R.string.enter_valid_email))
                 } else if (phoneNumber.isEmpty() ||
                     et_email.text.toString().isEmpty() ||
-                    et_address.text.toString().isEmpty() || pincode.isEmpty()
+                    et_address.text.toString().isEmpty()
                 ) {
                     showShortToast(getString(R.string.please_fill_all_fields))
-                } else {
+                }
+                else if(address.length<5){
+                    showShortToast(getString(R.string.valid_address))
+                }
+                else {
+                    if(pincode.isEmpty())
+                    {
+                        pincode=""
+                    }
                     performInitialSignup(
                         address,
                         businessName.toString(),
@@ -127,6 +135,8 @@ class BasicContactDetailsActivity : AppCompatActivity() {
         tradeLicenseNumber: String,
         zipCode: String
     ) {
+
+
         viewModel.performInitialSignup(
             address,
             businessName,

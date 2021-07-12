@@ -12,23 +12,17 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.FragmentNavigatorExtras
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.transition.ChangeBounds
 import com.app.emcashmerchant.R
 import com.app.emcashmerchant.data.SessionStorage
 import com.app.emcashmerchant.data.network.ApiCallStatus
 import com.app.emcashmerchant.ui.home.home_screen.adapter.RecentPaymentsAdapter
-import com.app.emcashmerchant.ui.home.settings.SettingsViewModel
-import com.app.emcashmerchant.ui.introScreen.IntroActivity
-import com.app.emcashmerchant.utils.AppDialog
 import com.app.emcashmerchant.utils.extensions.obtainViewModel
-import com.app.emcashmerchant.utils.extensions.openActivity
 import com.app.emcashmerchant.utils.extensions.showShortToast
 import kotlinx.android.synthetic.main.home_fragment.*
 import kotlinx.android.synthetic.main.home_fragment.iv_shop_profile_image
 import kotlinx.android.synthetic.main.layout_home_info_card.*
-import kotlinx.android.synthetic.main.settings_fragment.*
 import timber.log.Timber
 
 class HomeFragment : Fragment() {
@@ -112,8 +106,7 @@ class HomeFragment : Fragment() {
             val extras = FragmentNavigatorExtras(
                 it to "shop_image_transition"
             )
-            Navigation.findNavController(view)
-                .navigate(R.id.goto_settings_fragment, null, null, extras)
+            Navigation.findNavController(view).navigate(R.id.goto_settings_fragment, null, null, extras)
         }
         tv_wallet_id.setOnClickListener {
             Navigation.findNavController(view).navigate(R.id.walletFragment, null, null)
@@ -142,9 +135,12 @@ class HomeFragment : Fragment() {
         }
 
         tv_transfer_payment.setOnClickListener {
-            Navigation.findNavController(view).navigate(R.id.goto_transfer_payment_activity)
+            Navigation.findNavController(view).navigate(R.id.transferPaymentFragment)
         }
+        fab_new_payment.setOnClickListener{
+            Navigation.findNavController(view).navigate(R.id.paymentRequestFragment)
 
+        }
         setPaymentList()
 
     }

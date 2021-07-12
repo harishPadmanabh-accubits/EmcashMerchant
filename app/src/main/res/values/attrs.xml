@@ -13,4 +13,8 @@
         </attr>
     </declare-styleable>
 
+    <declare-styleable name="OnboardingNextButton">
+        <attr name="buttonText" format="string"/>
+    </declare-styleable>
+
 </resources>

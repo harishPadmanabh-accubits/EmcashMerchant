@@ -31,3 +31,8 @@ const val KEY_QUESTION_ID_1 = "question1"
 const val KEY_QUESTION_ID_2 = "question2"
 const val KEY_ANSWER_1 = "answer1"
 const val KEY_ANSWER_2 = "answer2"
+
+const val KEY_AMOUNT = "AMOUNT"
+const val KEY_DESCRIPTION = "DESCRIPTION"
+const val KEY_LONGITUDE = "LONGITUDE"
+const val KEY_LATITUDE = "LATITUDE"

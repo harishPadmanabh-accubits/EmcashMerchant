@@ -10,26 +10,29 @@ import com.app.emcashmerchant.data.network.ApiManger
 import com.app.emcashmerchant.utils.extensions.awaitResponse
 
 class WithDrawEmcashRepository(val context: Context) {
+
+
     private val sessionStorage = SessionStorage(context)
     private val api = ApiManger(context).api
 
+
     fun withDraw(
-        withDrawRequest: WithDrawRequest,
-        onApiCallback: (status: Boolean, message: String?, result: WithDrawResponse?) -> Unit
-    ) {
-        api.withDraw(withDrawRequest, "Bearer ${sessionStorage.accesToken}").awaitResponse(
-            onFailure = {
-                onApiCallback(false, it, null)
+    withDrawRequest: WithDrawRequest,
+    onApiCallback: (status: Boolean, message: String?, result: WithDrawResponse?) -> Unit
+) {
+    api.withDraw(withDrawRequest, "Bearer ${sessionStorage.accesToken}").awaitResponse(
+        onFailure = {
+            onApiCallback(false, it, null)
 
-            }, onSuccess = {
-                var data = it
-                data.let {
-                    onApiCallback(true, null, data)
+        }, onSuccess = {
+            var data = it
+            data.let {
+                onApiCallback(true, null, data)
 
-                }
             }
-        )
-    }
+        }
+    )
+}
 
 
 }

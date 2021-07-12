@@ -133,6 +133,11 @@
     <string name="enter_valid_amount">Please Enter a valid Amount</string>
     <string name="emcash_loaded">Emcash Loaded</string>
     <string name="iban">Please Enter IBAN</string>
+    <string name="bank_card">Bank Card</string>
+    <string name="notification">Notifications</string>
+    <string name="scan_qr_code">Scan QR code to pay</string>
+    <string name="enter_mobile_number">Enter mobile number</string>
+    <string name="or">or</string>
 
     <string-array name="security_question">
         <item>Select your Question</item>

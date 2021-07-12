@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,127 +8,134 @@
     android:orientation="vertical"
     tools:context=".ui.convertEmcashTocash.ConvertEmcashToCashActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_back"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
+        android:layout_marginStart="@dimen/dp16"
+        android:layout_marginTop="@dimen/dp24"
+        android:padding="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_back_arrow"
+        app:tint="@color/black" />
+
+    <TextView
+        android:id="@+id/tv_head"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/biennale_regular"
+        android:text="@string/convert_emcash_to_cash"
+        android:textColor="@color/black"
+        android:textSize="@dimen/sp18"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_back"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/iv_back" />
 
-        <LinearLayout
-            android:layout_width="@dimen/dp48"
-            android:layout_height="@dimen/dp48"
-            android:layout_marginLeft="@dimen/dp16"
-            android:gravity="center"
-            >
-            <ImageView
-                android:layout_width="@dimen/dp16"
-                android:layout_height="@dimen/dp16"
-                android:src="@drawable/ic_back_arrow" />
-        </LinearLayout>
-        <TextView
-            style="@style/HeadingText"
-            android:layout_width="match_parent"
-            android:gravity="center"
-            android:padding="@dimen/sp16"
-            android:textStyle="bold"
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline23"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent=".5" />
+
+    <LinearLayout
+        android:id="@+id/ll_input"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/guideline22"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline22">
+
+        <EditText
+            android:id="@+id/et_emcash"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/convert_emcash_to_cash"
-            android:textSize="@dimen/sp16"
-            />
-
+            android:layout_marginLeft="@dimen/dp6"
+            android:background="@null"
+            android:cursorVisible="false"
+            android:fontFamily="@font/biennale_bold"
+            android:hint="00"
+            android:inputType="number"
+            android:maxLength="2"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dp48" />
     </LinearLayout>
 
 
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
-        <LinearLayout
-            android:layout_width="match_parent"
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline22"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.25" />
+
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/dp16"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_head">
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/et_description"
+        style="@style/GreyRoundTextField"
+        android:layout_width="@dimen/dp_280"
+        android:layout_height="@dimen/dp48"
+        android:cursorVisible="false"
+        android:hint="@string/enter_iban"
+        android:layout_marginTop="@dimen/dp16"
+        android:inputType="number"
+        android:textSize="@dimen/sp14"
+        app:layout_constraintEnd_toEndOf="@+id/ll_input"
+        app:layout_constraintStart_toStartOf="@+id/ll_input"
+        app:layout_constraintTop_toBottomOf="@+id/ll_input" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp60"
+        android:background="@drawable/blueshaded_round_bg"
+        app:layout_constraintEnd_toEndOf="@+id/et_description"
+        app:layout_constraintStart_toStartOf="@+id/et_description"
+        app:layout_constraintTop_toBottomOf="@+id/et_description">
+
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="vertical"
-            android:background="@color/white"
+            android:layout_margin="@dimen/dp6"
+            android:fontFamily="@font/biennale_medium"
+            android:gravity="center"
+            android:padding="@dimen/dp2"
+            android:paddingStart="@dimen/dp32"
+            android:paddingEnd="@dimen/dp32"
+            android:paddingBottom="@dimen/dp8"
+            android:text="@string/aed_equals_emcash"
+            android:textColor="@color/app_blue"
+            android:textSize="@dimen/sp12" />
+    </LinearLayout>
 
-            >
-            <EditText
-                android:id="@+id/et_emcash"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="00"
-                android:textColor="@color/black"
-                android:textSize="@dimen/dp48"
-                android:textAlignment="center"
-                android:maxLength="2"
-                android:inputType="number"
-                android:background="@null"
-                android:fontFamily="@font/biennale_bold"
-                android:layout_marginTop="@dimen/dp80"
-                android:cursorVisible="false"
-                />
-            <TextView
-                style="@style/HeadingText"
-                android:layout_width="wrap_content"
-                android:gravity="center"
-                android:padding="@dimen/dp2"
-                android:fontFamily="@font/biennale_bold"
-                android:layout_height="wrap_content"
-                android:text="@string/emcash"
-                android:textSize="@dimen/sp16"
-                />
-
-            <EditText
-                android:id="@+id/et_enter_ibn"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp48"
-                style="@style/GreyRoundTextField"
-                android:hint="@string/enter_iban"
-                android:textSize="@dimen/sp14"
-                android:layout_marginLeft="@dimen/dp32"
-                android:layout_marginRight="@dimen/dp32"
-                android:layout_marginTop="@dimen/dp20"
-                android:cursorVisible="false"
-
-                />
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                 android:background="@drawable/blueshaded_round_bg"
-                android:layout_marginTop="@dimen/dp48"
-                android:layout_marginBottom="@dimen/dp12"
-                >
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:gravity="center"
-                    android:padding="@dimen/dp2"
-                    android:layout_height="wrap_content"
-                    android:text="@string/aed_equals_emcash"
-                    android:fontFamily="@font/biennale_medium"
-                    android:textColor="@color/app_blue"
-                    android:textSize="@dimen/sp12"
-                    android:layout_margin="@dimen/dp6"
-                    android:paddingBottom="@dimen/dp8"
-                    android:paddingStart="@dimen/dp32"
-                    android:paddingEnd="@dimen/dp32"
-                    />
-            </LinearLayout>
-
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_convert"
-                style="@style/BlueRoundedButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp24"
-                android:layout_marginEnd="@dimen/dp24"
-                android:layout_marginTop="@dimen/dp48"
-                android:layout_marginBottom="@dimen/dp30"
-                android:paddingLeft="@dimen/dp80"
-                android:paddingRight="@dimen/dp80"
-                android:onClick="onClick"
-                android:text="@string/convert" />
-
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
-</LinearLayout>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_convert_emcash"
+        style="@style/BlueRoundedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp30"
+        android:layout_marginTop="@dimen/dp32"
+        android:onClick="onClick"
+        android:paddingLeft="@dimen/dp80"
+        android:paddingRight="@dimen/dp80"
+        android:text="@string/convert"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

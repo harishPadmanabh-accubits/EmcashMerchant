@@ -13,7 +13,6 @@ import com.app.emcashmerchant.data.network.ApiCallStatus
 import com.app.emcashmerchant.utils.*
 import com.app.emcashmerchant.utils.extensions.*
 import com.app.emcashmerchant.Authviewmodel.RegisterViewModel
-import com.app.emcashmerchant.data.modelrequest.SignupInitialRequestBody
 import kotlinx.android.synthetic.main.lay_documents_upload.*
 import java.io.File
 import java.io.FileInputStream

@@ -14,9 +14,7 @@ class HomeViewModel(val app: Application) : AndroidViewModel(app) {
     val repository =
         HomeRepository(app)
 
-    fun getWalletDetails(
-
-    ) {
+    fun getWalletDetails() {
         walletDetails.value = ApiMapper(ApiCallStatus.LOADING, null, null)
 
         repository.getWalletDetails() { status, message, result ->

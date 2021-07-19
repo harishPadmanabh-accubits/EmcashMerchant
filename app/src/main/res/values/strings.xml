@@ -121,6 +121,23 @@
     <string name="incorrect_password">Incorrect Password</string>
     <string name="please_select_any_question">Please select any question</string>
     <string name="profile_pic_updated">Profile Picture Updated</string>
+    <string name="convert_emcash_to_cash">Convert EmCash to Cash</string>
+    <string name="emcash">Emcash</string>
+    <string name="enter_iban">Enter IBAN</string>
+    <string name="aed_equals_emcash">1 AED = 1 EmCash</string>
+    <string name="convert">Convert</string>
+    <string name="description">Description...</string>
+    <string name="load_my_wallet">Load My Wallet</string>
+    <string name="registered_name_of_business">Registered Name of Business*</string>
+    <string name="registered_name_validaiton">Please Enter a valid Registered Business Name</string>
+    <string name="enter_valid_amount">Please Enter a valid Amount</string>
+    <string name="emcash_loaded">Emcash Loaded</string>
+    <string name="iban">Please Enter IBAN</string>
+    <string name="bank_card">Bank Card</string>
+    <string name="notification">Notifications</string>
+    <string name="scan_qr_code">Scan QR code to pay</string>
+    <string name="enter_mobile_number">Enter mobile number</string>
+    <string name="or">or</string>
 
     <string-array name="security_question">
         <item>Select your Question</item>

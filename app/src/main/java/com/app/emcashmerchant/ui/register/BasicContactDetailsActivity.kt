@@ -21,6 +21,10 @@ class BasicContactDetailsActivity : AppCompatActivity() {
     private val businessName by lazy {
         intent.getStringExtra(KEY_BUISINESS_NAME)
     }
+    private val registeredNameOfBusiness by lazy {
+        intent.getStringExtra(KEY_REGISTERED_BUISINESS_NAME)
+    }
+
     private val contactPersonName by lazy {
         intent.getStringExtra(KEY_CONTACT_PERSON)
     }
@@ -109,7 +113,7 @@ class BasicContactDetailsActivity : AppCompatActivity() {
                         email,
                         contactPersonName.toString(),
                         phoneNumber,
-                        businessName.toString(),
+                        registeredNameOfBusiness.toString(),
                         serviceDesc.toString(),
                         tradeLicenseAuthority.toString(),
                         tradeLicenceNumber.toString(),

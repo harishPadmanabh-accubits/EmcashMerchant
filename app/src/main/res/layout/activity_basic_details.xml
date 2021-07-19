@@ -84,6 +84,7 @@
 
                     />
 
+
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/et_contact_person_name"
                     style="@style/WhiteRoundTextField"
@@ -94,6 +95,17 @@
                     android:layout_marginEnd="@dimen/dp20"
                     android:hint="@string/contact_person_name" />
 
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_reg_business_name"
+                    style="@style/WhiteRoundTextField"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp48"
+                    android:layout_marginStart="@dimen/dp20"
+                    android:layout_marginTop="@dimen/dp12"
+                    android:layout_marginEnd="@dimen/dp20"
+                    android:hint="@string/registered_name_of_business"
+
+                    />
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/et_trade_license_number"
                     style="@style/WhiteRoundTextField"

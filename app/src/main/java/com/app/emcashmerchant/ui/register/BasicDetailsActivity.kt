@@ -32,12 +32,13 @@ class BasicDetailsActivity : AppCompatActivity() {
         val tradeLicenceNumber = et_trade_license_number.text.toString()
         val tradeLicenseAuthority = et_license_issue_authority.text.toString()
         var serviceDesc = et_service_description.text.toString()
+        var registeredBusinesName: String = et_reg_business_name.text.toString()
 
         if (businessName.isEmpty()) {
 
             showShortToast(getString(R.string.valid_business_name))
 
-        } else if (contactPersonName.isEmpty() || contactPersonName.length<3) {
+        } else if (contactPersonName.isEmpty() || contactPersonName.length < 3) {
             showShortToast(getString(R.string.valid_contact_personname))
 
         } else if (tradeLicenceNumber.isEmpty()) {
@@ -46,12 +47,16 @@ class BasicDetailsActivity : AppCompatActivity() {
         } else if (tradeLicenseAuthority.isEmpty()) {
             showShortToast(getString(R.string.valid_trade_lic_auth))
 
+        } else if (registeredBusinesName.isEmpty()) {
+            showShortToast(getString(R.string.registered_name_validaiton))
+
         } else {
             if (serviceDesc.isEmpty()) {
                 serviceDesc = ""
             }
             openActivity(BasicContactDetailsActivity::class.java) {
                 putString(KEY_BUISINESS_NAME, businessName)
+                putString(KEY_REGISTERED_BUISINESS_NAME, registeredBusinesName)
                 putString(KEY_CONTACT_PERSON, contactPersonName)
                 putString(KEY_TRADE_LICENSE_NUM, tradeLicenceNumber)
                 putString(KEY_LICENSE_AUTHORITY, tradeLicenseAuthority)

@@ -12,6 +12,7 @@ import com.app.emcashmerchant.utils.extensions.openActivity
 import com.app.emcashmerchant.utils.extensions.showShortToast
 import com.app.emcashmerchant.Authviewmodel.ForgotPasswordViewModel
 import com.app.emcashmerchant.utils.*
+import com.app.emcashmerchant.utils.extensions.isEmailValidity
 import kotlinx.android.synthetic.main.activity_obtain_email.*
 
 class ObtainEmailActivity : AppCompatActivity() {
@@ -50,7 +51,11 @@ class ObtainEmailActivity : AppCompatActivity() {
                 onBackPressed()
             }
             R.id.btn_next -> {
-               goToVerifyOtpActivity(email)
+
+
+                    goToVerifyOtpActivity(email)
+
+
             }
         }
     }
@@ -82,11 +87,15 @@ class ObtainEmailActivity : AppCompatActivity() {
 
 
     private fun goToVerifyOtpActivity(email:String) {
-        if (email.isNotEmpty()) {
+      if(email.isEmpty()) {
+            showShortToast(getString(R.string.enter_valid_email))
+        }
+       else if (!email.isEmailValidity()) {
+            showShortToast(getString(R.string.enter_valid_email))
+        }
+       else if (email.isNotEmpty() && email.isEmailValidity()) {
             viewModel.performPasswordRequest(email,questionOneId.toString(),questionTwoId.toString(),answerOne.toString(),answerTwo.toString())
 
-        } else {
-            showShortToast(getString(R.string.enter_valid_email))
         }
     }
 

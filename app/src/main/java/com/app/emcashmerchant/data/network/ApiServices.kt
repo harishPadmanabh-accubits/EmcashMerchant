@@ -132,4 +132,34 @@ interface ApiServices {
         @Header("Authorization") authentication: String
     ): Call<WalletResponse>
 
+
+
+    @POST("v1/merchants/wallet/topup")
+    fun topUp(
+        @Body topUpRequest: TopUpRequest,
+        @Header("Authorization") authentication: String
+    ): Call<TopUpResponse>
+
+
+
+    @POST("v1/merchants/wallet/withdraw")
+    fun withDraw(
+        @Body withDrawRequest: WithDrawRequest,
+        @Header("Authorization") authentication: String
+    ): Call<WithDrawResponse>
+
+    @GET("v1/merchants/transactions/wallet")
+    fun walletTransactionResponse(
+        @Header("Authorization") authentication: String,
+        @Query("page") page:Int,
+        @Query("limit")  limit:Int
+    ): Call<WalletTransactionResponse>
+
+
+    @POST("v1/merchants/payments/qrcode/check")
+    fun qrCodeCheck(
+        @Body qrCodeRequest: CheckQrCodeRequest,
+        @Header("Authorization") authentication: String
+    ): Call<CheckQrCodeResponse>
+
 }

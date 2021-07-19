@@ -18,6 +18,7 @@ const val REQUEST_CODE_PICK_IMAGE_PROFILE = 104
 
 const val KEY_REF_ID = "ref_id"
 const val KEY_BUISINESS_NAME = "buisness_name"
+const val KEY_REGISTERED_BUISINESS_NAME = "reg_buisness_name"
 const val KEY_CONTACT_PERSON = "contact_person_name"
 const val KEY_TRADE_LICENSE_NUM = "license_num"
 const val KEY_LICENSE_AUTHORITY = "license_authority"
@@ -30,3 +31,8 @@ const val KEY_QUESTION_ID_1 = "question1"
 const val KEY_QUESTION_ID_2 = "question2"
 const val KEY_ANSWER_1 = "answer1"
 const val KEY_ANSWER_2 = "answer2"
+
+const val KEY_AMOUNT = "AMOUNT"
+const val KEY_DESCRIPTION = "DESCRIPTION"
+const val KEY_LONGITUDE = "LONGITUDE"
+const val KEY_LATITUDE = "LATITUDE"

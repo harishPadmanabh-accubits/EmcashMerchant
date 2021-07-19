@@ -145,4 +145,23 @@ data class WalletTransactionResponse(
             val walletAddress: String
         )
     }
+
+}
+
+
+data class WalletActivityModel(
+    val date: String,
+    val activities: List<WalletTransactionResponse.Data.Row>
+) {
+
+}
+
+data class WalletActivityDetails(
+    val type: Int,
+    val valueLoaded: String,
+    val time: String,
+    val changedValue: String,
+    val Balance: String
+) {
+
 }

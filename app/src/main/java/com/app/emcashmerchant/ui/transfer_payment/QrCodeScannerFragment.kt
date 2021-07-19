@@ -9,14 +9,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.app.emcashmerchant.R
+import com.app.emcashmerchant.data.SessionStorage
+import com.app.emcashmerchant.data.modelrequest.CheckQrCodeRequest
+import com.app.emcashmerchant.data.network.ApiCallStatus
 import com.app.emcashmerchant.ui.loadEmcash.LoadEmcashFragment
+import com.app.emcashmerchant.utils.KEY_AMOUNT
+import com.app.emcashmerchant.utils.KEY_DESCRIPTION
+import com.app.emcashmerchant.utils.extensions.showShortToast
 import com.budiyev.android.codescanner.CodeScanner
 import com.budiyev.android.codescanner.DecodeCallback
 import kotlinx.android.synthetic.main.fragment_qr_code_scanner.*
 
 class QrCodeScannerFragment : Fragment() {
+
+
+    private lateinit var viewModel: TransferPaymentViewModel
+    private lateinit var sessionStorage: SessionStorage
 
     private val PERMISSION_REQUEST = android.Manifest.permission.CAMERA
 
@@ -43,7 +55,14 @@ class QrCodeScannerFragment : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel = ViewModelProvider(this).get(TransferPaymentViewModel::class.java)
+        sessionStorage = SessionStorage(requireActivity())
+        observer(view)
         checkPermission()
+
+        var amount = requireArguments().getInt(KEY_AMOUNT)
+        var description = requireArguments().getInt(KEY_DESCRIPTION)
+
 
     }
 
@@ -97,6 +116,7 @@ class QrCodeScannerFragment : Fragment() {
             setUpCodeScanner()
         } else {
             // if user denies the permission request, handle the functionalities here.
+
         }
     }
 
@@ -111,6 +131,8 @@ class QrCodeScannerFragment : Fragment() {
                 // the decoded text can be read from here.
                 decodedText = it.text
                 Log.e("decodedText",decodedText.toString());
+                val checkQrCodeRequest=CheckQrCodeRequest(decodedText.toString())
+                viewModel.checkQr(checkQrCodeRequest)
             }
         }
     }
@@ -132,6 +154,25 @@ class QrCodeScannerFragment : Fragment() {
         super.onDestroy()
         if (this::codeScanner.isInitialized) {
             codeScanner.stopPreview()
+        }
+    }
+    fun observer(view: View) {
+        viewModel.apply {
+            qrCodeCheckStatus.observe(requireActivity(), Observer {
+                when (it.status) {
+                    ApiCallStatus.LOADING -> {
+
+                    }
+                    ApiCallStatus.SUCCESS -> {
+                        Navigation.findNavController(view).navigate(R.id.performTransferPaymentFragment)
+
+                    }
+                    ApiCallStatus.ERROR -> {
+                        requireActivity().showShortToast(it.errorMessage)
+
+                    }
+                }
+            })
         }
     }
 

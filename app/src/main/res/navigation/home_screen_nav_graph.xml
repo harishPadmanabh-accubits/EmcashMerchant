@@ -124,5 +124,14 @@
         android:id="@+id/qrCodeScannerFragment"
         android:name="com.app.emcashmerchant.ui.transfer_payment.QrCodeScannerFragment"
         android:label="fragment_qr_code_scanner"
-        tools:layout="@layout/fragment_qr_code_scanner" />
+        tools:layout="@layout/fragment_qr_code_scanner" >
+        <action
+            android:id="@+id/action_qrCodeScannerFragment_to_performTransferPaymentFragment"
+            app:destination="@id/performTransferPaymentFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/performTransferPaymentFragment"
+        android:name="com.app.emcashmerchant.ui.transfer_payment.PerformTransferPaymentFragment"
+        android:label="fragment_perform_transfer_payment"
+        tools:layout="@layout/fragment_perform_transfer_payment" />
 </navigation>

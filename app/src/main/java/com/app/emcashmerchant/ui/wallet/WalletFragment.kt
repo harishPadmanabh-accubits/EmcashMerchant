@@ -18,6 +18,7 @@ import com.app.emcashmerchant.data.SessionStorage
 import com.app.emcashmerchant.data.models.WalletTransactionResponse
 import com.app.emcashmerchant.data.network.ApiCallStatus
 import com.app.emcashmerchant.ui.wallet.adapter.WalletTransactionAdapter
+import com.app.emcashmerchant.ui.wallet.adapter.WalletTransactionAdapterV2
 import com.app.emcashmerchant.utils.extensions.dateFormat
 import com.app.emcashmerchant.utils.extensions.getCurrentDate
 import com.app.emcashmerchant.utils.extensions.showShortToast
@@ -32,7 +33,7 @@ class WalletFragment : Fragment() {
 
     private lateinit var viewModel: WalletViewModel
     private lateinit var sessionStorage: SessionStorage
-    var transactionData = arrayListOf<WalletTransactionResponse.Data.Row>()
+   // var transactionData = arrayListOf<WalletTransactionResponse.Data.Row>()
 
     var balance:String?=null
     override fun onCreateView(
@@ -90,7 +91,8 @@ class WalletFragment : Fragment() {
                         var currentDate  =  getCurrentDate()
                         var updateDate  = dateFormat(it.data?.rows?.get(1)?.updatedAt.toString())
 
-                        transactionData= it.data?.rows!!
+                        //transactionData= it.data
+                     val groupedActivies =   groupActivitiesByDate(it.data?.rows)
 
                         rv_wallet_transaction.apply {
                             layoutManager = LinearLayoutManager(
@@ -98,7 +100,10 @@ class WalletFragment : Fragment() {
                                 RecyclerView.VERTICAL, false
                             )
                             itemAnimator = DefaultItemAnimator()
-                            adapter=WalletTransactionAdapter(transactionData)
+                         //   adapter=WalletTransactionAdapter(transactionData)
+                            adapter = WalletTransactionAdapterV2(
+                                groupedActivies
+                            )
                         }
                     }
                     ApiCallStatus.ERROR -> {
@@ -110,5 +115,6 @@ class WalletFragment : Fragment() {
             })
         }
     }
+
 
 }

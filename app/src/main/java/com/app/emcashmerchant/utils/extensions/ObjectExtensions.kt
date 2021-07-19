@@ -567,7 +567,7 @@ fun getCurrentDate():String{
 }
 
 
-fun dateFormat(dateStr: String): String? {
+fun dateFormat(dateStr: String): String {
     val sdfInput =
         SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX", Locale.getDefault())
     val date = sdfInput.parse(dateStr)

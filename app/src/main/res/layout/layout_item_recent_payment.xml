@@ -32,7 +32,7 @@
             app:layout_constraintEnd_toEndOf="@+id/fl_user_level"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:src="@drawable/sample_img"
+            android:src="@drawable/ic_use_icon"
             app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.RoundImageStyle" />
 
         <TextView
@@ -42,8 +42,8 @@
             android:fontFamily="@font/biennale_semi_bold"
             android:text="K"
             android:visibility="gone"
-            android:textColor="@color/black"
-            android:textSize="14sp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp14"
             app:layout_constraintBottom_toBottomOf="@+id/iv_user_image"
             app:layout_constraintEnd_toEndOf="@+id/iv_user_image"
             app:layout_constraintStart_toStartOf="@+id/iv_user_image"
@@ -52,13 +52,16 @@
 
     <TextView
         android:id="@+id/tv_user_name_"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/biennale_regular"
         android:text="Puma"
+        android:textAlignment="center"
         android:textColor="@color/black"
-        android:textSize="12sp"
+        android:textSize="@dimen/sp12"
         android:layout_marginTop="12sp"
+        android:singleLine="true"
+        android:ellipsize="end"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cl_profile" />

@@ -135,6 +135,20 @@
     </LinearLayout>
 
 
-
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_request"
+        style="@style/BlueRoundedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp30"
+        android:layout_marginTop="@dimen/dp32"
+        android:paddingLeft="@dimen/dp60"
+        android:gravity="center"
+        android:paddingRight="@dimen/dp60"
+        android:text="Request"
+        android:drawableLeft="@drawable/arrow_forward"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

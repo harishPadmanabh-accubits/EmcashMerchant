@@ -6,8 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.app.emcashmerchant.R
 import com.app.emcashmerchant.ui.transaction_history.adapters.TransactionsTabAdapter
 import com.app.emcashmerchant.utils.extensions.obtainViewModel
@@ -28,6 +30,12 @@ class TransactionHistoryFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val backPressedCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                findNavController().navigate(R.id.homeFragment)
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(backPressedCallback)
         return inflater.inflate(R.layout.transaction_history_fragment, container, false)
     }
 

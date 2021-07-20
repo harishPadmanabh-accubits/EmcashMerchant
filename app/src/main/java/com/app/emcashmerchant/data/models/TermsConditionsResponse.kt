@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName
 
 data class TermsConditionsResponse(
     @SerializedName("data")
-    val `data`: String,
+    val data: String,
     @SerializedName("error")
     val error: String,
     @SerializedName("message")

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:weightSum="3"
+    android:id="@+id/ll_contact"
+    android:orientation="horizontal">
+
+    <com.app.emcashmerchant.utils.widget.LevelProfileImageView
+        android:id="@+id/iv_contact"
+        android:layout_width="@dimen/dp60"
+        android:layout_height="@dimen/dp60"
+        android:layout_marginTop="@dimen/dp12"
+        android:layout_weight="0"
+        android:layout_marginBottom="@dimen/dp24"/>
+
+    <LinearLayout
+        android:layout_width="@dimen/dp200"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp16"
+        android:layout_marginTop="@dimen/dp12"
+        android:layout_weight="2"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_contact_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Rahul"
+            android:fontFamily="@font/biennale_regular"
+            android:textColor="@color/black"
+            android:layout_toEndOf="@+id/iv_contact"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/tv_contact_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_contact_name"
+            android:layout_marginTop="@dimen/dp4"
+            android:text="91289128921"
+            android:fontFamily="@font/biennale_regular"
+            android:textSize="@dimen/sp12"
+            android:layout_toEndOf="@+id/iv_contact"
+            android:layout_weight="0.5" />
+
+
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/tv_image_verified"
+        android:layout_width="@dimen/dp24"
+        android:layout_height="@dimen/dp24"
+        android:layout_alignParentEnd="true"
+        android:layout_weight="1"
+        android:layout_marginTop="@dimen/dp24"
+        android:layout_marginRight="@dimen/dp16"
+        android:src="@drawable/checked" />
+</LinearLayout>

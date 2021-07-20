@@ -32,21 +32,6 @@ class OtpLayout(context: Context, attrs: AttributeSet) : LinearLayout(context, a
     }
 
     private fun handleFocusOnInput() {
-//        otpField1.afterTextChanged {
-//            otpField2.requestFocus()
-//        }
-//
-//        otpField2.afterTextChanged {
-//            otpField3.requestFocus()
-//        }
-//
-//        otpField3.afterTextChanged {
-//            otpField4.requestFocus()
-//        }
-//
-//        otpField4.onDeletePressed(otpField3)
-//        otpField3.onDeletePressed(otpField2)
-//        otpField2.onDeletePressed(otpField1)
 
         val sb = StringBuilder()
         otpField1.addTextChangedListener(object : TextWatcher {

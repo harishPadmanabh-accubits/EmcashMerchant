@@ -25,21 +25,24 @@ class WalletTransactionDetailsAdapterV2(
         val currentTransaction =transactions[position]
         holder.itemView.apply {
             tv_time.text= timeformat(transactions[position].updatedAt)
-            var type=transactions[position].transactionInfo.type
+            val type=transactions[position].transactionInfo.type
 
-            if(type==1){
+            if(type==1){ //TODO Show corresponding icon in image view
                 if (transactions[position].mode == 1) {
                     tv_type_indicator.text=transactions[position].transactionInfo.remitter.name
+                    iv_type_indicator_load_emcash.setBackgroundResource(R.drawable.ic_inbound)
+
                 } else {
+                    iv_type_indicator_load_emcash.setBackgroundResource(R.drawable.ic_outbound)
                     tv_type_indicator.text=transactions[position].transactionInfo.beneficiary.name
 
                 }
             }
             else if(type==2){
-                iv_type_indicator_load_emcash.setBackgroundResource(R.drawable.ic_payment_recieved)
-                tv_type_indicator.text="Payment recieved"
+                iv_type_indicator_load_emcash.setBackgroundResource(R.drawable.ic_emcash_loaded)
+                tv_type_indicator.text="Emcash Loaded"
             }else if(type==3){
-                iv_type_indicator_load_emcash.setBackgroundResource(R.drawable.ic_icon_convert)
+                iv_type_indicator_load_emcash.setBackgroundResource(R.drawable.ic_emcash_converted)
                 tv_type_indicator.text="Emcash Converted"
 
             }
@@ -56,6 +59,7 @@ class WalletTransactionDetailsAdapterV2(
                     setTextColor(ContextCompat.getColor(context,R.color.green))
 
                 } else {
+
                     setTextColor(ContextCompat.getColor(context,R.color.red))
 
                 }

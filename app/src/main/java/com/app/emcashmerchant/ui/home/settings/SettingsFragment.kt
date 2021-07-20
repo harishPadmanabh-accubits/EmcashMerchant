@@ -148,7 +148,7 @@ class SettingsFragment : Fragment() {
                         dialog.show_dialog()
                     }
                     ApiCallStatus.SUCCESS -> {
-                        termsConditions=it.data.toString()
+                        termsConditions=it.data?.data.toString()
                         dialog.dismiss_dialog()
 
                     }

@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/grey_radius_20">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline33"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.14" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.85" />
+
+        <LinearLayout
+            android:id="@+id/ll_you"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guideline33"
+            app:layout_constraintStart_toStartOf="@+id/guideline33"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_user_dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/sample_shop_profile" />
+
+            <TextView
+                android:id="@+id/tv_info_you"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:fontFamily="@font/biennale_semi_bold"
+                android:text="You"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_handshake"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="@+id/ll_you"
+            app:layout_constraintEnd_toStartOf="@+id/start"
+            app:layout_constraintStart_toStartOf="@+id/start"
+            app:layout_constraintTop_toTopOf="@+id/ll_you">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_handshake"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/white_circle_bg"
+                android:padding="4dp"
+                android:src="@drawable/handshake" />
+
+            <TextView
+                android:id="@+id/tv_handshake_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/biennale_semi_bold"
+                android:text="Handshaked"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tv_handshake_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:alpha=".6"
+                android:fontFamily="@font/biennale_book"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_receipient"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="@+id/ll_you"
+            app:layout_constraintEnd_toStartOf="@+id/end"
+            app:layout_constraintStart_toStartOf="@+id/end"
+            app:layout_constraintTop_toTopOf="@+id/ll_you">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_receipient_dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/user_img" />
+
+            <TextView
+                android:id="@+id/tv_reciepient_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:fontFamily="@font/biennale_semi_bold"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_line"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            app:layout_constraintBottom_toBottomOf="@+id/ll_you"
+            app:layout_constraintEnd_toStartOf="@+id/ll_handshake"
+            app:layout_constraintStart_toEndOf="@+id/ll_you"
+            app:layout_constraintTop_toTopOf="@+id/ll_you"
+            app:srcCompat="@drawable/break_line" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_line_2"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="@+id/ll_you"
+            app:layout_constraintEnd_toStartOf="@+id/ll_receipient"
+            app:layout_constraintStart_toEndOf="@+id/ll_handshake"
+            app:layout_constraintTop_toTopOf="@+id/ll_you"
+            app:srcCompat="@drawable/break_line" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

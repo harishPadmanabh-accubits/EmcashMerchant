@@ -133,13 +133,11 @@ interface ApiServices {
     ): Call<WalletResponse>
 
 
-
     @POST("v1/merchants/wallet/topup")
     fun topUp(
         @Body topUpRequest: TopUpRequest,
         @Header("Authorization") authentication: String
     ): Call<TopUpResponse>
-
 
 
     @POST("v1/merchants/wallet/withdraw")
@@ -151,8 +149,8 @@ interface ApiServices {
     @GET("v1/merchants/transactions/wallet")
     fun walletTransactionResponse(
         @Header("Authorization") authentication: String,
-        @Query("page") page:Int,
-        @Query("limit")  limit:Int
+        @Query("page") page: Int,
+        @Query("limit") limit: Int
     ): Call<WalletTransactionResponse>
 
 
@@ -161,5 +159,85 @@ interface ApiServices {
         @Body qrCodeRequest: CheckQrCodeRequest,
         @Header("Authorization") authentication: String
     ): Call<CheckQrCodeResponse>
+
+
+    @POST("v1/merchants/payments/transfer")
+    fun transferAmount(
+        @Body transferAmountRequest: TransferAmountRequest,
+        @Header("Authorization") authentication: String
+    ): Call<TransferAmountResponse>
+
+    @GET("v1/merchants/transactions/main/{reference_id}")
+    fun paymentReceiptResponse(
+        @Path("reference_id") reference_id: String,
+        @Header("Authorization") authentication: String
+    ): Call<PaymentReceiptResponse>
+
+    @GET("v1/merchants/contacts")
+    fun allContactsResponse(
+        @Header("Authorization") authentication: String,
+        @Query("page") page: Int,
+        @Query("limit") limit: Int,
+        @Query("search") search: String
+    ): Call<AllContactResponse>
+
+
+    @GET("v1/merchants/contacts/{userId}")
+    fun getOneContactResponse(
+        @Header("Authorization") authentication: String,
+        @Path("userId") userId: String
+    ): Call<CustomerContactResponse>
+
+    @POST("v1/merchants/payments/initiate")
+    fun intiatePayment(
+        @Body intiateContactPaymentRequest: IntiateContactPaymentRequest,
+        @Header("Authorization") authentication: String
+    ): Call<IntiateContactPaymentResponse>
+
+
+
+    @POST("v1/merchants/payments/qrcode/generate")
+    fun generateQrCodeRequest(
+        @Body generateQrCodeRequest: GenerateQrCodeRequest,
+        @Header("Authorization") authentication: String
+    ): Call<GenerateQrCodeResponse>
+
+
+    @GET("v1/merchants/transactions/recent")
+    fun recentTransaction(
+        @Header("Authorization") authentication: String,
+        @Query("page") page: Int,
+        @Query("limit") limit: Int
+    ): Call<RecentTransactionResponse>
+
+
+
+    @POST("v1/merchants/payments/request")
+    fun requestPayment(
+        @Header("Authorization") authentication: String,
+        @Body  paymentRequest: PaymentRequest
+    ): Call<PaymentRequestResponse>
+
+
+    @GET("v1/merchants/transactions/main?")
+    fun allTransactionHistoryReponse(
+        @Header("Authorization") authentication: String,
+        @Query("page") page: Int,
+        @Query("limit") limit: Int,
+        @Query("mode") mode: String,
+        @Query("startDate") startDate: String,
+        @Query("endDate") endDate: String
+    ): Call<TransactionHistoryResponse>
+
+    @GET("v1/merchants/contacts/{user_id}/transactions")
+    fun getChatResponse(
+        @Header("Authorization") authentication: String,
+        @Path("user_id") user_id: Int,
+        @Query("page") page: Int,
+        @Query("limit") limit: Int
+
+    ): Call<PaymentChatResponse>
+
+
 
 }

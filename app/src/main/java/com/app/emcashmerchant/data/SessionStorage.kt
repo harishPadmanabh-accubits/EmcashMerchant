@@ -68,7 +68,7 @@ class SessionStorage(var _context: Context) {
         set(value) = editor.putString(keyMerchantName, value).apply()
 
     var balance: String?
-        get() = pref.getString(keyBalance, null)
+        get() = pref.getString(keyBalance, "0")
         set(value) = editor.putString(keyBalance, value).apply()
 
     var isLoggedIn: Boolean

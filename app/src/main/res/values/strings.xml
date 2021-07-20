@@ -73,7 +73,7 @@
     <string name="enter_your_answer">Enter your answer</string>
     <string name="your_answer_hint">Ans. Your answer goes here</string>
     <string name="upload_documents">Upload Documents</string>
-    <string name="head_uplaod_documents">Please uplaod these documents to finish up the sign up process.</string>
+    <string name="head_uplaod_documents">Please upload these documents to finish up the sign up process.</string>
     <string name="accepted_document_formats">Accepted document formats :</string>
     <string name="pdf_jpeg_or_png">PDF, JPEG or PNG.</string>
     <string name="max_file_size">Max file size per file:</string>
@@ -89,7 +89,7 @@
     <string name="same_pin_number_validation">Please enter same Pin Number</string>
     <string name="select_different">Please Select Different Question</string>
     <string name="please_answer_both_question">Please Answer both question</string>
-    <string name="upload_all_documents">Please Upload All the Documents</string>
+    <string name="upload_all_documents">Please upload all the documents</string>
     <string name="bank_doc_size">Bank Document size is above 8MB</string>
     <string name="commercial_doc_size">Commercial Registration Document size is above 8MB</string>
     <string name="trade_doc_size">Trade License Document size is above 8MB</string>
@@ -101,7 +101,7 @@
     <string name="numeric_character_password">Password Should Contain  atleast 1 Numeric Character</string>
     <string name="enter_valid_number">Please Enter a valid Mobile Number</string>
     <string name="enter_valid_email">Please Enter a valid Email</string>
-    <string name="enter_valid_pin">Please Enter a Valid Pin Number</string>
+    <string name="enter_valid_pin">Please enter a valid pin number</string>
     <string name="terms_and_conditions">Terms and Conditions</string>
     <string name="notifications">Notifications</string>
     <string name="logout">Logout</string>
@@ -123,7 +123,7 @@
     <string name="profile_pic_updated">Profile Picture Updated</string>
     <string name="convert_emcash_to_cash">Convert EmCash to Cash</string>
     <string name="emcash">Emcash</string>
-    <string name="enter_iban">Enter IBAN</string>
+    <string name="enter_iban">Enter IBAN*</string>
     <string name="aed_equals_emcash">1 AED = 1 EmCash</string>
     <string name="convert">Convert</string>
     <string name="description">Description...</string>
@@ -138,6 +138,23 @@
     <string name="scan_qr_code">Scan QR code to pay</string>
     <string name="enter_mobile_number">Enter mobile number</string>
     <string name="or">or</string>
+    <string name="valid_qr">Please Scan a valid QR</string>
+    <string name="emcash_pin">Emcash Pin</string>
+    <string name="enter_your_phone_number">Enter Your Phone Number</string>
+    <string name="enter_mobile_number_of_verified_user">Please enter the mobile number of the verified user</string>
+    <string name="enter_number_hint">Enter Phone Number</string>
+    <string name="payment_success">Payment Success</string>
+    <string name="payment_inprogress">Payment In-progress</string>
+    <string name="payment_failed">Payment Failed</string>
+    <string name="payment_recieved">Payment Received</string>
+    <string name="payment_converted">Payment Converted</string>
+    <string name="scan_qr">[ ] Scan QR</string>
+    <string name="cancel">Cancel</string>
+    <string name="okay">Okay</string>
+    <string name="view_all">View All</string>
+    <string name="enough_bal">You Don\'t have enough balance</string>
+    <string name="enter_Valid_pin">Please enter a valid Pin</string>
+    <string name="enter_valid_pin_">Please enter a valid PIN</string>
 
     <string-array name="security_question">
         <item>Select your Question</item>

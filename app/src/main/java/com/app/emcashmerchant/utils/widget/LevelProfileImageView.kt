@@ -2,6 +2,7 @@ package com.app.emcashmerchant.utils.widget
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.app.emcashmerchant.R
 import com.app.emcashmerchant.utils.extensions.hide
@@ -17,7 +18,7 @@ class LevelProfileImageView(context: Context, attrs: AttributeSet) :
     }
 
     enum class UserProfileLevel{
-        RED,GREEN,YELLOW,NONE
+        RED,GREEN,YELLOW,NONE,BLACK,GREY_FILLED
     }
 
     fun setLevel(level : UserProfileLevel){
@@ -30,6 +31,12 @@ class LevelProfileImageView(context: Context, attrs: AttributeSet) :
             }
             UserProfileLevel.YELLOW->{
                 fl_user_level.setBackgroundResource((R.drawable.yellow_round))
+            }
+            UserProfileLevel.BLACK->{
+                fl_user_level.setBackgroundResource((R.drawable.black_round))
+            }
+            UserProfileLevel.GREY_FILLED->{
+                fl_user_level.setBackgroundResource((R.drawable.circle_black_fill))
             }
             UserProfileLevel.NONE->{
                 fl_user_level.hide()
@@ -51,6 +58,10 @@ class LevelProfileImageView(context: Context, attrs: AttributeSet) :
 
     fun setProfileName(name:String){
         tv_user_name_.text =name
+    }
+
+    fun invisibleProfileName(){
+        tv_user_name_.visibility=View.GONE
     }
 
     fun setFirstLetter(name:String){

@@ -54,18 +54,22 @@ class TransactionFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this).get(LoadEmcashViewModel::class.java)
         dialog=AppDialog(requireActivity())
+        var amount = requireArguments().getInt(KEY_AMOUNT)
+
         observe(view)
         getData()
-        performAction(view)
+        performAction(view,amount)
+        tv_info_currency.text=amount.toString()
 
     }
 
-    fun performAction(view: View) {
+    fun performAction(view: View,amount:Int) {
 
-        var amount = requireArguments().getInt(KEY_AMOUNT)
         var description = requireArguments().getString(KEY_DESCRIPTION)
         var latitude = requireArguments().getDouble(KEY_LATITUDE)
         var longitude = requireArguments().getDouble(KEY_LONGITUDE)
+
+
 
         tab_empay.setOnClickListener {
             tab_empay.setBackgroundResource(R.drawable.blue_stroke_light_blue_fill_round_bg)

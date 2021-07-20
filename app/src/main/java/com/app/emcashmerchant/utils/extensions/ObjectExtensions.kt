@@ -19,7 +19,6 @@ import android.util.DisplayMetrics
 import android.view.KeyEvent
 import android.view.View
 import android.view.WindowManager
-import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageView
@@ -42,10 +41,12 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.File
+import java.nio.charset.StandardCharsets
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.regex.Pattern
+
 
 private const val TIME_STAMP_FORMAT = "EEEE, MMMM d, yyyy - hh:mm:ss a"
 private const val DATE_FORMAT = "yyyy-MM-dd"
@@ -561,15 +562,11 @@ fun String.isEmailValidity(): Boolean {
      return  gpsStatus
 }
 
-fun getCurrentDate():String{
-    val sdf = SimpleDateFormat( "dd MMM yyyy")
-    return sdf.format(Date())
-}
+
 
 
 fun dateFormat(dateStr: String): String {
-    val sdfInput =
-        SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX", Locale.getDefault())
+    val sdfInput = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX", Locale.getDefault())
     val date = sdfInput.parse(dateStr)
     val sdfOutput = SimpleDateFormat("dd MMM yyyy")
     sdfOutput.timeZone = TimeZone.getTimeZone("Etc/UTC")
@@ -578,12 +575,35 @@ fun dateFormat(dateStr: String): String {
 }
 
 fun timeformat(dateStr: String):String?{
-    val sdfInput =
-        SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX", Locale.getDefault())
+    val sdfInput = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX", Locale.getDefault())
     val date = sdfInput.parse(dateStr)
     val sdfOutput = SimpleDateFormat("hh:mm a")
-    sdfOutput.timeZone = TimeZone.getTimeZone("Etc/UTC")
     val formatted = sdfOutput.format(date)
+    return  formatted
+
+}
+
+fun trimID(string: String): String? {
+
+    return string.substring(0, string.indexOf('-'));
+
+}
+
+//get todays date
+fun getCurrentDate():String{
+    val sdfInput = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX", Locale.getDefault())
+    val sdfOutput = SimpleDateFormat("dd MMM yyyy")
+    sdfOutput.timeZone = TimeZone.getTimeZone("Etc/UTC")
+    val formatted = sdfOutput.format(Date())
     return  formatted
 }
 
+fun EditText.onDeletePressed(function: () -> Unit){
+    this.setOnKeyListener { view, i, keyEvent ->
+        if(i == KeyEvent.KEYCODE_DEL && keyEvent.action==KeyEvent.ACTION_DOWN){
+            function.invoke()
+            return@setOnKeyListener true
+        }
+        return@setOnKeyListener false
+    }
+}

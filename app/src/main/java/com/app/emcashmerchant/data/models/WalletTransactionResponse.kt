@@ -43,7 +43,7 @@ data class WalletTransactionResponse(
             @SerializedName("transactionInfo")
             val transactionInfo: TransactionInfo,
             @SerializedName("updatedAt")
-            val updatedAt: String,
+            var updatedAt: String,
             @SerializedName("userId")
             val userId: String,
             @SerializedName("walletId")

@@ -99,7 +99,6 @@
         style="@style/GreyRoundTextField"
         android:layout_width="@dimen/dp_280"
         android:layout_height="@dimen/dp48"
-        android:cursorVisible="false"
         android:hint="@string/enter_iban"
         android:layout_marginTop="@dimen/dp16"
         android:inputType="number"

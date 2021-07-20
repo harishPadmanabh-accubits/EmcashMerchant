@@ -18,7 +18,9 @@
     <color name="card_blue">#4D4FFF</color>
     <color name="grey">#E9E9E9</color>
     <color name="grey_light">#F9F9F9</color>
+    <color name="grey_light1">#F0F0F0</color>
     <color name="blue_light">#F2F4FF</color>
+
 
     <color name="sky_blue">#70DDFF</color>
 
@@ -26,5 +28,6 @@
     <color name="orange">#EDB054</color>
     <color name="purple">#BB579F</color>
     <color name="custom_black">#252626</color>
+    <color name="light_black">#4B4B4B</color>
 
 </resources>

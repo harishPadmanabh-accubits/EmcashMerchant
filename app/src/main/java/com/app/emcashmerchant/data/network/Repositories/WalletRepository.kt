@@ -14,7 +14,7 @@ class WalletRepository(val context: Context) {
     fun walletResponse(
         onApiCallback: (status: Boolean, message: String?, result: WalletTransactionResponse.Data?) -> Unit
     ) {
-        api.walletTransactionResponse( "Bearer ${sessionStorage.accesToken}",1,10).awaitResponse(
+        api.walletTransactionResponse( "Bearer ${sessionStorage.accesToken}",1,20).awaitResponse(
             onFailure = {
                 onApiCallback(false, it, null)
 

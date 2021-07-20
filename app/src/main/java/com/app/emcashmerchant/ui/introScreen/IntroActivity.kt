@@ -18,6 +18,8 @@ class IntroActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_acitivity)
         getViewModel()
+
+
     }
 
     private fun getViewModel() {

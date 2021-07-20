@@ -15,5 +15,4 @@ class HomeBaseActivity : AppCompatActivity() {
 
     }
 
-
 }

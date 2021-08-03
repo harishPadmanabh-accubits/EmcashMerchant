@@ -3,20 +3,33 @@ package com.app.emcashmerchant.ui.transfer_payment
 import android.app.Activity
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.core.app.ActivityCompat
+import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.app.emcashmerchant.R
-import com.app.emcashmerchant.ui.loadEmcash.LoadEmcashFragment
+import com.app.emcashmerchant.data.SessionStorage
+import com.app.emcashmerchant.data.modelrequest.CheckQrCodeRequest
+import com.app.emcashmerchant.data.network.ApiCallStatus
+import com.app.emcashmerchant.utils.*
+import com.app.emcashmerchant.utils.extensions.isNull
+import com.app.emcashmerchant.utils.extensions.showShortToast
 import com.budiyev.android.codescanner.CodeScanner
 import com.budiyev.android.codescanner.DecodeCallback
 import kotlinx.android.synthetic.main.fragment_qr_code_scanner.*
 
 class QrCodeScannerFragment : Fragment() {
+
+
+    private lateinit var viewModel: TransferPaymentViewModel
+    private lateinit var sessionStorage: SessionStorage
 
     private val PERMISSION_REQUEST = android.Manifest.permission.CAMERA
 
@@ -32,6 +45,14 @@ class QrCodeScannerFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        val onBackPressedCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                findNavController().navigate(R.id.transferContactListFragment)
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(onBackPressedCallback)
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_qr_code_scanner, container, false)
     }
@@ -41,9 +62,20 @@ class QrCodeScannerFragment : Fragment() {
             QrCodeScannerFragment()
 
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel = ViewModelProvider(this).get(TransferPaymentViewModel::class.java)
+        sessionStorage = SessionStorage(requireActivity())
         checkPermission()
+
+        observer(view)
+        iv_back.setOnClickListener {
+            Navigation.findNavController(view).navigate(R.id.transferContactListFragment)
+
+        }
+
+
 
     }
 
@@ -97,6 +129,7 @@ class QrCodeScannerFragment : Fragment() {
             setUpCodeScanner()
         } else {
             // if user denies the permission request, handle the functionalities here.
+
         }
     }
 
@@ -110,7 +143,13 @@ class QrCodeScannerFragment : Fragment() {
             activity.runOnUiThread {
                 // the decoded text can be read from here.
                 decodedText = it.text
-                Log.e("decodedText",decodedText.toString());
+                if (!decodedText.isNull()) {
+                    val checkQrCodeRequest = CheckQrCodeRequest(decodedText.toString())
+                    viewModel.checkQr(checkQrCodeRequest)
+
+                } else {
+                    requireActivity().showShortToast(getString(R.string.valid_qr))
+                }
             }
         }
     }
@@ -132,6 +171,39 @@ class QrCodeScannerFragment : Fragment() {
         super.onDestroy()
         if (this::codeScanner.isInitialized) {
             codeScanner.stopPreview()
+        }
+    }
+
+    fun observer(view: View) {
+        viewModel.apply {
+            qrCodeCheckStatus.observe(requireActivity(), Observer {
+                when (it.status) {
+                    ApiCallStatus.LOADING -> {
+
+                    }
+                    ApiCallStatus.SUCCESS -> {
+                        val bundle = bundleOf(
+                            KEY_AMOUNT to it.data?.amount,
+                            KEY_SENDER_NAME to it.data?.name,
+                            KEY_SENDER_NUMBER to it.data?.phoneNumber,
+                            KEY_REF_ID to decodedText,
+                            KEY_LEVEL_COLOUR to it.data?.ppp.toString(),
+                            KEY_ROLE to it.data?.roleId.toString()
+
+
+
+                        )
+
+                        Navigation.findNavController(view)
+                            .navigate(R.id.performTransferPaymentFragment, bundle)
+
+                    }
+                    ApiCallStatus.ERROR -> {
+                        requireActivity().showShortToast(it.errorMessage)
+
+                    }
+                }
+            })
         }
     }
 

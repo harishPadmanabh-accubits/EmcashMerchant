@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/iv_status"
+        android:layout_width="@dimen/dp60"
+        android:layout_height="@dimen/dp60"
+        android:layout_gravity="center|top"
+        android:layout_marginStart="@dimen/dp150"
+        android:layout_marginEnd="@dimen/dp150"
+        android:translationZ="@dimen/dp2" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp16"
+        android:layout_marginTop="@dimen/dp20"
+        android:layout_marginRight="@dimen/dp16"
+        android:background="@drawable/grey_radius_20"
+        android:paddingBottom="@dimen/dp26"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tv_payment_status2"
+            android:fontFamily="@font/biennale_semi_bold"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp64"
+            android:gravity="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/ll_txn_block"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp24"
+            android:layout_marginTop="@dimen/dp32"
+            android:background="@drawable/white_rounded_radius_14dp"
+            android:backgroundTint="@color/white"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toStartOf="@id/ll_wallet_block"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_payment_status2">
+
+            <TextView
+                android:id="@+id/tv_txn_id_label"
+                android:fontFamily="@font/biennale_regular"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp16"
+                android:layout_marginTop="@dimen/dp8"
+                android:layout_marginEnd="@dimen/dp32"
+                android:gravity="center"
+                android:text="Transaction ID" />
+
+            <TextView
+                android:id="@+id/tv_txn_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp16"
+                android:layout_marginTop="@dimen/dp8"
+                android:layout_marginEnd="@dimen/dp40"
+                android:layout_marginBottom="@dimen/dp8"
+                android:gravity="center"
+                android:fontFamily="@font/biennale_semi_bold"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp14"
+         />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_wallet_block"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp16"
+            android:layout_marginEnd="@dimen/dp24"
+            android:background="@drawable/white_rounded_radius_14dp"
+            android:backgroundTint="@color/white"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/ll_txn_block"
+            app:layout_constraintTop_toTopOf="@id/ll_txn_block">
+
+            <TextView
+                android:id="@+id/tv_wallet_id_label"
+                android:fontFamily="@font/biennale_regular"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp16"
+                android:layout_marginTop="@dimen/dp8"
+                android:layout_marginEnd="@dimen/dp32"
+                android:gravity="center"
+                android:text="Wallet ID" />
+
+            <TextView
+                android:id="@+id/tv_wallet_id"
+                android:fontFamily="@font/biennale_semi_bold"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp16"
+                android:layout_marginTop="@dimen/dp8"
+                android:layout_marginBottom="@dimen/dp8"
+                android:gravity="center"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_desc_block"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp24"
+            android:layout_marginTop="@dimen/dp16"
+            android:layout_marginEnd="@dimen/dp24"
+            android:background="@drawable/white_rounded_radius_14dp"
+            android:backgroundTint="@color/white"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ll_txn_block">
+
+            <TextView
+                android:id="@+id/tv_description_label"
+                android:fontFamily="@font/biennale_regular"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp16"
+                android:layout_marginTop="@dimen/dp16"
+                android:layout_marginEnd="@dimen/dp40"
+                android:gravity="center"
+                android:text="Description" />
+
+            <TextView
+                android:id="@+id/tv_description"
+                android:fontFamily="@font/biennale_semi_bold"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp16"
+                android:layout_marginTop="@dimen/dp8"
+                android:layout_marginEnd="@dimen/dp40"
+                android:layout_marginBottom="@dimen/dp16"
+                android:gravity="center"
+                />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_send_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp26"
+            android:drawableRight="@drawable/right_side_blue_arrow"
+            android:drawablePadding="@dimen/dp12"
+            android:text="Send receipt to email"
+            android:textColor="@color/app_blue"
+            android:fontFamily="@font/biennale_semi_bold"
+            android:textSize="@dimen/sp14"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ll_desc_block" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

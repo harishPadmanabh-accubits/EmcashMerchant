@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.payment_request.RequestContactListFragment">
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp16"
+        android:layout_marginTop="@dimen/dp24"
+        android:padding="@dimen/dp12"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_back_arrow"
+        app:tint="@color/black" />
+
+
+    <TextView
+        android:id="@+id/tv_text_heading"
+        style="@style/HeadingText"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp24"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="@dimen/dp150"
+        android:text="@string/enter_your_phone_number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/iv_back"
+        app:layout_constraintTop_toBottomOf="@id/iv_back" />
+
+    <TextView
+        android:id="@+id/tv_text_sub_heading"
+        style="@style/SubHeadingText"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp40"
+        android:layout_marginTop="@dimen/dp16"
+        android:text="@string/enter_mobile_number_of_verified_user"
+        app:layout_constraintStart_toStartOf="@id/tv_text_heading"
+        app:layout_constraintTop_toBottomOf="@id/tv_text_heading" />
+
+    <EditText
+        android:id="@+id/sv_search"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp48"
+        android:layout_marginStart="@dimen/dp16"
+        android:layout_marginTop="@dimen/dp16"
+        android:layout_marginEnd="@dimen/dp16"
+        android:background="@drawable/greyshaded_round_bg_24dp"
+        android:drawableLeft="@drawable/ic_search"
+        android:drawablePadding="@dimen/dp12"
+        android:fontFamily="@font/biennale_regular"
+        android:hint="Search Contact"
+        android:imeOptions="actionSearch"
+        android:inputType="text"
+        android:paddingLeft="@dimen/dp12"
+        android:singleLine="true"
+        android:textSize="@dimen/sp14"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_text_sub_heading" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_contactList"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/dp16"
+        android:layout_marginTop="@dimen/dp40"
+        android:layout_marginEnd="@dimen/dp16"
+        android:overScrollMode="never"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sv_search" />
+
+
+    <FrameLayout
+        android:visibility="gone"
+        android:id="@+id/fl_confirmation"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/light_black_shade"
+        >
+        <LinearLayout
+            android:id="@+id/ll_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/white_top_edged"
+            android:layout_gravity="bottom"
+            >
+            <include
+                layout="@layout/lay_confirmation"
+                />
+
+        </LinearLayout>
+
+    </FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
+

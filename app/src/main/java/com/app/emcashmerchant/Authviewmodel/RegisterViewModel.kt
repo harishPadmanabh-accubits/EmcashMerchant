@@ -35,7 +35,7 @@ class RegisterViewModel(val app: Application) : AndroidViewModel(app) {
         serviceDescription: String,
         tradeLicenseIssuingAuthority: String,
         tradeLicenseNumber: String,
-        zipCode: String
+        zipCode: String,refId: String?
     ) {
         initialSignupStatus.value = ApiMapper(ApiCallStatus.LOADING, null, null)
         val signupRequestBody =
@@ -49,7 +49,7 @@ class RegisterViewModel(val app: Application) : AndroidViewModel(app) {
                 serviceDescription,
                 tradeLicenseIssuingAuthority,
                 tradeLicenseNumber,
-                zipCode
+                zipCode,refId
             )
         repository.performInitialSignup(signupRequestBody) { status, message, result ->
             Timber.e("error $message")
@@ -85,7 +85,7 @@ class RegisterViewModel(val app: Application) : AndroidViewModel(app) {
 
     fun performVerifyOtp(otp: String, refId: String) {
         verifyOtpStatus.value = ApiMapper(ApiCallStatus.LOADING, null, null)
-        val verifyOtpRequest = VerifyOtpRequest(otp, refId)
+        val verifyOtpRequest = VerifyOtpRequestRegister(otp, refId)
         repository.verifyOtp(verifyOtpRequest) { status, message, result ->
             Timber.e("error $message")
             when (status) {
@@ -187,9 +187,9 @@ class RegisterViewModel(val app: Application) : AndroidViewModel(app) {
         }
     }
 
-    fun finalSignup() {
+    fun finalSignup(fcmToken:String) {
         finalSignupResponseStatus.value = ApiMapper(ApiCallStatus.LOADING, null, null)
-        repository.performFinalSignup() { status, message, result ->
+        repository.performFinalSignup(fcmToken) { status, message, result ->
             when (status) {
                 true -> {
                     finalSignupResponseStatus.value = ApiMapper(ApiCallStatus.SUCCESS, result, null)

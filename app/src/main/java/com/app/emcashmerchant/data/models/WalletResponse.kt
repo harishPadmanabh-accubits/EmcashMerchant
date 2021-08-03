@@ -28,6 +28,11 @@ data class WalletResponse(
         @SerializedName("userId")
         val userId: String,
         @SerializedName("walletAddress")
-        val walletAddress: String
+        val walletAddress: String,
+        @SerializedName("notificationCount")
+        val notificationCount : Int,
+        @SerializedName("profileImage")
+        val profileImage : String
+
     )
 }

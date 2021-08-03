@@ -7,6 +7,8 @@ import androidx.core.app.ActivityCompat
 import com.app.emcashmerchant.R
 import com.app.emcashmerchant.ui.login.LoginActivity
 import com.app.emcashmerchant.ui.register.BasicDetailsActivity
+import com.app.emcashmerchant.utils.KEY_DEEPLINK
+import com.app.emcashmerchant.utils.KEY_TYPE
 import com.app.emcashmerchant.utils.extensions.obtainViewModel
 import com.app.emcashmerchant.utils.extensions.openActivity
 
@@ -14,10 +16,19 @@ import com.app.emcashmerchant.utils.extensions.openActivity
 class IntroActivity : AppCompatActivity() {
     private lateinit var viewmodel: IntroScreenViewModel
 
+    private val type by lazy {
+        intent.getStringExtra(KEY_TYPE)
+    }
+    private val deepLink by lazy {
+        intent.getStringExtra(KEY_DEEPLINK)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_acitivity)
         getViewModel()
+
+
     }
 
     private fun getViewModel() {

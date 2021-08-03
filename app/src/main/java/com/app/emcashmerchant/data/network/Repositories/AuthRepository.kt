@@ -1,6 +1,7 @@
 package com.app.emcashmerchant.data.network.Repositories
 
 import android.content.Context
+import android.util.Log
 import android.webkit.MimeTypeMap
 import com.app.emcashmerchant.data.SessionStorage
 import com.app.emcashmerchant.data.modelrequest.*
@@ -38,7 +39,7 @@ class AuthRepository(val context: Context) {
 
 
     fun verifyOtp(
-        verifyOtpRequest: VerifyOtpRequest,
+        verifyOtpRequest: VerifyOtpRequestRegister,
         onApiCallback: (status: Boolean, message: String?, result: VerifyOtpResponse.Data?) -> Unit
     ) {
         api.performVerifyOTP(verifyOtpRequest).awaitResponse(
@@ -170,11 +171,11 @@ class AuthRepository(val context: Context) {
 
 
 
-    fun performFinalSignup(
+    fun performFinalSignup(fcmToken:String,
         onApiCallback: (status: Boolean, message: String?, result: FinalRegistartionResponse?) -> Unit
     ) {
 
-        val finalSignupRequest=FinalSignupRequest(sessionStorage.referenceIdSecurity.toString())
+        val finalSignupRequest=FinalSignupRequest(sessionStorage.referenceIdSecurity.toString(),fcmToken)
         api.performFinalSignup(
             finalSignupRequest
         ).awaitResponse(

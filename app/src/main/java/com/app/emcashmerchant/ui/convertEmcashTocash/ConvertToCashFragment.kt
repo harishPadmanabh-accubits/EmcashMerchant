@@ -54,7 +54,7 @@ class ConvertToCashFragment : Fragment() {
     ): View? {
         val onBackPressedCallback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.walletFragment)
+                findNavController().popBackStack()
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(onBackPressedCallback)
@@ -69,7 +69,7 @@ class ConvertToCashFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewModel = ViewModelProvider(this).get(ConvertEmcashViewModel::class.java)
-
+        sessionStorage=SessionStorage(requireActivity())
         activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
         dialog = AppDialog(requireActivity())
 
@@ -77,11 +77,13 @@ class ConvertToCashFragment : Fragment() {
         observe(view)
 
         iv_back.setOnClickListener {
-            Navigation.findNavController(view).navigate(R.id.walletFragment)
+            findNavController().popBackStack()
+
         }
         btn_convert_emcash.setOnClickListener {
              amount = et_emcash.text.toString()
             val ibn: String = et_description.text.toString()
+
             if (gpsEnabled(requireActivity())) {
 
                 if (ibn.isEmpty()) {
@@ -89,6 +91,9 @@ class ConvertToCashFragment : Fragment() {
 
                 } else if(amount.isEmpty()) {
                     requireActivity().showShortToast(getString(R.string.enter_valid_amount))
+                }else if(sessionStorage.balance?.toInt()!! < amount.toInt()){
+                    requireActivity().showShortToast(getString(R.string.enough_bal))
+
                 }
                 else
                 {

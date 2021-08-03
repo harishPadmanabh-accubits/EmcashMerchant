@@ -2,7 +2,9 @@ package com.app.emcashmerchant.data.network
 
 import android.content.Context
 import com.app.emcashmerchant.BuildConfig
+import com.app.emcashmerchant.data.authenticator.TokenAuthenticator
 import com.app.emcashmerchant.data.network.interceptors.NetworkConnectionInterceptor
+import com.app.emcashmerchant.data.network.interceptors.TokenInterceptor
 import com.app.emcashmerchant.utils.BASE_URL
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -18,7 +20,10 @@ class ApiManger(appContext: Context) {
         val okHttpClient = OkHttpClient.Builder()
             .addInterceptor(NetworkConnectionInterceptor(appContext))
             .addInterceptor(loggingInterceptor)
+//            .addInterceptor(TokenInterceptor(appContext))
+            .authenticator(TokenAuthenticator(appContext))
             .build()
+
 
         val restAdapter = Retrofit.Builder()
             .baseUrl(BASE_URL)
@@ -27,4 +32,6 @@ class ApiManger(appContext: Context) {
             .build()
         api = restAdapter.create(ApiServices::class.java)
     }
+
+
 }

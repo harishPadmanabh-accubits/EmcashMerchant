@@ -6,5 +6,8 @@ import com.google.gson.annotations.SerializedName
 
 data class FinalSignupRequest(
     @SerializedName("referenceId")
-    val referenceId: String
+    val referenceId: String,
+
+    @SerializedName("fcmToken")
+    val fcmToken: String
 )

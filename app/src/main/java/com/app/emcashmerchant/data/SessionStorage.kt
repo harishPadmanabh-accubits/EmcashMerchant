@@ -68,7 +68,7 @@ class SessionStorage(var _context: Context) {
         set(value) = editor.putString(keyMerchantName, value).apply()
 
     var balance: String?
-        get() = pref.getString(keyBalance, null)
+        get() = pref.getString(keyBalance, "0")
         set(value) = editor.putString(keyBalance, value).apply()
 
     var isLoggedIn: Boolean
@@ -84,6 +84,11 @@ class SessionStorage(var _context: Context) {
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         i.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         _context.startActivity(i)
+    }
+
+    fun clearUserReferenceId() {
+        editor.clear()
+        editor.commit()
     }
 
     companion object {

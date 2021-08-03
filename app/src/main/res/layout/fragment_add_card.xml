@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.transactionActivity.AddCardFragment">
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp16"
+        android:layout_marginTop="@dimen/dp24"
+        android:padding="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_back_arrow"
+        app:tint="@color/black" />
+
+    <TextView
+        android:id="@+id/tv_head"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/biennale_regular"
+        android:text="@string/add_new_card"
+        android:textColor="@color/black"
+        android:textSize="@dimen/sp18"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_back"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/iv_back" />
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout2"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp300"
+        android:layout_marginRight="@dimen/dp24"
+        android:layout_marginTop="@dimen/dp40"
+        android:layout_marginLeft="@dimen/dp24"
+        android:background="@drawable/grey_outline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_head">
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/biennale_regular"
+            android:text="@string/add_new_card"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp14"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.072"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/view1"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="@dimen/dp12"
+            android:layout_marginTop="@dimen/dp12"
+            android:layout_marginRight="@dimen/dp12"
+            android:layout_marginBottom="@dimen/dp12"
+            android:background="@color/grey"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/textView5"
+            app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+        <EditText
+            android:id="@+id/et_atmNumber"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp48"
+            android:layout_marginLeft="@dimen/dp12"
+            android:inputType="number"
+            android:layout_marginTop="@dimen/dp20"
+            android:layout_marginRight="@dimen/dp12"
+            android:background="@drawable/grey_8dp"
+            android:fontFamily="@font/biennale_regular"
+            android:hint="0000 0000 0000 0000 0000 "
+            android:paddingStart="@dimen/dp16"
+            android:textSize="@dimen/sp14"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/view1"
+            app:layout_constraintTop_toBottomOf="@+id/view1" />
+
+        <EditText
+            android:id="@+id/et_CardHolderName"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp48"
+            android:layout_marginLeft="@dimen/dp12"
+            android:layout_marginTop="@dimen/dp20"
+            android:layout_marginRight="@dimen/dp12"
+            android:background="@drawable/grey_8dp"
+            android:fontFamily="@font/biennale_regular"
+            android:hint="Enter cardholder name"
+            android:paddingStart="@dimen/dp16"
+            android:textSize="@dimen/sp14"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/et_atmNumber"
+            app:layout_constraintTop_toBottomOf="@+id/et_atmNumber" />
+
+        <LinearLayout
+            android:layout_width="200dp"
+            android:layout_height="@dimen/dp48"
+            android:layout_marginLeft="@dimen/dp12"
+            android:layout_marginTop="24dp"
+            app:layout_constraintEnd_toEndOf="@+id/et_CardHolderName"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_CardHolderName">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginRight="@dimen/dp12"
+                android:layout_weight="1"
+                android:background="@drawable/grey_8dp"
+                android:fontFamily="@font/biennale_regular"
+                android:hint="MM/YYYY"
+                android:inputType="number"
+                android:textAlignment="center"
+                android:textSize="@dimen/sp14"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/et_atmNumber"
+                app:layout_constraintTop_toBottomOf="@+id/et_atmNumber" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/dp12"
+                android:layout_weight="1"
+                android:background="@drawable/grey_8dp"
+                android:fontFamily="@font/biennale_regular"
+                android:hint="CVC/CVV"
+                android:inputType="number"
+                android:textAlignment="center"
+                android:textSize="@dimen/sp14"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/et_atmNumber"
+                app:layout_constraintTop_toBottomOf="@+id/et_atmNumber" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_convert_emcash"
+        style="@style/BlueRoundedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/dp80"
+        android:paddingRight="@dimen/dp80"
+        android:text="Save Card"
+        android:layout_marginTop="@dimen/dp40"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/dp12"
+    android:gravity="center"
+    android:id="@+id/ll_duration"
+    android:background="@drawable/white_greyborderd_5dp"
+    >
+
+    <TextView
+        android:id="@+id/tv_duration"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="1 Week"
+        android:textAlignment="center"
+        android:paddingLeft="@dimen/dp12"
+        android:paddingRight="@dimen/dp12"
+        android:paddingTop="@dimen/dp12"
+        android:paddingBottom="@dimen/dp12"
+        android:textColor="@color/light_black1"
+        android:fontFamily="@font/biennale_regular"
+        android:textSize="@dimen/sp10"
+        />
+</LinearLayout>

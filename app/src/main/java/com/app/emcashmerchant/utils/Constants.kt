@@ -3,7 +3,12 @@ package com.app.emcashmerchant.utils
 import androidx.security.crypto.MasterKeys
 
 
-const val BASE_URL : String = "https://emcash-api-dev.devtomaster.com/"
+const val BASE_URL : String = "https://emcash-api-dev.devtomaster.com/"//dev
+//const val BASE_URL : String = "https://emcash-api-stg.devtomaster.com"
+
+const val BUCKET_URL : String = "https://stemcashmerchantdocstest.blob.core.windows.net"
+
+
 var masterKeyAlias: String = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC)
 
 const val DATABASE_Name = "app_master_db"
@@ -36,3 +41,26 @@ const val KEY_AMOUNT = "AMOUNT"
 const val KEY_DESCRIPTION = "DESCRIPTION"
 const val KEY_LONGITUDE = "LONGITUDE"
 const val KEY_LATITUDE = "LATITUDE"
+const val KEY_SENDER_NUMBER = "SENDER_NUMBER"
+const val KEY_SENDER_NAME = "SENDER_NAME"
+
+const val KEY_USERID = "USER_ID"
+const val KEY_QRCODE = "QRCODE"
+const val KEY_PAGE = "PAGE"
+const val KEY_ACTION = "ACTION"
+const val KEY_NAME = "NAME"
+const val KEY_NUMBER = "NUMBER"
+const val KEY_LEVEL_COLOUR = "LEVEL_COLOUR"
+const val KEY_ROLE = "ROLE"
+const val KEY_DEEPLINK = "DEEPLINK"
+const val KEY_TYPE = "TYPE"
+const val KEY_PROFLE_IMAGE_LINK = "PROFLE_IMAGE_LINK"
+const val KEY_REUPLOAD_TOKEN = "REUPLOAD_TOKEN"
+const val KEY_REVIEWSCREEN = "REVIEWSCREEN"
+
+
+
+const val DESTINATION = "source"
+const val SCREEN_CHAT = 200
+const val IS_FROM_DEEPLINK = "deeplink_sourced"
+const val KEY_USER_ID_FROM_DEEPLINK = "user_id_deeplink"

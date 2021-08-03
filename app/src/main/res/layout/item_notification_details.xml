@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
+    android:id="@+id/ll_notifications"
+    android:layout_marginTop="@dimen/dp12"
     android:orientation="horizontal">
 
 
@@ -14,7 +16,7 @@
         android:layout_height="@dimen/dp12"
         android:layout_marginTop="@dimen/dp12"
         android:layout_marginBottom="@dimen/dp12"
-        android:src="@drawable/ic_point"
+        android:src="@drawable/black_bg"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

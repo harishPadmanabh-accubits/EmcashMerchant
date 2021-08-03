@@ -2,8 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:layout_marginStart="@dimen/dp16"
-    android:layout_marginEnd="@dimen/dp16"
+
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <TextView
@@ -12,9 +11,10 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/biennale_regular"
         android:text="19 May 2021"
+
         android:textColor="@color/black"
         android:textSize="@dimen/dp12"
-        android:layout_marginTop="@dimen/dp8" />
+        android:layout_marginTop="@dimen/dp16" />
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_notification_details"
         android:layout_width="match_parent"

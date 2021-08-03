@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.payment_request.PaymentRequestFragment">
 
     <androidx.appcompat.widget.AppCompatImageView
@@ -42,13 +42,12 @@
         android:id="@+id/ll_input"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/guideline22"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline22"
-        android:gravity="center"
-        >
+        app:layout_constraintTop_toTopOf="@+id/guideline22">
 
         <EditText
             android:id="@+id/et_emcash"
@@ -63,14 +62,14 @@
             android:maxLength="4"
             android:textColor="@color/black"
             android:textSize="@dimen/dp48" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/biennale_bold"
             android:text="Emcash"
             android:textColor="@color/black"
-            android:textSize="@dimen/sp18"
-            />
+            android:textSize="@dimen/sp18" />
 
     </LinearLayout>
 
@@ -80,7 +79,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.30"  />
+        app:layout_constraintGuide_percent="0.30" />
 
 
     <LinearLayout
@@ -99,12 +98,12 @@
         style="@style/GreyRoundTextField"
         android:layout_width="@dimen/dp_280"
         android:layout_height="@dimen/dp48"
+        android:layout_marginTop="@dimen/dp60"
         android:cursorVisible="false"
         android:hint="@string/description"
-        android:layout_marginTop="@dimen/dp60"
+        android:imeOptions="actionDone"
         android:inputType="text"
         android:textSize="@dimen/sp14"
-        android:imeOptions="actionDone"
         app:layout_constraintEnd_toEndOf="@+id/ll_input"
         app:layout_constraintStart_toStartOf="@+id/ll_input"
         app:layout_constraintTop_toBottomOf="@+id/ll_input" />
@@ -135,6 +134,20 @@
     </LinearLayout>
 
 
-
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_request"
+        style="@style/BlueRoundedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp32"
+        android:layout_marginBottom="@dimen/dp30"
+        android:drawableLeft="@drawable/arrow_forward"
+        android:gravity="center"
+        android:paddingLeft="@dimen/dp60"
+        android:paddingRight="@dimen/dp60"
+        android:text="Request"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

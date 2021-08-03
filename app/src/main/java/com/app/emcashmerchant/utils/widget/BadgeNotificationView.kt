@@ -23,22 +23,6 @@ class BadgeNotificationView(context: Context, attrs: AttributeSet)
         //setupBadge(5)
     }
 
-     fun setupBadge(notification : Int) {
 
-        if(notification == 0) return // Don't show the badge
-
-        this.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
-            override fun onGlobalLayout() {
-                BadgeDrawable.create(context).apply {
-                    number = notification
-                    verticalOffset = 45
-                    horizontalOffset = 45
-                    backgroundColor = ContextCompat.getColor(context,R.color.red)
-                    BadgeUtils.attachBadgeDrawable(this, this@BadgeNotificationView)
-                }
-                this@BadgeNotificationView.viewTreeObserver.removeOnGlobalLayoutListener(this)
-            }
-        })
-    }
 
 }

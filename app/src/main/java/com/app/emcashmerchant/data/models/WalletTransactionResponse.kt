@@ -43,7 +43,7 @@ data class WalletTransactionResponse(
             @SerializedName("transactionInfo")
             val transactionInfo: TransactionInfo,
             @SerializedName("updatedAt")
-            val updatedAt: String,
+            var updatedAt: String,
             @SerializedName("userId")
             val userId: String,
             @SerializedName("walletId")
@@ -145,4 +145,28 @@ data class WalletTransactionResponse(
             val walletAddress: String
         )
     }
+
+}
+
+
+data class WalletActivityModel(
+    val date: String,
+    val activities: List<WalletTransactionResponse.Data.Row>
+) {
+
+}
+
+data class TransactionItemUiModel(
+    val date: String,
+    val transactionList: List<WalletTransactionResponse.Data.Row>
+)
+
+data class WalletActivityDetails(
+    val type: Int,
+    val valueLoaded: String,
+    val time: String,
+    val changedValue: String,
+    val Balance: String
+) {
+
 }

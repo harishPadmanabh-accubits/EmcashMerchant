@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:id="@+id/cl_bottomsheet"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_close"
+        android:layout_width="@dimen/dp24"
+        android:layout_height="@dimen/dp24"
+        android:layout_gravity="right"
+        android:layout_margin="@dimen/dp24"
+        android:src="@drawable/ic_close_grey"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <FrameLayout
+        android:id="@+id/fl_user_level_confirmation"
+        android:layout_width="94dp"
+        android:layout_height="94dp"
+        android:layout_marginTop="@dimen/dp60"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_close">
+
+
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:visibility="gone"
+            android:id="@+id/iv_user_dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_use_icon" />
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/tv_firstLetterr_confirmation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="A"
+            android:fontFamily="@font/biennale_medium"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp20"
+            />
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/biennale_medium"
+        android:textColor="@color/black"
+        android:layout_marginTop="@dimen/dp20"
+        android:textSize="@dimen/sp18"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fl_user_level_confirmation" />
+
+    <TextView
+        android:id="@+id/tv_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/biennale_regular"
+        android:textColor="@color/black"
+        android:textSize="@dimen/sp14"
+        android:padding="@dimen/dp6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_name" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp24"
+        android:background="@drawable/grey_rounded"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_number">
+
+        <TextView
+            android:id="@+id/tv_total_bill_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp6"
+            android:fontFamily="@font/biennale_medium"
+            android:gravity="center"
+            android:padding="@dimen/dp2"
+            android:paddingStart="@dimen/dp32"
+            android:paddingEnd="@dimen/dp32"
+            android:paddingBottom="@dimen/dp8"
+            android:textColor="@color/grey_unselected"
+            android:textSize="@dimen/sp12" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_confirm"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/biennale_regular"
+        android:text="Do you wish to send a request to this contact person ?"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="@dimen/sp14"
+        android:layout_marginTop="@dimen/dp24"
+        android:layout_marginRight="@dimen/dp16"
+        android:layout_marginLeft="@dimen/dp16"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout5" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_request"
+        style="@style/BlueRoundedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp24"
+        android:layout_marginBottom="@dimen/dp32"
+        android:gravity="center"
+        android:paddingLeft="@dimen/dp60"
+        android:paddingRight="@dimen/dp60"
+        android:text="Continue"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_confirm" />
+</androidx.constraintlayout.widget.ConstraintLayout>

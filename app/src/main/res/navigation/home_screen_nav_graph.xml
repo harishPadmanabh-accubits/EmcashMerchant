@@ -27,12 +27,19 @@
             app:destination="@id/notificationsFragment" />
         <action android:id="@+id/goto_transfer_payment_activity"
             app:destination="@+id/tranferPaymentActivity"/>
-        <action
-            android:id="@+id/action_homeFragment_to_transferPaymentFragment"
-            app:destination="@id/transferPaymentFragment" />
+
         <action
             android:id="@+id/action_homeFragment_to_paymentRequestFragment"
             app:destination="@id/paymentRequestFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_transferContactListFragment"
+            app:destination="@id/transferContactListFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_paymentChatHistoryFragment"
+            app:destination="@id/paymentChatHistoryFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_viewAllTransactionsFragment"
+            app:destination="@id/viewAllTransactionsFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
@@ -55,7 +62,11 @@
         android:id="@+id/notificationsFragment"
         android:name="com.app.emcashmerchant.ui.home.notifications.NotificationsFragment"
         android:label="notifications_fragment"
-        tools:layout="@layout/notifications_fragment" />
+        tools:layout="@layout/notifications_fragment" >
+        <action
+            android:id="@+id/action_notificationsFragment_to_paymentChatHistoryFragment"
+            app:destination="@id/paymentChatHistoryFragment" />
+    </fragment>
     <fragment
         android:id="@+id/convertToCashFragment"
         android:name="com.app.emcashmerchant.ui.convert_to_cash.ConvertToCashFragment"
@@ -96,16 +107,12 @@
         android:id="@+id/transactionFragment"
         android:name="com.app.emcashmerchant.ui.transactionActivity.TransactionFragment"
         android:label="fragment_transaction"
-        tools:layout="@layout/fragment_transaction" />
-    <fragment
-        android:id="@+id/transferPaymentFragment"
-        android:name="com.app.emcashmerchant.ui.transfer_payment.TransferPaymentFragment"
-        android:label="fragment_transfer_payment"
-        tools:layout="@layout/fragment_transfer_payment" >
+        tools:layout="@layout/fragment_transaction" >
         <action
-            android:id="@+id/action_transferPaymentFragment_to_qrCodeScannerFragment"
-            app:destination="@id/qrCodeScannerFragment" />
+            android:id="@+id/action_transactionFragment_to_addCardFragment"
+            app:destination="@id/addCardFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/paymentRequestFragment"
         android:name="com.app.emcashmerchant.ui.payment_request.PaymentRequestFragment"
@@ -119,10 +126,112 @@
         android:id="@+id/paymentRequestQrCodeFragment"
         android:name="com.app.emcashmerchant.ui.payment_request.PaymentRequestQrCodeFragment"
         android:label="fragment_payment_request_qr_code"
-        tools:layout="@layout/fragment_payment_request_qr_code" />
+        tools:layout="@layout/fragment_payment_request_qr_code" >
+        <action
+            android:id="@+id/action_paymentRequestQrCodeFragment_to_requestContactListFragment"
+            app:destination="@id/requestContactListFragment" />
+    </fragment>
     <fragment
         android:id="@+id/qrCodeScannerFragment"
         android:name="com.app.emcashmerchant.ui.transfer_payment.QrCodeScannerFragment"
         android:label="fragment_qr_code_scanner"
-        tools:layout="@layout/fragment_qr_code_scanner" />
+        tools:layout="@layout/fragment_qr_code_scanner" >
+        <action
+            android:id="@+id/action_qrCodeScannerFragment_to_performTransferPaymentFragment"
+            app:destination="@id/performTransferPaymentFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/performTransferPaymentFragment"
+        android:name="com.app.emcashmerchant.ui.transfer_payment.PerformTransferPaymentFragment"
+        android:label="fragment_perform_transfer_payment"
+        tools:layout="@layout/fragment_perform_transfer_payment" >
+        <action
+            android:id="@+id/action_performTransferPaymentFragment_to_paymentPinNumberFragment"
+            app:destination="@id/paymentPinNumberFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/paymentPinNumberFragment"
+        android:name="com.app.emcashmerchant.ui.transfer_payment.TransferPaymentPinNumberFragment"
+        android:label="PaymentPinNumberFragment" >
+        <action
+            android:id="@+id/action_paymentPinNumberFragment_to_paymentRecieptFragment"
+            app:destination="@id/transferpaymentRecieptFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/transferpaymentRecieptFragment"
+        android:name="com.app.emcashmerchant.ui.paymentReciept.TransferPaymentRecieptFragment"
+        android:label="fragment_payment_reciept"
+        tools:layout="@layout/fragment_transfer_payment_reciept" >
+        <action
+            android:id="@+id/action_transferpaymentRecieptFragment_to_paymentChatHistoryFragment"
+            app:destination="@id/paymentChatHistoryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/paymentChatHistoryFragment"
+        android:name="com.app.emcashmerchant.ui.PaymentChatHistory.PaymentChatHistoryFragment"
+        android:label="fragment_payment_chat_history"
+        tools:layout="@layout/fragment_payment_chat_history">
+        <action
+            android:id="@+id/action_paymentChatHistoryFragment_to_performTransferByContactFragment"
+            app:destination="@id/performTransferByContactFragment" />
+        <action
+            android:id="@+id/action_paymentChatHistoryFragment_to_paymentRequestByContactFragment"
+            app:destination="@id/paymentRequestByContactFragment" />
+        <action
+            android:id="@+id/action_paymentChatHistoryFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/requestContactListFragment"
+        android:name="com.app.emcashmerchant.ui.payment_request.RequestContactListFragment"
+        android:label="fragment_request_contact_list"
+        tools:layout="@layout/fragment_request_contact_list" >
+        <action
+            android:id="@+id/action_requestContactListFragment_to_performTransferByContactFragment"
+            app:destination="@id/performTransferByContactFragment" />
+        <action
+            android:id="@+id/action_requestContactListFragment_to_paymentChatHistoryFragment"
+            app:destination="@id/paymentChatHistoryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/transferContactListFragment"
+        android:name="com.app.emcashmerchant.ui.transfer_payment.TransferContactListFragment"
+        android:label="fragment_transfer_contact_list"
+        tools:layout="@layout/fragment_transfer_contact_list" >
+        <action
+            android:id="@+id/action_transferContactListFragment_to_qrCodeScannerFragment"
+            app:destination="@id/qrCodeScannerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/performTransferByContactFragment"
+        android:name="com.app.emcashmerchant.ui.transfer_payment.PerformTransferByContactFragment"
+        android:label="fragment_perform_transfer_by_contact"
+        tools:layout="@layout/fragment_perform_transfer_by_contact" />
+    <fragment
+        android:id="@+id/viewAllTransactionsFragment"
+        android:name="com.app.emcashmerchant.ui.viewAllTransaction.ViewAllTransactionsFragment"
+        android:label="fragment_view_all_transactions"
+        tools:layout="@layout/fragment_view_all_transactions" >
+        <action
+            android:id="@+id/action_viewAllTransactionsFragment_to_paymentChatHistoryFragment"
+            app:destination="@id/paymentChatHistoryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/paymentRequestByContactFragment"
+        android:name="com.app.emcashmerchant.ui.payment_request.PaymentRequestByContactFragment"
+        android:label="fragment_payment_request_by_contact"
+        tools:layout="@layout/fragment_payment_request_by_contact" >
+        <action
+            android:id="@+id/action_paymentRequestByContactFragment_to_paymentChatHistoryFragment"
+            app:destination="@id/paymentChatHistoryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addCardFragment"
+        android:name="com.app.emcashmerchant.ui.transactionActivity.AddCardFragment"
+        android:label="fragment_add_card"
+        tools:layout="@layout/fragment_add_card" >
+        <action
+            android:id="@+id/action_addCardFragment_to_transactionFragment"
+            app:destination="@id/transactionFragment" />
+    </fragment>
 </navigation>

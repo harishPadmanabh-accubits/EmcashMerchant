@@ -7,5 +7,7 @@ data class VerifyOtpRequest(
     @SerializedName("otp")
     val otp: String,
     @SerializedName("referenceId")
-    val referenceId: String
+    val referenceId: String,
+    @SerializedName("fcmToken")
+    val fcmToken: String
 )

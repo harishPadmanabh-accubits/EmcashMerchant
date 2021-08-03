@@ -16,7 +16,7 @@ class BasicContactDetailsActivity : AppCompatActivity() {
 
     private lateinit var viewModel: RegisterViewModel
     private lateinit var sessionStorage: SessionStorage
-    lateinit var dialog:AppDialog
+    lateinit var dialog: AppDialog
 
     private val businessName by lazy {
         intent.getStringExtra(KEY_BUISINESS_NAME)
@@ -44,8 +44,7 @@ class BasicContactDetailsActivity : AppCompatActivity() {
         initViews()
         initViewModel()
         setupObservers()
-        dialog= AppDialog(this)
-
+        dialog = AppDialog(this)
 
 
     }
@@ -63,7 +62,7 @@ class BasicContactDetailsActivity : AppCompatActivity() {
                     ApiCallStatus.SUCCESS -> {
                         dialog.dismiss_dialog()
                         val data = it.data
-                        sessionStorage.referenceIdInitial=data?.referenceId
+                        sessionStorage.referenceIdInitial = data?.referenceId
                         sessionStorage.merchantNumber = et_phone_num.obtainPhoneNumber().toString()
                         openActivity(RegisterOtpActivity::class.java)
 
@@ -98,14 +97,11 @@ class BasicContactDetailsActivity : AppCompatActivity() {
                     et_address.text.toString().isEmpty()
                 ) {
                     showShortToast(getString(R.string.please_fill_all_fields))
-                }
-                else if(address.length<5){
+                } else if (address.length < 5) {
                     showShortToast(getString(R.string.valid_address))
-                }
-                else {
-                    if(pincode.isEmpty())
-                    {
-                        pincode=""
+                } else {
+                    if (pincode.isEmpty()) {
+                        pincode = ""
                     }
                     performInitialSignup(
                         address,
@@ -151,7 +147,7 @@ class BasicContactDetailsActivity : AppCompatActivity() {
             serviceDescription,
             tradeLicenseIssuingAuthority,
             tradeLicenseNumber,
-            zipCode
+            zipCode,sessionStorage.referenceIdInitial
         )
     }
 

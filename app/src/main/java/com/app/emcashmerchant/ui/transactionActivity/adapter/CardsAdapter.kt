@@ -52,6 +52,12 @@ class CardsAdapter(val list: ArrayList<CardResponse>) :
                     notifyDataSetChanged()
                 }
 
+                rb_select.setOnClickListener {
+                    selectedId = currentItem.id
+                    list[defaultCardPos].default = false
+                    notifyDataSetChanged()
+                }
+
                 if (selectedId == currentItem.id)
                     selectCard(this)
                 else

@@ -5,56 +5,95 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.app.emcashmerchant.R
+import com.app.emcashmerchant.data.network.ApiCallStatus
+import com.app.emcashmerchant.ui.transaction_history.adapters.AllTransactionAdapter
+import com.app.emcashmerchant.utils.AppDialog
+import com.app.emcashmerchant.utils.extensions.obtainViewModel
+import com.app.emcashmerchant.utils.extensions.showShortToast
+import kotlinx.android.synthetic.main.fragment_all_transactions.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [AllTransactionsFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class AllTransactionsFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private lateinit var viewModel: TransactionHistoryViewModel
+    private lateinit var dialog: AppDialog
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.fragment_all_transactions, container, false)
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment AllTransactionsFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            AllTransactionsFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        getViewModel()
+        dialog = AppDialog(requireActivity())
+//        viewModel.getAllTransactions("0","","","","")
+        viewModel.getAllGroupedTransactions("0","","","","")
+
+        observe()
+
+
+
+        val sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+        sharedViewModel.apply {
+            status.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+                viewModel.getAllGroupedTransactions("0","",it,"","")
+
+            })
+            date.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+                viewModel.getAllGroupedTransactions("0","","",it[0], it[1])
+
+            })
+
+        }
+
+
     }
+
+
+    private fun getViewModel() {
+        viewModel = requireActivity().obtainViewModel(TransactionHistoryViewModel::class.java)
+    }
+
+    private fun observe() {
+        viewModel.apply {
+            allGroupedtransactionHistoryResponse.observe(
+                requireActivity(),
+                androidx.lifecycle.Observer {
+                    when (it.status) {
+                        ApiCallStatus.LOADING -> {
+                            dialog.show_dialog()
+                        }
+                        ApiCallStatus.SUCCESS -> {
+                            dialog.dismiss_dialog()
+                            it.data?.rows?.let {
+                                rv_all_transactions.apply {
+                                    layoutManager = LinearLayoutManager(requireActivity(),RecyclerView.VERTICAL, false)
+                                    adapter = AllTransactionAdapter(it)
+                                }
+                            }
+
+                        }
+
+                        ApiCallStatus.ERROR -> {
+                            dialog.dismiss_dialog()
+                            requireActivity().showShortToast(it.errorMessage)
+
+                        }
+                    }
+
+                })
+
+        }
+    }
+
+
 }

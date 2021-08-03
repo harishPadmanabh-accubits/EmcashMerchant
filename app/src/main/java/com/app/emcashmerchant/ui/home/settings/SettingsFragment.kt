@@ -13,7 +13,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
-import androidx.navigation.Navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.transition.ChangeBounds
 import com.app.emcashmerchant.R
@@ -22,10 +21,9 @@ import com.app.emcashmerchant.data.network.ApiCallStatus
 import com.app.emcashmerchant.ui.introScreen.IntroActivity
 import com.app.emcashmerchant.utils.AppDialog
 import com.app.emcashmerchant.utils.REQUEST_CODE_PICK_IMAGE_PROFILE
-import com.app.emcashmerchant.utils.extensions.getFileName
-import com.app.emcashmerchant.utils.extensions.openActivity
-import com.app.emcashmerchant.utils.extensions.showShortToast
+import com.app.emcashmerchant.utils.extensions.*
 import kotlinx.android.synthetic.main.settings_fragment.*
+import kotlinx.android.synthetic.main.signoutlay.view.*
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
@@ -65,9 +63,13 @@ class SettingsFragment : Fragment() {
         iv_back.setOnClickListener {
             Navigation.findNavController(view).popBackStack()
         }
+        lay_notifications.setOnClickListener {
+            Navigation.findNavController(view).navigate(R.id.goto_notifications_fragment)
+        }
+
 
         lay_logout.setOnClickListener {
-            viewModel.performLogout()
+            logOut()
         }
         tv_updateprofileimage.setOnClickListener {
             selectProfileIMage()
@@ -88,6 +90,19 @@ class SettingsFragment : Fragment() {
         }
 
         requireActivity().onBackPressedDispatcher.addCallback(callback)
+    }
+
+    private fun logOut() {
+        fl_logOut.visibility=View.VISIBLE
+
+        fl_logOut.btn_logOut.setOnClickListener {
+            viewModel.performLogout()
+
+        }
+        fl_logOut.iv_close.setOnClickListener {
+            fl_logOut.visibility=View.GONE
+
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -132,6 +147,7 @@ class SettingsFragment : Fragment() {
                         dialog.dismiss_dialog()
                         sessionStorage.merchantName = it.data?.name
                         tv_name.text = sessionStorage.merchantName
+                        iv_shop_profile_image.loadImageWithUrlUser(it.data?.profileImage)
 
 
                     }
@@ -148,7 +164,7 @@ class SettingsFragment : Fragment() {
                         dialog.show_dialog()
                     }
                     ApiCallStatus.SUCCESS -> {
-                        termsConditions=it.data.toString()
+                        termsConditions=it.data?.data.toString()
                         dialog.dismiss_dialog()
 
                     }
@@ -167,6 +183,7 @@ class SettingsFragment : Fragment() {
                     ApiCallStatus.SUCCESS -> {
                         dialog.dismiss_dialog()
                         activity?.showShortToast(getString(R.string.profile_pic_updated))
+                        viewModel.getProfileDetails()
 
                     }
                     ApiCallStatus.ERROR -> {
@@ -214,5 +231,7 @@ class SettingsFragment : Fragment() {
             )
         }
     }
+
+
 
 }

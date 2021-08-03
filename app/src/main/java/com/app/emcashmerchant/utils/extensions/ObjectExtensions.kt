@@ -19,7 +19,6 @@ import android.util.DisplayMetrics
 import android.view.KeyEvent
 import android.view.View
 import android.view.WindowManager
-import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageView
@@ -32,6 +31,7 @@ import androidx.lifecycle.MutableLiveData
 import com.app.emcashmerchant.BuildConfig
 import com.app.emcashmerchant.R
 import com.app.emcashmerchant.data.models.BaseResponse
+import com.app.emcashmerchant.utils.BUCKET_URL
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
@@ -46,6 +46,7 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.regex.Pattern
+
 
 private const val TIME_STAMP_FORMAT = "EEEE, MMMM d, yyyy - hh:mm:ss a"
 private const val DATE_FORMAT = "yyyy-MM-dd"
@@ -314,7 +315,25 @@ fun ImageView.loadImageWithUrl(imageUrl: String?) {
         imageUrl?.let { imageUrl ->
             if (context != null) {
                 Glide.with(context)
-                    .load(imageUrl)
+                    .load(BUCKET_URL.plus(imageUrl))
+                    .into(this)
+            }
+
+        }
+
+    } catch (e: Exception) {
+        e.printStackTrace()
+    }
+
+
+}
+fun ImageView.loadImageWithUrlUser(imageUrl: String?) {
+    try {
+        imageUrl?.let { imageUrl ->
+            if (context != null) {
+                Glide.with(context)
+                    .load(BUCKET_URL.plus(imageUrl))
+                    .error(R.drawable.sample_shop_profile)
                     .into(this)
             }
 
@@ -334,6 +353,7 @@ fun ImageView.loadImageWithUrl(imageUrl: String?, onError: (status: Boolean) -> 
             if (context != null) {
                 Glide.with(context)
                     .load(imageUrl)
+                    .error(R.drawable.ic_use_icon)
                     .listener(object : RequestListener<Drawable> {
                         override fun onLoadFailed(
                             p0: GlideException?,
@@ -368,6 +388,7 @@ fun ImageView.loadImageWithUrl(imageUrl: String?, onError: (status: Boolean) -> 
 
 
 }
+
 
 //load imageView with image drawable resource
 fun ImageView.loadImageWithResId(resID: Int?) = try {
@@ -554,36 +575,81 @@ fun String.isEmailValidity(): Boolean {
 }
 
 //gps enabled
- fun gpsEnabled(context: Context):Boolean {
+fun gpsEnabled(context: Context): Boolean {
 
     val locationManager = context.getSystemService(LOCATION_SERVICE) as LocationManager
     var gpsStatus = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
-     return  gpsStatus
-}
-
-fun getCurrentDate():String{
-    val sdf = SimpleDateFormat( "dd MMM yyyy")
-    return sdf.format(Date())
+    return gpsStatus
 }
 
 
-fun dateFormat(dateStr: String): String? {
-    val sdfInput =
-        SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX", Locale.getDefault())
+fun dateFormat(dateStr: String): String {
+    val sdfInput = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX", Locale.getDefault())
     val date = sdfInput.parse(dateStr)
     val sdfOutput = SimpleDateFormat("dd MMM yyyy")
     sdfOutput.timeZone = TimeZone.getTimeZone("Etc/UTC")
     val formatted = sdfOutput.format(date)
-    return  formatted
+    return formatted
 }
 
-fun timeformat(dateStr: String):String?{
-    val sdfInput =
-        SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX", Locale.getDefault())
+fun timeformat(dateStr: String): String? {
+    val sdfInput = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX", Locale.getDefault())
     val date = sdfInput.parse(dateStr)
     val sdfOutput = SimpleDateFormat("hh:mm a")
-    sdfOutput.timeZone = TimeZone.getTimeZone("Etc/UTC")
     val formatted = sdfOutput.format(date)
-    return  formatted
+    return formatted
+
 }
+
+fun trimID(string: String): String? {
+    var output: String? = null
+    try {
+        output = string.substring(0, string.indexOf('-'))
+    } catch (exception: java.lang.Exception) {
+
+    }
+
+    return output
+
+}
+
+fun dateFormatFromCalender(dateStr: String): String {
+    val utc = TimeZone.getTimeZone("UTC")
+    val sourceFormat = SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy")
+    val destFormat = SimpleDateFormat("dd-MMM-YYYY")
+    sourceFormat.timeZone = utc
+    val convertedDate = sourceFormat.parse(dateStr)
+    return destFormat.format(convertedDate)
+}
+
+
+//get todays date
+fun getCurrentDate(): String {
+    val sdfInput = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX", Locale.getDefault())
+    val sdfOutput = SimpleDateFormat("dd MMM yyyy")
+    sdfOutput.timeZone = TimeZone.getTimeZone("Etc/UTC")
+    val formatted = sdfOutput.format(Date())
+
+
+    return formatted
+}
+
+fun EditText.onDeletePressed(function: () -> Unit) {
+    this.setOnKeyListener { view, i, keyEvent ->
+        if (i == KeyEvent.KEYCODE_DEL && keyEvent.action == KeyEvent.ACTION_DOWN) {
+            function.invoke()
+            return@setOnKeyListener true
+        }
+        return@setOnKeyListener false
+    }
+}
+
+fun getDaysAgo(daysAgo: Int): Date {
+    val calendar = Calendar.getInstance()
+    calendar.add(Calendar.DAY_OF_YEAR, -daysAgo)
+    return calendar.time
+}
+
+
+
 

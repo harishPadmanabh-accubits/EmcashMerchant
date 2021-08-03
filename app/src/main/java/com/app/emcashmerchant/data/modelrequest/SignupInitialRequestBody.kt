@@ -23,5 +23,7 @@ data class SignupInitialRequestBody(
     @SerializedName("tradeLicenseNumber")
     val tradeLicenseNumber: String,
     @SerializedName("zipCode")
-    val zipCode: String = ""
+    val zipCode: String = "",
+    @SerializedName("referenceId")
+    val referenceId: String? = null
 )

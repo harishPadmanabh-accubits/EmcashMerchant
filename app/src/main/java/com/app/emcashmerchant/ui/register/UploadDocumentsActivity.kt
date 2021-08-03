@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -13,16 +14,20 @@ import com.app.emcashmerchant.data.network.ApiCallStatus
 import com.app.emcashmerchant.utils.*
 import com.app.emcashmerchant.utils.extensions.*
 import com.app.emcashmerchant.Authviewmodel.RegisterViewModel
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.android.synthetic.main.lay_documents_upload.*
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
+import java.lang.Exception
 
 class UploadDocumentsActivity : AppCompatActivity() {
     private var selectedImageUriTrade: Uri? = null
     private var selectedImageUriComm: Uri? = null
     private var selectedImageUriBank: Uri? = null
     private lateinit var viewModel: RegisterViewModel
+    private var fcmToken:String?=null
     private lateinit var sessionStorage: SessionStorage
     lateinit var dialog: AppDialog
 
@@ -34,6 +39,25 @@ class UploadDocumentsActivity : AppCompatActivity() {
         initViewModel()
         setupObservers()
         dialog = AppDialog(this)
+
+
+        try {
+            FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+                if (!task.isSuccessful) {
+                    Log.e("fcmError", "Fetching FCM registration token failed", task.exception)
+                    return@OnCompleteListener
+                }
+
+                // Get new FCM registration token
+                fcmToken = task.result.toString()
+                Log.d("fcmToken007", fcmToken.toString())
+            })
+
+        }catch (exception: Exception){
+            Log.d("exception", exception.toString())
+
+        }
+
     }
 
     fun onClick(view: View) {
@@ -68,12 +92,23 @@ class UploadDocumentsActivity : AppCompatActivity() {
         iv_trade_file.apply {
             setImageResource(R.drawable.ic_upload_docs)
         }
+
         Intent(Intent.ACTION_PICK).also {
-            it.type = "*/*"
-            val mimeTypes = arrayOf("image/jpeg", "image/png", "application/pdf")
-            it.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes)
-            startActivityForResult(it, REQUEST_CODE_PICK_IMAGE_TRADEFILE)
+            val intent = Intent()
+            intent.type = "*/*"
+            intent.action = Intent.ACTION_GET_CONTENT
+            startActivityForResult(
+                Intent.createChooser(intent, "Select File"),
+                REQUEST_CODE_PICK_IMAGE_TRADEFILE
+            )
         }
+//
+//        Intent(Intent.ACTION_PICK).also {
+//            it.type = "*/*"
+//            val mimeTypes = arrayOf("image/jpeg", "image/png", "application/pdf")
+//            it.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes)
+//            startActivityForResult(it, REQUEST_CODE_PICK_IMAGE_TRADEFILE)
+//        }
     }
 
     private fun selectCommRegistrationDoc() {
@@ -82,11 +117,21 @@ class UploadDocumentsActivity : AppCompatActivity() {
         }
 
         Intent(Intent.ACTION_PICK).also {
-            it.type = "*/*"
-            val mimeTypes = arrayOf("image/jpeg", "image/png", "application/pdf")
-            it.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes)
-            startActivityForResult(it, REQUEST_CODE_PICK_IMAGE_COMM)
+            val intent = Intent()
+            intent.type = "*/*"
+            intent.action = Intent.ACTION_GET_CONTENT
+            startActivityForResult(
+                Intent.createChooser(intent, "Select File"),
+                REQUEST_CODE_PICK_IMAGE_COMM
+            )
         }
+//
+//        Intent(Intent.ACTION_PICK).also {
+//            it.type = "*/*"
+//            val mimeTypes = arrayOf("image/jpeg", "image/png", "application/pdf")
+//            it.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes)
+//            startActivityForResult(it, REQUEST_CODE_PICK_IMAGE_COMM)
+//        }
     }
 
     private fun selectBankDetailsDoc() {
@@ -95,11 +140,21 @@ class UploadDocumentsActivity : AppCompatActivity() {
         }
 
         Intent(Intent.ACTION_PICK).also {
-            it.type = "*/*"
-            val mimeTypes = arrayOf("image/jpeg", "image/png", "application/pdf")
-            it.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes)
-            startActivityForResult(it, REQUEST_CODE_PICK_IMAGE_BANK)
+            val intent = Intent()
+            intent.type = "*/*"
+            intent.action = Intent.ACTION_GET_CONTENT
+            startActivityForResult(
+                Intent.createChooser(intent, "Select File"),
+                REQUEST_CODE_PICK_IMAGE_BANK
+            )
         }
+
+//        Intent(Intent.ACTION_PICK).also {
+//            it.type = "*/*"
+//            val mimeTypes = arrayOf("image/jpeg", "image/png", "application/pdf")
+//            it.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes)
+//            startActivityForResult(it, REQUEST_CODE_PICK_IMAGE_BANK)
+//        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -169,6 +224,7 @@ class UploadDocumentsActivity : AppCompatActivity() {
                     }
                     ApiCallStatus.SUCCESS -> {
                         dialog.dismiss_dialog()
+                        sessionStorage.clearUserReferenceId()
                         openActivity(AccountUnderProcessActivity::class.java)
                     }
                     ApiCallStatus.ERROR -> {
@@ -177,6 +233,7 @@ class UploadDocumentsActivity : AppCompatActivity() {
                     }
                 }
             })
+
             commercialDocumentStatus.observe(this@UploadDocumentsActivity, Observer {
                 when (it.status) {
                     ApiCallStatus.LOADING -> {
@@ -245,8 +302,7 @@ class UploadDocumentsActivity : AppCompatActivity() {
 
     private fun finalSignup() {
 
-
-    viewModel.finalSignup()
+    viewModel.finalSignup(fcmToken.toString())
 
     }
 

@@ -53,7 +53,7 @@ class ForgotPasswordViewModel(val app: Application): AndroidViewModel(app) {
     ) {
         performForgotPasswordOtpStatus.value = ApiMapper(ApiCallStatus.LOADING, null, null)
         val verifyOtprequest =
-            VerifyOtpRequest(
+            VerifyOtpRequestReset(
                 otp,refId
             )
         repository.performForgotPasswordOtpVerify(verifyOtprequest) { status, message, result ->

@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.transfer_payment.PerformTransferPaymentFragment">
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp16"
+        android:layout_marginTop="@dimen/dp24"
+        android:padding="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_back_arrow"
+        app:tint="@color/black" />
+
+    <TextView
+        android:id="@+id/tv_head"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/biennale_regular"
+        android:text="Transfer Emcash"
+        android:textColor="@color/black"
+        android:textSize="@dimen/sp18"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_back"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/iv_back" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline23"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent=".5" />
+
+    <LinearLayout
+        android:id="@+id/ll_input"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline22"
+
+        >
+        <FrameLayout
+            android:id="@+id/fl_user_level"
+            android:layout_width="94dp"
+            android:layout_height="94dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/guideline28">
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/tv_firstLetter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/biennale_medium"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp18"
+                />
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_userImage"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_use_icon" />
+        </FrameLayout>
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Puma Store"
+            android:fontFamily="@font/biennale_medium"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp18"
+            android:layout_marginTop="@dimen/dp12"
+            />
+        <TextView
+            android:id="@+id/tv_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="324623"
+            android:fontFamily="@font/biennale_regular"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp14"
+            android:layout_marginTop="@dimen/dp4"
+            />
+
+        <TextView
+            android:id="@+id/tv_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:cursorVisible="false"
+            android:fontFamily="@font/biennale_bold"
+            android:text="34"
+            android:layout_marginTop="@dimen/dp48"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dp48" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/grey_rounded"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="@dimen/dp12"
+        app:layout_constraintTop_toBottomOf="@+id/ll_input">
+
+        <TextView
+            android:id="@+id/tv_total_bill_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp6"
+            android:fontFamily="@font/biennale_medium"
+            android:gravity="center"
+            android:padding="@dimen/dp2"
+            android:paddingStart="@dimen/dp32"
+            android:paddingEnd="@dimen/dp32"
+            android:paddingBottom="@dimen/dp8"
+            android:text="Total Bill amount of 34 AED"
+            android:textColor="@color/grey_unselected"
+            android:textSize="@dimen/sp12" />
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline22"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.15" />
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_transfer"
+        style="@style/BlueRoundedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp30"
+        android:layout_marginTop="@dimen/dp32"
+        android:paddingLeft="@dimen/dp60"
+        android:gravity="center"
+        android:paddingRight="@dimen/dp60"
+        android:text="Transfer"
+        android:drawableLeft="@drawable/arrow_forward"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

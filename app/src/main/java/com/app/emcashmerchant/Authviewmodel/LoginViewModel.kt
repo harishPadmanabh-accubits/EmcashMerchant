@@ -49,12 +49,12 @@ class LoginViewModel(val app: Application) : AndroidViewModel(app) {
 
 
     fun performVerifyOtp(
-        otp: String, refId: String
+        otp: String, refId: String,fcmToken:String
     ) {
         loginOtpStatus.value = ApiMapper(ApiCallStatus.LOADING, null, null)
         val verifyOtprequest =
             VerifyOtpRequest(
-                otp, refId
+                otp, refId,fcmToken
             )
         repository.performVerifyOtp(verifyOtprequest) { status, message, result ->
             Timber.e("error $message")

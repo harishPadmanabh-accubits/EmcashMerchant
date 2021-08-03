@@ -2,10 +2,7 @@ package com.app.emcashmerchant.data.network.Repositories
 
 import android.content.Context
 import com.app.emcashmerchant.data.SessionStorage
-import com.app.emcashmerchant.data.modelrequest.ForgotPasswordRequest
-import com.app.emcashmerchant.data.modelrequest.ResendOtpRequest
-import com.app.emcashmerchant.data.modelrequest.ResetPasswordRequest
-import com.app.emcashmerchant.data.modelrequest.VerifyOtpRequest
+import com.app.emcashmerchant.data.modelrequest.*
 import com.app.emcashmerchant.data.models.*
 import com.app.emcashmerchant.data.network.ApiManger
 import com.app.emcashmerchant.utils.extensions.awaitResponse
@@ -32,7 +29,7 @@ class ForgotPasswordRepository(val context: Context) {
     }
 
     fun performForgotPasswordOtpVerify(
-        verifyOtpRequest: VerifyOtpRequest,
+        verifyOtpRequest: VerifyOtpRequestReset,
         onApiCallback: (status: Boolean, message: String?, result: VerifyOtpResponse.Data?) -> Unit
     ) {
         api.performForgotPasswordVerifyOtp(verifyOtpRequest).awaitResponse(

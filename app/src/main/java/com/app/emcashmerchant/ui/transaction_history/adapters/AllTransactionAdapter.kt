@@ -3,13 +3,17 @@ package com.app.emcashmerchant.ui.transaction_history.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.app.emcashmerchant.R
 import com.app.emcashmerchant.data.models.GroupedTransactionHistoryResponse
+import com.app.emcashmerchant.data.models.GroupedWalletTransactionResponse
 import com.app.emcashmerchant.data.models.TransactionHistoryGroupViewModel
+import com.app.emcashmerchant.ui.wallet.adapter.WalletTransactionAdapterV2
 import kotlinx.android.synthetic.main.item_wallet_activity.view.*
 
-class AllTransactionAdapter(val transactions : List<GroupedTransactionHistoryResponse.Data.Row>) : RecyclerView.Adapter<AllTransactionAdapter.ViewHolder>() {
+class AllTransactionAdapter :PagingDataAdapter<GroupedTransactionHistoryResponse.Data.Row, AllTransactionAdapter.ViewHolder>(DiffUtilCallBack()) {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
@@ -22,17 +26,35 @@ class AllTransactionAdapter(val transactions : List<GroupedTransactionHistoryRes
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val transactions = transactions[position]
-        holder.itemView.apply {
-            tv_transaction_date.text =transactions.key
-            rv_transaction_details.adapter =AllTransactionsDetailsAdapter(transactions.transactions)
+        val transactions = getItem(position)
+        transactions?.let {
+            holder.itemView.apply {
+                tv_transaction_date.text =it.key
+                rv_transaction_details.adapter =AllTransactionsDetailsAdapter(it.transactions)
+            }
+
         }
 
     }
 
-    override fun getItemCount(): Int {
-        return transactions.size
-    }
 
+    class DiffUtilCallBack : DiffUtil.ItemCallback<GroupedTransactionHistoryResponse.Data.Row>() {
+        override fun areItemsTheSame(
+            oldItem: GroupedTransactionHistoryResponse.Data.Row,
+            newItem: GroupedTransactionHistoryResponse.Data.Row
+        ): Boolean {
+            return oldItem.key == newItem.key
+        }
+
+        override fun areContentsTheSame(
+            oldItem: GroupedTransactionHistoryResponse.Data.Row,
+            newItem: GroupedTransactionHistoryResponse.Data.Row
+        ): Boolean {
+            return oldItem.key == newItem.key
+
+
+        }
+
+    }
 
 }

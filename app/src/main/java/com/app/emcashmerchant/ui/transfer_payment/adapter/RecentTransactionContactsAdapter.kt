@@ -11,11 +11,14 @@ import com.app.emcashmerchant.data.models.RecentTransactionResponse
 import com.app.emcashmerchant.utils.BUCKET_URL
 import com.app.emcashmerchant.utils.KEY_USERID
 import com.app.emcashmerchant.utils.widget.LevelProfileImageView
+import kotlinx.android.synthetic.main.contact_item_list.view.*
 import kotlinx.android.synthetic.main.item_recent_payment.view.*
 import kotlinx.android.synthetic.main.item_recent_payment_contacts.view.*
 import kotlinx.android.synthetic.main.item_recent_payment_contacts.view.ll_contact
 import kotlinx.android.synthetic.main.item_recent_payment_contacts.view.lpi_imageView
 import kotlinx.android.synthetic.main.layout_item_recent_payment.view.*
+import kotlinx.android.synthetic.main.layout_item_recent_payment.view.fl_user_level
+import kotlinx.android.synthetic.main.layout_item_recent_payment.view.iv_user_image
 
 
 class RecentTransactionContactsAdapter(
@@ -45,7 +48,8 @@ class RecentTransactionContactsAdapter(
                 iv_user_image.visibility = View.INVISIBLE
                 tv_user_name_letter.visibility = View.VISIBLE
                 lpi_imageView.setLevel(LevelProfileImageView.UserProfileLevel.BLACK)
-
+//                lpi_imageView.setBackgroundResource(R.drawable.greyfilled_round)
+//                tv_user_name_letter.setTextColor(resources.getColor(R.color.white))
             }
             if (transaction[position].roleId == 3) {
                 lpi_imageView.fl_user_level.visibility = View.VISIBLE

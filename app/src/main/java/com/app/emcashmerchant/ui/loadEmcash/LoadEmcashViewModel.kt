@@ -4,9 +4,10 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.app.emcashmerchant.data.modelrequest.PaymentByExisitingCardRequest
+import com.app.emcashmerchant.data.modelrequest.PaymentByNewCardRequest
 import com.app.emcashmerchant.data.modelrequest.TopUpRequest
-import com.app.emcashmerchant.data.models.TopUpResponse
-import com.app.emcashmerchant.data.models.WalletResponse
+import com.app.emcashmerchant.data.models.*
 import com.app.emcashmerchant.data.network.ApiCallStatus
 import com.app.emcashmerchant.data.network.ApiMapper
 import com.app.emcashmerchant.data.network.Repositories.HomeRepository
@@ -15,6 +16,10 @@ import timber.log.Timber
 
 class LoadEmcashViewModel(val app: Application): AndroidViewModel(app)  {
     var topupStatus = MutableLiveData<ApiMapper<TopUpResponse>>()
+    var bankCardStatus = MutableLiveData<ApiMapper<BankCardsListingResponse.Data>>()
+    var paymentByExistingCardStatus = MutableLiveData<ApiMapper<PaymentByExisitingCardResponse>>()
+    var paymentByNewCardStatus = MutableLiveData<ApiMapper<PaymentByNewCardResponse>>()
+
     val repository = LoadEmcashRepository(app)
 
     fun topUp(topUpRequest: TopUpRequest) {
@@ -27,6 +32,51 @@ class LoadEmcashViewModel(val app: Application): AndroidViewModel(app)  {
                 }
                 false -> {
                     topupStatus.value = ApiMapper(ApiCallStatus.ERROR, null, message)
+
+                }
+            }
+        }
+    }
+    fun bankCardListing() {
+        bankCardStatus.value = ApiMapper(ApiCallStatus.LOADING, null, null)
+
+        repository.bankCardsListing() { status, message, result ->
+            when (status) {
+                true -> {
+                    bankCardStatus.value = ApiMapper(ApiCallStatus.SUCCESS, result, null)
+                }
+                false -> {
+                    bankCardStatus.value = ApiMapper(ApiCallStatus.ERROR, null, message)
+
+                }
+            }
+        }
+    }
+    fun paymentByExistingCard(paymentByExisitingCardRequest: PaymentByExisitingCardRequest) {
+        paymentByExistingCardStatus.value = ApiMapper(ApiCallStatus.LOADING, null, null)
+
+        repository.paymentByExistingCard(paymentByExisitingCardRequest) { status, message, result ->
+            when (status) {
+                true -> {
+                    paymentByExistingCardStatus.value = ApiMapper(ApiCallStatus.SUCCESS, result, null)
+                }
+                false -> {
+                    paymentByExistingCardStatus.value = ApiMapper(ApiCallStatus.ERROR, null, message)
+
+                }
+            }
+        }
+    }
+    fun paymentByNewCard(paymentByNewCardRequest: PaymentByNewCardRequest) {
+        paymentByNewCardStatus.value = ApiMapper(ApiCallStatus.LOADING, null, null)
+
+        repository.paymentByNewCard(paymentByNewCardRequest) { status, message, result ->
+            when (status) {
+                true -> {
+                    paymentByNewCardStatus.value = ApiMapper(ApiCallStatus.SUCCESS, result, null)
+                }
+                false -> {
+                    paymentByNewCardStatus.value = ApiMapper(ApiCallStatus.ERROR, null, message)
 
                 }
             }

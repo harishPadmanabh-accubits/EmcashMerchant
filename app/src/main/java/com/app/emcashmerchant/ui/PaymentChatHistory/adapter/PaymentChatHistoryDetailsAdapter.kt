@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.app.emcashmerchant.R
 import com.app.emcashmerchant.data.models.AllContactResponse
+import com.app.emcashmerchant.data.models.GroupedChatHistoryResponse
 import com.app.emcashmerchant.data.models.PaymentChatResponse
 import com.app.emcashmerchant.ui.payment_request.adapter.ContactsItemClickListener
 import com.app.emcashmerchant.utils.*
@@ -22,7 +23,7 @@ import kotlinx.android.synthetic.main.item_chat_details.view.*
 
 
 class PaymentChatHistoryDetailsAdapter(
-    val transactions: List<PaymentChatResponse.Data.Row>,
+    val transactions: List<GroupedChatHistoryResponse.Data.Row.Transaction>,
     private val ClickListener: ChatItemClickListener
 
 ) : RecyclerView.Adapter<PaymentChatHistoryDetailsAdapter.ViewHolder>() {
@@ -229,8 +230,8 @@ class PaymentChatHistoryDetailsAdapter(
 }
 
 interface ChatItemClickListener {
-    fun onChatRejectClicked(payment: PaymentChatResponse.Data.Row)
-    fun onChatAcceptClicked(payment: PaymentChatResponse.Data.Row)
+    fun onChatRejectClicked(payment: GroupedChatHistoryResponse.Data.Row.Transaction)
+    fun onChatAcceptClicked(payment: GroupedChatHistoryResponse.Data.Row.Transaction)
 
 
 }

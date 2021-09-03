@@ -1,87 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ll_contact"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
     android:layout_marginTop="@dimen/dp16"
+    android:orientation="vertical"
     android:weightSum="3">
 
-    <FrameLayout
 
-        android:id="@+id/fl_user_level"
-        android:layout_width="@dimen/dp60"
-        android:layout_height="@dimen/dp60"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-
-        <TextView
-            android:id="@+id/tv_firstLetterr"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:fontFamily="@font/biennale_medium"
-            android:textColor="@color/black"
-            android:textSize="@dimen/sp20"
-            />
-
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/iv_user_image"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="@dimen/dp4"
-            android:layout_gravity="center"
-            android:src="@drawable/ic_use_icon"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/fl_user_level"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.RoundImageStyle" />
-
-    </FrameLayout>
-
-    <LinearLayout
-        android:layout_width="@dimen/dp200"
+    <TextView
+        android:id="@+id/tv_firstLetterName"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dp16"
-        android:layout_marginTop="@dimen/dp12"
-        android:layout_weight="2"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/tv_contact_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/iv_contact"
-            android:layout_weight="1"
-            android:fontFamily="@font/biennale_regular"
-            android:text="Rahul"
-            android:textColor="@color/black" />
-
-        <TextView
-            android:id="@+id/tv_contact_number"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tv_contact_name"
-            android:layout_marginTop="@dimen/dp4"
-            android:layout_toEndOf="@+id/iv_contact"
-            android:layout_weight="0.5"
-            android:fontFamily="@font/biennale_regular"
-            android:text="91289128921"
-            android:textSize="@dimen/sp12" />
-
-
-    </LinearLayout>
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/tv_image_verified"
-        android:layout_width="@dimen/dp24"
-        android:layout_height="@dimen/dp24"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="@dimen/dp24"
-        android:layout_marginRight="@dimen/dp16"
+        android:layout_toEndOf="@+id/iv_contact"
         android:layout_weight="1"
-        android:src="@drawable/checked" />
+        android:fontFamily="@font/biennale_regular"
+        android:text="A"
+        android:textColor="@color/black" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_contacts"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:orientation="vertical"
+        />
+
+
 </LinearLayout>

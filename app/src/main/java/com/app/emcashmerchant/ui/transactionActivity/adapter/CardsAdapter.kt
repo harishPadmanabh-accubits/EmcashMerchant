@@ -5,11 +5,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.app.emcashmerchant.R
+import com.app.emcashmerchant.data.models.AllContactResponse
+import com.app.emcashmerchant.data.models.BankCardsListingResponse
 import com.app.emcashmerchant.data.models.CardResponse
-import kotlinx.android.synthetic.main.item_payment_account.view.*
+import com.app.emcashmerchant.ui.payment_request.adapter.ContactsItemClickListener
+import com.app.emcashmerchant.utils.KEY_REVIEWSCREEN
+import kotlinx.android.synthetic.main.item_bankcard.view.*
 
 
-class CardsAdapter(val list: ArrayList<CardResponse>) :
+class CardsAdapter(
+    val list: List<BankCardsListingResponse.Data.Card>,
+    private val clickListener: CardsItemClickListener) :
     RecyclerView.Adapter<CardsAdapter.ViewHolder>() {
     private var selectedId = 0
     private var defaultCardPos = -1
@@ -25,40 +31,48 @@ class CardsAdapter(val list: ArrayList<CardResponse>) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardsAdapter.ViewHolder {
         val view: View =
-            LayoutInflater.from(parent.context).inflate(R.layout.item_payment_account, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.item_bankcard, parent, false)
         return ViewHolder(view)
 
     }
 
     override fun onBindViewHolder(holder: CardsAdapter.ViewHolder, position: Int) {
         holder.itemView.apply {
-            tv_card.text = list[position].cardnumber
-            tv_amount.text = list[position].amount
+            tv_card.text = list[position].alias
+            tv_amount.text = "Ending XXXXXX".plus(list[position].last4)
 
             val currentItem = list[position]
 
             holder.itemView.apply {
 
-                tv_card.text = currentItem.cardnumber
-                tv_amount.text = currentItem.amount
+                tv_card.text = currentItem.alias
+                tv_amount.text = "Ending XXXXXX".plus(currentItem.last4)
 
-                if (currentItem.default) {
-                    selectedId = currentItem.id
+                if (currentItem.isDefault) {
+                    selectedId = currentItem.last4.toInt()
                     defaultCardPos = position
+                    clickListener.onCardClicked(currentItem)
+
                 }
                 ll_item_main.setOnClickListener {
-                    selectedId = currentItem.id
-                    list[defaultCardPos].default = false
+                    selectedId = currentItem.last4.toInt()
+                    list[defaultCardPos].isDefault = false
                     notifyDataSetChanged()
+                    clickListener.onCardClicked(currentItem)
+
                 }
+
+
 
                 rb_select.setOnClickListener {
-                    selectedId = currentItem.id
-                    list[defaultCardPos].default = false
+                    selectedId = currentItem.last4.toInt()
+                    list[defaultCardPos].isDefault = false
                     notifyDataSetChanged()
+                    clickListener.onCardClicked(currentItem)
+
                 }
 
-                if (selectedId == currentItem.id)
+                if (selectedId == currentItem.last4.toInt())
                     selectCard(this)
                 else
                     unSelectCard(this)
@@ -80,5 +94,9 @@ class CardsAdapter(val list: ArrayList<CardResponse>) :
         }
     }
 
+
+    interface CardsItemClickListener {
+        fun onCardClicked(card: BankCardsListingResponse.Data.Card)
+    }
 
 }

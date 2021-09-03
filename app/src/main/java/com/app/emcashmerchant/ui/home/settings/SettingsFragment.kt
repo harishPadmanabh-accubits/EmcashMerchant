@@ -69,7 +69,13 @@ class SettingsFragment : Fragment() {
 
 
         lay_logout.setOnClickListener {
-            logOut()
+            if(checkNetwork(requireContext())){
+                logOut()
+
+            }else
+            {
+                sessionStorage.logoutUser()
+            }
         }
         tv_updateprofileimage.setOnClickListener {
             selectProfileIMage()

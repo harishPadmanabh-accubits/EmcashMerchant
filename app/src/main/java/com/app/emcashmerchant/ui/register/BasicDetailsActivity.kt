@@ -34,20 +34,20 @@ class BasicDetailsActivity : AppCompatActivity() {
         var serviceDesc = et_service_description.text.toString()
         var registeredBusinesName: String = et_reg_business_name.text.toString()
 
-        if (businessName.isEmpty()) {
+        if (businessName.isEmpty() || businessName.length < 3) {
 
             showShortToast(getString(R.string.valid_business_name))
 
         } else if (contactPersonName.isEmpty() || contactPersonName.length < 3) {
             showShortToast(getString(R.string.valid_contact_personname))
 
-        } else if (tradeLicenceNumber.isEmpty()) {
+        } else if (tradeLicenceNumber.isEmpty() || tradeLicenceNumber.length < 3) {
             showShortToast(getString(R.string.valid_tradeliscencenumber))
 
-        } else if (tradeLicenseAuthority.isEmpty()) {
+        } else if (tradeLicenseAuthority.isEmpty() || tradeLicenseAuthority.length < 3) {
             showShortToast(getString(R.string.valid_trade_lic_auth))
 
-        } else if (registeredBusinesName.isEmpty()) {
+        } else if (registeredBusinesName.isEmpty() || registeredBusinesName.length < 3) {
             showShortToast(getString(R.string.registered_name_validaiton))
 
         } else {

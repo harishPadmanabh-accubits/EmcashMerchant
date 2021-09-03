@@ -30,24 +30,4 @@ class WalletRepository(val context: Context) {
     }
 
 
-
-//    fun groupedWalletResponse(
-//        page:Int,limit:Int,
-//        onApiCallback: (status: Boolean, message: String?, result: GroupedWalletTransactionResponse.Data?) -> Unit
-//    ) {
-//        api.walletGropedTransactionResponse( "Bearer ${sessionStorage.accesToken}",page,limit).awaitResponse(
-//            onFailure = {
-//                onApiCallback(false, it, null)
-//
-//            }, onSuccess = {
-//                var data = it?.data
-//                data.let {
-//                    onApiCallback(true, null, data)
-//
-//                }
-//            }
-//        )
-//    }
-//
-
 }

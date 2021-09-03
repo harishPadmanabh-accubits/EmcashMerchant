@@ -12,27 +12,35 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.app.emcashmerchant.R
 import com.app.emcashmerchant.data.SessionStorage
+import com.app.emcashmerchant.data.models.GroupedChatHistoryResponse
 import com.app.emcashmerchant.data.models.PaymentChatResponse
 import com.app.emcashmerchant.data.network.ApiCallStatus
 import com.app.emcashmerchant.ui.PaymentChatHistory.adapter.ChatItemClickListener
 import com.app.emcashmerchant.ui.PaymentChatHistory.adapter.PaymentChatHistoryAdapter
 import com.app.emcashmerchant.ui.home.HomeBaseActivity
+import com.app.emcashmerchant.ui.transaction_history.adapters.AllTransactionAdapter
 import com.app.emcashmerchant.utils.*
 import com.app.emcashmerchant.utils.extensions.loadImageWithUrl
+import com.app.emcashmerchant.utils.extensions.showShortToast
 import kotlinx.android.synthetic.main.block_layout.*
 import kotlinx.android.synthetic.main.dialog_emcash_successful.*
+import kotlinx.android.synthetic.main.fragment_all_transactions.*
 import kotlinx.android.synthetic.main.fragment_payment_chat_history.*
 import kotlinx.android.synthetic.main.fragment_payment_chat_history.fl_user_level
 import kotlinx.android.synthetic.main.fragment_payment_chat_history.iv_back
 import kotlinx.android.synthetic.main.fragment_payment_chat_history.tv_name
 import kotlinx.android.synthetic.main.fragment_payment_chat_history.tv_number
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 
 class PaymentChatHistoryFragment : Fragment(), ChatItemClickListener {
@@ -46,6 +54,10 @@ class PaymentChatHistoryFragment : Fragment(), ChatItemClickListener {
     private var userId = ""
     var name: String? = null
     var phoneNumber: String? = null
+
+    val pagedAdapter by lazy {
+        PaymentChatHistoryAdapter(this)
+    }
 
     companion object {
         fun newInstance() = PaymentChatHistoryFragment()
@@ -83,6 +95,44 @@ class PaymentChatHistoryFragment : Fragment(), ChatItemClickListener {
         }
         requireActivity().onBackPressedDispatcher.addCallback(onBackPressedCallback)
 
+        pagedAdapter.addLoadStateListener { loadState ->
+            if (loadState.refresh is LoadState.Loading) {
+                dialog.show_dialog()
+            } else {
+                dialog.dismiss_dialog()
+
+                // getting the error
+                val error = when {
+                    loadState.prepend is LoadState.Error -> loadState.prepend as LoadState.Error
+                    loadState.append is LoadState.Error -> loadState.append as LoadState.Error
+                    loadState.refresh is LoadState.Error -> loadState.refresh as LoadState.Error
+                    else -> null
+                }
+
+                error?.let {
+                    requireActivity().showShortToast(it.error.message)
+                }
+            }
+        }
+
+        rv_chat.apply {
+            adapter = pagedAdapter
+            layoutManager = LinearLayoutManager(
+                requireActivity(),
+                RecyclerView.VERTICAL, true
+            )
+        }
+
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.getListData(userId.toInt()).collect {
+                it?.let {
+                    pagedAdapter.submitData(it)
+
+                }
+            }
+
+        }
 
         iv_menu.setOnClickListener {
             showPopup(it, userId.toInt())
@@ -119,7 +169,8 @@ class PaymentChatHistoryFragment : Fragment(), ChatItemClickListener {
 
         }
         iv_back.setOnClickListener {
-            Navigation.findNavController(view).navigate(R.id.action_paymentChatHistoryFragment_to_homeFragment)
+            Navigation.findNavController(view)
+                .navigate(R.id.action_paymentChatHistoryFragment_to_homeFragment)
         }
 
     }
@@ -134,9 +185,7 @@ class PaymentChatHistoryFragment : Fragment(), ChatItemClickListener {
                     ApiCallStatus.SUCCESS -> {
                         dialog.dismiss_dialog()
 
-
-
-
+                        cl_main.visibility=View.VISIBLE
                         name = it.data?.contact?.name
                         phoneNumber = it.data?.contact?.phoneNumber
                         var userLevel = it.data?.contact?.ppp
@@ -187,26 +236,6 @@ class PaymentChatHistoryFragment : Fragment(), ChatItemClickListener {
 
 
                         }
-                        it.data?.rows.let {
-                            val groupedActivies = groupPaymentTransactionsByDate(it)
-
-                            rv_chat.apply {
-                                layoutManager = LinearLayoutManager(
-                                    requireActivity(),
-                                    RecyclerView.VERTICAL, false
-                                )
-                                itemAnimator = DefaultItemAnimator()
-
-                                adapter = PaymentChatHistoryAdapter(
-                                    groupedActivies.asReversed(),
-                                    this@PaymentChatHistoryFragment
-                                )
-                                smoothScrollToPosition(groupedActivies.size - 1);
-
-                            }
-
-                        }
-
 
                     }
                     ApiCallStatus.ERROR -> {
@@ -255,7 +284,7 @@ class PaymentChatHistoryFragment : Fragment(), ChatItemClickListener {
 
     }
 
-    override fun onChatRejectClicked(payment: PaymentChatResponse.Data.Row) {
+    override fun onChatRejectClicked(payment: GroupedChatHistoryResponse.Data.Row.Transaction) {
         var bundle = bundleOf(
             KEY_REF_ID to payment.transactionId,
             KEY_PAGE to "ChatScreen",
@@ -265,7 +294,7 @@ class PaymentChatHistoryFragment : Fragment(), ChatItemClickListener {
         findNavController().navigate(R.id.paymentPinNumberFragment, bundle)
     }
 
-    override fun onChatAcceptClicked(payment: PaymentChatResponse.Data.Row) {
+    override fun onChatAcceptClicked(payment: GroupedChatHistoryResponse.Data.Row.Transaction) {
         var bundle = bundleOf(
             KEY_REF_ID to payment.transactionId,
             KEY_PAGE to "ChatScreen",
@@ -349,12 +378,10 @@ class PaymentChatHistoryFragment : Fragment(), ChatItemClickListener {
         }
         dialogBlockUnBlock.confirm_lay.setOnClickListener {
             dialogBlockUnBlock.dismiss()
-
             if (isBlockedContactUser == false) {
                 viewModel.block(userId)
 
             } else {
-
                 viewModel.unBlock(userId)
 
             }

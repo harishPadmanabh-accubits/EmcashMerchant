@@ -224,7 +224,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dp8"
                         android:fontFamily="@font/biennale_regular"
-                        android:text="Add a Debit/Credit Card"
+                        android:text="Pay with Debit/Credit Card"
                         android:textColor="@color/black"
                         android:textSize="@dimen/sp13"
                         app:layout_constraintBottom_toBottomOf="@+id/appCompatImageView2"

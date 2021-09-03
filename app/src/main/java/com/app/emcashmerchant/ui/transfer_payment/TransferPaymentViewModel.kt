@@ -4,14 +4,23 @@ import android.app.Application
 import android.text.TextUtils
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import com.app.emcashmerchant.data.SessionStorage
 import com.app.emcashmerchant.data.modelrequest.CheckQrCodeRequest
 import com.app.emcashmerchant.data.modelrequest.IntiateContactPaymentRequest
 import com.app.emcashmerchant.data.modelrequest.RejectAcceptRequest
 import com.app.emcashmerchant.data.modelrequest.TransferAmountRequest
 import com.app.emcashmerchant.data.models.*
 import com.app.emcashmerchant.data.network.ApiCallStatus
+import com.app.emcashmerchant.data.network.ApiManger
 import com.app.emcashmerchant.data.network.ApiMapper
 import com.app.emcashmerchant.data.network.Repositories.TransferPaymentRepository
+import com.app.emcashmerchant.ui.transaction_history.PagingSource.AllTransactionsPagingSource
+import com.app.emcashmerchant.ui.transfer_payment.PagingSource.AllContactsPagingSource
 import timber.log.Timber
 import java.util.*
 import kotlin.Comparator
@@ -30,6 +39,20 @@ class TransferPaymentViewModel(val app: Application) : AndroidViewModel(app) {
     var recentTransactions = MutableLiveData<ApiMapper<RecentTransactionResponse.Data>>()
 
     val repository = TransferPaymentRepository(app)
+    private val api = ApiManger(app).api
+    private val sessionStorage = SessionStorage(app)
+
+
+    fun getContactsData(
+        search: String
+    ): kotlinx.coroutines.flow.Flow<PagingData<GroupedContactsResponse.Data.Row>> {
+        return Pager(PagingConfig(10)) {
+            AllContactsPagingSource(
+                api,
+                sessionStorage.accesToken.toString(), search
+            )
+        }.flow.cachedIn(viewModelScope)
+    }
 
     fun checkQr(checkQrCodeRequest: CheckQrCodeRequest) {
         qrCodeCheckStatus.value = ApiMapper(ApiCallStatus.LOADING, null, null)

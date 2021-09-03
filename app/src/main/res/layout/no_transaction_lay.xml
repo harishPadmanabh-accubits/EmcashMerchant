@@ -50,7 +50,9 @@
             android:fontFamily="@font/biennale_medium"
             android:text="Start new transaction"
             android:textAlignment="textStart"
+            android:drawableRight="@drawable/arrow_right"
             android:layout_marginTop="@dimen/dp12"
+            android:drawablePadding="@dimen/dp1"
             android:textColor="@color/app_blue"
             android:textSize="14sp"
             />

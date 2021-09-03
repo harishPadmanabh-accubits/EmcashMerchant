@@ -6,12 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.app.emcashmerchant.R
+import com.app.emcashmerchant.data.modelrequest.PaymentByExisitingCardRequest
+import com.app.emcashmerchant.data.modelrequest.PaymentByNewCardRequest
 import com.app.emcashmerchant.data.modelrequest.TopUpRequest
+import com.app.emcashmerchant.data.models.BankCardsListingResponse
 import com.app.emcashmerchant.data.models.CardResponse
 import com.app.emcashmerchant.data.network.ApiCallStatus
 import com.app.emcashmerchant.ui.loadEmcash.LoadEmcashViewModel
@@ -27,9 +31,10 @@ import kotlinx.android.synthetic.main.fragment_transaction.tab_bank_card
 import kotlinx.android.synthetic.main.fragment_transaction.tab_empay
 import kotlinx.android.synthetic.main.fragment_transaction.tv_info_currency
 
-class TransactionFragment : Fragment() {
+class TransactionFragment : Fragment(), CardsAdapter.CardsItemClickListener {
     private lateinit var viewModel: LoadEmcashViewModel
     lateinit var dialog: AppDialog
+    var useExistingCard: String?=null
 
     companion object {
         fun newInstance() =
@@ -65,12 +70,13 @@ class TransactionFragment : Fragment() {
 
         observe(view)
         getData()
-        performAction(view, amount)
+        performAction(view, amount.toDouble())
+        viewModel.bankCardListing()
         tv_info_currency.text = amount.toString()
 
     }
 
-    fun performAction(view: View, amount: Int) {
+    fun performAction(view: View, amount: Double) {
 
         rv_Empaycards.isVisible = true
         ll_bankCards.isVisible = false
@@ -80,7 +86,14 @@ class TransactionFragment : Fragment() {
         var longitude = requireArguments().getDouble(KEY_LONGITUDE)
 
         cl_addCard.setOnClickListener {
-            findNavController().navigate(R.id.addCardFragment)
+            val bundle = bundleOf(
+                KEY_AMOUNT to amount,
+                KEY_DESCRIPTION to description,
+                KEY_LATITUDE to latitude,
+                KEY_LONGITUDE to longitude
+            )
+
+            findNavController().navigate(R.id.addCardFragment, bundle)
 
         }
 
@@ -110,15 +123,29 @@ class TransactionFragment : Fragment() {
         }
 
         btn_continue.setOnClickListener {
-            val topUpRequest = TopUpRequest(amount, description.toString(), latitude, longitude)
-            viewModel.topUp(topUpRequest)
+
+
+            var customer = PaymentByExisitingCardRequest.Customer("540000010", 1)
+            var amount = PaymentByExisitingCardRequest.Amount("AED",  String.format("%.2f", amount))
+            var paymentByExisitingCardRequest =
+                PaymentByExisitingCardRequest(
+                    amount,
+                    "9000001",
+                    null,
+                    customer,
+                    description,
+                    useExistingCard.toString(), "07", latitude, true, longitude, true
+                )
+
+            viewModel.paymentByExistingCard(paymentByExisitingCardRequest)
+
         }
 
     }
 
     private fun observe(view: View) {
         viewModel.apply {
-            topupStatus.observe(requireActivity(), androidx.lifecycle.Observer {
+            paymentByExistingCardStatus.observe(requireActivity(), androidx.lifecycle.Observer {
                 when (it.status) {
                     ApiCallStatus.LOADING -> {
                         dialog.show_dialog()
@@ -138,8 +165,37 @@ class TransactionFragment : Fragment() {
                 }
 
             })
+            bankCardStatus.observe(requireActivity(), androidx.lifecycle.Observer {
+                when (it.status) {
+                    ApiCallStatus.LOADING -> {
+                        dialog.show_dialog()
+                    }
+                    ApiCallStatus.SUCCESS -> {
+                        dialog.dismiss_dialog()
+
+                        rv_bankCard.apply {
+                            adapter = it.data?.let { it1 ->
+                                CardsAdapter(
+                                    it1.cards,
+                                    this@TransactionFragment
+                                )
+                            }
+                        }
+
+                    }
+                    ApiCallStatus.ERROR -> {
+                        dialog.dismiss_dialog()
+                        requireActivity().showShortToast(it.errorMessage)
+
+                    }
+                }
+
+            })
+
 
         }
+
+
     }
 
     private fun getData() {
@@ -149,11 +205,15 @@ class TransactionFragment : Fragment() {
         cards.add(CardResponse(2, "Empay - Credit- XXXXX 607", "AED 234.20", false))
 
 
-        rv_Empaycards.apply {
-            adapter = CardsAdapter(cards)
-        }
-        rv_bankCard.apply {
-            adapter = CardsAdapter(cards)
-        }
+//        rv_Empaycards.apply {
+//            adapter = CardsAdapter(cards)
+//        }
+
+    }
+
+    override fun onCardClicked(card: BankCardsListingResponse.Data.Card) {
+        useExistingCard = card.token
+
+        ////8008001036547555
     }
 }

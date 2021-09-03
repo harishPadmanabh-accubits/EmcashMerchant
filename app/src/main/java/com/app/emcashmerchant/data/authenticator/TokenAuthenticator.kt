@@ -35,16 +35,16 @@ class TokenAuthenticator(val context: Context) : Authenticator {
     var api = restAdapter.create(ApiServices::class.java)
 
 
-    override fun authenticate(route: Route?, response: Response): Request? {
-        Log.d("responseCodeAuth", response.code.toString())
+    override fun authenticate(route: Route?, responseAuth: Response): Request? {
+        Log.d("responseCodeAuth", responseAuth.code.toString())
 
-        getUpdatedToken()
+       getUpdatedToken(responseAuth)
+
+
         return null
-
-
     }
 
-    fun getUpdatedToken() {
+    fun getUpdatedToken(responseAuth:Response) : Request{
 
         var refreshTokenRequest = RefreshTokenRequest(sessionStorage.refreshToken.toString())
         api.refreshToken("Bearer ${sessionStorage.accesToken}", refreshTokenRequest)
@@ -63,6 +63,7 @@ class TokenAuthenticator(val context: Context) : Authenticator {
                         sessionStorage.refreshToken =
                             response.body()?.data?.tokens?.refreshToken.toString()
 
+
                     } else if (response.code() == 401) {
                         sessionStorage.logoutUser()
                     }
@@ -70,6 +71,10 @@ class TokenAuthenticator(val context: Context) : Authenticator {
 
                 }
             })
+        return responseAuth.request.newBuilder()
+            .header("Authorization", "Bearer ${sessionStorage.accesToken}")
+            .build()
+
     }
 
     fun client(): OkHttpClient {

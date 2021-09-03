@@ -33,7 +33,9 @@ class LevelProfileImageView(context: Context, attrs: AttributeSet) :
                 fl_user_level.setBackgroundResource((R.drawable.yellow_round))
             }
             UserProfileLevel.BLACK->{
-                fl_user_level.setBackgroundResource((R.drawable.black_round))
+                fl_user_level.setBackgroundResource((R.drawable.greyfilled_round))
+                tv_user_name_letter.setTextColor(resources.getColor(R.color.white))
+
             }
             UserProfileLevel.GREY_FILLED->{
                 fl_user_level.setBackgroundResource((R.drawable.circle_black_fill))

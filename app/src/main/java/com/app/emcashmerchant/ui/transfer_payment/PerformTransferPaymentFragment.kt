@@ -69,8 +69,9 @@ class PerformTransferPaymentFragment : Fragment() {
             tv_firstLetter.text = senderPerson.toString()[0].toString()
             iv_userImage.visibility = View.INVISIBLE
             tv_firstLetter.visibility = View.VISIBLE
-            fl_user_level.setBackgroundResource(R.drawable.black_round)
-
+//            fl_user_level.setBackgroundResource(R.drawable.black_round)
+            fl_user_level.setBackgroundResource(R.drawable.greyfilled_round)
+            tv_firstLetter.setTextColor(resources.getColor(R.color.white))
         }
 
         if (role == 3) {

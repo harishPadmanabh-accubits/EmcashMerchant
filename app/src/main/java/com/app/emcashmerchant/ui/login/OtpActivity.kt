@@ -39,6 +39,7 @@ class OtpActivity : AppCompatActivity() {
             FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
                 if (!task.isSuccessful) {
                     Log.e("fcmError", "Fetching FCM registration token failed", task.exception)
+                    fcmToken=task.result.toString()
                     return@OnCompleteListener
                 }
 

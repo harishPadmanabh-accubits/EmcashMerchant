@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.app.emcashmerchant.R
 import com.app.emcashmerchant.data.models.DemoNotificationResponse
+import com.app.emcashmerchant.data.models.GroupedNotificationResponse
 import com.app.emcashmerchant.data.models.NotificationResponse
 import com.app.emcashmerchant.data.models.PaymentChatResponse
 import com.app.emcashmerchant.utils.KEY_ACTION
@@ -24,7 +25,7 @@ import com.app.emcashmerchant.utils.extensions.timeformat
 import kotlinx.android.synthetic.main.item_notification_details.view.*
 import kotlinx.android.synthetic.main.layout_payment_reciept_top.*
 
-class NotificationDetailsAdapter(val data: List<NotificationResponse.Data.Row>) :
+class NotificationDetailsAdapter(val data: List<GroupedNotificationResponse.Data.Row.Notification>) :
     RecyclerView.Adapter<NotificationDetailsAdapter.ViewHolder>() {
     open class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
@@ -50,7 +51,7 @@ class NotificationDetailsAdapter(val data: List<NotificationResponse.Data.Row>) 
             ll_notifications.setOnClickListener {
                 if (type != 5 || type != 6) {
                     var bundle = bundleOf(
-                        KEY_USERID to data[position].contactUserId
+                        KEY_USERID to data[position].contactUserId.toString()
                     )
 
                     findNavController().navigate(
@@ -73,15 +74,6 @@ class NotificationDetailsAdapter(val data: List<NotificationResponse.Data.Row>) 
             } else if (type == 5) {//rejected from merchant side
                 iv_point.setColorFilter(ContextCompat.getColor(context, R.color.red));
             }
-//            val colors = arrayOf(
-//                Color.parseColor("#70DDFF"),
-//                Color.parseColor("#EDB054"),
-//                Color.parseColor("#BB579F"),
-//                Color.parseColor("#16C89D"),
-//                Color.parseColor("#8D92FF")
-//            )
-//            val randomColor = colors.random()
-//            iv_point.setColorFilter(randomColor)
 
 
         }

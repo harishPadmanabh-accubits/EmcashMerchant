@@ -6,7 +6,10 @@ import android.content.Intent
 import android.content.SharedPreferences
 import androidx.security.crypto.EncryptedSharedPreferences
 import com.app.emcashmerchant.ui.introScreen.IntroActivity
+import com.app.emcashmerchant.utils.KEY_DEEPLINK
 import com.app.emcashmerchant.utils.masterKeyAlias
+import timber.log.Timber
+import java.lang.Exception
 
 @SuppressLint("CommitPrefEdits")
 class SessionStorage(var _context: Context) {
@@ -91,9 +94,18 @@ class SessionStorage(var _context: Context) {
         editor.commit()
     }
 
-    companion object {
-
+    var pendingDeeplink:String?
+    get() = try {
+         pref.getString(KEY_DEEPLINK, null)
+    }catch (e:Exception){
+        Timber.e("Deeplink Exc $e")
+        null
     }
+    set(value) = editor.putString(KEY_DEEPLINK, value).apply()
+
+
+
+
 
     init {
         pref = EncryptedSharedPreferences.create(

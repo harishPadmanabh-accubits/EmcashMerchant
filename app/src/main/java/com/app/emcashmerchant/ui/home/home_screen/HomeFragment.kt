@@ -1,25 +1,12 @@
 package com.app.emcashmerchant.ui.home.home_screen
 
-import android.app.Notification
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
-import android.content.Context
-import android.content.Intent
-import android.graphics.BitmapFactory
-import android.graphics.Color
-import android.media.RingtoneManager
-import android.os.Build
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RemoteViews
 import androidx.activity.OnBackPressedCallback
 import androidx.core.app.ActivityCompat
-import androidx.core.app.NotificationCompat
-import androidx.core.content.ContextCompat.getSystemService
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
@@ -32,17 +19,16 @@ import androidx.transition.ChangeBounds
 import com.app.emcashmerchant.R
 import com.app.emcashmerchant.data.SessionStorage
 import com.app.emcashmerchant.data.network.ApiCallStatus
-import com.app.emcashmerchant.ui.home.HomeBaseActivity
 import com.app.emcashmerchant.ui.home.home_screen.adapter.RecentTransactionsAdapter
-import com.app.emcashmerchant.utils.*
-import com.app.emcashmerchant.utils.extensions.*
-import com.app.emcashmerchant.utils.extensions.loadImageWithUrl
+import com.app.emcashmerchant.utils.AppDialog
+import com.app.emcashmerchant.utils.extensions.loadImageWithUrlUser
+import com.app.emcashmerchant.utils.extensions.obtainViewModel
+import com.app.emcashmerchant.utils.extensions.showShortToast
+import com.app.emcashmerchant.utils.extensions.trimID
 import kotlinx.android.synthetic.main.home_fragment.*
 import kotlinx.android.synthetic.main.layout_home_info_card.*
 import kotlinx.android.synthetic.main.layout_notification_with_badge_view.*
-import kotlinx.android.synthetic.main.walletv2.*
 import timber.log.Timber
-
 
 
 class HomeFragment : Fragment() {
@@ -56,6 +42,21 @@ class HomeFragment : Fragment() {
     private lateinit var sessionStorage: SessionStorage
     var balance: String? = null
     lateinit var dialog: AppDialog
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        handlePendingDeepLink()
+    }
+
+    private fun handlePendingDeepLink() {
+        sessionStorage = SessionStorage(requireContext())
+        val deepLink = sessionStorage.pendingDeeplink
+        if(!deepLink.isNullOrEmpty()){
+            Timber.e("Deeplink in home $deepLink")
+            sessionStorage.pendingDeeplink = null
+            findNavController().navigate(Uri.parse(deepLink))
+        }
+    }
 
 
     override fun onCreateView(
@@ -73,20 +74,6 @@ class HomeFragment : Fragment() {
                 ActivityCompat.finishAffinity(requireActivity())
             }
         }
-
-
-        if((requireActivity() as HomeBaseActivity).destination == SCREEN_CHAT){
-            val uid = (requireActivity() as HomeBaseActivity).userIdFromDeeplink.toString()
-            uid?.let{
-                val bundle = bundleOf(
-                    KEY_USERID to it
-                )
-                (requireActivity() as HomeBaseActivity).intent.removeExtra(DESTINATION)
-                findNavController().navigate(R.id.paymentChatHistoryFragment,bundle)
-            }
-
-        }
-
         requireActivity().onBackPressedDispatcher.addCallback(callback)
         return inflater.inflate(R.layout.home_fragment, container, false)
     }
@@ -96,8 +83,6 @@ class HomeFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
         sessionStorage = SessionStorage(requireActivity())
         dialog = AppDialog(requireActivity())
-
-
         getWalletDetails()
         viewModel.getRecentTransactions()
         observe()

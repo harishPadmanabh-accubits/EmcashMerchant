@@ -50,9 +50,9 @@ data class GroupedTransactionHistoryResponse(
                 @SerializedName("id")
                 val id: String,
                 @SerializedName("latitude")
-                val latitude: Int,
+                val latitude: Double,
                 @SerializedName("longitude")
-                val longitude: Int,
+                val longitude: Double,
                 @SerializedName("method")
                 val method: Int,
                 @SerializedName("paymentConfirmedAt")
@@ -95,18 +95,18 @@ data class GroupedTransactionHistoryResponse(
 
                 data class WalletTransactionInfo(
                     @SerializedName("balance")
-                    val balance: Any,
+                    val balance: Int,
                     @SerializedName("mode")
-                    val mode: Any,
+                    val mode: Int,
                     @SerializedName("transactionId")
                     val transactionId: Any,
                     @SerializedName("userId")
-                    val userId: Any,
+                    val userId: Int,
                     @SerializedName("walletId")
                     val walletId: Any,
                     @SerializedName("walletTransactionId")
                     val walletTransactionId: Any
-                )
+                    )
             }
         }
     }

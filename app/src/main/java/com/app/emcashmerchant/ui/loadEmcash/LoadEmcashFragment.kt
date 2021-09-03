@@ -70,6 +70,9 @@ class LoadEmcashFragment : Fragment() {
             if (gpsEnabled(requireActivity())) {
                 if (amount.isEmpty()) {
                     requireActivity().showShortToast(getString(R.string.enter_valid_amount))
+                } else if (description.isEmpty()) {
+                    requireActivity().showShortToast(getString(R.string.please_enter_description))
+
                 } else {
                     topUp(amount.toInt(), description, view)
                 }

@@ -77,6 +77,7 @@
                     style="@style/WhiteRoundTextField"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp48"
+                    android:maxLength="50"
                     android:layout_marginStart="@dimen/dp20"
                     android:layout_marginTop="@dimen/dp60"
                     android:layout_marginEnd="@dimen/dp20"
@@ -92,6 +93,7 @@
                     android:layout_height="@dimen/dp48"
                     android:layout_marginStart="@dimen/dp20"
                     android:layout_marginTop="@dimen/dp12"
+                    android:maxLength="50"
                     android:layout_marginEnd="@dimen/dp20"
                     android:hint="@string/contact_person_name" />
 
@@ -103,6 +105,7 @@
                     android:layout_marginStart="@dimen/dp20"
                     android:layout_marginTop="@dimen/dp12"
                     android:layout_marginEnd="@dimen/dp20"
+                    android:maxLength="50"
                     android:hint="@string/registered_name_of_business"
 
                     />
@@ -113,6 +116,7 @@
                     android:layout_height="@dimen/dp48"
                     android:layout_marginStart="@dimen/dp20"
                     android:layout_marginTop="@dimen/dp12"
+                    android:maxLength="50"
                     android:layout_marginEnd="@dimen/dp20"
                     android:hint="@string/trade_license_number" />
 
@@ -123,6 +127,7 @@
                     android:layout_height="@dimen/dp48"
                     android:layout_marginStart="@dimen/dp20"
                     android:layout_marginTop="@dimen/dp12"
+                    android:maxLength="50"
                     android:layout_marginEnd="@dimen/dp20"
                     android:hint="@string/trade_license_authority" />
 
@@ -135,6 +140,7 @@
                     android:layout_marginTop="@dimen/dp12"
                     android:layout_marginEnd="@dimen/dp20"
                     android:gravity="top"
+                    android:maxLength="250"
                     android:hint="@string/service_description"
                     android:paddingTop="@dimen/dp12" />
 

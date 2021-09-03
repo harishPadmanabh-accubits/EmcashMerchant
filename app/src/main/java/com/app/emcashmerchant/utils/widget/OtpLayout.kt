@@ -171,4 +171,6 @@ class OtpLayout(context: Context, attrs: AttributeSet) : LinearLayout(context, a
         .plus(otpField3.text.toString())
         .plus(otpField4.text.toString())
 
+
+
 }

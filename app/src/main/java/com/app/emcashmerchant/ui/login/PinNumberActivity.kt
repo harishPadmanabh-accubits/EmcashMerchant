@@ -1,12 +1,9 @@
 package com.app.emcashmerchant.ui.login
 
-import android.content.Intent
-import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.core.app.ActivityCompat
-import androidx.core.net.toUri
 import androidx.lifecycle.Observer
 import com.app.emcashmerchant.R
 import com.app.emcashmerchant.data.SessionStorage
@@ -33,7 +30,7 @@ class PinNumberActivity : AppCompatActivity() {
     }
 
     val deeplink by lazy {
-        intent.getStringExtra(KEY_DEEPLINK)?.toUri()
+        intent.getStringExtra(KEY_DEEPLINK)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -89,56 +86,22 @@ class PinNumberActivity : AppCompatActivity() {
                     var status = it.data?.data?.userStatus
 
                     if (isFromDeepLink) {
-//                        startActivity(deeplink?.let { uri ->
-//                            DeepLinkFactory.getIntentFromDeeplink(
-//                                uri, this
-//                            )
-//                        })
-//                        DeepLinkFactory.getIntentFromDeeplink(
-//                            Uri.parse(deeplink.toString()), this
-//                        )
-                        val userId = Uri.parse(deeplink.toString()).pathSegments[2]
-
-                        if (Uri.parse(deeplink.toString()).pathSegments[1].equals("paymentHistory")) {
-                            openActivity(HomeBaseActivity::class.java) {
-                                putInt(DESTINATION, SCREEN_CHAT)
-                                putString(KEY_USER_ID_FROM_DEEPLINK, userId)
-                            }
-                        } else if (Uri.parse(deeplink.toString()).pathSegments[1].equals("ReUpload")) {
-                            openActivity(ReUploadDocumentsActivity::class.java) {
-                                putInt(DESTINATION, SCREEN_CHAT)
-                                putString(KEY_REUPLOAD_TOKEN, userId)
-                            }
-                        }
-
-//                        Intent(this, HomeBaseActivity::class.java).also {
-//                            it.putExtra(DESTINATION, SCREEN_CHAT)
-//                            it.putExtra(KEY_USER_ID_FROM_DEEPLINK, 1)
-//                        }
-
+                        DeepLinkFactory.processDeeplink(deeplink, this)
                     } else {
 
-                        if (status == 1) {
-                            openActivity(HomeBaseActivity::class.java)
 
-                        } else if (status == 2) {
-                            showShortToast("You account is in review")
-                        } else if (status == 3) {
-                            if (it.data?.data?.requestingAddInfo == true) {
-                                openActivity(ReUploadDocumentsActivity::class.java){
-                                    putString(KEY_REUPLOAD_TOKEN, it.data?.data?.uploadDocumentToken)
-
-                                }
-
-                            } else {
-                                showShortToast("You account is rejected")
-
+                        if (it.data?.data?.requestingAddInfo == true) {
+                            openActivity(ReUploadDocumentsActivity::class.java) {
+                                putString(KEY_REUPLOAD_TOKEN, it.data?.data?.uploadDocumentToken)
                             }
-
+                        } else if (status == 1) {//accept
+                            openActivity(HomeBaseActivity::class.java)
+                        } else if (status == 2) {
+                            showShortToast("Your account is under review")
+                        } else if (status == 3) {
+                            showShortToast("Your account is rejected")
                         } else if (status == 4) {
-                            showShortToast("You account is blocked")
-
-
+                            showShortToast("Your account is blocked")
                         }
                     }
                 }

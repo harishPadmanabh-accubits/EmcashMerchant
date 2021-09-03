@@ -87,6 +87,7 @@ class RegisterOtpActivity : AppCompatActivity() {
                     ApiCallStatus.SUCCESS -> {
                         dialog.dismiss_dialog()
                         var data = it.data
+
                         showLongToast(getString(R.string.otp_resend_msg))
 
                     }

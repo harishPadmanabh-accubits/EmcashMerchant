@@ -16,7 +16,7 @@ import com.app.emcashmerchant.data.SessionStorage
 import com.app.emcashmerchant.data.network.ApiCallStatus
 import com.app.emcashmerchant.utils.*
 import com.app.emcashmerchant.utils.extensions.*
-import kotlinx.android.synthetic.main.fragment_transfer_payment_reciept.iv_back
+import kotlinx.android.synthetic.main.fragment_transfer_payment_reciept.*
 import kotlinx.android.synthetic.main.layout_payment_receipt_bottom.*
 import kotlinx.android.synthetic.main.layout_payment_reciept_middle.*
 import kotlinx.android.synthetic.main.layout_payment_reciept_top.*
@@ -83,8 +83,9 @@ class TransferPaymentRecieptFragment : Fragment() {
                     }
                     ApiCallStatus.SUCCESS -> {
                         dialog.dismiss_dialog()
-                        userId = it.data?.beneficiary?.userId.toString()
+                        cl_main.visibility=View.VISIBLE
 
+                        userId = it.data?.beneficiary?.userId.toString()
                         if (it.data?.beneficiary?.profileImage != null) {
                             iv_user_Image.visibility = View.VISIBLE
                             iv_receipient_dp.visibility = View.VISIBLE

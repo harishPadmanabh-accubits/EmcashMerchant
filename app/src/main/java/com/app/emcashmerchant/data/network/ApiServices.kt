@@ -250,6 +250,15 @@ interface ApiServices {
     ): Call<AllContactResponse>
 
 
+    @GET("v1/merchants/contacts/group")
+   suspend fun allGroupedContactsResponse(
+        @Header("Authorization") authentication: String,
+        @Query("page") page: Int,
+        @Query("limit") limit: Int,
+        @Query("search") search: String
+    ): Response<GroupedContactsResponse>
+
+
     @GET("v1/merchants/contacts/{userId}")
     fun getOneContactResponse(
         @Header("Authorization") authentication: String,
@@ -299,7 +308,7 @@ interface ApiServices {
 
 
     @GET("v1/merchants/transactions/main/group?")
-    fun allGroupedTransactionHistoryReponse(
+    suspend fun allGroupedTransactionHistoryReponse(
         @Header("Authorization") authentication: String,
         @Query("page") page: Int,
         @Query("limit") limit: Int,
@@ -308,7 +317,7 @@ interface ApiServices {
         @Query("endDate") endDate: String,
         @Query("status") status: String,
         @Query("type") type: String
-    ): Call<GroupedTransactionHistoryResponse>
+    ): Response<GroupedTransactionHistoryResponse>
 
     @GET("v1/merchants/contacts/{user_id}/transactions")
     fun getChatResponse(
@@ -318,6 +327,27 @@ interface ApiServices {
         @Query("limit") limit: Int
 
     ): Call<PaymentChatResponse>
+
+
+    @GET("v1/merchants/contacts/{user_id}/transactions/group")
+    fun getGroupedChatResponse(
+        @Header("Authorization") authentication: String,
+        @Path("user_id") user_id: Int,
+        @Query("page") page: Int,
+        @Query("limit") limit: Int
+    ): Call<GroupedChatHistoryResponse>
+
+
+
+
+    @GET("v1/merchants/contacts/{user_id}/transactions/group")
+    suspend fun getPagingGroupedChatResponse(
+        @Header("Authorization") authentication: String,
+        @Path("user_id") user_id: Int,
+        @Query("page") page: Int,
+        @Query("limit") limit: Int
+    ): Response<GroupedChatHistoryResponse>
+
 
     @POST("v1/merchants/contacts/{user_id}/block")
     fun blockContact(
@@ -338,11 +368,37 @@ interface ApiServices {
         @Query("limit") limit: Int
     ): Call<NotificationResponse>
 
+    @GET("v1/merchants/notification/group-by-date")
+    suspend fun groupNotification(
+        @Header("Authorization") authentication: String,
+        @Query("page") page: Int,
+        @Query("limit") limit: Int
+    ): Response<GroupedNotificationResponse>
+
     @POST("v1/merchants/auth/refresh")
     fun refreshToken(
         @Header("Authorization") authentication: String,
         @Body refreshTokenRequest: RefreshTokenRequest
     ): Call<RefreshTokenResponse>
+
+
+    @GET("v1/merchants/empay/cards")
+    fun getBankCard(
+        @Header("Authorization") authentication: String
+    ): Call<BankCardsListingResponse>
+
+
+    @POST("v1/merchants/empay/payment-through-new-card")
+    fun paymentByNewCard(
+        @Header("Authorization") authentication: String,
+        @Body paymentByNewCardRequest: PaymentByNewCardRequest
+    ): Call<PaymentByNewCardResponse>
+
+    @POST("v1/merchants/empay/payment-through-existing-card")
+    fun paymentByExistingCard(
+        @Header("Authorization") authentication: String,
+        @Body paymentByExisitingCardRequest: PaymentByExisitingCardRequest
+    ): Call<PaymentByExisitingCardResponse>
 
 
 }

@@ -27,6 +27,7 @@ import kotlinx.android.synthetic.main.fragment_perform_transfer_by_contact.fl_us
 import kotlinx.android.synthetic.main.fragment_perform_transfer_by_contact.iv_back
 import kotlinx.android.synthetic.main.fragment_perform_transfer_by_contact.tv_name
 import kotlinx.android.synthetic.main.fragment_perform_transfer_by_contact.tv_number
+import kotlinx.android.synthetic.main.layout_item_recent_payment.view.*
 
 class PerformTransferByContactFragment : Fragment() {
 
@@ -127,7 +128,8 @@ class PerformTransferByContactFragment : Fragment() {
                             tv_firstLetterr.text = it.data?.name.toString()[0].toString()
                             iv_userImagee.visibility = View.INVISIBLE
                             tv_firstLetterr.visibility = View.VISIBLE
-                            fl_user_level.setBackgroundResource(R.drawable.black_round)
+                            fl_user_level.setBackgroundResource(R.drawable.greyfilled_round)
+                            tv_firstLetterr.setTextColor(resources.getColor(R.color.white))
 
                         }
 

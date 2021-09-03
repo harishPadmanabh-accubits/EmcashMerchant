@@ -3,6 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:id="@+id/cl_main"
+    android:visibility="gone"
     android:layout_height="match_parent"
     android:background="@color/white"
     tools:context=".ui.PaymentChatHistory.PaymentChatHistoryFragment">
@@ -98,8 +100,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ll_name_number"
-        app:reverseLayout="true"
-        app:stackFromEnd="true" />
+     />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline5"
@@ -218,7 +219,6 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

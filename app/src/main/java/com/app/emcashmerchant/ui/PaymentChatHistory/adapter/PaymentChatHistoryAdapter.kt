@@ -4,17 +4,21 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.app.emcashmerchant.R
+import com.app.emcashmerchant.data.models.GroupedChatHistoryResponse
+import com.app.emcashmerchant.data.models.GroupedTransactionHistoryResponse
 import com.app.emcashmerchant.data.models.PaymentChatResponse
 import com.app.emcashmerchant.utils.extensions.getCurrentDate
 import kotlinx.android.synthetic.main.payment_transaction_chat_item.view.*
 
 class PaymentChatHistoryAdapter(
-    val transactions: MutableList<PaymentChatResponse.ChatTransactionViewModel>,
     private val clickListener: ChatItemClickListener
-) :
-    RecyclerView.Adapter<PaymentChatHistoryAdapter.ViewHolder>() {
+) : PagingDataAdapter<GroupedChatHistoryResponse.Data.Row, PaymentChatHistoryAdapter.ViewHolder>(
+    DiffUtilCallBack()
+) {
     open class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -27,23 +31,47 @@ class PaymentChatHistoryAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.itemView.apply {
 
+            val transactions = getItem(position)
 
-            if (getCurrentDate().equals(transactions[position].date)) {
-                tv_date.text = "Today"
-            } else {
-                tv_date.text = transactions[position].date
 
-            }
-            rv_chat_details.apply {
-                adapter = PaymentChatHistoryDetailsAdapter(
-                    transactions[position].activities.asReversed(),clickListener)
+//            tv_date.text = transactions[position].key
+            transactions?.let {
+                if (getCurrentDate().equals(it.key)) {
+                    tv_date.text = "Today"
+                } else {
+                    tv_date.text = it.key
+
+                }
+
+                rv_chat_details.apply {
+                    adapter = PaymentChatHistoryDetailsAdapter(
+                        it.transactions, clickListener
+                    )
+                }
             }
 
         }
     }
 
-    override fun getItemCount(): Int {
-        return transactions.size
+
+    class DiffUtilCallBack : DiffUtil.ItemCallback<GroupedChatHistoryResponse.Data.Row>() {
+        override fun areItemsTheSame(
+            oldItem: GroupedChatHistoryResponse.Data.Row,
+            newItem: GroupedChatHistoryResponse.Data.Row
+        ): Boolean {
+            return oldItem.key == newItem.key
+        }
+
+        override fun areContentsTheSame(
+            oldItem: GroupedChatHistoryResponse.Data.Row,
+            newItem: GroupedChatHistoryResponse.Data.Row
+        ): Boolean {
+            return oldItem.key == newItem.key
+
+
+        }
+
     }
+
 
 }

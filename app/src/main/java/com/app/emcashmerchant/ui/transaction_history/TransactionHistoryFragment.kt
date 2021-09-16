@@ -28,6 +28,7 @@ import kotlinx.android.synthetic.main.lay_types_filter.*
 import kotlinx.android.synthetic.main.layout_payment_receipt_bottom.*
 import kotlinx.android.synthetic.main.transaction_history_fragment.*
 import timber.log.Timber
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -219,6 +220,15 @@ class TransactionHistoryFragment : Fragment(), DurationItemClickListener {
 
             }
         }
+        calenderView.setOnDateSelectedListener(object :CalendarPickerView.OnDateSelectedListener{
+            override fun onDateSelected(date: Date?) {
+                updateUIwithCalendar(calenderView.selectedDates)
+            }
+
+            override fun onDateUnselected(date: Date?) {
+            }
+
+        })
     }
 
     private fun setupTabs() {
@@ -287,5 +297,18 @@ class TransactionHistoryFragment : Fragment(), DurationItemClickListener {
             startDate = getDaysAgo(2).toString()
             durationFilterCustom = 0
         }
+    }
+    fun dateFormatFromCalender(dateFormat: String, dateStr: String): String {
+        val utc = TimeZone.getTimeZone("UTC")
+        val sourceFormat = SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy")
+        val destFormat = SimpleDateFormat(dateFormat)
+        sourceFormat.timeZone = utc
+        val convertedDate = sourceFormat.parse(dateStr)
+        return destFormat.format(convertedDate)
+    }
+    private fun updateUIwithCalendar(selectedDates: List<Date>) {
+
+        tv_toDate.text = dateFormatFromCalender("dd-MMM-YYYY", selectedDates.last().toString())
+        tv_fromDate.text = dateFormatFromCalender("dd-MMM-YYYY", selectedDates.first().toString())
     }
 }

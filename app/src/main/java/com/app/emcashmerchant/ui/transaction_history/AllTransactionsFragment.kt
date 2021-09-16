@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
@@ -19,10 +20,10 @@ import kotlinx.android.synthetic.main.fragment_all_transactions.*
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 
 class AllTransactionsFragment : Fragment() {
-    private lateinit var viewModel: TransactionHistoryViewModel
     private lateinit var dialog: AppDialog
 
     val pagedAdapter by lazy {
@@ -39,7 +40,6 @@ class AllTransactionsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        getViewModel()
         dialog = AppDialog(requireActivity())
 
 
@@ -72,53 +72,22 @@ class AllTransactionsFragment : Fragment() {
             )
         }
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.getListData("0", "", "", "", "").collect {
-                pagedAdapter.submitData(it)
-            }
 
-        }
 
+    }
+
+
+    override fun onResume() {
+        super.onResume()
         val sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
         sharedViewModel.apply {
-            status.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-//                viewModel.getAllGroupedTransactions("0","",it,"","")
-
-                viewLifecycleOwner.lifecycleScope.launch {
-                    viewModel.getListData("0", "", "", it, "").collect {
-
-                        pagedAdapter.submitData(lifecycle,it)
-
-                    }
-
-
-                }
-
-
-            })
-            date.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-//                viewModel.getAllGroupedTransactions("0","","",it[0], it[1])
-
-                viewLifecycleOwner.lifecycleScope.launch {
-                    viewModel.getListData("0", it[0], it[1], "", "").collectLatest {
-                        pagedAdapter.submitData(lifecycle,it)
-
-                    }
-
-                }
-
-
+            filter.value = HistoryFilter()
+            pagedTransactions.observe(viewLifecycleOwner, Observer {
+                pagedAdapter.submitData(lifecycle,it)
+                Timber.e("Observing ${it}")
             })
 
         }
-
-
     }
-
-
-    private fun getViewModel() {
-        viewModel = requireActivity().obtainViewModel(TransactionHistoryViewModel::class.java)
-    }
-
 
 }

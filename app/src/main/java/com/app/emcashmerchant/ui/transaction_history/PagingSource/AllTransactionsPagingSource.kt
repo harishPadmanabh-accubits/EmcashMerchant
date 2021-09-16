@@ -43,11 +43,19 @@ class AllTransactionsPagingSource(
         }
 
 
-        return LoadResult.Page(
-            data = groupedActivities,
-            prevKey = if (nextPage == 1) null else nextPage - 1,
-            nextKey =if(nextPage==response?.data?.totalPages) null else response?.data?.page?.plus(1)
-        )
+        if (response != null) {
+            return LoadResult.Page(
+                data = groupedActivities,
+                prevKey = if (response.data.totalPages == 0) null else {
+                    if (nextPage == 1) null else nextPage - 1
+                },
+                nextKey = if (response.data.totalPages == 0) null else {
+                    if (nextPage == response.data.totalPages) null else response.data.page.plus(1)
+
+                }
+            )
+        }else
+            return LoadResult.Error(Error("null response error"))
     }
 
     companion object {

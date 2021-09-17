@@ -43,14 +43,14 @@ class AllTransactionAdapter :PagingDataAdapter<GroupedTransactionHistoryResponse
             oldItem: GroupedTransactionHistoryResponse.Data.Row,
             newItem: GroupedTransactionHistoryResponse.Data.Row
         ): Boolean {
-            return oldItem.key == newItem.key
+            return false
         }
 
         override fun areContentsTheSame(
             oldItem: GroupedTransactionHistoryResponse.Data.Row,
             newItem: GroupedTransactionHistoryResponse.Data.Row
         ): Boolean {
-            return oldItem.key == newItem.key
+            return false
 
 
         }

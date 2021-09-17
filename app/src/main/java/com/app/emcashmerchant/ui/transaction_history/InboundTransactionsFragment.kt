@@ -83,6 +83,7 @@ class InboundTransactionsFragment : Fragment() {
         super.onResume()
         val sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
         sharedViewModel.apply {
+            setScreenFlag(HistoryScreens.INBOUND)
             filter.value = HistoryFilter(mode = "1")
             pagedInboundTransactions.observe(viewLifecycleOwner, Observer {
                 pagedAdapter.submitData(lifecycle,it)

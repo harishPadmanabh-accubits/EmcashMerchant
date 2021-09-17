@@ -81,6 +81,7 @@ class AllTransactionsFragment : Fragment() {
         super.onResume()
         val sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
         sharedViewModel.apply {
+            setScreenFlag(HistoryScreens.ALL)
             filter.value = HistoryFilter()
             pagedTransactions.observe(viewLifecycleOwner, Observer {
                 pagedAdapter.submitData(lifecycle,it)

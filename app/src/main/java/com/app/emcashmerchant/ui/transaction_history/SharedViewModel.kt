@@ -12,12 +12,18 @@ import com.app.emcashmerchant.ui.transaction_history.PagingSource.AllTransaction
 import com.app.emcashmerchant.utils.extensions.default
 import timber.log.Timber
 
-class SharedViewModel(val app:Application) : AndroidViewModel(app) {
+class SharedViewModel(val app: Application) : AndroidViewModel(app) {
     val type = MutableLiveData<String>()
     val status = MutableLiveData<String>().default("4")
     val date = MutableLiveData<ArrayList<String>>()
     val endDate = MutableLiveData<String>()
     val filter = MutableLiveData<HistoryFilter>().default(HistoryFilter())
+    val _screen = MutableLiveData<HistoryScreens>()
+
+    fun setScreenFlag(screen: HistoryScreens): LiveData<HistoryScreens> {
+        _screen.value = screen
+        return _screen
+    }
 
     fun sendType(s_type: String) {
         type.value = s_type
@@ -26,7 +32,14 @@ class SharedViewModel(val app:Application) : AndroidViewModel(app) {
 
     fun sendStatus(s_status: String) {
         status.value = s_status
-        filter.value = HistoryFilter(status = s_status)
+        filter.value = HistoryFilter(
+            status = s_status, mode = when (_screen.value) {
+                HistoryScreens.ALL -> "0"
+                HistoryScreens.INBOUND -> "1"
+                HistoryScreens.OUTBOUND -> "2"
+                else -> "0"
+            }
+        )
 
     }
 
@@ -34,13 +47,19 @@ class SharedViewModel(val app:Application) : AndroidViewModel(app) {
         date.value = s_date
         filter.value = HistoryFilter(
             startDate = s_date.first(),
-            endDate = s_date.last()
+            endDate = s_date.last(),
+            mode = when (_screen.value) {
+                HistoryScreens.ALL -> "0"
+                HistoryScreens.INBOUND -> "1"
+                HistoryScreens.OUTBOUND -> "2"
+                else -> "0"
+            }
         )
         Timber.e("date start ${s_date[0]} end ${s_date.last()}")
     }
 
-    val pagedTransactions= Transformations.switchMap(filter){
-         Pager(PagingConfig(1)) {
+    val pagedTransactions = Transformations.switchMap(filter) {
+        Pager(PagingConfig(1)) {
             AllTransactionsPagingSource(
                 ApiManger(app).api,
                 SessionStorage(app).accesToken.toString(),
@@ -53,7 +72,7 @@ class SharedViewModel(val app:Application) : AndroidViewModel(app) {
         }.liveData.cachedIn(viewModelScope)
     }
 
-    val pagedInboundTransactions= Transformations.switchMap(filter){
+    val pagedInboundTransactions = Transformations.switchMap(filter) {
         Pager(PagingConfig(1)) {
             AllTransactionsPagingSource(
                 ApiManger(app).api,
@@ -67,7 +86,7 @@ class SharedViewModel(val app:Application) : AndroidViewModel(app) {
         }.liveData.cachedIn(viewModelScope)
     }
 
-    val pagedOutboundTransactions= Transformations.switchMap(filter){
+    val pagedOutboundTransactions = Transformations.switchMap(filter) {
         Pager(PagingConfig(1)) {
             AllTransactionsPagingSource(
                 ApiManger(app).api,
@@ -84,8 +103,9 @@ class SharedViewModel(val app:Application) : AndroidViewModel(app) {
 
 }
 
-
-
+enum class HistoryScreens {
+    ALL, INBOUND, OUTBOUND
+}
 
 
 data class HistoryFilter(

@@ -53,7 +53,41 @@ class SharedViewModel(val app:Application) : AndroidViewModel(app) {
         }.liveData.cachedIn(viewModelScope)
     }
 
+    val pagedInboundTransactions= Transformations.switchMap(filter){
+        Pager(PagingConfig(1)) {
+            AllTransactionsPagingSource(
+                ApiManger(app).api,
+                SessionStorage(app).accesToken.toString(),
+                filter.value?.mode ?: "1",
+                filter.value?.startDate ?: "",
+                filter.value?.endDate ?: "",
+                filter.value?.status ?: "",
+                filter.value?.type ?: ""
+            )
+        }.liveData.cachedIn(viewModelScope)
+    }
+
+    val pagedOutboundTransactions= Transformations.switchMap(filter){
+        Pager(PagingConfig(1)) {
+            AllTransactionsPagingSource(
+                ApiManger(app).api,
+                SessionStorage(app).accesToken.toString(),
+                filter.value?.mode ?: "2",
+                filter.value?.startDate ?: "",
+                filter.value?.endDate ?: "",
+                filter.value?.status ?: "",
+                filter.value?.type ?: ""
+            )
+        }.liveData.cachedIn(viewModelScope)
+    }
+
+
 }
+
+
+
+
+
 data class HistoryFilter(
     var mode: String = "0",
     var startDate: String = "",
@@ -61,3 +95,8 @@ data class HistoryFilter(
     var status: String = "",
     var type: String = ""
 )
+
+
+
+
+

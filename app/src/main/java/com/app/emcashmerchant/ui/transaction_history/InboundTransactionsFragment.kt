@@ -84,7 +84,7 @@ class InboundTransactionsFragment : Fragment() {
         val sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
         sharedViewModel.apply {
             filter.value = HistoryFilter(mode = "1")
-            pagedTransactions.observe(viewLifecycleOwner, Observer {
+            pagedInboundTransactions.observe(viewLifecycleOwner, Observer {
                 pagedAdapter.submitData(lifecycle,it)
                 Timber.e("Observing ${it}")
             })

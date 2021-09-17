@@ -37,7 +37,7 @@
             android:buttonTint="@color/app_blue"
             android:fontFamily="@font/biennale_regular"
             android:paddingStart="@dimen/dp12"
-            android:text="EmCash Recieved"
+            android:text="EmCash Received"
             android:textSize="@dimen/sp16" />
         <RadioButton
             android:id="@+id/rb_success"

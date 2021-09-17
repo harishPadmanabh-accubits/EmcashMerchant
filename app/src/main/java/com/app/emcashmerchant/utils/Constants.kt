@@ -6,8 +6,6 @@ import androidx.security.crypto.MasterKeys
 const val BASE_URL : String = "https://emcash-api-dev.devtomaster.com/"//dev
 //const val BASE_URL : String = "https://emcash-api-stg.devtomaster.com"
 //const val BASE_URL : String = "https://2fe5-117-216-229-80.ngrok.io"
-
-
 const val BUCKET_URL : String = "https://stemcashmerchantdocstest.blob.core.windows.net"
 
 
@@ -60,6 +58,8 @@ const val KEY_PROFLE_IMAGE_LINK = "PROFLE_IMAGE_LINK"
 const val KEY_REUPLOAD_TOKEN = "REUPLOAD_TOKEN"
 const val KEY_REVIEWSCREEN = "REVIEWSCREEN"
 
+const val KEY_USERLEVEL = "USERLEVEL"
+const val KEY_ROLEID = "ROLEID"
 
 
 const val DESTINATION = "source"

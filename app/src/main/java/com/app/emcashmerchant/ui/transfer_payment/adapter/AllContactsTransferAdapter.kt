@@ -57,14 +57,14 @@ class AllContactsTransferAdapter :
             oldItem: GroupedContactsResponse.Data.Row,
             newItem: GroupedContactsResponse.Data.Row
         ): Boolean {
-            return oldItem.key == newItem.key
+            return false
         }
 
         override fun areContentsTheSame(
             oldItem: GroupedContactsResponse.Data.Row,
             newItem: GroupedContactsResponse.Data.Row
         ): Boolean {
-            return oldItem.key == newItem.key
+            return false
 
 
         }

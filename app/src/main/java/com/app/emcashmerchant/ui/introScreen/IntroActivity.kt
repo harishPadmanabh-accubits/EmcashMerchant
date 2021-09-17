@@ -16,12 +16,6 @@ import com.app.emcashmerchant.utils.extensions.openActivity
 class IntroActivity : AppCompatActivity() {
     private lateinit var viewmodel: IntroScreenViewModel
 
-    private val type by lazy {
-        intent.getStringExtra(KEY_TYPE)
-    }
-    private val deepLink by lazy {
-        intent.getStringExtra(KEY_DEEPLINK)
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

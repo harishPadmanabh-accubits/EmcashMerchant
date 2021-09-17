@@ -48,7 +48,7 @@ class ForgotPasswordRepository(val context: Context) {
         resendOtpRequest: ResendOtpRequest,
         onApiCallback: (status: Boolean, message: String?, result: ResendOtpResponse.Data?) -> Unit
     ) {
-        api.performLoginResendOTP(resendOtpRequest).awaitResponse(
+        api.performForgotResendOTP(resendOtpRequest).awaitResponse(
             onFailure = {
                 onApiCallback(false, it, null)
             }, onSuccess = {

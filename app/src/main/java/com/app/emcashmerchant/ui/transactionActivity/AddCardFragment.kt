@@ -73,7 +73,7 @@ class AddCardFragment : Fragment() {
                 var billerId = "9000001"
                 var customer = PaymentByNewCardRequest.Customer("540000010", 1)
                 var amountAuthorized =
-                    PaymentByNewCardRequest.AmountAuthorized("AED", amount.toString())
+                    PaymentByNewCardRequest.AmountAuthorized("AED", String.format("%.2f", amount.toDouble()) )
                 var card = PaymentByNewCardRequest.Card(
                     cvv,
                     "manual",

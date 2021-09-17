@@ -16,6 +16,7 @@ import com.app.emcashmerchant.ui.transaction_history.adapters.AllTransactionAdap
 import com.app.emcashmerchant.utils.AppDialog
 import com.app.emcashmerchant.utils.extensions.obtainViewModel
 import com.app.emcashmerchant.utils.extensions.showShortToast
+import kotlinx.android.synthetic.main.fragment_inbound_transactions.*
 import kotlinx.android.synthetic.main.fragment_out_bound_transactions.*
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
@@ -44,7 +45,8 @@ class OutBoundTransactionsFragment : Fragment() {
             if (loadState.refresh is LoadState.Loading){
             }
             else{
-
+//                iv_emptyOutboundTransaction.visibility=View.VISIBLE
+//                rv_outbound.visibility=View.GONE
                 // getting the error
                 val error = when {
                     loadState.prepend is LoadState.Error -> loadState.prepend as LoadState.Error
@@ -76,6 +78,8 @@ class OutBoundTransactionsFragment : Fragment() {
         sharedViewModel.apply {
             setScreenFlag(HistoryScreens.OUTBOUND)
             filter.value = HistoryFilter(mode = "2")
+            sendType(true)
+
             pagedOutboundTransactions.observe(viewLifecycleOwner, Observer {
                 pagedAdapter.submitData(lifecycle,it)
                 Timber.e("Observing ${it}")

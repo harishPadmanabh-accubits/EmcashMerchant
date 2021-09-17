@@ -88,10 +88,10 @@ class BasicContactDetailsActivity : AppCompatActivity() {
 
         when (view.id) {
             R.id.btn_confirm -> {
-                if (phoneNumber.length < 8) {
-                    showShortToast(getString(R.string.enter_valid_number))
-                } else if (!email.isEmailValidity()) {
+                if (!email.isEmailValidity()) {
                     showShortToast(getString(R.string.enter_valid_email))
+                } else if (phoneNumber.length < 8) {
+                    showShortToast(getString(R.string.enter_valid_number))
                 } else if (phoneNumber.isEmpty() ||
                     et_email.text.toString().isEmpty() ||
                     et_address.text.toString().isEmpty()
@@ -147,7 +147,7 @@ class BasicContactDetailsActivity : AppCompatActivity() {
             serviceDescription,
             tradeLicenseIssuingAuthority,
             tradeLicenseNumber,
-            zipCode,sessionStorage.referenceIdInitial
+            zipCode, sessionStorage.referenceIdInitial
         )
     }
 

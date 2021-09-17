@@ -90,17 +90,17 @@ class PinNumberActivity : AppCompatActivity() {
                     } else {
 
 
-                        if (it.data?.data?.requestingAddInfo == true) {
+                        if (it.data?.data?.requestingAddInfo == true) {//requested for documents
                             openActivity(ReUploadDocumentsActivity::class.java) {
                                 putString(KEY_REUPLOAD_TOKEN, it.data?.data?.uploadDocumentToken)
                             }
                         } else if (status == 1) {//accept
                             openActivity(HomeBaseActivity::class.java)
-                        } else if (status == 2) {
+                        } else if (status == 2) {//review
                             showShortToast("Your account is under review")
-                        } else if (status == 3) {
+                        } else if (status == 3) {//rejected
                             showShortToast("Your account is rejected")
-                        } else if (status == 4) {
+                        } else if (status == 4) {//blocked
                             showShortToast("Your account is blocked")
                         }
                     }

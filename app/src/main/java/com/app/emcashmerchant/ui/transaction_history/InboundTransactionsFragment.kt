@@ -49,7 +49,8 @@ class InboundTransactionsFragment : Fragment() {
             if (loadState.refresh is LoadState.Loading){
             }
             else{
-
+//                iv_emptyInboundTransaction.visibility=View.VISIBLE
+//                rv_inbound.visibility=View.GONE
                 // getting the error
                 val error = when {
                     loadState.prepend is LoadState.Error -> loadState.prepend as LoadState.Error
@@ -85,6 +86,8 @@ class InboundTransactionsFragment : Fragment() {
         sharedViewModel.apply {
             setScreenFlag(HistoryScreens.INBOUND)
             filter.value = HistoryFilter(mode = "1")
+            sendType(true)
+
             pagedInboundTransactions.observe(viewLifecycleOwner, Observer {
                 pagedAdapter.submitData(lifecycle,it)
                 Timber.e("Observing ${it}")

@@ -12,6 +12,7 @@ import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.app.emcashmerchant.R
+import com.app.emcashmerchant.ui.loadStateAdapter.HeaderFooterAdapter
 import com.app.emcashmerchant.ui.transaction_history.adapters.AllTransactionAdapter
 import com.app.emcashmerchant.utils.AppDialog
 import com.app.emcashmerchant.utils.extensions.obtainViewModel
@@ -43,12 +44,18 @@ class AllTransactionsFragment : Fragment() {
         dialog = AppDialog(requireActivity())
 
 
+//
+//        pagedAdapter.withLoadStateFooter(
+//            footer = HeaderFooterAdapter()
+//        )
+
         pagedAdapter.addLoadStateListener { loadState ->
             if (loadState.refresh is LoadState.Loading) {
                 dialog.show_dialog()
             } else {
                 dialog.dismiss_dialog()
-
+//                iv_emptyTransaction.visibility=View.VISIBLE
+//                rv_all_transactions.visibility=View.GONE
                 // getting the error
                 val error = when {
                     loadState.prepend is LoadState.Error -> loadState.prepend as LoadState.Error
@@ -81,6 +88,7 @@ class AllTransactionsFragment : Fragment() {
         super.onResume()
         val sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
         sharedViewModel.apply {
+            sendType(true)
             setScreenFlag(HistoryScreens.ALL)
             filter.value = HistoryFilter()
             pagedTransactions.observe(viewLifecycleOwner, Observer {

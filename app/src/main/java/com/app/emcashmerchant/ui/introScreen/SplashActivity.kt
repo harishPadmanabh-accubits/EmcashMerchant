@@ -14,12 +14,13 @@ import com.app.emcashmerchant.utils.KEY_DEEPLINK
 import com.app.emcashmerchant.utils.KEY_REUPLOAD_TOKEN
 import com.app.emcashmerchant.utils.KEY_TYPE
 import com.app.emcashmerchant.utils.extensions.openActivity
+import com.app.emcashmerchant.utils.extensions.showShortToast
 
 class SplashActivity : AppCompatActivity() {
     var type: String? = null
     private var deepLink: String? = null
 
-    val isFromDeeplink by lazy {
+    private val isFromDeeplink by lazy {
         intent.getBooleanExtra(IS_FROM_DEEPLINK, false)
     }
 
@@ -56,7 +57,7 @@ class SplashActivity : AppCompatActivity() {
                                 this.putBoolean(IS_FROM_DEEPLINK, true)
                             }
                         }
-                    }else {
+                    } else {
                         openActivity(PinNumberActivity::class.java)
 
                     }
@@ -66,8 +67,14 @@ class SplashActivity : AppCompatActivity() {
                     openActivity(PinNumberActivity::class.java)
 
                 }
-            } else {
-                if (isFromDeeplink) {
+            }
+            else {
+                if(type=="6"){
+
+                    openActivity(IntroActivity::class.java)
+
+                }
+               else if (isFromDeeplink) {
                     if (deepLink?.isNotEmpty() == true) {
                         if (Uri.parse(deepLink.toString()).pathSegments[1].equals("ReUpload")) {
                             openActivity(ReUploadDocumentsActivity::class.java) {
@@ -77,13 +84,13 @@ class SplashActivity : AppCompatActivity() {
                                 this.putString(KEY_REUPLOAD_TOKEN, token)
                             }
                         }
-                    }
-                    else {
+                    } else {
                         openActivity(IntroActivity::class.java)
 
                     }
 
-                } else {
+                }
+                else {
                     openActivity(IntroActivity::class.java)
 
                 }

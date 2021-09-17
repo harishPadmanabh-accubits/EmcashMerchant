@@ -69,6 +69,8 @@ class NotificationDetailsAdapter(val data: List<GroupedNotificationResponse.Data
                 iv_point.setColorFilter(ContextCompat.getColor(context, R.color.green));
             } else if (type == 3) {//rejected
                 iv_point.setColorFilter(ContextCompat.getColor(context, R.color.red));
+            } else if (type == 4) {//documents verified
+                iv_point.setColorFilter(ContextCompat.getColor(context, R.color.green));
             } else if (type == 6) {//registration completed
                 iv_point.setColorFilter(ContextCompat.getColor(context, R.color.sky_blue));
             } else if (type == 5) {//rejected from merchant side

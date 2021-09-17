@@ -18,6 +18,7 @@ import com.app.emcashmerchant.data.SessionStorage
 import com.app.emcashmerchant.data.network.ApiCallStatus
 import com.app.emcashmerchant.ui.wallet.adapter.WalletTransactionAdapterV2
 import com.app.emcashmerchant.utils.AppDialog
+import com.app.emcashmerchant.utils.extensions.loadImageWithUrlUser
 import com.app.emcashmerchant.utils.extensions.showShortToast
 import com.app.emcashmerchant.utils.extensions.trimID
 import kotlinx.android.synthetic.main.walletv2.*
@@ -30,6 +31,7 @@ class WalletFragment : Fragment() {
     companion object {
         fun newInstance() = WalletFragment()
     }
+
     val pagedAdapter by lazy {
         WalletTransactionAdapterV2()
     }
@@ -89,11 +91,16 @@ class WalletFragment : Fragment() {
 
         }
 
-        pagedAdapter.addLoadStateListener {loadState ->
-            if (loadState.refresh is LoadState.Loading){
+        pagedAdapter.addLoadStateListener { loadState ->
+            if (loadState.refresh is LoadState.Loading) {
                 dialog.show_dialog()
             }
-            else{
+//            else if (loadState.refresh is LoadState.NotLoading && pagedAdapter.itemCount < 1) {
+//                dialog.dismiss_dialog()
+//                iv_emptyTransaction.visibility=View.VISIBLE
+//                rv_wallet_transaction.visibility=View.GONE
+//            }
+            else {
                 dialog.dismiss_dialog()
 
                 // getting the error
@@ -111,17 +118,16 @@ class WalletFragment : Fragment() {
         }
 
         rv_wallet_transaction.apply {
-            adapter=pagedAdapter
-            layoutManager=mLayoutManager
+            adapter = pagedAdapter
+            layoutManager = mLayoutManager
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.walletActivities.collect {
-            pagedAdapter.submitData(it)
+                pagedAdapter.submitData(it)
             }
 
         }
-
 
 
     }
@@ -137,11 +143,14 @@ class WalletFragment : Fragment() {
                     ApiCallStatus.SUCCESS -> {
                         dialog.dismiss_dialog()
                         balance = it.data?.wallet?.amount.toString()
+                        appCompatImageView.loadImageWithUrlUser(it.data?.wallet?.user?.profileImage)
+
                         if (balance != null) {
                             sessionStorage.balance = balance
                             tv_balance.text = sessionStorage.balance
                         }
-                        tv_safe_box_id.text = "Wallet ID : ".plus(trimID(it.data?.wallet?.id.toString()))
+                        tv_safe_box_id.text =
+                            "Wallet ID : ".plus(trimID(it.data?.wallet?.id.toString()))
                         //transactionData= it.data
 
 

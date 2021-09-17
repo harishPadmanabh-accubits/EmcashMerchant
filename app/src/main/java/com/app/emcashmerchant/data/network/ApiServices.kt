@@ -93,7 +93,7 @@ interface ApiServices {
     ): Call<ReUploadResponse>
 
 
-    @GET("v1/admin/merchants/upload-document/user_detail")
+    @GET("v1/admin/merchants/upload-document/user_details")
     fun reUploadUserDetails(
         @Header("Authorization") authentication: String
     ): Call<ReUploadUserDeatilsResponse>
@@ -126,6 +126,12 @@ interface ApiServices {
     fun performLoginResendOTP(
         @Body resendOtpRequest: ResendOtpRequest
     ): Call<ResendOtpResponse>
+
+    @POST("v1/merchants/auth/forgotpassword/otp/resend")
+    fun performForgotResendOTP(
+        @Body resendOtpRequest: ResendOtpRequest
+    ): Call<ResendOtpResponse>
+
 
     @POST("v1/merchants/auth/forgotpassword")
     fun performForgotPassword(

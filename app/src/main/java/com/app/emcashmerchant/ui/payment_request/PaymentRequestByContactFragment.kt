@@ -13,14 +13,19 @@ import androidx.navigation.fragment.findNavController
 import com.app.emcashmerchant.R
 import com.app.emcashmerchant.data.modelrequest.PaymentRequest
 import com.app.emcashmerchant.data.network.ApiCallStatus
+import com.app.emcashmerchant.utils.*
 
-import com.app.emcashmerchant.utils.AppDialog
-import com.app.emcashmerchant.utils.KEY_NAME
-import com.app.emcashmerchant.utils.KEY_NUMBER
-
-import com.app.emcashmerchant.utils.KEY_USERID
+import com.app.emcashmerchant.utils.extensions.loadImageWithUrl
 import com.app.emcashmerchant.utils.extensions.showShortToast
 import kotlinx.android.synthetic.main.fragment_payment_request_by_contact.*
+import kotlinx.android.synthetic.main.fragment_payment_request_by_contact.et_amount
+import kotlinx.android.synthetic.main.fragment_payment_request_by_contact.et_description
+import kotlinx.android.synthetic.main.fragment_payment_request_by_contact.fl_user_level
+import kotlinx.android.synthetic.main.fragment_payment_request_by_contact.iv_back
+import kotlinx.android.synthetic.main.fragment_payment_request_by_contact.tv_name
+import kotlinx.android.synthetic.main.fragment_payment_request_by_contact.tv_number
+import kotlinx.android.synthetic.main.fragment_perform_transfer_by_contact.*
+import kotlinx.android.synthetic.main.fragment_transfer_contact_list.*
 
 
 class PaymentRequestByContactFragment : Fragment() {
@@ -29,7 +34,9 @@ class PaymentRequestByContactFragment : Fragment() {
     var userId: String = ""
     var name: String? = null
     var phoneNumber: String? = null
-
+    var userLevel: Int? = 0
+    var roleId: Int? = 0
+    var profileImage:String?=""
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -52,12 +59,45 @@ class PaymentRequestByContactFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(PaymentRequestViewModel::class.java)
         dialog = AppDialog(requireActivity())
         userId = requireArguments().getString(KEY_USERID).toString()
+        roleId = requireArguments().getString(KEY_ROLEID)?.toInt()
+        userLevel = requireArguments().getString(KEY_USERLEVEL)?.toInt()
+        profileImage = requireArguments().getString(KEY_PROFLE_IMAGE_LINK)
 
         name = requireArguments().getString(KEY_NAME).toString()
         phoneNumber = requireArguments().getString(KEY_NUMBER).toString()
 
         tv_name.text=name
         tv_number.text=phoneNumber
+
+        if (profileImage != null) {
+            iv_user_dp.loadImageWithUrl(profileImage.toString())
+            iv_user_dp.visibility = View.VISIBLE
+            tv_firstLetter.visibility = View.INVISIBLE
+
+
+        } else {
+
+            tv_firstLetter.text = name.toString()[0].toString()
+            iv_user_dp.visibility = View.INVISIBLE
+            tv_firstLetter.visibility = View.VISIBLE
+            fl_user_level.setBackgroundResource(R.drawable.greyfilled_round)
+            tv_firstLetter.setTextColor(resources.getColor(R.color.white))
+
+        }
+
+        if (roleId == 3) {
+            if (userLevel == 1) {
+                fl_user_level.setBackgroundResource(R.drawable.green_round)
+            } else if (userLevel == 2) {
+                fl_user_level.setBackgroundResource((R.drawable.yellow_round))
+            } else if (userLevel == 4) {
+                fl_user_level.setBackgroundResource(R.drawable.red_round)
+
+            }
+        }else if (roleId == 2) {
+
+
+        }
         iv_back.setOnClickListener {
             findNavController().popBackStack()
 
@@ -100,6 +140,7 @@ class PaymentRequestByContactFragment : Fragment() {
 
                     }
                     ApiCallStatus.ERROR -> {
+                        requireActivity().showShortToast(it.errorMessage)
                         dialog.dismiss_dialog()
 
                     }

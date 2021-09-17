@@ -39,6 +39,7 @@ import kotlinx.android.synthetic.main.fragment_payment_chat_history.fl_user_leve
 import kotlinx.android.synthetic.main.fragment_payment_chat_history.iv_back
 import kotlinx.android.synthetic.main.fragment_payment_chat_history.tv_name
 import kotlinx.android.synthetic.main.fragment_payment_chat_history.tv_number
+import kotlinx.android.synthetic.main.layout_payment_reciept_top.*
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -54,7 +55,10 @@ class PaymentChatHistoryFragment : Fragment(), ChatItemClickListener {
     private var userId = ""
     var name: String? = null
     var phoneNumber: String? = null
-
+    var ppp: String? = null
+    var userLevel: Int? = null
+    var roleId: Int? = 0
+    var profileImage:String?=null
     val pagedAdapter by lazy {
         PaymentChatHistoryAdapter(this)
     }
@@ -80,11 +84,8 @@ class PaymentChatHistoryFragment : Fragment(), ChatItemClickListener {
         dialog = AppDialog(requireActivity())
 
         userId = requireArguments().getString(KEY_USERID).toString()
-
         tv_balance.text = sessionStorage.balance
-
         viewModel.getPaymentChat(userId.toInt())
-
         observe(view)
 
 
@@ -142,7 +143,11 @@ class PaymentChatHistoryFragment : Fragment(), ChatItemClickListener {
             var bundle = bundleOf(
                 KEY_USERID to userId,
                 KEY_NAME to name,
-                KEY_NUMBER to phoneNumber
+                KEY_NUMBER to phoneNumber,
+                KEY_USERLEVEL to userLevel.toString(),
+                KEY_ROLEID to roleId.toString(),
+                KEY_PROFLE_IMAGE_LINK to profileImage
+
 
 
             )
@@ -185,11 +190,12 @@ class PaymentChatHistoryFragment : Fragment(), ChatItemClickListener {
                     ApiCallStatus.SUCCESS -> {
                         dialog.dismiss_dialog()
 
-                        cl_main.visibility=View.VISIBLE
+                        cl_main.visibility = View.VISIBLE
                         name = it.data?.contact?.name
                         phoneNumber = it.data?.contact?.phoneNumber
-                        var userLevel = it.data?.contact?.ppp
-                        var roleId = it.data?.contact?.roleId
+                        userLevel = it.data?.contact?.ppp
+                        roleId = it.data?.contact?.roleId
+                        profileImage=it.data?.contact?.profileImage
 
                         if (it.data?.contact?.profileImage != null) {
                             iv_user_dpTop.visibility = View.VISIBLE
@@ -201,8 +207,8 @@ class PaymentChatHistoryFragment : Fragment(), ChatItemClickListener {
                             tv_firstLetterrTop.visibility = View.VISIBLE
                             tv_firstLetterrTop.text =
                                 it.data?.contact?.name.toString()[0].toString()
-                            fl_user_level.setBackgroundResource(R.drawable.black_round)
-
+                            tv_firstLetterrTop.setTextColor(resources.getColor(R.color.white))
+                            fl_user_level.setBackgroundResource(R.drawable.greyfilled_round)
                         }
 
                         if (roleId == 3) {
@@ -365,6 +371,33 @@ class PaymentChatHistoryFragment : Fragment(), ChatItemClickListener {
 
         dialogBlockUnBlock.tv_name.text = name
         dialogBlockUnBlock.tv_number.text = phoneNumber
+
+        if (profileImage != null) {
+            dialogBlockUnBlock.iv_user_dp.visibility = View.VISIBLE
+            dialogBlockUnBlock.tv_firstLetter.visibility = View.INVISIBLE
+            dialogBlockUnBlock.iv_user_dp.loadImageWithUrl(profileImage)
+
+        } else {
+            dialogBlockUnBlock.iv_user_dp.visibility = View.INVISIBLE
+            dialogBlockUnBlock.tv_firstLetter.visibility = View.VISIBLE
+            dialogBlockUnBlock.tv_firstLetter.text = name.toString()[0].toString()
+            dialogBlockUnBlock.tv_firstLetter.setTextColor(resources.getColor(R.color.white))
+            dialogBlockUnBlock.fll_holder.setBackgroundResource(R.drawable.greyfilled_round)
+        }
+
+        if (roleId == 3) {
+            if (userLevel == 1) {
+                dialogBlockUnBlock.fll_holder.setBackgroundResource(R.drawable.green_round)
+            } else if (userLevel == 2) {
+                dialogBlockUnBlock.fll_holder.setBackgroundResource((R.drawable.yellow_round))
+            } else if (userLevel == 4) {
+                dialogBlockUnBlock.fll_holder.setBackgroundResource(R.drawable.red_round)
+
+            }
+        } else if (roleId == 2) {
+
+
+        }
 
         if (isBlockedContactUser == false) {
             dialogBlockUnBlock.tv_block.text = "Block"

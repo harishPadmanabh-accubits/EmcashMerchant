@@ -3,23 +3,17 @@ package com.app.emcashmerchant.ui.PaymentChatHistory
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.PagingData
-import androidx.paging.cachedIn
+import androidx.paging.*
 import com.app.emcashmerchant.data.SessionStorage
-import com.app.emcashmerchant.data.modelrequest.WithDrawRequest
 import com.app.emcashmerchant.data.models.*
 import com.app.emcashmerchant.data.network.ApiCallStatus
 import com.app.emcashmerchant.data.network.ApiManger
 import com.app.emcashmerchant.data.network.ApiMapper
 import com.app.emcashmerchant.data.network.Repositories.PaymentChatRepository
-import com.app.emcashmerchant.data.network.Repositories.WithDrawEmcashRepository
 import com.app.emcashmerchant.ui.PaymentChatHistory.PagingSource.ChatPagingSource
-import com.app.emcashmerchant.ui.transaction_history.PagingSource.AllTransactionsPagingSource
-import com.app.emcashmerchant.utils.extensions.dateFormat
-import timber.log.Timber
+import com.app.emcashmerchant.utils.extensions.default
 
 class PaymentChatHistoryViewModel(val app: Application) : AndroidViewModel(app) {
 
@@ -30,13 +24,26 @@ class PaymentChatHistoryViewModel(val app: Application) : AndroidViewModel(app) 
     val repository = PaymentChatRepository(app)
     private val api = ApiManger(app).api
     private val sessionStorage = SessionStorage(app)
+    var userId = 0
 
+
+    val _refreshChat  = MutableLiveData<Boolean>()
+
+
+    val pagedHistoryItems = Transformations.switchMap(_refreshChat){
+        Pager(PagingConfig(pageSize = 1)) {
+            ChatPagingSource(
+                api,
+                sessionStorage.accesToken.toString(),userId.toString()
+            )
+        }.liveData.cachedIn(viewModelScope)
+    }
 
     fun getListData(userId: Int): kotlinx.coroutines.flow.Flow<PagingData<GroupedChatHistoryResponse.Data.Row>> {
         return Pager(PagingConfig(10)) {
             ChatPagingSource(
                 api,
-                sessionStorage.accesToken.toString(),userId
+                sessionStorage.accesToken.toString(),userId.toString()
             )
         }.flow.cachedIn(viewModelScope)
     }

@@ -96,6 +96,7 @@ class TransactionHistoryFragment : Fragment(), DurationItemClickListener {
 
 
 
+
         iv_back_type.setOnClickListener {
             fl_holder.visibility = View.GONE
 
@@ -104,18 +105,7 @@ class TransactionHistoryFragment : Fragment(), DurationItemClickListener {
             typeViewVisible()
         }
 
-//        iv_backward.setOnClickListener {
-//
-//
-//        }
-//
-//        iv_forward.setOnClickListener {
-//            var nextMonth = Calendar.getInstance(timeZone, locale)
-//            nextMonth.add(Calendar.MONTH, 1)
-//
-//            calenderView.scrollToDate(nextMonth.time)
-//
-//        }
+
         btn_filter.setOnClickListener {
 
             if (durationFilterCustom == 0) {
@@ -194,6 +184,21 @@ class TransactionHistoryFragment : Fragment(), DurationItemClickListener {
             }
 
         }
+
+        sharedViewModel.type.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            if(it==true){
+                rg_type.clearCheck()
+                tv_fromDate.text=""
+                tv_toDate.text=""
+                calenderView.clearSelectedDates()
+
+            }
+
+        })
+//        pagedTransactions.observe(viewLifecycleOwner, Observer {
+//            pagedAdapter.submitData(lifecycle,it)
+//            Timber.e("Observing ${it}")
+//        })
 
     }
 

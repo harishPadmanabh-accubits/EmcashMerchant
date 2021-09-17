@@ -21,10 +21,12 @@ import com.app.emcashmerchant.data.network.ApiCallStatus
 import com.app.emcashmerchant.ui.transfer_payment.adapter.AllContactsTransferAdapter
 import com.app.emcashmerchant.ui.transfer_payment.adapter.RecentTransactionContactsAdapter
 import com.app.emcashmerchant.utils.AppDialog
+import com.app.emcashmerchant.utils.extensions.afterTextChanged
 import com.app.emcashmerchant.utils.extensions.showShortToast
 import kotlinx.android.synthetic.main.fragment_transfer_contact_list.*
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 
 class TransferContactListFragment : Fragment() {
@@ -33,6 +35,7 @@ class TransferContactListFragment : Fragment() {
     val pagedAdapter by lazy {
         AllContactsTransferAdapter()
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -52,24 +55,15 @@ class TransferContactListFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(TransferPaymentViewModel::class.java)
         dialog = AppDialog(requireActivity())
         viewModel.getRecentTransactions()
-        observe(view)
-
-
         et_search_contact.setOnEditorActionListener(OnEditorActionListener { v, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-
-                viewLifecycleOwner.lifecycleScope.launch {
-                    viewModel.getContactsData(et_search_contact.text.toString()).collect {
-                        pagedAdapter.submitData(it)
-
-                    }
-
-                }
-
+                viewModel.search.postValue(et_search_contact.text.toString())
+                Timber.e("searched")
                 return@OnEditorActionListener true
             }
             false
         })
+
 
         iv_back.setOnClickListener {
             Navigation.findNavController(view).navigate(R.id.homeFragment)
@@ -107,15 +101,11 @@ class TransferContactListFragment : Fragment() {
                 RecyclerView.VERTICAL, false
             )
         }
+        viewModel.pagedContacts.observe(viewLifecycleOwner, Observer {
+            pagedAdapter.submitData(lifecycle, it)
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.getContactsData("").collect {
-                pagedAdapter.submitData(it)
-
-            }
-
-        }
-
+        })
+        observe(view)
 
 
     }
@@ -153,4 +143,5 @@ class TransferContactListFragment : Fragment() {
             })
         }
     }
+
 }

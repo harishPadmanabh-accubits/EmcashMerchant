@@ -45,7 +45,7 @@ class NotificationsFragment : Fragment() {
     ): View? {
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.homeFragment)
+                findNavController().popBackStack()
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(callback)
@@ -59,7 +59,7 @@ class NotificationsFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(NotificationsViewModel::class.java)
         dialog = AppDialog(requireActivity())
         iv_back.setOnClickListener {
-            Navigation.findNavController(view).navigate(R.id.homeFragment)
+            findNavController().popBackStack()
 
         }
 

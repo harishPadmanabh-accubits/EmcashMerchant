@@ -142,8 +142,16 @@ data class WalletTransactionResponse(
             @SerializedName("userId")
             val userId: String,
             @SerializedName("walletAddress")
-            val walletAddress: String
-        )
+            val walletAddress: String,
+            @SerializedName("user")
+            val user: User
+
+        ) {
+            data class User(
+                @SerializedName("profileImage")
+                val profileImage: String
+            )
+        }
     }
 
 }

@@ -28,6 +28,7 @@ import com.app.emcashmerchant.utils.AppDialog
 import com.app.emcashmerchant.utils.KEY_AMOUNT
 import com.app.emcashmerchant.utils.KEY_DESCRIPTION
 import com.app.emcashmerchant.utils.KEY_USERID
+import com.app.emcashmerchant.utils.extensions.afterTextChanged
 import com.app.emcashmerchant.utils.extensions.loadImageWithUrl
 import com.app.emcashmerchant.utils.extensions.showShortToast
 import kotlinx.android.synthetic.main.contact_item.view.*
@@ -42,6 +43,7 @@ import kotlinx.android.synthetic.main.lay_confirmation.tv_number
 import kotlinx.android.synthetic.main.lay_confirmation.tv_total_bill_amount
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 
 class RequestContactListFragment : Fragment(), ContactsItemClickListener {
@@ -111,27 +113,37 @@ class RequestContactListFragment : Fragment(), ContactsItemClickListener {
             )
         }
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.getContactsData("").collect {
-                pagedAdapter.submitData(it)
+       viewModel.pagedContacts.observe(viewLifecycleOwner, Observer {
+           pagedAdapter.submitData(lifecycle,it)
+       })
 
+//        sv_search.afterTextChanged {
+//            if(it.length>=3 )
+//            viewModel.search.value = it
+//
+//        }
+        sv_search.setOnEditorActionListener(TextView.OnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                viewModel.search.value = sv_search.text.toString()
+
+                Timber.e("searched")
+                return@OnEditorActionListener true
             }
-
-        }
-
+            false
+        })
 
         iv_back.setOnClickListener {
             findNavController().popBackStack()
 
         }
 
-        sv_search.setOnEditorActionListener(TextView.OnEditorActionListener { v, actionId, event ->
-            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                viewModel.getContactsList(sv_search.text.toString())
-                return@OnEditorActionListener true
-            }
-            false
-        })
+//        sv_search.setOnEditorActionListener(TextView.OnEditorActionListener { v, actionId, event ->
+//            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+//                viewModel.getContactsList(sv_search.text.toString())
+//                return@OnEditorActionListener true
+//            }
+//            false
+//        })
 
     }
 
@@ -157,6 +169,7 @@ class RequestContactListFragment : Fragment(), ContactsItemClickListener {
 
                     }
                     ApiCallStatus.ERROR -> {
+                        requireActivity().showShortToast(it.errorMessage)
                         dialog.dismiss_dialog()
 
                     }

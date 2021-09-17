@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import androidx.activity.OnBackPressedCallback
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
@@ -14,16 +15,23 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.ChangeBounds
 import com.app.emcashmerchant.R
 import com.app.emcashmerchant.data.SessionStorage
 import com.app.emcashmerchant.data.network.ApiCallStatus
 import com.app.emcashmerchant.ui.introScreen.IntroActivity
+import com.app.emcashmerchant.ui.transfer_payment.TransferPaymentViewModel
 import com.app.emcashmerchant.utils.AppDialog
 import com.app.emcashmerchant.utils.REQUEST_CODE_PICK_IMAGE_PROFILE
 import com.app.emcashmerchant.utils.extensions.*
+import kotlinx.android.synthetic.main.fragment_transfer_contact_list.*
 import kotlinx.android.synthetic.main.settings_fragment.*
+import kotlinx.android.synthetic.main.settings_fragment.iv_back
 import kotlinx.android.synthetic.main.signoutlay.view.*
+import timber.log.Timber
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
@@ -59,6 +67,14 @@ class SettingsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel = ViewModelProvider(this).get(SettingsViewModel::class.java)
+        sessionStorage = SessionStorage(requireActivity())
+        dialog = AppDialog(requireActivity())
+        viewModel.getProfileDetails()
+        viewModel.getTermsConditions()
+        tv_name.text = sessionStorage.merchantName
+
+        observe()
 
         iv_back.setOnClickListener {
             Navigation.findNavController(view).popBackStack()
@@ -111,19 +127,13 @@ class SettingsFragment : Fragment() {
         }
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(SettingsViewModel::class.java)
-        sessionStorage = SessionStorage(requireActivity())
-        dialog = AppDialog(requireActivity())
-        viewModel.getProfileDetails()
-        viewModel.getTermsConditions()
-        tv_name.text = sessionStorage.merchantName
 
-        observe()
-
-
-    }
+//
+//    override fun onActivityCreated(savedInstanceState: Bundle?) {
+//        super.onActivityCreated(savedInstanceState)
+//
+//
+//    }
 
     fun observe() {
         viewModel.apply {
@@ -170,8 +180,8 @@ class SettingsFragment : Fragment() {
                         dialog.show_dialog()
                     }
                     ApiCallStatus.SUCCESS -> {
-                        termsConditions=it.data?.data.toString()
                         dialog.dismiss_dialog()
+                        termsConditions=it.data?.data.toString()
 
                     }
                     ApiCallStatus.ERROR -> {

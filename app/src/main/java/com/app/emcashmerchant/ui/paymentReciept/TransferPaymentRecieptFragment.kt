@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -16,7 +17,10 @@ import com.app.emcashmerchant.data.SessionStorage
 import com.app.emcashmerchant.data.network.ApiCallStatus
 import com.app.emcashmerchant.utils.*
 import com.app.emcashmerchant.utils.extensions.*
+import kotlinx.android.synthetic.main.fragment_perform_transfer_by_contact.*
 import kotlinx.android.synthetic.main.fragment_transfer_payment_reciept.*
+import kotlinx.android.synthetic.main.fragment_transfer_payment_reciept.iv_back
+import kotlinx.android.synthetic.main.item_notification_details.view.*
 import kotlinx.android.synthetic.main.layout_payment_receipt_bottom.*
 import kotlinx.android.synthetic.main.layout_payment_reciept_middle.*
 import kotlinx.android.synthetic.main.layout_payment_reciept_top.*
@@ -84,8 +88,9 @@ class TransferPaymentRecieptFragment : Fragment() {
                     ApiCallStatus.SUCCESS -> {
                         dialog.dismiss_dialog()
                         cl_main.visibility=View.VISIBLE
-
+                        iv_user_dp.loadImageWithUrlUser(it.data?.remitter?.profileImage)
                         userId = it.data?.beneficiary?.userId.toString()
+
                         if (it.data?.beneficiary?.profileImage != null) {
                             iv_user_Image.visibility = View.VISIBLE
                             iv_receipient_dp.visibility = View.VISIBLE
@@ -101,9 +106,9 @@ class TransferPaymentRecieptFragment : Fragment() {
                             tv_firstLetter_recipient.visibility=View.VISIBLE
                             tv_firstLetter_recipient.text =
                                 it.data?.beneficiary?.name.toString()[0].toString()
-                            tv_firstLetterr.text =
-                                it.data?.beneficiary?.name.toString()[0].toString()
-                            fl_user_level.setBackgroundResource(R.drawable.black_round)
+                            tv_firstLetterr.text = it.data?.beneficiary?.name.toString()[0].toString()
+                            tv_firstLetterr.setTextColor(resources.getColor(R.color.white))
+                            fl_user_level.setBackgroundResource(R.drawable.greyfilled_round)
 
                         }
 
@@ -149,13 +154,16 @@ class TransferPaymentRecieptFragment : Fragment() {
                             }
 
                             iv_status.setBackgroundResource(R.drawable.ic_payment_success)
-                            iv_status_point.setBackgroundResource(R.drawable.ic_green_ellipse)
+                            iv_status_point.setColorFilter(ContextCompat.getColor(requireContext(), R.color.green));
+
                         } else if (status == 2) {
                             tv_progress.text = getString(R.string.payment_inprogress)
                             tv_payment_status2.text = getString(R.string.payment_inprogress)
                             tv_request_status.text = getString(R.string.payment_inprogress)
 
                             iv_status.setBackgroundResource(R.drawable.ic_payment_pending)
+                            iv_status_point.setColorFilter(ContextCompat.getColor(requireContext(), R.color.orange));
+
                             if (type == 1) {
                                 tv_request_status.text = "Transfer In Progress"
 
@@ -178,7 +186,8 @@ class TransferPaymentRecieptFragment : Fragment() {
 
                             }
                             iv_status.setBackgroundResource(R.drawable.ic_paymnet_failed)
-                            iv_status_point.setBackgroundResource(R.drawable.ic_red_ellipse)
+                            iv_status_point.setColorFilter(ContextCompat.getColor(requireContext(), R.color.red));
+
 
                         } else if (status == 4) {
                             tv_progress.text = getString(R.string.payment_rejected)
@@ -194,7 +203,8 @@ class TransferPaymentRecieptFragment : Fragment() {
                             }
 
                             iv_status.setBackgroundResource(R.drawable.ic_payment_rejected)
-                            iv_status_point.setBackgroundResource(R.drawable.ic_red_ellipse)
+                            iv_status_point.setColorFilter(ContextCompat.getColor(requireContext(), R.color.red));
+
                         }
 
                         if (it.data?.handShakingStatus == false) {

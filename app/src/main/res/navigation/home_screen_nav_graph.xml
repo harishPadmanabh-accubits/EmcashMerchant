@@ -33,7 +33,11 @@
             app:destination="@id/paymentRequestFragment" />
         <action
             android:id="@+id/action_homeFragment_to_transferContactListFragment"
-            app:destination="@id/transferContactListFragment" />
+            app:destination="@id/transferContactListFragment"
+            app:enterAnim="@anim/enteranim"
+            app:exitAnim="@anim/exitanim"
+            app:popEnterAnim="@anim/popenteranim"
+            app:popExitAnim="@anim/popexitanim" />
         <action
             android:id="@+id/action_homeFragment_to_paymentChatHistoryFragment"
             app:destination="@id/paymentChatHistoryFragment" />

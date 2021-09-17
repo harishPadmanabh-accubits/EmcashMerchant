@@ -3,11 +3,9 @@ package com.app.emcashmerchant.ui.payment_request
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.PagingData
-import androidx.paging.cachedIn
+import androidx.paging.*
 import com.app.emcashmerchant.data.SessionStorage
 import com.app.emcashmerchant.data.modelrequest.GenerateQrCodeRequest
 import com.app.emcashmerchant.data.modelrequest.PaymentRequest
@@ -21,6 +19,7 @@ import com.app.emcashmerchant.data.network.ApiMapper
 import com.app.emcashmerchant.data.network.Repositories.RequestPaymentRepository
 import com.app.emcashmerchant.data.network.Repositories.TransferPaymentRepository
 import com.app.emcashmerchant.ui.transfer_payment.PagingSource.AllContactsPagingSource
+import com.app.emcashmerchant.utils.extensions.default
 
 class PaymentRequestViewModel(val app: Application) : AndroidViewModel(app) {
     var allContactsStatus = MutableLiveData<ApiMapper<AllContactResponse.Data>>()
@@ -30,18 +29,17 @@ class PaymentRequestViewModel(val app: Application) : AndroidViewModel(app) {
     val repository = RequestPaymentRepository(app)
     private val api = ApiManger(app).api
     private val sessionStorage = SessionStorage(app)
-
-
-    fun getContactsData(
-        search: String
-    ): kotlinx.coroutines.flow.Flow<PagingData<GroupedContactsResponse.Data.Row>> {
-        return Pager(PagingConfig(10)) {
+    val search = MutableLiveData<String>().default("")
+    val pagedContacts = Transformations.switchMap(search){
+        Pager(PagingConfig(1)) {
             AllContactsPagingSource(
                 api,
-                sessionStorage.accesToken.toString(), search
+                sessionStorage.accesToken.toString(), it
             )
-        }.flow.cachedIn(viewModelScope)
+        }.liveData.cachedIn(viewModelScope)
     }
+
+
 
 
 

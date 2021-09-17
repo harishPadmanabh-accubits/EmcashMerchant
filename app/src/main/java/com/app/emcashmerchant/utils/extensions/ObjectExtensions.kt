@@ -331,7 +331,6 @@ fun ImageView.loadImageWithUrl(imageUrl: String?) {
 }
 fun ImageView.loadImageWithUrlUser(imageUrl: String?) {
     try {
-        imageUrl?.let { imageUrl ->
             if (context != null) {
                 Glide.with(context)
                     .load(BUCKET_URL.plus(imageUrl))
@@ -339,7 +338,7 @@ fun ImageView.loadImageWithUrlUser(imageUrl: String?) {
                     .into(this)
             }
 
-        }
+
 
     } catch (e: Exception) {
         e.printStackTrace()

@@ -1,4 +1,4 @@
-package com.app.emcashmerchant.service
+package com.app.emcashmerchant.firebaseService
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -31,7 +31,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     var title: String? = null
     var message: String? = null
     var deepLink: String? = null
-    var type: String? = null
+    var Notificationtype: String? = null
     var rejectContent: String? = null
 
     lateinit var sessionStorage: SessionStorage
@@ -44,10 +44,12 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             title = remoteMessage.data["title"]
             message = remoteMessage.data["message"]
             deepLink = remoteMessage.data["deepLink"]
-            type = remoteMessage.data["type"]
+            Notificationtype = remoteMessage.data["type"]
             rejectContent = remoteMessage.data["rejectContent"]
 
             Log.d("deepLink",deepLink.toString())
+            Log.d("type",Notificationtype.toString())
+
             showNotification(title, message)
 
 
@@ -69,7 +71,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         var notificationIntent = Intent(applicationContext, SplashActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             putExtra(KEY_DEEPLINK, deepLink?.toString())
-            putExtra(KEY_TYPE, type?.toString())
+            putExtra(KEY_TYPE, Notificationtype.toString())
             putExtra(IS_FROM_DEEPLINK,true)
         }
 
@@ -80,17 +82,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         val resultPendingIntent =
             stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT)
 
-        //  notificationIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
-        //    notificationIntent.putExtra(KEY_DEEPLINK, deepLink.toString())
-        //  notificationIntent.putExtra(KEY_TYPE, type.toString())
-        //deepLink?.let { Log.d("KEY_DEEPLINK_SHOW_NOT", it) }
-
-//        var contentIntent = PendingIntent.getActivity(
-//            this,
-//            12345,
-//            notificationIntent,
-//            PendingIntent.FLAG_UPDATE_CURRENT
-//        )
 
         // checking if android version is greater than oreo(API 26) or not
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

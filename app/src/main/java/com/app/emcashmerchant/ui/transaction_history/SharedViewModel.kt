@@ -13,19 +13,20 @@ import com.app.emcashmerchant.utils.extensions.default
 import timber.log.Timber
 
 class SharedViewModel(val app: Application) : AndroidViewModel(app) {
-    val type = MutableLiveData<String>()
+    val type = MutableLiveData<Boolean>()
     val status = MutableLiveData<String>().default("4")
     val date = MutableLiveData<ArrayList<String>>()
     val endDate = MutableLiveData<String>()
     val filter = MutableLiveData<HistoryFilter>().default(HistoryFilter())
     val _screen = MutableLiveData<HistoryScreens>()
 
+
     fun setScreenFlag(screen: HistoryScreens): LiveData<HistoryScreens> {
         _screen.value = screen
         return _screen
     }
 
-    fun sendType(s_type: String) {
+    fun sendType(s_type: Boolean) {
         type.value = s_type
 
     }

@@ -21,6 +21,7 @@ class SharedViewModel(val app: Application) : AndroidViewModel(app) {
     val _screen = MutableLiveData<HistoryScreens>()
 
 
+
     fun setScreenFlag(screen: HistoryScreens): LiveData<HistoryScreens> {
         _screen.value = screen
         return _screen

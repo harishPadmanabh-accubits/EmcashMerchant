@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="white_transparent">#00FFFFFF</color>
 
 
     <color name="app_blue">#3E60E6</color>
@@ -26,19 +24,9 @@
 
     <color name="grey_unselected">#59595C</color>
     <color name="orange">#EDB054</color>
-    <color name="purple">#BB579F</color>
     <color name="custom_black">#252626</color>
     <color name="light_black">#4B4B4B</color>
     <color name="light_black_shade">#90000000</color>
-    <color name="blue2">#8D92FF</color>
-    <color name="cream">#FF9E9E</color>
 
-
-    <color name="calendar_selected_day_bg">#3E60E6</color>
-    <color name="calendar_selected_range_bg">#993E60E6</color>
-    <color name="calendar_unavailable_bg">#F44336</color>
-    <color name="calendar_highlighted_day_bg">#3E60E6</color>
-
-    <color name="dateTimeRangePickerStateToday">#3E60E6</color>
 
 </resources>

@@ -28,8 +28,9 @@ class WalletViewModel(val app: Application) : AndroidViewModel(app) {
     val repository = WalletRepository(app)
     private val api = ApiManger(app).api
     private val sessionStorage = SessionStorage(app)
+    var balance: String? = null
 
-    val walletActivities = Pager(PagingConfig(10)){
+    val walletActivities = Pager(PagingConfig(1)){
         WalletTransactionPagingSource(api,sessionStorage.accesToken.toString())
     }.flow.cachedIn(viewModelScope)
 

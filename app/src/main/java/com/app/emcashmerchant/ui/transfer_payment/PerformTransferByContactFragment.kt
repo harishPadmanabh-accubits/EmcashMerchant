@@ -2,10 +2,8 @@ package com.app.emcashmerchant.ui.transfer_payment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.activity.OnBackPressedCallback
+import androidx.activity.addCallback
 import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -15,10 +13,7 @@ import com.app.emcashmerchant.R
 import com.app.emcashmerchant.data.SessionStorage
 import com.app.emcashmerchant.data.modelrequest.IntiateContactPaymentRequest
 import com.app.emcashmerchant.data.network.ApiCallStatus
-import com.app.emcashmerchant.utils.AppDialog
-import com.app.emcashmerchant.utils.KEY_PAGE
-import com.app.emcashmerchant.utils.KEY_REF_ID
-import com.app.emcashmerchant.utils.KEY_USERID
+import com.app.emcashmerchant.utils.*
 import com.app.emcashmerchant.utils.extensions.loadImageWithUrl
 import com.app.emcashmerchant.utils.extensions.showShortToast
 import kotlinx.android.synthetic.main.fragment_perform_transfer_by_contact.*
@@ -27,50 +22,45 @@ import kotlinx.android.synthetic.main.fragment_perform_transfer_by_contact.fl_us
 import kotlinx.android.synthetic.main.fragment_perform_transfer_by_contact.iv_back
 import kotlinx.android.synthetic.main.fragment_perform_transfer_by_contact.tv_name
 import kotlinx.android.synthetic.main.fragment_perform_transfer_by_contact.tv_number
-import kotlinx.android.synthetic.main.layout_item_recent_payment.view.*
 
-class PerformTransferByContactFragment : Fragment() {
+class PerformTransferByContactFragment : Fragment(R.layout.fragment_perform_transfer_by_contact) {
 
     private lateinit var viewModel: TransferPaymentViewModel
     private lateinit var dialog: AppDialog
     private lateinit var sessionStorage:SessionStorage
-    var page:String?=null
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        val onBackPressedCallback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                if(page=="ChatScreen"){
-                    findNavController().popBackStack()
+    var navigateToScreen:String?=null
+    var userId:String?=null
 
-                }else{
-                    findNavController().navigate(R.id.transferContactListFragment)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-                }
+        requireActivity().onBackPressedDispatcher.addCallback(this){
+            if(navigateToScreen==SCREEN_CHAT){
+                findNavController().popBackStack()
+
+            }
+            else{
+                findNavController().navigate(R.id.transferContactListFragment)
+
             }
         }
-        requireActivity().onBackPressedDispatcher.addCallback(onBackPressedCallback)
 
-        return inflater.inflate(R.layout.fragment_perform_transfer_by_contact, container, false)
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         dialog = AppDialog(requireActivity())
         viewModel = ViewModelProvider(this).get(TransferPaymentViewModel::class.java)
         sessionStorage= SessionStorage(requireActivity())
-        var userId = requireArguments().getString(KEY_USERID).toString()
-         page = requireArguments().getString(KEY_PAGE).toString()
+         userId = requireArguments().getString(KEY_USERID).toString()
+         navigateToScreen = requireArguments().getString(KEY_PAGE).toString()
 
 
         viewModel.getOneContact(userId.toString())
         observer(view)
 
         iv_back.setOnClickListener {
-            if(page=="ChatScreen"){
+            if(navigateToScreen==SCREEN_CHAT){
                 findNavController().popBackStack()
 
             }else{
@@ -94,7 +84,7 @@ class PerformTransferByContactFragment : Fragment() {
                 var intiateContactPaymentRequest = IntiateContactPaymentRequest(
                     amount.toInt(),
                     description,
-                    userId.toInt()
+                    userId.toString().toInt()
                 )
                 viewModel.intiatePayment(intiateContactPaymentRequest)
             }
@@ -105,7 +95,7 @@ class PerformTransferByContactFragment : Fragment() {
 
     fun observer(view: View) {
         viewModel.apply {
-            oneContactStatus.observe(requireActivity(), Observer {
+            oneContactStatus.observe(viewLifecycleOwner, Observer {
                 when (it.status) {
                     ApiCallStatus.LOADING -> {
                         dialog.show_dialog()
@@ -122,7 +112,6 @@ class PerformTransferByContactFragment : Fragment() {
                             iv_userImagee.loadImageWithUrl(it.data?.profileImage.toString())
                             iv_userImagee.visibility = View.VISIBLE
                             tv_firstLetterr.visibility = View.INVISIBLE
-
 
                         } else {
                             tv_firstLetterr.text = it.data?.name.toString()[0].toString()
@@ -156,7 +145,7 @@ class PerformTransferByContactFragment : Fragment() {
                     }
                 }
             })
-            intiatePaymentStatus.observe(requireActivity(), Observer {
+            intiatePaymentStatus.observe(viewLifecycleOwner, Observer {
                 when (it.status) {
                     ApiCallStatus.LOADING -> {
                         dialog.show_dialog()
@@ -165,7 +154,9 @@ class PerformTransferByContactFragment : Fragment() {
                         dialog.dismiss_dialog()
 
                         val bundle = bundleOf(
-                            KEY_REF_ID to it.data?.referenceId
+                            KEY_REF_ID to it.data?.referenceId,
+                            KEY_PAGE to navigateToScreen,
+                            KEY_USERID to userId.toString()
 
                         )
 

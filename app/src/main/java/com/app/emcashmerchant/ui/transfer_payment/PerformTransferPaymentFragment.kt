@@ -24,7 +24,7 @@ import kotlinx.android.synthetic.main.fragment_perform_transfer_payment.tv_name
 import kotlinx.android.synthetic.main.fragment_perform_transfer_payment.tv_number
 
 
-class PerformTransferPaymentFragment : Fragment() {
+class PerformTransferPaymentFragment : Fragment(R.layout.fragment_perform_transfer_payment) {
 
 
     companion object {
@@ -32,10 +32,8 @@ class PerformTransferPaymentFragment : Fragment() {
 
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
         val backPressedCallback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -43,8 +41,9 @@ class PerformTransferPaymentFragment : Fragment() {
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(backPressedCallback)
-        return inflater.inflate(R.layout.fragment_perform_transfer_payment, container, false)
+
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -69,7 +68,6 @@ class PerformTransferPaymentFragment : Fragment() {
             tv_firstLetter.text = senderPerson.toString()[0].toString()
             iv_userImage.visibility = View.INVISIBLE
             tv_firstLetter.visibility = View.VISIBLE
-//            fl_user_level.setBackgroundResource(R.drawable.black_round)
             fl_user_level.setBackgroundResource(R.drawable.greyfilled_round)
             tv_firstLetter.setTextColor(resources.getColor(R.color.white))
         }

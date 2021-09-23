@@ -25,9 +25,16 @@ class PaymentChatHistoryViewModel(val app: Application) : AndroidViewModel(app) 
     private val api = ApiManger(app).api
     private val sessionStorage = SessionStorage(app)
     var userId = 0
-
+     var isBlockedLoggedInUser: Boolean? = false
+     var isBlockedContactUser: Boolean? = false
+    var name: String? = null
+    var phoneNumber: String? = null
+    var userLevel: Int? = null
+    var roleId: Int? = 0
+    var profileImage:String?=null
 
     val _refreshChat  = MutableLiveData<Boolean>()
+
 
 
     val pagedHistoryItems = Transformations.switchMap(_refreshChat){
@@ -39,13 +46,14 @@ class PaymentChatHistoryViewModel(val app: Application) : AndroidViewModel(app) 
         }.liveData.cachedIn(viewModelScope)
     }
 
-    fun getListData(userId: Int): kotlinx.coroutines.flow.Flow<PagingData<GroupedChatHistoryResponse.Data.Row>> {
-        return Pager(PagingConfig(10)) {
+    val refreshStatus = MutableLiveData<String>()
+    val pagedHistory = Transformations.switchMap(refreshStatus){
+        Pager(PagingConfig(1)) {
             ChatPagingSource(
                 api,
-                sessionStorage.accesToken.toString(),userId.toString()
+                sessionStorage.accesToken.toString(),it
             )
-        }.flow.cachedIn(viewModelScope)
+        }.liveData.cachedIn(viewModelScope)
     }
 
     fun block(userId: Int) {
@@ -96,44 +104,5 @@ class PaymentChatHistoryViewModel(val app: Application) : AndroidViewModel(app) 
             }
         }
     }
-//
-//
-//    fun groupPaymentTransactionsByDate(rows: ArrayList<PaymentChatResponse.Data.Row>?): ArrayList<PaymentChatResponse.ChatTransactionViewModel> {
-//
-//        val paymentActivityList = ArrayList<PaymentChatResponse.ChatTransactionViewModel>()  //final processed list
-//        val accessedDates = ArrayList<String>() //to check if a date is alreaaady accesssed
-//
-//        rows?.let { allTransactions ->   //check if rows are null
-//            if (!allTransactions.isNullOrEmpty()) {
-//                val dates = allTransactions.map {
-//                    it.updatedAt                                                                 //gets a list of updatedAt from all data using map
-//                }
-//                dates.forEach { unformattedDate ->
-//                    Timber.e("Unformatted date $unformattedDate")
-//                    val formattedDate = dateFormat(unformattedDate)
-//                    Timber.e("formatted date $formattedDate")
-//
-//                    if(!accessedDates.contains(formattedDate)){              //check if date already accessed otherwise duplications will occur
-//                        val groupedActivities = allTransactions.filter { row ->
-//                            dateFormat(row.updatedAt) == formattedDate
-//                        }                                                     // get all trnasaction under each item in dates list
-//                        paymentActivityList.add(
-//                            PaymentChatResponse.ChatTransactionViewModel(
-//                                formattedDate,
-//                                groupedActivities
-//                            )
-//                        )  //add to custom model
-//                        accessedDates.add(formattedDate)               //add date to accessDate Array
-//                    }
-//
-//
-//                }
-//            }
-//
-//
-//        }
-//        return paymentActivityList //pass this to adapter
-//    }
-
 
 }

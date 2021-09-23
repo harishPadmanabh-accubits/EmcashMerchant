@@ -19,12 +19,11 @@ import com.app.emcashmerchant.utils.*
 import com.app.emcashmerchant.utils.extensions.showKeyboard
 import com.app.emcashmerchant.utils.extensions.showShortToast
 import kotlinx.android.synthetic.main.fragment_payment_request.*
-import kotlinx.android.synthetic.main.fragment_transfer_payment.et_description
-import kotlinx.android.synthetic.main.fragment_transfer_payment.et_emcash
+
 import timber.log.Timber
 
 
-class PaymentRequestFragment : Fragment() {
+class PaymentRequestFragment : Fragment(R.layout.fragment_payment_request) {
     private lateinit var viewModel: PaymentRequestViewModel
     private lateinit var dialog: AppDialog
     var amount: String=""
@@ -37,26 +36,19 @@ class PaymentRequestFragment : Fragment() {
     }
 
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         val backPressedCallback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 findNavController().navigate(R.id.homeFragment)
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(backPressedCallback)
-        return inflater.inflate(R.layout.fragment_payment_request, container, false)
-    }
-
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
 
     }
+
+
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -133,7 +125,7 @@ class PaymentRequestFragment : Fragment() {
 
     fun observe(view: View) {
         viewModel.apply {
-            generateQrCodeStatus.observe(requireActivity(), Observer {
+            generateQrCodeStatus.observe(viewLifecycleOwner, Observer {
                 when (it.status) {
                     ApiCallStatus.LOADING -> {
                         dialog.show_dialog()

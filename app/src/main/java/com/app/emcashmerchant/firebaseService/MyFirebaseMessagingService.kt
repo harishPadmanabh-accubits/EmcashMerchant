@@ -101,8 +101,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                 .setAutoCancel(true)
                 .setContentIntent(resultPendingIntent)
                 .setSound(Uri.parse("android.resource://" + packageName + "/" + R.raw.notification))
-                .setSmallIcon(com.app.emcashmerchant.R.mipmap.ic_launcher)
-                .setBadgeIconType(R.mipmap.ic_launcher)
+                .setSmallIcon(R.mipmap.ic_launcher_round)
+                .setBadgeIconType(R.mipmap.ic_launcher_round)
         } else {
 
             builder = Notification.Builder(this)
@@ -111,7 +111,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                 .setAutoCancel(true)
                 .setContentIntent(resultPendingIntent)
                 .setSound(Uri.parse("android.resource://" + packageName + "/" + R.raw.notification))
-                .setSmallIcon(com.app.emcashmerchant.R.mipmap.ic_launcher)
+                .setSmallIcon(R.mipmap.ic_launcher_round)
 
         }
 

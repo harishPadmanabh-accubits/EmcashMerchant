@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.*
 import android.widget.PopupMenu
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.addCallback
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -44,37 +45,26 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 
-class PaymentChatHistoryFragment : Fragment(), ChatItemClickListener {
+class PaymentChatHistoryFragment : Fragment(R.layout.fragment_payment_chat_history),
+    ChatItemClickListener {
 
     lateinit var dialogBlockUnBlock: Dialog
     private lateinit var sessionStorage: SessionStorage
     private lateinit var viewModel: PaymentChatHistoryViewModel
     private lateinit var dialog: AppDialog
-    private var isBlockedLoggedInUser: Boolean? = false
-    private var isBlockedContactUser: Boolean? = false
-    private var userId = ""
-    var name: String? = null
-    var phoneNumber: String? = null
-    var ppp: String? = null
-    var userLevel: Int? = null
-    var roleId: Int? = 0
-    var profileImage:String?=null
-    val pagedAdapter by lazy {
+
+    private val pagedAdapter by lazy {
         PaymentChatHistoryAdapter(this)
     }
 
-    companion object {
-        fun newInstance() = PaymentChatHistoryFragment()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-    }
+        requireActivity().onBackPressedDispatcher.addCallback(this) {
+            findNavController().navigate(R.id.action_paymentChatHistoryFragment_to_homeFragment)
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
+        }
 
-        return inflater.inflate(R.layout.fragment_payment_chat_history, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -83,18 +73,20 @@ class PaymentChatHistoryFragment : Fragment(), ChatItemClickListener {
         sessionStorage = SessionStorage(requireActivity())
         dialog = AppDialog(requireActivity())
 
-        userId = requireArguments().getString(KEY_USERID).toString()
+        viewModel.userId = requireArguments().getString(KEY_USERID).toString().toInt()
         tv_balance.text = sessionStorage.balance
-        viewModel.getPaymentChat(userId.toInt())
-        observe(view)
+        viewModel.getPaymentChat(viewModel.userId)
 
 
-        val onBackPressedCallback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.action_paymentChatHistoryFragment_to_homeFragment)
-            }
+        rv_chat.apply {
+            adapter = pagedAdapter
+            layoutManager = LinearLayoutManager(
+                requireActivity(),
+                RecyclerView.VERTICAL, true
+            )
         }
-        requireActivity().onBackPressedDispatcher.addCallback(onBackPressedCallback)
+
+        viewModel._refreshChat.value = true
 
         pagedAdapter.addLoadStateListener { loadState ->
             if (loadState.refresh is LoadState.Loading) {
@@ -116,38 +108,23 @@ class PaymentChatHistoryFragment : Fragment(), ChatItemClickListener {
             }
         }
 
-        rv_chat.apply {
-            adapter = pagedAdapter
-            layoutManager = LinearLayoutManager(
-                requireActivity(),
-                RecyclerView.VERTICAL, true
-            )
-        }
+
+        observe()
 
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.getListData(userId.toInt()).collect {
-                it?.let {
-                    pagedAdapter.submitData(it)
-
-                }
-            }
-
-        }
 
         iv_menu.setOnClickListener {
-            showPopup(it, userId.toInt())
+            showPopup(it, viewModel.userId)
         }
 
         btn_request.setOnClickListener {
             var bundle = bundleOf(
-                KEY_USERID to userId,
-                KEY_NAME to name,
-                KEY_NUMBER to phoneNumber,
-                KEY_USERLEVEL to userLevel.toString(),
-                KEY_ROLEID to roleId.toString(),
-                KEY_PROFLE_IMAGE_LINK to profileImage
-
+                KEY_USERID to viewModel.userId.toString(),
+                KEY_NAME to viewModel.name,
+                KEY_NUMBER to viewModel.phoneNumber,
+                KEY_USERLEVEL to viewModel.userLevel.toString(),
+                KEY_ROLEID to viewModel.roleId.toString(),
+                KEY_PROFLE_IMAGE_LINK to viewModel.profileImage
 
 
             )
@@ -159,10 +136,11 @@ class PaymentChatHistoryFragment : Fragment(), ChatItemClickListener {
 
 
         }
+
         btn_pay.setOnClickListener {
             var bundle = bundleOf(
-                KEY_USERID to userId,
-                KEY_PAGE to "ChatScreen"
+                KEY_USERID to viewModel.userId.toString(),
+                KEY_PAGE to SCREEN_CHAT
 
 
             )
@@ -173,16 +151,17 @@ class PaymentChatHistoryFragment : Fragment(), ChatItemClickListener {
                 )
 
         }
+
         iv_back.setOnClickListener {
-            Navigation.findNavController(view)
-                .navigate(R.id.action_paymentChatHistoryFragment_to_homeFragment)
+            findNavController().navigate(R.id.action_paymentChatHistoryFragment_to_homeFragment)
+
         }
 
     }
 
-    fun observe(view: View) {
+    fun observe() {
         viewModel.apply {
-            paymentChatStatus.observe(requireActivity(), Observer {
+            paymentChatStatus.observe(viewLifecycleOwner, Observer {
                 when (it.status) {
                     ApiCallStatus.LOADING -> {
                         dialog.show_dialog()
@@ -195,7 +174,7 @@ class PaymentChatHistoryFragment : Fragment(), ChatItemClickListener {
                         phoneNumber = it.data?.contact?.phoneNumber
                         userLevel = it.data?.contact?.ppp
                         roleId = it.data?.contact?.roleId
-                        profileImage=it.data?.contact?.profileImage
+                        profileImage = it.data?.contact?.profileImage
 
                         if (it.data?.contact?.profileImage != null) {
                             iv_user_dpTop.visibility = View.VISIBLE
@@ -250,7 +229,7 @@ class PaymentChatHistoryFragment : Fragment(), ChatItemClickListener {
 
                 }
             })
-            blockStatus.observe(requireActivity(), Observer {
+            blockStatus.observe(viewLifecycleOwner, Observer {
                 when (it.status) {
                     ApiCallStatus.LOADING -> {
                         dialog.show_dialog()
@@ -268,7 +247,7 @@ class PaymentChatHistoryFragment : Fragment(), ChatItemClickListener {
                 }
             })
 
-            unblockStatus.observe(requireActivity(), Observer {
+            unblockStatus.observe(viewLifecycleOwner, Observer {
                 when (it.status) {
                     ApiCallStatus.LOADING -> {
                         dialog.show_dialog()
@@ -287,6 +266,10 @@ class PaymentChatHistoryFragment : Fragment(), ChatItemClickListener {
             })
 
         }
+
+        viewModel.pagedHistoryItems.observe(viewLifecycleOwner, Observer {
+            pagedAdapter.submitData(lifecycle, it)
+        })
 
     }
 
@@ -324,7 +307,7 @@ class PaymentChatHistoryFragment : Fragment(), ChatItemClickListener {
         popup.inflate(R.menu.action_menu)
         val menuOpts = popup.menu
 
-        if (isBlockedContactUser == false) {
+        if (viewModel.isBlockedContactUser == false) {
             menuOpts.getItem(2).title = "Block Account"
 
 
@@ -349,7 +332,8 @@ class PaymentChatHistoryFragment : Fragment(), ChatItemClickListener {
 
                 }
                 R.id.refresh -> {
-                    viewModel.getPaymentChat(userId)
+                    viewModel.getPaymentChat(userId.toInt())
+                    refresh()
                 }
 
             }
@@ -369,37 +353,37 @@ class PaymentChatHistoryFragment : Fragment(), ChatItemClickListener {
         dialogBlockUnBlock.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialogBlockUnBlock.show()
 
-        dialogBlockUnBlock.tv_name.text = name
-        dialogBlockUnBlock.tv_number.text = phoneNumber
+        dialogBlockUnBlock.tv_name.text = viewModel.name
+        dialogBlockUnBlock.tv_number.text = viewModel.phoneNumber
 
-        if (profileImage != null) {
+        if (viewModel.profileImage != null) {
             dialogBlockUnBlock.iv_user_dp.visibility = View.VISIBLE
             dialogBlockUnBlock.tv_firstLetter.visibility = View.INVISIBLE
-            dialogBlockUnBlock.iv_user_dp.loadImageWithUrl(profileImage)
+            dialogBlockUnBlock.iv_user_dp.loadImageWithUrl(viewModel.profileImage)
 
         } else {
             dialogBlockUnBlock.iv_user_dp.visibility = View.INVISIBLE
             dialogBlockUnBlock.tv_firstLetter.visibility = View.VISIBLE
-            dialogBlockUnBlock.tv_firstLetter.text = name.toString()[0].toString()
+            dialogBlockUnBlock.tv_firstLetter.text = viewModel.name.toString()[0].toString()
             dialogBlockUnBlock.tv_firstLetter.setTextColor(resources.getColor(R.color.white))
             dialogBlockUnBlock.fll_holder.setBackgroundResource(R.drawable.greyfilled_round)
         }
 
-        if (roleId == 3) {
-            if (userLevel == 1) {
+        if (viewModel.roleId == 3) {
+            if (viewModel.userLevel == 1) {
                 dialogBlockUnBlock.fll_holder.setBackgroundResource(R.drawable.green_round)
-            } else if (userLevel == 2) {
+            } else if (viewModel.userLevel == 2) {
                 dialogBlockUnBlock.fll_holder.setBackgroundResource((R.drawable.yellow_round))
-            } else if (userLevel == 4) {
+            } else if (viewModel.userLevel == 4) {
                 dialogBlockUnBlock.fll_holder.setBackgroundResource(R.drawable.red_round)
 
             }
-        } else if (roleId == 2) {
+        } else if (viewModel.roleId == 2) {
 
 
         }
 
-        if (isBlockedContactUser == false) {
+        if (viewModel.isBlockedContactUser == false) {
             dialogBlockUnBlock.tv_block.text = "Block"
 
         } else {
@@ -411,7 +395,7 @@ class PaymentChatHistoryFragment : Fragment(), ChatItemClickListener {
         }
         dialogBlockUnBlock.confirm_lay.setOnClickListener {
             dialogBlockUnBlock.dismiss()
-            if (isBlockedContactUser == false) {
+            if (viewModel.isBlockedContactUser == false) {
                 viewModel.block(userId)
 
             } else {
@@ -421,6 +405,19 @@ class PaymentChatHistoryFragment : Fragment(), ChatItemClickListener {
 
         }
 
+
+    }
+
+    private fun refresh() {
+
+        rv_chat.apply {
+            adapter = pagedAdapter
+            layoutManager = LinearLayoutManager(
+                requireActivity(),
+                RecyclerView.VERTICAL, true
+            )
+        }
+        viewModel._refreshChat.value = true
 
     }
 

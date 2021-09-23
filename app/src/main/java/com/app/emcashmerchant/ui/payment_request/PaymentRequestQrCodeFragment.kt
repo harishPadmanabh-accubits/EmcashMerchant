@@ -20,7 +20,7 @@ import java.util.*
 import android.util.Base64.decode as decode1
 
 
-class PaymentRequestQrCodeFragment : Fragment() {
+class PaymentRequestQrCodeFragment : Fragment(R.layout.fragment_payment_request_qr_code) {
 
     companion object {
         fun newInstance() =
@@ -28,10 +28,10 @@ class PaymentRequestQrCodeFragment : Fragment() {
 
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
         val backPressedCallback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -39,9 +39,9 @@ class PaymentRequestQrCodeFragment : Fragment() {
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(backPressedCallback)
-        return inflater.inflate(R.layout.fragment_payment_request_qr_code, container, false)
-    }
 
+
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

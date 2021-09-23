@@ -17,11 +17,31 @@ class LoginViewModel(val app: Application) : AndroidViewModel(app) {
     var loginOtpStatus = MutableLiveData<ApiMapper<LoginVerifyOtpResponse.Data>>()
     var pinNumberStatus = MutableLiveData<ApiMapper<PinNumberVerifyResponse>>()
     var resendOtpStatus = MutableLiveData<ApiMapper<ResendOtpResponse.Data>>()
+    var initialLogOutResponseStatus = MutableLiveData<ApiMapper<LogOutResponse>>()
 
 
     val repository = LoginAuthRepository(app)
     var passwordVisibiltyData = MutableLiveData<PasswordVisibilty>()
         .default(PasswordVisibilty.PSWD_HIDE)
+
+
+    fun performLogout(
+    ) {
+        initialLogOutResponseStatus.value = ApiMapper(ApiCallStatus.LOADING, null, null)
+
+        repository.performLogout() { status, message, result ->
+            Timber.e("error $message")
+            when (status) {
+                true -> {
+                    initialLogOutResponseStatus.value = ApiMapper(ApiCallStatus.SUCCESS, result, null)
+                }
+                false -> {
+                    initialLogOutResponseStatus.value = ApiMapper(ApiCallStatus.ERROR, null, message)
+
+                }
+            }
+        }
+    }
 
     fun performInitialLogin(
         email: String,

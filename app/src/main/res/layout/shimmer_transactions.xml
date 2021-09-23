@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:id="@+id/shimmerContainer"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <View
+        android:id="@+id/tv_transaction_date"
+        android:layout_width="@dimen/dp100"
+        android:layout_height="@dimen/dp16"
+        android:background="@color/grey"
+        android:layout_marginStart="@dimen/dp24"
+        android:layout_marginTop="@dimen/dp8" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp24"
+        android:layout_marginTop="@dimen/dp8"
+
+        >
+        <View
+            android:background="@color/grey"
+            android:id="@+id/iv_type_indicator_load_emcash"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:visibility="visible"
+            app:layout_constraintEnd_toStartOf="@+id/guideline19"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+
+        <View
+            android:background="@color/grey"
+            android:id="@+id/tv_type_indicator"
+            android:layout_width="@dimen/dp100"
+            android:layout_height="@dimen/dp16"
+            android:layout_marginStart="12dp"
+            android:fontFamily="@font/biennale_regular"
+            android:text="Aaron Phillips"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp14"
+            app:layout_constraintStart_toStartOf="@+id/guideline19"
+            app:layout_constraintTop_toTopOf="@+id/iv_type_indicator_load_emcash" />
+
+
+        <View
+            android:background="@color/grey"
+            android:id="@+id/tv_time"
+            android:layout_width="@dimen/dp100"
+            android:layout_height="@dimen/dp16"
+            android:layout_marginTop="7dp"
+            android:fontFamily="@font/biennale_regular"
+            android:text="09:00 PM"
+            android:textColor="@color/grey_unselected"
+            android:textSize="@dimen/sp12"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/tv_type_indicator"
+            app:layout_constraintTop_toBottomOf="@+id/tv_type_indicator" />
+
+        <View
+            android:background="@color/grey"
+            android:id="@+id/tv_value_changed"
+            android:layout_width="@dimen/dp32"
+            android:layout_height="@dimen/dp16"
+            android:layout_marginEnd="@dimen/dp30"
+            android:fontFamily="@font/biennale_bold"
+            android:text="+30"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp14"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_type_indicator" />
+
+
+        <LinearLayout
+            android:id="@+id/ll_balance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="@+id/tv_value_changed"
+            app:layout_constraintTop_toBottomOf="@+id/tv_value_changed">
+
+            <View
+                android:background="@color/grey"
+                android:id="@+id/tv_info_balance"
+                android:layout_width="@dimen/dp60"
+                android:layout_height="@dimen/dp12"
+                android:fontFamily="@font/biennale_regular"
+                android:text="Balance"
+                android:textSize="@dimen/sp12"
+                android:textColor="@color/grey_unselected"
+                tools:layout_editor_absoluteX="76dp"
+                tools:layout_editor_absoluteY="184dp" />
+
+            <View
+                android:background="@color/grey"
+                android:id="@+id/tv_balance"
+                android:layout_width="@dimen/dp20"
+                android:layout_height="@dimen/dp12"
+                android:layout_marginStart="7dp"
+                android:fontFamily="@font/biennale_regular"
+                android:text="40"
+                android:textSize="@dimen/sp12"
+                android:textColor="@color/green" />
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline19"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.090439275" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

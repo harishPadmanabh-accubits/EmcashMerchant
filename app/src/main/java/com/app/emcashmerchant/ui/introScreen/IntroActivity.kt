@@ -5,6 +5,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.app.emcashmerchant.R
+import com.app.emcashmerchant.data.SessionStorage
 import com.app.emcashmerchant.ui.login.LoginActivity
 import com.app.emcashmerchant.ui.register.BasicDetailsActivity
 import com.app.emcashmerchant.utils.KEY_DEEPLINK
@@ -15,11 +16,16 @@ import com.app.emcashmerchant.utils.extensions.openActivity
 
 class IntroActivity : AppCompatActivity() {
     private lateinit var viewmodel: IntroScreenViewModel
+    private lateinit var sessionStorage: SessionStorage
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_acitivity)
+
+        sessionStorage=SessionStorage(this)
+        sessionStorage.referenceIdInitial=null
+
         getViewModel()
 
 
@@ -30,13 +36,16 @@ class IntroActivity : AppCompatActivity() {
     }
 
     fun onClick(view: View) {
-        when(view.id){
+        when (view.id) {
             R.id.btn_login -> openActivity(LoginActivity::class.java)
             R.id.btn_register -> openActivity(BasicDetailsActivity::class.java)
+
         }
 
     }
+
     override fun onBackPressed() {
         ActivityCompat.finishAffinity(this)
     }
+
 }

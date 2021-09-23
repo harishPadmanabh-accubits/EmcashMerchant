@@ -2,13 +2,10 @@ package com.app.emcashmerchant.ui.home.home_screen
 
 import android.net.Uri
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
@@ -20,9 +17,9 @@ import com.app.emcashmerchant.R
 import com.app.emcashmerchant.data.SessionStorage
 import com.app.emcashmerchant.data.network.ApiCallStatus
 import com.app.emcashmerchant.ui.home.home_screen.adapter.RecentTransactionsAdapter
+import com.app.emcashmerchant.ui.loadEmcash.LoadEmcashViewModel
 import com.app.emcashmerchant.utils.AppDialog
 import com.app.emcashmerchant.utils.extensions.loadImageWithUrlUser
-import com.app.emcashmerchant.utils.extensions.obtainViewModel
 import com.app.emcashmerchant.utils.extensions.showShortToast
 import com.app.emcashmerchant.utils.extensions.trimID
 import kotlinx.android.synthetic.main.home_fragment.*
@@ -30,22 +27,41 @@ import kotlinx.android.synthetic.main.layout_home_info_card.*
 import kotlinx.android.synthetic.main.layout_notification_with_badge_view.*
 import timber.log.Timber
 
+/**
+ Home Screen
+ **/
+class HomeFragment : Fragment(R.layout.home_fragment) {
 
-class HomeFragment : Fragment() {
-
-    companion object {
-        fun newInstance() =
-            HomeFragment()
-    }
-
-    private lateinit var viewModel: HomeViewModel
+    private  lateinit var viewModel: HomeViewModel
     private lateinit var sessionStorage: SessionStorage
-    var balance: String? = null
     lateinit var dialog: AppDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        /**
+         Method to handle deepLinks
+         **/
         handlePendingDeepLink()
+
+
+        sharedElementEnterTransition = ChangeBounds().apply {
+            duration = 750
+        }
+        sharedElementReturnTransition = ChangeBounds().apply {
+            duration = 750
+        }
+
+        /**
+         Backpress Callback
+         **/
+        val onBackPressedCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                ActivityCompat.finishAffinity(requireActivity())
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(onBackPressedCallback)
+
     }
 
     private fun handlePendingDeepLink() {
@@ -59,118 +75,29 @@ class HomeFragment : Fragment() {
     }
 
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        sharedElementEnterTransition = ChangeBounds().apply {
-            duration = 750
-        }
-        sharedElementReturnTransition = ChangeBounds().apply {
-            duration = 750
-        }
-        val callback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                ActivityCompat.finishAffinity(requireActivity())
-            }
-        }
-        requireActivity().onBackPressedDispatcher.addCallback(callback)
-        return inflater.inflate(R.layout.home_fragment, container, false)
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
-        sessionStorage = SessionStorage(requireActivity())
-        dialog = AppDialog(requireActivity())
-        getWalletDetails()
-        viewModel.getRecentTransactions()
-        observe()
-
-
-    }
-
-    private fun observe() {
-        viewModel.apply {
-            walletDetails.observe(requireActivity(), Observer {
-                when (it.status) {
-                    ApiCallStatus.LOADING -> {
-                        //show loading
-                        dialog.show_dialog()
-
-                    }
-                    ApiCallStatus.SUCCESS -> {
-                        dialog.dismiss_dialog()
-                        var notificationCounts = it.data?.notificationCount?.toInt()
-                        iv_shop_profile_image.loadImageWithUrlUser(it.data?.profileImage)
-                        if (notificationCounts.toString().toInt() >= 10) {
-                            notificationCount.text = "9+"
-                        } else {
-                            notificationCount.text = notificationCounts.toString()
-
-                        }
-                        balance = it.data?.amount.toString()
-                        if (balance != null) {
-                            sessionStorage.balance = balance
-
-                            tv_num_emcash.setText(sessionStorage.balance)
-
-                        }
-
-                        tv_wallet_id.text = "Wallet ID : ".plus(trimID(it.data?.id.toString()))
-
-                    }
-                    ApiCallStatus.ERROR -> {
-                        dialog.dismiss_dialog()
-                        activity?.showShortToast(it.errorMessage)
-                    }
-                }
-            })
-
-            recentTransactions.observe(requireActivity(), Observer {
-                when (it.status) {
-                    ApiCallStatus.LOADING -> {
-                        //show loading
-                        dialog.show_dialog()
-
-                    }
-                    ApiCallStatus.SUCCESS -> {
-                        dialog.dismiss_dialog()
-
-                        val recentTransactions = it.data?.rows
-
-                        if (recentTransactions?.isNotEmpty() == true) {
-                            rv_recent_payment_list.visibility = View.VISIBLE
-                            ll_no_transactions.visibility = View.GONE
-
-                            rv_recent_payment_list.apply {
-                                layoutManager = GridLayoutManager(requireContext(), 5)
-                                adapter = RecentTransactionsAdapter(recentTransactions)
-                            }
-                        } else {
-                            rv_recent_payment_list.visibility = View.GONE
-                            ll_no_transactions.visibility = View.VISIBLE
-                        }
-
-
-                    }
-                    ApiCallStatus.ERROR -> {
-                        dialog.dismiss_dialog()
-                        activity?.showShortToast(it.errorMessage)
-                    }
-                }
-            })
-
-
-        }
-    }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Timber.e("onViewCreated")
-        initViewModel(requireActivity())
+
+        viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
+        sessionStorage = SessionStorage(requireActivity())
+        dialog = AppDialog(requireActivity())
+
+        /**
+        Handling Views and navigations
+         **/
         setupViews(view)
+
+        /**
+         calling viewModels
+         **/
+        viewModels()
+
+        /**
+         method to observe the liveData
+         **/
+        observe()
+
     }
 
     private fun setupViews(view: View) {
@@ -224,17 +151,90 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun initViewModel(fragmentActivity: FragmentActivity?) {
-        if (fragmentActivity != null)
-            viewModel = fragmentActivity.obtainViewModel(HomeViewModel::class.java)
-        else
-            Timber.e("ViewModel init failed")
-    }
 
-
-    private fun getWalletDetails() {
+    private fun viewModels() {
         viewModel.getWalletDetails()
         tv_num_emcash.setText(sessionStorage.balance)
+        viewModel.getRecentTransactions()
+
+    }
+
+    private fun observe() {
+        viewModel.apply {
+            walletDetails.observe(viewLifecycleOwner, Observer {
+                when (it.status) {
+                    ApiCallStatus.LOADING -> {
+                        //show loading
+                        dialog.show_dialog()
+
+                    }
+                    ApiCallStatus.SUCCESS -> {
+                        dialog.dismiss_dialog()
+                        it?.data?.let {
+                            var notificationCounts = it.notificationCount?.toInt()
+                            iv_shop_profile_image.loadImageWithUrlUser(it.profileImage)
+                            if (notificationCounts.toString().toInt() >= 10) {
+                                notificationCount.text = "9+"
+                            } else {
+                                notificationCount.text = notificationCounts.toString()
+
+                            }
+                            balance = it.amount.toString()
+                            if (balance != null) {
+                                sessionStorage.balance = balance
+                                tv_num_emcash.setText(sessionStorage.balance)
+
+                            }
+                            1
+                            tv_wallet_id.text = "Wallet ID : ".plus(trimID(it.id.toString()))
+
+                        }
+
+                    }
+                    ApiCallStatus.ERROR -> {
+                        dialog.dismiss_dialog()
+                        activity?.showShortToast(it.errorMessage)
+                    }
+                }
+            })
+
+            recentTransactions.observe(viewLifecycleOwner, Observer {
+                when (it.status) {
+                    ApiCallStatus.LOADING -> {
+                        //show loading
+                        dialog.show_dialog()
+
+                    }
+                    ApiCallStatus.SUCCESS -> {
+                        dialog.dismiss_dialog()
+                        it.data?.rows?.let {
+                            var recentTransactions = it
+
+                            if (recentTransactions.isNotEmpty()) {
+                                rv_recent_payment.visibility = View.VISIBLE
+                                ll_no_transactions.visibility = View.GONE
+
+                                rv_recent_payment.apply {
+                                    layoutManager = GridLayoutManager(requireContext(), 5)
+                                    adapter = RecentTransactionsAdapter(recentTransactions)
+                                }
+                            } else {
+                                rv_recent_payment.visibility = View.GONE
+                                ll_no_transactions.visibility = View.VISIBLE
+                            }
+                        }
+
+
+                    }
+                    ApiCallStatus.ERROR -> {
+                        dialog.dismiss_dialog()
+                        activity?.showShortToast(it.errorMessage)
+                    }
+                }
+            })
+
+
+        }
     }
 
 

@@ -9,12 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.app.emcashmerchant.R
 import com.app.emcashmerchant.data.models.*
-import com.app.emcashmerchant.ui.transactionActivity.adapter.CardsAdapter
-import com.app.emcashmerchant.ui.wallet.adapter.WalletTransactionAdapterV2
-import com.app.emcashmerchant.utils.extensions.dateFormat
-import com.app.emcashmerchant.utils.extensions.timeformat
 import kotlinx.android.synthetic.main.item_notification.view.*
-import kotlinx.android.synthetic.main.item_transaction_details.view.*
 
 class NotificationAdapter :
     PagingDataAdapter<GroupedNotificationResponse.Data.Row, NotificationAdapter.ViewHolder>(

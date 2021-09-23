@@ -18,8 +18,16 @@ import com.app.emcashmerchant.data.models.GroupedChatHistoryResponse
 import com.app.emcashmerchant.data.models.PaymentChatResponse
 import com.app.emcashmerchant.ui.payment_request.adapter.ContactsItemClickListener
 import com.app.emcashmerchant.utils.*
+import com.app.emcashmerchant.utils.TransactionUtils.Companion.TRANSACTION_MODE_DEBIT
+import com.app.emcashmerchant.utils.TransactionUtils.Companion.TRANSACTION_STATUS_FAILED
+import com.app.emcashmerchant.utils.TransactionUtils.Companion.TRANSACTION_STATUS_PENDING
+import com.app.emcashmerchant.utils.TransactionUtils.Companion.TRANSACTION_STATUS_REJECTED
+import com.app.emcashmerchant.utils.TransactionUtils.Companion.TRANSACTION_STATUS_SUCCESS
+import com.app.emcashmerchant.utils.TransactionUtils.Companion.TRANSACTION_TYPE_REQUEST
+import com.app.emcashmerchant.utils.TransactionUtils.Companion.TRANSACTION_TYPE_TRANSFER
 import com.app.emcashmerchant.utils.extensions.timeformat
 import kotlinx.android.synthetic.main.item_chat_details.view.*
+import timber.log.Timber
 
 
 class PaymentChatHistoryDetailsAdapter(
@@ -74,7 +82,8 @@ class PaymentChatHistoryDetailsAdapter(
                 ClickListener.onChatAcceptClicked(transactions[position])
 
             }
-            if (transactions[position].isReciever) {
+            if (transactions[position].isReciever)
+            {
                 ll_chat_receive.visibility = View.VISIBLE
                 ll_chat_send.visibility = View.GONE
 
@@ -88,8 +97,8 @@ class PaymentChatHistoryDetailsAdapter(
                 tv_cash_receive.text = transactions[position].amount.toString()
 
 
-                if (status == 1) {
-                    if (mode==2) {
+                if (status == TRANSACTION_STATUS_SUCCESS) {
+                    if (mode == TRANSACTION_MODE_DEBIT) {
                         tv_payment_type_label_receive.text = "Payment Received"
 
                     } else {
@@ -98,52 +107,52 @@ class PaymentChatHistoryDetailsAdapter(
                     }
                     iv_image_receive_status.setBackgroundResource(R.drawable.ic_success)
 
-                    if (type == 1) {
+                    if (type == TRANSACTION_TYPE_TRANSFER) {
                         tv_status_receive.text = "Payment Success"
-                    } else if (type == 4) {
+                    } else if (type == TRANSACTION_TYPE_REQUEST) {
                         tv_status_receive.text = "Request Success"
 
                     }
                 }
-                else if (status == 2) {
+                else if (status == TRANSACTION_STATUS_PENDING) {
                     iv_image_receive_status.setBackgroundResource(R.drawable.ic_pending)
 
                     tv_payment_type_label_receive.text = "Payment Pending"
 
-                    if (type == 1) {
+                    if (type == TRANSACTION_TYPE_TRANSFER) {
                         tv_status_receive.text = "Payment Pending"
 
 
-                    } else if (type == 4) {
+                    } else if (type == TRANSACTION_TYPE_REQUEST) {
                         tv_status_receive.text = "Request Pending"
 
 
                     }
                 }
-                else if (status == 3) {
+                else if (status == TRANSACTION_STATUS_FAILED) {
                     iv_image_receive_status.setBackgroundResource(R.drawable.ic_failed)
 
                     tv_payment_type_label_receive.text = "Payment Failed"
 
-                    if (type == 1) {
+                    if (type == TRANSACTION_TYPE_TRANSFER) {
                         tv_status_receive.text = "Payment Failed"
 
 
-                    } else if (type == 4) {
+                    } else if (type == TRANSACTION_TYPE_REQUEST) {
                         tv_status_receive.text = "Request Failed"
 
                     }
                 }
-                else if (status == 4) {
+                else if (status == TRANSACTION_STATUS_REJECTED) {
                     iv_image_receive_status.setBackgroundResource(R.drawable.ic_rejected)
 
                     tv_payment_type_label_receive.text = "Payment Rejected"
 
-                    if (type == 1) {
+                    if (type == TRANSACTION_TYPE_TRANSFER) {
                         tv_status_receive.text = "Payment Rejected"
 
 
-                    } else if (type == 4) {
+                    } else if (type == TRANSACTION_TYPE_REQUEST) {
                         tv_status_receive.text = "Request Rejected"
 
                     }
@@ -151,8 +160,6 @@ class PaymentChatHistoryDetailsAdapter(
 
 
             }
-
-
             else {
 
                 ll_chat_receive.visibility = View.GONE
@@ -162,9 +169,9 @@ class PaymentChatHistoryDetailsAdapter(
                 tv_cash_send.text = transactions[position].amount.toString()
 
 
-                if (status == 1) {
+                if (status == TRANSACTION_STATUS_SUCCESS) {
 
-                    if (mode==2) {
+                    if (mode == 2) {
                         tv_payment_type_label_send.text = "Payment Received"
 
                     } else {
@@ -173,46 +180,43 @@ class PaymentChatHistoryDetailsAdapter(
                     }
                     iv_image_send_status.setBackgroundResource(R.drawable.ic_chat_success)
 
-                    if (type == 1) {
+                    if (type == TRANSACTION_TYPE_TRANSFER) {
                         tv_status_send.text = "Payment Success"
-                    } else if (type == 4) {
+                    } else if (type == TRANSACTION_TYPE_REQUEST) {
                         tv_status_send.text = "Request Success"
 
                     }
-                }
-                else if (status == 2) {
+                } else if (status == TRANSACTION_STATUS_PENDING) {
                     iv_image_send_status.setBackgroundResource(R.drawable.ic_chat_pending)
                     tv_payment_type_label_send.text = "Payment Intiated"
 
-                    if (type == 1) {
+                    if (type == TRANSACTION_TYPE_TRANSFER) {
                         tv_status_send.text = "Payment Pending"
 
-                    } else if (type == 4) {
+                    } else if (type == TRANSACTION_TYPE_REQUEST) {
                         tv_status_send.text = "Request Pending"
 
                     }
-                }
-                else if (status == 3) {
+                } else if (status == TRANSACTION_STATUS_FAILED) {
                     iv_image_send_status.setBackgroundResource(R.drawable.ic_failed)
                     tv_payment_type_label_send.text = "Payment Failed"
 
-                    if (type == 1) {
+                    if (type == TRANSACTION_TYPE_TRANSFER) {
                         tv_status_send.text = "Payment Failed"
 
-                    } else if (type == 4) {
+                    } else if (type == TRANSACTION_TYPE_REQUEST) {
                         tv_status_send.text = "Request Failed"
 
                     }
-                }
-                else if (status == 4) {
+                } else if (status == TRANSACTION_STATUS_REJECTED) {
                     iv_image_send_status.setBackgroundResource(R.drawable.ic_rejected)
                     tv_payment_type_label_send.text = "Payment Rejected"
 
-                    if (type == 1) {
+                    if (type == TRANSACTION_TYPE_TRANSFER) {//1
                         tv_status_send.text = "Payment Rejected"
 
 
-                    } else if (type == 4) {
+                    } else if (type == TRANSACTION_TYPE_REQUEST) {//4
                         tv_status_send.text = "Request Rejected"
 
                     }

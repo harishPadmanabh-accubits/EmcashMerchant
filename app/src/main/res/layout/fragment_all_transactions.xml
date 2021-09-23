@@ -6,6 +6,10 @@
     android:layout_height="match_parent"
     tools:context=".ui.transaction_history.AllTransactionsFragment">
 
+
+
+    
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_all_transactions"
         android:layout_width="match_parent"

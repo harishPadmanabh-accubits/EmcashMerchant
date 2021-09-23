@@ -43,7 +43,7 @@ class TermsFragment : Fragment() {
         var  termscondition=requireArguments().getString("terms_conditions")
         tv_terms.text=termscondition
         iv_back.setOnClickListener {
-            Navigation.findNavController(view).popBackStack()
+            findNavController().navigate(R.id.settingsFragment)
         }
 
     }

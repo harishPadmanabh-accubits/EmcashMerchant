@@ -7,6 +7,11 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.app.emcashmerchant.R
 import com.app.emcashmerchant.data.models.GroupedWalletTransactionResponse
+import com.app.emcashmerchant.utils.TransactionUtils.Companion.TRANSACTION_MODE_CREDIT
+import com.app.emcashmerchant.utils.TransactionUtils.Companion.TRANSACTION_TYPE_REQUEST
+import com.app.emcashmerchant.utils.TransactionUtils.Companion.TRANSACTION_TYPE_TOPUP
+import com.app.emcashmerchant.utils.TransactionUtils.Companion.TRANSACTION_TYPE_TRANSFER
+import com.app.emcashmerchant.utils.TransactionUtils.Companion.TRANSACTION_TYPE_WITHDRAW
 import com.app.emcashmerchant.utils.extensions.timeformat
 import kotlinx.android.synthetic.main.item_inner_activity_details.view.*
 
@@ -26,8 +31,8 @@ class WalletTransactionDetailsAdapterV2(
             tv_time.text= timeformat(transactions[position].updatedAt)
             val type=transactions[position].transactionInfo.type
 
-            if(type==1){ //TODO Show corresponding icon in image view
-                if (transactions[position].mode == 1) {
+            if(type==TRANSACTION_TYPE_TRANSFER){ // Show corresponding icon in image view
+                if (transactions[position].mode == TRANSACTION_MODE_CREDIT) {
                     tv_type_indicator.text=transactions[position].remitter.name
                     iv_type_indicator_load_emcash.setBackgroundResource(R.drawable.ic_inbound)
 
@@ -37,15 +42,20 @@ class WalletTransactionDetailsAdapterV2(
 
                 }
             }
-            else if(type==2){
+
+            else if(type==TRANSACTION_TYPE_TOPUP){
                 iv_type_indicator_load_emcash.setBackgroundResource(R.drawable.ic_emcash_loaded)
                 tv_type_indicator.text="Emcash Loaded"
-            }else if(type==3){
+            }
+
+            else if(type==TRANSACTION_TYPE_WITHDRAW){
                 iv_type_indicator_load_emcash.setBackgroundResource(R.drawable.ic_emcash_converted)
                 tv_type_indicator.text="Emcash Converted"
 
-            }else if(type ==4 ){
-                if (transactions[position].mode == 1) {
+            }
+
+            else if(type ==TRANSACTION_TYPE_REQUEST){
+                if (transactions[position].mode == TRANSACTION_MODE_CREDIT) {
                     tv_type_indicator.text=transactions[position].remitter.name
                     iv_type_indicator_load_emcash.setBackgroundResource(R.drawable.ic_inbound)
 
@@ -55,16 +65,20 @@ class WalletTransactionDetailsAdapterV2(
 
                 }
             }
-            if (transactions.get(position).mode == 1) {
+
+
+
+            if (transactions.get(position).mode == TRANSACTION_MODE_CREDIT) {
                 tv_value_changed.text="+"+transactions.get(position).transactionInfo.amount.toString()+" EmCash"
 
             } else {
                 tv_value_changed.text="-"+transactions.get(position).transactionInfo.amount.toString()+" EmCash"
 
             }
+
             tv_balance.apply {
                 tv_balance.text = transactions.get(position).balance.toString()
-                if (transactions[position].mode == 1) {
+                if (transactions[position].mode == TRANSACTION_MODE_CREDIT) {
                     setTextColor(ContextCompat.getColor(context,R.color.green))
 
                 } else {

@@ -16,8 +16,10 @@ import com.app.emcashmerchant.utils.extensions.showShortToast
 import com.app.emcashmerchant.Authviewmodel.LoginViewModel
 import com.app.emcashmerchant.DeepLinkFactory
 import com.app.emcashmerchant.ui.ReUploadDocuments.ReUploadDocumentsActivity
+import com.app.emcashmerchant.ui.introScreen.IntroActivity
 import com.app.emcashmerchant.utils.*
 import kotlinx.android.synthetic.main.activity_pin_number.*
+import kotlinx.android.synthetic.main.fragment_payment_chat_history.*
 
 class PinNumberActivity : AppCompatActivity() {
 
@@ -58,7 +60,7 @@ class PinNumberActivity : AppCompatActivity() {
                 onBackPressed()
             }
             R.id.ll_logout -> {
-                sessionStorage.logoutUser()
+                viewModel.performLogout()
             }
         }
     }
@@ -72,6 +74,25 @@ class PinNumberActivity : AppCompatActivity() {
     }
 
     private fun observe() {
+
+       viewModel.initialLogOutResponseStatus.observe(this, Observer {
+            when (it.status) {
+                ApiCallStatus.LOADING -> {
+                    //show loading
+                    dialog.show_dialog()
+                }
+                ApiCallStatus.SUCCESS -> {
+                    dialog.dismiss_dialog()
+                    sessionStorage.logoutUser()
+                }
+                ApiCallStatus.ERROR -> {
+                    dialog.dismiss_dialog()
+                    sessionStorage.logoutUser()
+                    showShortToast(it.errorMessage)
+                }
+            }
+        })
+
         viewModel.pinNumberStatus.observe(this@PinNumberActivity, Observer {
             when (it.status) {
                 ApiCallStatus.LOADING -> {

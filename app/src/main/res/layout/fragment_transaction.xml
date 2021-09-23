@@ -5,7 +5,7 @@
     android:id="@+id/cl_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.transactionActivity.TransactionFragment">
+    tools:context=".ui.loadEmcash.TransactionFragment">
 
 
     <androidx.appcompat.widget.AppCompatImageView

@@ -94,19 +94,6 @@
 
     </LinearLayout>
 
-    <EditText
-        android:id="@+id/et_description"
-        style="@style/GreyRoundTextField"
-        android:layout_width="@dimen/dp_280"
-        android:layout_height="@dimen/dp48"
-        android:hint="@string/enter_iban"
-        android:layout_marginTop="@dimen/dp16"
-        android:inputType="number"
-        android:textSize="@dimen/sp14"
-        android:maxLength="34"
-        app:layout_constraintEnd_toEndOf="@+id/ll_input"
-        app:layout_constraintStart_toStartOf="@+id/ll_input"
-        app:layout_constraintTop_toBottomOf="@+id/ll_input" />
 
     <LinearLayout
         android:id="@+id/linearLayout2"
@@ -114,9 +101,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp60"
         android:background="@drawable/blueshaded_round_bg"
-        app:layout_constraintEnd_toEndOf="@+id/et_description"
-        app:layout_constraintStart_toStartOf="@+id/et_description"
-        app:layout_constraintTop_toBottomOf="@+id/et_description">
+        app:layout_constraintEnd_toEndOf="@+id/ll_bank"
+        app:layout_constraintStart_toStartOf="@+id/ll_bank"
+        app:layout_constraintTop_toBottomOf="@+id/ll_bank">
 
         <TextView
             android:layout_width="wrap_content"
@@ -146,5 +133,128 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/ll_bank"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp12"
+        app:layout_constraintEnd_toEndOf="@+id/ll_input"
+        app:layout_constraintStart_toStartOf="@+id/ll_input"
+        app:layout_constraintTop_toBottomOf="@+id/ll_input"
+
+  >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/ll_addBank"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/dp20"
+                android:gravity="center_vertical"
+                android:layout_marginTop="@dimen/dp16"
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center_vertical"
+                    android:layout_weight="1"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Add Bank Account"
+                        android:textColor="@color/app_blue"
+                        android:padding="@dimen/dp2"
+                        android:textSize="@dimen/sp14"
+                        android:fontFamily="@font/biennale_semi_bold"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Please add bank account details to continue ."
+                        android:padding="@dimen/dp2"
+                        android:textSize="@dimen/sp12"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/biennale_regular"
+                        />
+
+
+                </LinearLayout>
+                <ImageView
+                    android:layout_width="@dimen/dp16"
+                    android:layout_height="@dimen/dp16"
+                    android:buttonTint="@color/app_blue"
+                    android:layout_marginRight="@dimen/dp24"
+                    android:layout_marginTop="@dimen/dp16"
+                    android:checked="true"
+                    android:src="@drawable/arrow_right"
+                    android:layout_marginBottom="@dimen/dp16"
+                    />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/ll_bankDetails"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+                <RadioButton
+                    android:id="@+id/rb_select"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/app_blue"
+                    android:layout_marginLeft="@dimen/dp24"
+                    android:layout_marginTop="@dimen/dp16"
+                    android:checked="true"
+                    android:layout_marginBottom="@dimen/dp16"
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="@dimen/dp20"
+                    android:gravity="center_vertical"
+                    >
+                    <TextView
+                        android:id="@+id/tv_iban"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:padding="@dimen/dp2"
+                        android:textSize="@dimen/sp14"
+                        android:fontFamily="@font/biennale_semi_bold"
+                        />
+
+                    <TextView
+                        android:id="@+id/tv_bank"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/dp2"
+                        android:textSize="@dimen/sp12"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/biennale_regular"
+                        />
+
+
+                </LinearLayout>
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+
+
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

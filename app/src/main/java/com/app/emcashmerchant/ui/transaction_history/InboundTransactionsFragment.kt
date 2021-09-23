@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.app.emcashmerchant.R
 import com.app.emcashmerchant.data.network.ApiCallStatus
 import com.app.emcashmerchant.ui.transaction_history.adapters.AllTransactionAdapter
-import com.app.emcashmerchant.utils.AppDialog
 import com.app.emcashmerchant.utils.extensions.obtainViewModel
 import com.app.emcashmerchant.utils.extensions.showShortToast
 import kotlinx.android.synthetic.main.fragment_all_transactions.*
@@ -28,9 +27,8 @@ import timber.log.Timber
 
 class InboundTransactionsFragment : Fragment() {
 
-    private lateinit var dialog:AppDialog
 
-    val pagedAdapter by lazy {
+    private val pagedAdapter by lazy {
         AllTransactionAdapter()
     }
 
@@ -44,7 +42,6 @@ class InboundTransactionsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        dialog= AppDialog(requireActivity())
         pagedAdapter.addLoadStateListener {loadState ->
             if (loadState.refresh is LoadState.Loading){
             }

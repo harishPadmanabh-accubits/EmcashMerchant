@@ -8,80 +8,98 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.app.emcashmerchant.R
 import com.app.emcashmerchant.data.network.ApiCallStatus
 import com.app.emcashmerchant.ui.viewAllTransaction.adapter.ViewAllTransactionsAdapter
+import com.app.emcashmerchant.ui.viewAllTransaction.adapter.ViewAllTransactionsAdapterV2
+import com.app.emcashmerchant.ui.wallet.adapter.WalletTransactionAdapterV2
 import com.app.emcashmerchant.utils.AppDialog
 import com.app.emcashmerchant.utils.extensions.showShortToast
 import kotlinx.android.synthetic.main.fragment_view_all_transactions.*
+import kotlinx.android.synthetic.main.fragment_view_all_transactions.iv_back
+import kotlinx.android.synthetic.main.walletv2.*
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 
-class ViewAllTransactionsFragment : Fragment() {
+class ViewAllTransactionsFragment : Fragment(R.layout.fragment_view_all_transactions) {
     private lateinit var viewModel: AllTransactionsViewModel
     lateinit var dialog: AppDialog
+    val pagedAdapter by lazy {
+        ViewAllTransactionsAdapterV2()
+    }
+    lateinit var mLayoutManager: LinearLayoutManager
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
         val onBackPressedCallback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 findNavController().popBackStack()
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(onBackPressedCallback)
-        return inflater.inflate(R.layout.fragment_view_all_transactions, container, false)
 
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         viewModel = ViewModelProvider(this).get(AllTransactionsViewModel::class.java)
         dialog = AppDialog(requireActivity())
 
+        mLayoutManager = GridLayoutManager(requireContext(), 5)
 
-        viewModel.getAllTransactions()
+
+
+        pagedAdapter.addLoadStateListener { loadState ->
+            if (loadState.refresh is LoadState.Loading) {
+                dialog.show_dialog()
+            }
+
+            else {
+                dialog.dismiss_dialog()
+
+                // getting the error
+                val error = when {
+                    loadState.prepend is LoadState.Error -> loadState.prepend as LoadState.Error
+                    loadState.append is LoadState.Error -> loadState.append as LoadState.Error
+                    loadState.refresh is LoadState.Error -> loadState.refresh as LoadState.Error
+                    else -> null
+                }
+
+                error?.let {
+                    requireActivity().showShortToast(it.error.message)
+                }
+            }
+        }
+
+        rv_all_transactions.apply {
+            adapter = pagedAdapter
+            layoutManager = mLayoutManager
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.viewAllActivities.collect {
+                pagedAdapter.submitData(it)
+            }
+
+        }
 
         iv_back.setOnClickListener {
 
             findNavController().popBackStack()
 
         }
-        observe()
+
     }
 
-    private fun observe() {
-        viewModel.apply {
 
-            allTransactions.observe(requireActivity(), Observer {
-                when (it.status) {
-                    ApiCallStatus.LOADING -> {
-                        //show loading
-                        dialog.show_dialog()
-
-                    }
-                    ApiCallStatus.SUCCESS -> {
-                        dialog.dismiss_dialog()
-                        it.data?.let {
-                            rv_all_transactions.apply {
-                                layoutManager = GridLayoutManager(requireContext(), 5)
-                                adapter = ViewAllTransactionsAdapter(it.rows)
-                            }
-                        }
-
-                    }
-                    ApiCallStatus.ERROR -> {
-                        dialog.dismiss_dialog()
-                        activity?.showShortToast(it.errorMessage)
-                    }
-                }
-            })
-
-
-        }
-    }
 
 }

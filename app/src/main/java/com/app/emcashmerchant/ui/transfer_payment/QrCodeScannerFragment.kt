@@ -25,7 +25,7 @@ import com.budiyev.android.codescanner.CodeScanner
 import com.budiyev.android.codescanner.DecodeCallback
 import kotlinx.android.synthetic.main.fragment_qr_code_scanner.*
 
-class QrCodeScannerFragment : Fragment() {
+class QrCodeScannerFragment : Fragment(R.layout.fragment_qr_code_scanner) {
 
 
     private lateinit var viewModel: TransferPaymentViewModel
@@ -41,10 +41,9 @@ class QrCodeScannerFragment : Fragment() {
 
     /** variable to store the decoded text from QR code*/
     private var decodedText: String? = null
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
         val onBackPressedCallback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -53,9 +52,9 @@ class QrCodeScannerFragment : Fragment() {
         }
         requireActivity().onBackPressedDispatcher.addCallback(onBackPressedCallback)
 
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_qr_code_scanner, container, false)
+
     }
+
 
     companion object {
         fun newInstance() =
@@ -74,7 +73,6 @@ class QrCodeScannerFragment : Fragment() {
             Navigation.findNavController(view).navigate(R.id.transferContactListFragment)
 
         }
-
 
 
     }
@@ -176,7 +174,7 @@ class QrCodeScannerFragment : Fragment() {
 
     fun observer(view: View) {
         viewModel.apply {
-            qrCodeCheckStatus.observe(requireActivity(), Observer {
+            qrCodeCheckStatus.observe(viewLifecycleOwner, Observer {
                 when (it.status) {
                     ApiCallStatus.LOADING -> {
 
@@ -189,7 +187,6 @@ class QrCodeScannerFragment : Fragment() {
                             KEY_REF_ID to decodedText,
                             KEY_LEVEL_COLOUR to it.data?.ppp.toString(),
                             KEY_ROLE to it.data?.roleId.toString()
-
 
 
                         )

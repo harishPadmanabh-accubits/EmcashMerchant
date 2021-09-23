@@ -32,7 +32,6 @@ import com.app.emcashmerchant.utils.extensions.afterTextChanged
 import com.app.emcashmerchant.utils.extensions.loadImageWithUrl
 import com.app.emcashmerchant.utils.extensions.showShortToast
 import kotlinx.android.synthetic.main.contact_item.view.*
-import kotlinx.android.synthetic.main.dialog_confirmation.*
 import kotlinx.android.synthetic.main.fragment_perform_transfer_payment.*
 import kotlinx.android.synthetic.main.fragment_request_contact_list.*
 import kotlinx.android.synthetic.main.fragment_request_contact_list.iv_back
@@ -46,13 +45,12 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 
 
-class RequestContactListFragment : Fragment(), ContactsItemClickListener {
+class RequestContactListFragment : Fragment(R.layout.fragment_request_contact_list), ContactsItemClickListener {
     private lateinit var viewModel: PaymentRequestViewModel
     var amount: String = ""
     var description: String? = null
     var userId: String = ""
     lateinit var dialog: AppDialog
-    lateinit var dialogConfirmation: Dialog
     val pagedAdapter by lazy {
         AllContactsRequestsAdapter(this)
     }
@@ -60,11 +58,8 @@ class RequestContactListFragment : Fragment(), ContactsItemClickListener {
         fun newInstance() = RequestContactListFragment()
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         val backPressedCallback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 findNavController().popBackStack()
@@ -72,8 +67,9 @@ class RequestContactListFragment : Fragment(), ContactsItemClickListener {
         }
         requireActivity().onBackPressedDispatcher.addCallback(backPressedCallback)
 
-        return inflater.inflate(R.layout.fragment_request_contact_list, container, false)
+
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -150,7 +146,7 @@ class RequestContactListFragment : Fragment(), ContactsItemClickListener {
 
     fun observe(view: View) {
         viewModel.apply {
-            paymentRequestStatus.observe(requireActivity(), Observer {
+            paymentRequestStatus.observe(viewLifecycleOwner, Observer {
                 when (it.status) {
                     ApiCallStatus.LOADING -> {
                         dialog.show_dialog()

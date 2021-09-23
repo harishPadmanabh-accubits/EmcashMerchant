@@ -14,7 +14,9 @@ data class ProfileDetailsResponse(
     @SerializedName("status")
     val status: Boolean
 ) {
-   data class Data(
+    data class Data(
+        @SerializedName("isBankAccoutExists")
+        val isBankAccoutExists: Boolean,
         @SerializedName("address")
         val address: String,
         @SerializedName("createdAt")
@@ -34,11 +36,11 @@ data class ProfileDetailsResponse(
         @SerializedName("merchantTradeInfo")
         val merchantTradeInfo: MerchantTradeInfo,
         @SerializedName("name")
-        val name: String,
+        val name: String?,
         @SerializedName("phoneNumber")
         val phoneNumber: String,
         @SerializedName("profileImage")
-        val profileImage: String,
+        val profileImage: String?,
         @SerializedName("roleId")
         val roleId: Int,
         @SerializedName("status")

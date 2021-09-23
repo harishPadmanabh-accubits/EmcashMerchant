@@ -97,11 +97,7 @@ class RecentTransactionsAdapter(val transactions: List<RecentTransactionResponse
 
                     }
                 }
-//                else if (transaction.roleId == 2) {
-//                    lpi_imageView.fl_user_level.visibility = View.INVISIBLE
-//
-//
-//                }
+
                 ll_contact.setOnClickListener {
                     val bundle = bundleOf(
                         KEY_USERID to transaction.userId.toString(),
@@ -123,9 +119,13 @@ class RecentTransactionsAdapter(val transactions: List<RecentTransactionResponse
     class ViewAllViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bind() {
-            if (POSITION_SIZE > 9) {
+            if (POSITION_SIZE < 9) {
                 itemView.apply {
                     cl_viewall.visibility = View.GONE
+                }
+            }else{
+                itemView.apply {
+                    cl_viewall.visibility = View.VISIBLE
                 }
             }
             itemView.apply {

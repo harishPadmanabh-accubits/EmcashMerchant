@@ -4,40 +4,31 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
-import androidx.activity.OnBackPressedCallback
+import androidx.activity.addCallback
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
-import androidx.paging.LoadState
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.ChangeBounds
 import com.app.emcashmerchant.R
 import com.app.emcashmerchant.data.SessionStorage
 import com.app.emcashmerchant.data.network.ApiCallStatus
 import com.app.emcashmerchant.ui.introScreen.IntroActivity
-import com.app.emcashmerchant.ui.transfer_payment.TransferPaymentViewModel
 import com.app.emcashmerchant.utils.AppDialog
 import com.app.emcashmerchant.utils.REQUEST_CODE_PICK_IMAGE_PROFILE
 import com.app.emcashmerchant.utils.extensions.*
-import kotlinx.android.synthetic.main.fragment_transfer_contact_list.*
 import kotlinx.android.synthetic.main.settings_fragment.*
 import kotlinx.android.synthetic.main.settings_fragment.iv_back
 import kotlinx.android.synthetic.main.signoutlay.view.*
-import timber.log.Timber
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
 
 
-class SettingsFragment : Fragment() {
+class SettingsFragment : Fragment(R.layout.settings_fragment) {
 
     companion object {
         fun newInstance() =
@@ -47,13 +38,13 @@ class SettingsFragment : Fragment() {
     private lateinit var viewModel: SettingsViewModel
     private lateinit var sessionStorage: SessionStorage
     lateinit var dialog: AppDialog
-    var termsConditions:String?=null
+    var termsConditions: String? = null
     private var selectedImageUri: Uri? = null
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
         sharedElementEnterTransition = ChangeBounds().apply {
             duration = 750
         }
@@ -61,83 +52,97 @@ class SettingsFragment : Fragment() {
             duration = 500
         }
 
+        requireActivity().onBackPressedDispatcher.addCallback {
+           findNavController().navigate(R.id.homeFragment)
 
-        return inflater.inflate(R.layout.settings_fragment, container, false)
+
+        }
+
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this).get(SettingsViewModel::class.java)
-        sessionStorage = SessionStorage(requireActivity())
-        dialog = AppDialog(requireActivity())
-        viewModel.getProfileDetails()
-        viewModel.getTermsConditions()
+        sessionStorage = SessionStorage(requireContext())
+        dialog = AppDialog(requireContext())
+
         tv_name.text = sessionStorage.merchantName
 
+        /**calling viewmodels**/
+        viewModels()
+
+        /**observing livedata**/
         observe()
 
         iv_back.setOnClickListener {
             Navigation.findNavController(view).popBackStack()
         }
+
         lay_notifications.setOnClickListener {
             Navigation.findNavController(view).navigate(R.id.goto_notifications_fragment)
         }
 
+        cv_editBankDetails.setOnClickListener {
+            findNavController().navigate(R.id.action_settingsFragment_to_addBankDetailsFragment)
+
+
+        }
 
         lay_logout.setOnClickListener {
-            if(checkNetwork(requireContext())){
+            if (checkNetwork(requireContext())) {
+
+                /**method for api calling logout**/
                 logOut()
 
-            }else
-            {
+            } else {
                 sessionStorage.logoutUser()
             }
         }
+
         tv_updateprofileimage.setOnClickListener {
-            selectProfileIMage()
+            selectProfileImage()
         }
+
         lay_terms_conditions.setOnClickListener {
-            if(termsConditions?.isNotEmpty()!!){
-                val  bundle= bundleOf("terms_conditions" to termsConditions )
-                Navigation.findNavController(view).navigate(R.id.goto_terms_fragment,bundle)
+            if (termsConditions?.isNotEmpty()!!) {
+                val bundle = bundleOf("terms_conditions" to termsConditions)
+                Navigation.findNavController(view).navigate(R.id.goto_terms_fragment, bundle)
             }
+
+        }
+
+        lay_editBank.setOnClickListener {
+            findNavController().navigate(R.id.action_settingsFragment_to_editBankDetailsFragment)
 
 
         }
 
-        val callback = object : OnBackPressedCallback(true ) {
-            override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.homeFragment)
-            }
-        }
 
-        requireActivity().onBackPressedDispatcher.addCallback(callback)
     }
 
+
     private fun logOut() {
-        fl_logOut.visibility=View.VISIBLE
+        fl_logOut.visibility = View.VISIBLE
 
         fl_logOut.btn_logOut.setOnClickListener {
             viewModel.performLogout()
 
         }
         fl_logOut.iv_close.setOnClickListener {
-            fl_logOut.visibility=View.GONE
+            fl_logOut.visibility = View.GONE
 
         }
     }
 
-
-//
-//    override fun onActivityCreated(savedInstanceState: Bundle?) {
-//        super.onActivityCreated(savedInstanceState)
-//
-//
-//    }
+    fun viewModels(){
+        viewModel.getProfileDetails()
+        viewModel.getTermsConditions()
+    }
 
     fun observe() {
         viewModel.apply {
-            initialLogOutResponseStatus.observe(requireActivity(), Observer {
+            initialLogOutResponseStatus.observe(viewLifecycleOwner, Observer {
                 when (it.status) {
                     ApiCallStatus.LOADING -> {
                         //show loading
@@ -154,17 +159,55 @@ class SettingsFragment : Fragment() {
                     }
                 }
             })
-            profileDetails.observe(requireActivity(), Observer {
+            profileDetails.observe(viewLifecycleOwner, Observer {
                 when (it.status) {
                     ApiCallStatus.LOADING -> {
                         dialog.show_dialog()
                     }
                     ApiCallStatus.SUCCESS -> {
                         dialog.dismiss_dialog()
-                        sessionStorage.merchantName = it.data?.name
-                        tv_name.text = sessionStorage.merchantName
-                        iv_shop_profile_image.loadImageWithUrlUser(it.data?.profileImage)
 
+                        it.data?.let {
+                            sessionStorage.merchantName = it.name
+                            tv_name.text = sessionStorage.merchantName
+                            iv_shop_profile_image.loadImageWithUrlUser(it.profileImage)
+                            isBankAccoutExists = it.isBankAccoutExists
+                            if (isBankAccoutExists) {
+
+                                lay_editBank.visibility = View.VISIBLE
+                                cv_editBankDetails.visibility = View.GONE
+
+                            } else {
+
+                                tv_bankStatus.text = "Add Bank Account"
+                                lay_editBank.visibility = View.GONE
+                                cv_editBankDetails.visibility = View.VISIBLE
+
+                            }
+                        }
+
+
+                    }
+                    ApiCallStatus.ERROR -> {
+                        dialog.dismiss_dialog()
+                        cl_main.visibility = View.GONE
+
+                        activity?.showShortToast(it.errorMessage)
+
+                    }
+                }
+            })
+            termsConditionsResponse.observe(viewLifecycleOwner, Observer {
+                when (it.status) {
+                    ApiCallStatus.LOADING -> {
+                        dialog.show_dialog()
+                    }
+                    ApiCallStatus.SUCCESS -> {
+                        dialog.dismiss_dialog()
+                        it?.data?.data?.let {
+                            termsConditions = it
+
+                        }
 
                     }
                     ApiCallStatus.ERROR -> {
@@ -174,24 +217,7 @@ class SettingsFragment : Fragment() {
                     }
                 }
             })
-            termsConditionsResponse.observe(requireActivity(), Observer {
-                when (it.status) {
-                    ApiCallStatus.LOADING -> {
-                        dialog.show_dialog()
-                    }
-                    ApiCallStatus.SUCCESS -> {
-                        dialog.dismiss_dialog()
-                        termsConditions=it.data?.data.toString()
-
-                    }
-                    ApiCallStatus.ERROR -> {
-                        dialog.dismiss_dialog()
-                        activity?.showShortToast(it.errorMessage)
-
-                    }
-                }
-            })
-            updateStatus.observe(requireActivity(), Observer {
+            updateStatus.observe(viewLifecycleOwner, Observer {
                 when (it.status) {
                     ApiCallStatus.LOADING -> {
                         dialog.show_dialog()
@@ -236,7 +262,7 @@ class SettingsFragment : Fragment() {
         }
     }
 
-    private fun selectProfileIMage() {
+    private fun selectProfileImage() {
         Intent(Intent.ACTION_PICK).also {
             val intent = Intent()
             intent.type = "image/*"
@@ -247,7 +273,6 @@ class SettingsFragment : Fragment() {
             )
         }
     }
-
 
 
 }

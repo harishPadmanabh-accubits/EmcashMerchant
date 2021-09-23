@@ -36,8 +36,8 @@
             app:destination="@id/transferContactListFragment"
             app:enterAnim="@anim/enteranim"
             app:exitAnim="@anim/exitanim"
-            app:popEnterAnim="@anim/popenteranim"
-            app:popExitAnim="@anim/popexitanim" />
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
         <action
             android:id="@+id/action_homeFragment_to_paymentChatHistoryFragment"
             app:destination="@id/paymentChatHistoryFragment" />
@@ -56,6 +56,15 @@
         <action
             android:id="@+id/goto_notifications_fragment"
             app:destination="@id/notificationsFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_editBankDetailsFragment"
+            app:destination="@id/editBankDetailsFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_addBankDetailsFragment"
+            app:destination="@id/addBankDetailsFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
     <fragment
         android:id="@+id/termsFragment"
@@ -75,7 +84,11 @@
         android:id="@+id/convertToCashFragment"
         android:name="com.app.emcashmerchant.ui.convert_to_cash.ConvertToCashFragment"
         android:label="convert_to_cash_fragment"
-        tools:layout="@layout/convert_to_cash_fragment" />
+        tools:layout="@layout/convert_to_cash_fragment" >
+        <action
+            android:id="@+id/action_convertToCashFragment_to_addBankDetailsFragment"
+            app:destination="@id/addBankDetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/walletFragment"
         android:name="com.app.emcashmerchant.ui.wallet.WalletFragment"
@@ -109,7 +122,7 @@
     </fragment>
     <fragment
         android:id="@+id/transactionFragment"
-        android:name="com.app.emcashmerchant.ui.transactionActivity.TransactionFragment"
+        android:name="com.app.emcashmerchant.ui.loadEmcash.TransactionFragment"
         android:label="fragment_transaction"
         tools:layout="@layout/fragment_transaction" >
         <action
@@ -163,7 +176,7 @@
     </fragment>
     <fragment
         android:id="@+id/transferpaymentRecieptFragment"
-        android:name="com.app.emcashmerchant.ui.paymentReciept.TransferPaymentRecieptFragment"
+        android:name="com.app.emcashmerchant.ui.paymentReciept.PaymentRecieptFragment"
         android:label="fragment_payment_reciept"
         tools:layout="@layout/fragment_transfer_payment_reciept" >
         <action
@@ -238,11 +251,33 @@
     </fragment>
     <fragment
         android:id="@+id/addCardFragment"
-        android:name="com.app.emcashmerchant.ui.transactionActivity.AddCardFragment"
+        android:name="com.app.emcashmerchant.ui.loadEmcash.AddCardFragment"
         android:label="fragment_add_card"
         tools:layout="@layout/fragment_add_card" >
         <action
             android:id="@+id/action_addCardFragment_to_transactionFragment"
             app:destination="@id/transactionFragment" />
+        <action
+            android:id="@+id/action_addCardFragment_to_emPayWebViewFragment"
+            app:destination="@id/emPayWebViewFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editBankDetailsFragment"
+        android:name="com.app.emcashmerchant.ui.home.bank.EditBankDetailsFragment"
+        android:label="fragment_edit_bank_details"
+        tools:layout="@layout/fragment_edit_bank_details" />
+    <fragment
+        android:id="@+id/addBankDetailsFragment"
+        android:name="com.app.emcashmerchant.ui.home.bank.AddBankDetailsFragment"
+        android:label="fragment_add_bank_details"
+        tools:layout="@layout/fragment_add_bank_details" />
+    <fragment
+        android:id="@+id/emPayWebViewFragment"
+        android:name="com.app.emcashmerchant.ui.loadEmcash.EmPayWebViewFragment"
+        android:label="fragment_em_pay_web_view"
+        tools:layout="@layout/fragment_em_pay_web_view" >
+        <action
+            android:id="@+id/action_emPayWebViewFragment_to_walletFragment"
+            app:destination="@id/walletFragment" />
     </fragment>
 </navigation>

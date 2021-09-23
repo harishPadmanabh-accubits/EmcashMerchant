@@ -27,6 +27,12 @@ data class PaymentByExisitingCardResponse(
         val transactionId: String
     ) {
         class PayerAuthentication(
+            @SerializedName("url3D")
+            val url3D: String,
+            @SerializedName("url3DSuccess")
+            val url3DSuccess: String,
+            @SerializedName("url3DError")
+            val url3DError: String
         )
     }
 }

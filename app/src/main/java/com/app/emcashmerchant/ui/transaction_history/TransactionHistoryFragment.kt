@@ -35,10 +35,7 @@ import kotlin.collections.ArrayList
 
 class TransactionHistoryFragment : Fragment(), DurationItemClickListener {
 
-    companion object {
-        fun newInstance() =
-            TransactionHistoryFragment()
-    }
+
 
     private lateinit var viewModel: TransactionHistoryViewModel
     private lateinit var sharedViewModel: SharedViewModel

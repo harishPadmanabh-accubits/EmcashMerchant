@@ -2,6 +2,7 @@ package com.app.emcashmerchant.data.network.Repositories
 
 import android.content.Context
 import com.app.emcashmerchant.data.SessionStorage
+import com.app.emcashmerchant.data.modelrequest.PayerAuthenticatorRequest
 import com.app.emcashmerchant.data.modelrequest.PaymentByExisitingCardRequest
 import com.app.emcashmerchant.data.modelrequest.PaymentByNewCardRequest
 import com.app.emcashmerchant.data.modelrequest.TopUpRequest
@@ -61,6 +62,21 @@ class LoadEmcashRepository(val context: Context) {
 
     fun paymentByNewCard(paymentByNewCardRequest: PaymentByNewCardRequest,onApiCallback: (status: Boolean, message: String?, result: PaymentByNewCardResponse?) -> Unit){
         api.paymentByNewCard("Bearer ${sessionStorage.accesToken}",paymentByNewCardRequest).awaitResponse(
+            onFailure = {
+                onApiCallback(false, it, null)
+
+            }, onSuccess = {
+                var  data=it
+                data?.let {
+                    onApiCallback(true, null, data)
+
+                }
+            }
+        )
+    }
+
+    fun payerAuthenticator(payerAuthenticatorRequest: PayerAuthenticatorRequest,onApiCallback: (status: Boolean, message: String?, result: PayerAuthenticatorResponse?) -> Unit){
+        api.payerAuthenticator("Bearer ${sessionStorage.accesToken}",payerAuthenticatorRequest).awaitResponse(
             onFailure = {
                 onApiCallback(false, it, null)
 

@@ -10,6 +10,14 @@ import com.app.emcashmerchant.data.models.GroupedTransactionHistoryResponse
 import com.app.emcashmerchant.data.models.TransactionHistoryGroupViewModel
 import com.app.emcashmerchant.data.models.TransactionHistoryResponse
 import com.app.emcashmerchant.data.models.WalletTransactionResponse
+import com.app.emcashmerchant.utils.TransactionUtils.Companion.TRANSACTION_STATUS_FAILED
+import com.app.emcashmerchant.utils.TransactionUtils.Companion.TRANSACTION_STATUS_PENDING
+import com.app.emcashmerchant.utils.TransactionUtils.Companion.TRANSACTION_STATUS_REJECTED
+import com.app.emcashmerchant.utils.TransactionUtils.Companion.TRANSACTION_STATUS_SUCCESS
+import com.app.emcashmerchant.utils.TransactionUtils.Companion.TRANSACTION_TYPE_REQUEST
+import com.app.emcashmerchant.utils.TransactionUtils.Companion.TRANSACTION_TYPE_TOPUP
+import com.app.emcashmerchant.utils.TransactionUtils.Companion.TRANSACTION_TYPE_TRANSFER
+import com.app.emcashmerchant.utils.TransactionUtils.Companion.TRANSACTION_TYPE_WITHDRAW
 import com.app.emcashmerchant.utils.extensions.timeformat
 import kotlinx.android.synthetic.main.item_inner_activity_details.view.*
 import kotlinx.android.synthetic.main.item_transaction_details.view.*
@@ -37,16 +45,16 @@ class AllTransactionsDetailsAdapter(val transactions: List<GroupedTransactionHis
 
     override fun onBindViewHolder(holder: AllTransactionsDetailsAdapter.ViewHolder, position: Int) {
         holder.itemView.apply {
-            tv_time.text = timeformat(transactions[position].updatedAt)
+            tv_time.text = timeformat(transactions[position].createdAt)
             val type = transactions[position].type
             val status = transactions[position].status
 
-            tv_time.text = timeformat(transactions[position].updatedAt)
+//            tv_time.text = timeformat(transactions[position].updatedAt)
 
-            if (type == 1) {
+            if (type == TRANSACTION_TYPE_TRANSFER) {
                 tv_type_indicator.text = transactions[position].transferUserInfo.name
 
-                if (status == 1) {//success
+                if (status == TRANSACTION_STATUS_SUCCESS) {//success
                     tv_balance.text =
                         transactions[position].walletTransactionInfo.balance.toString()
 
@@ -72,7 +80,7 @@ class AllTransactionsDetailsAdapter(val transactions: List<GroupedTransactionHis
                                 transactions.get(position).walletTransactionInfo.balance.toString()
                         }
                     }
-                } else if (status == 2) {//pending
+                } else if (status == TRANSACTION_STATUS_PENDING) {//pending
                     iv_type_indicator_load_emcash.setBackgroundResource(R.drawable.ic_pending)
 
                     tv_value_changed.text = transactions[position].amount.toString() + " EmCash"
@@ -80,18 +88,18 @@ class AllTransactionsDetailsAdapter(val transactions: List<GroupedTransactionHis
                     tv_inf_balance.text = "Transfer Pending"
                     tv_balance.visibility = View.GONE
 
-                } else if (status == 3) {//failed
+                } else if (status == TRANSACTION_STATUS_FAILED) {//failed
 
                     //need to add failed icon
-                    tv_value_changed.text =  transactions[position].amount.toString() + " EmCash"
+                    tv_value_changed.text = transactions[position].amount.toString() + " EmCash"
                     iv_type_indicator_load_emcash.setBackgroundResource(R.drawable.ic_failed)
                     tv_inf_balance.text = "Failed"
                     tv_balance.visibility = View.GONE
 
-                }else if (status == 4) {//rejected
+                } else if (status == TRANSACTION_STATUS_REJECTED) {//rejected
 
                     //need to add reject icon
-                    tv_value_changed.text =  transactions[position].amount.toString() + " EmCash"
+                    tv_value_changed.text = transactions[position].amount.toString() + " EmCash"
                     iv_type_indicator_load_emcash.setBackgroundResource(R.drawable.ic_rejected)
                     tv_inf_balance.text = "Rejected"
                     tv_balance.visibility = View.GONE
@@ -99,8 +107,9 @@ class AllTransactionsDetailsAdapter(val transactions: List<GroupedTransactionHis
                 }
 
 
-            } else if (type == 2) {//emcash loaded cases
-                if (status == 1) {
+            }
+            else if (type == TRANSACTION_TYPE_TOPUP) {//emcash loaded cases
+                if (status == TRANSACTION_STATUS_SUCCESS) {
                     iv_type_indicator_load_emcash.setBackgroundResource(R.drawable.ic_emcash_loaded)
                     tv_balance.text =
                         transactions[position].walletTransactionInfo.balance.toString()
@@ -114,7 +123,7 @@ class AllTransactionsDetailsAdapter(val transactions: List<GroupedTransactionHis
                         text = transactions.get(position).walletTransactionInfo.balance.toString()
                     }
 
-                } else if (status == 2) {
+                } else if (status == TRANSACTION_STATUS_PENDING) {
                     tv_value_changed.text = transactions[position].amount.toString() + " EmCash"
                     iv_type_indicator_load_emcash.setBackgroundResource(R.drawable.ic_pending)
 
@@ -122,17 +131,17 @@ class AllTransactionsDetailsAdapter(val transactions: List<GroupedTransactionHis
                     tv_inf_balance.text = "Pending"
                     tv_balance.visibility = View.GONE
 
-                } else if (status == 3) {
+                } else if (status == TRANSACTION_STATUS_FAILED) {
                     iv_type_indicator_load_emcash.setBackgroundResource(R.drawable.ic_failed)
                     tv_value_changed.text = transactions[position].amount.toString() + " EmCash"
                     tv_type_indicator.text = "Emcash Load"
                     tv_inf_balance.text = "Failed"
                     tv_balance.visibility = View.GONE
 
-                }else if (status == 4) {//rejected
+                } else if (status == TRANSACTION_STATUS_REJECTED) {//rejected
 
                     //need to add reject icon
-                    tv_value_changed.text =  transactions[position].amount.toString() + " EmCash"
+                    tv_value_changed.text = transactions[position].amount.toString() + " EmCash"
                     iv_type_indicator_load_emcash.setBackgroundResource(R.drawable.ic_rejected)
                     tv_inf_balance.text = "Rejected"
                     tv_balance.visibility = View.GONE
@@ -140,8 +149,9 @@ class AllTransactionsDetailsAdapter(val transactions: List<GroupedTransactionHis
                 }
 
 
-            } else if (type == 3) {//emcash converted cases
-                if (status == 1) {
+            }
+            else if (type == TRANSACTION_TYPE_WITHDRAW) {//emcash converted cases
+                if (status == TRANSACTION_STATUS_SUCCESS) {
                     iv_type_indicator_load_emcash.setBackgroundResource(R.drawable.ic_emcash_converted)
                     tv_value_changed.text =
                         "-" + transactions[position].amount.toString() + " EmCash"
@@ -153,24 +163,24 @@ class AllTransactionsDetailsAdapter(val transactions: List<GroupedTransactionHis
                         text = transactions.get(position).walletTransactionInfo.balance.toString()
                     }
 
-                } else if (status == 2) {
+                } else if (status == TRANSACTION_STATUS_PENDING) {
                     iv_type_indicator_load_emcash.setBackgroundResource(R.drawable.ic_pending)
                     tv_value_changed.text = transactions[position].amount.toString() + " EmCash"
                     tv_type_indicator.text = "Emcash Conversion"
                     tv_inf_balance.text = "Pending"
                     tv_balance.visibility = View.GONE
 
-                } else if (status == 3) {
+                } else if (status == TRANSACTION_STATUS_FAILED) {
                     iv_type_indicator_load_emcash.setBackgroundResource(R.drawable.ic_failed)
                     tv_value_changed.text = transactions[position].amount.toString() + " EmCash"
                     tv_type_indicator.text = "Emcash Conversion"
                     tv_inf_balance.text = "Failed"
                     tv_balance.visibility = View.GONE
 
-                }else if (status == 4) {//rejected
+                } else if (status == TRANSACTION_STATUS_REJECTED) {//rejected
 
                     //need to add reject icon
-                    tv_value_changed.text =  transactions[position].amount.toString() + " EmCash"
+                    tv_value_changed.text = transactions[position].amount.toString() + " EmCash"
                     iv_type_indicator_load_emcash.setBackgroundResource(R.drawable.ic_rejected)
                     tv_inf_balance.text = "Rejected"
                     tv_balance.visibility = View.GONE
@@ -178,8 +188,8 @@ class AllTransactionsDetailsAdapter(val transactions: List<GroupedTransactionHis
                 }
 
 
-
-            } else if (type == 4) {//request
+            }
+            else if (type == TRANSACTION_TYPE_REQUEST) {//request
 //                iv_type_indicator_load_emcash.setBackgroundResource(R.drawable.ic_pending)
 //                tv_value_changed.text = transactions[position].amount.toString() + " EmCash"
 //                tv_type_indicator.text = transactions.get(position).transferUserInfo.name
@@ -188,12 +198,13 @@ class AllTransactionsDetailsAdapter(val transactions: List<GroupedTransactionHis
 
                 tv_type_indicator.text = transactions[position].transferUserInfo.name
 
-                if (status == 1) {//success
+                if (status == TRANSACTION_STATUS_SUCCESS) {//success
                     tv_balance.text =
                         transactions[position].walletTransactionInfo.balance.toString()
 
                     if (transactions[position].walletTransactionInfo.mode == 1) {
-                        tv_value_changed.text = "+" + transactions[position].amount.toString() + " EmCash"
+                        tv_value_changed.text =
+                            "+" + transactions[position].amount.toString() + " EmCash"
 
                         iv_type_indicator_load_emcash.setBackgroundResource(R.drawable.ic_inbound)
 
@@ -203,7 +214,8 @@ class AllTransactionsDetailsAdapter(val transactions: List<GroupedTransactionHis
                                 transactions.get(position).walletTransactionInfo.balance.toString()
                         }
                     } else {
-                        tv_value_changed.text = "-" + transactions[position].amount.toString() + " EmCash"
+                        tv_value_changed.text =
+                            "-" + transactions[position].amount.toString() + " EmCash"
 
                         iv_type_indicator_load_emcash.setBackgroundResource(R.drawable.ic_outbound)
                         tv_balance.apply {
@@ -212,27 +224,27 @@ class AllTransactionsDetailsAdapter(val transactions: List<GroupedTransactionHis
                                 transactions.get(position).walletTransactionInfo.balance.toString()
                         }
                     }
-                } else if (status == 2) {//pending
+                } else if (status == TRANSACTION_STATUS_PENDING) {//pending
                     iv_type_indicator_load_emcash.setBackgroundResource(R.drawable.ic_pending)
 
                     tv_value_changed.text =
-                       transactions[position].amount.toString() + " EmCash"
+                        transactions[position].amount.toString() + " EmCash"
                     //need to add pending icon
                     tv_inf_balance.text = "Request Pending"
                     tv_balance.visibility = View.GONE
 
-                } else if (status == 3) {//failed
+                } else if (status == TRANSACTION_STATUS_FAILED) {//failed
 
                     //need to add failed icon
-                    tv_value_changed.text =  transactions[position].amount.toString() + " EmCash"
+                    tv_value_changed.text = transactions[position].amount.toString() + " EmCash"
                     iv_type_indicator_load_emcash.setBackgroundResource(R.drawable.ic_failed)
                     tv_inf_balance.text = "Failed"
                     tv_balance.visibility = View.GONE
 
-                }else if (status == 4) {//rejected
+                } else if (status == TRANSACTION_STATUS_REJECTED) {//rejected
 
                     //need to add reject icon
-                    tv_value_changed.text =  transactions[position].amount.toString() + " EmCash"
+                    tv_value_changed.text = transactions[position].amount.toString() + " EmCash"
                     iv_type_indicator_load_emcash.setBackgroundResource(R.drawable.ic_rejected)
                     tv_inf_balance.text = "Rejected"
                     tv_balance.visibility = View.GONE

@@ -13,6 +13,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.addCallback
+import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.app.emcashmerchant.R
@@ -21,19 +23,15 @@ import com.app.emcashmerchant.data.modelrequest.WithDrawRequest
 import com.app.emcashmerchant.data.network.ApiCallStatus
 import com.app.emcashmerchant.ui.convertEmcashTocash.ConvertEmcashViewModel
 import com.app.emcashmerchant.utils.AppDialog
-import com.app.emcashmerchant.utils.extensions.gpsEnabled
-import com.app.emcashmerchant.utils.extensions.showKeyboard
-import com.app.emcashmerchant.utils.extensions.showLongToast
-import com.app.emcashmerchant.utils.extensions.showShortToast
+import com.app.emcashmerchant.utils.extensions.*
 import com.app.emcashmerchant.utils.locationhelper.LocationHelper
-import kotlinx.android.synthetic.main.convert_to_cash_fragment.btn_convert_emcash
-import kotlinx.android.synthetic.main.convert_to_cash_fragment.et_emcash
-import kotlinx.android.synthetic.main.convert_to_cash_fragment.et_description
+import kotlinx.android.synthetic.main.convert_to_cash_fragment.*
 import kotlinx.android.synthetic.main.convert_to_cash_fragment.iv_back
 import kotlinx.android.synthetic.main.dialog_emcash_successful.*
+import kotlinx.android.synthetic.main.fragment_edit_bank_details.*
 import timber.log.Timber
 
-class ConvertToCashFragment : Fragment() {
+class ConvertToCashFragment : Fragment(R.layout.convert_to_cash_fragment) {
     private lateinit var sessionStorage: SessionStorage
     private lateinit var viewModel: ConvertEmcashViewModel
     lateinit var dialog: AppDialog
@@ -47,25 +45,19 @@ class ConvertToCashFragment : Fragment() {
             ConvertToCashFragment()
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val onBackPressedCallback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                findNavController().popBackStack()
-            }
+        requireActivity().onBackPressedDispatcher.addCallback(this) {
+            findNavController().popBackStack()
         }
-        requireActivity().onBackPressedDispatcher.addCallback(onBackPressedCallback)
-        val view: View = inflater.inflate(R.layout.convert_to_cash_fragment, container, false)
 
-        return view
+
+
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-    }
+
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewModel = ViewModelProvider(this).get(ConvertEmcashViewModel::class.java)
@@ -74,19 +66,25 @@ class ConvertToCashFragment : Fragment() {
         dialog = AppDialog(requireActivity())
 
         fetchLocation()
+        viewModel.bankDetails()
+
         observe(view)
 
         iv_back.setOnClickListener {
             findNavController().popBackStack()
 
         }
+
+        ll_addBank.setOnClickListener {
+        findNavController().navigate(R.id.action_convertToCashFragment_to_addBankDetailsFragment)
+        }
+
         btn_convert_emcash.setOnClickListener {
              amount = et_emcash.text.toString()
-            val ibn: String = et_description.text.toString()
 
             if (gpsEnabled(requireActivity())) {
 
-                if (ibn.isEmpty()) {
+                if (viewModel.ibn.toString().isEmpty()) {
                     requireActivity().showShortToast(getString(R.string.iban))
 
                 } else if(amount.isEmpty()) {
@@ -97,7 +95,7 @@ class ConvertToCashFragment : Fragment() {
                 }
                 else
                 {
-                    withdraw(amount, ibn)
+                    withdraw(amount, viewModel.ibn.toString())
                 }
             } else {
                 requireActivity().showLongToast("Gps Off")
@@ -131,7 +129,39 @@ class ConvertToCashFragment : Fragment() {
 
     private fun observe(view: View) {
         viewModel.apply {
-            withDrawStatus.observe(requireActivity(), androidx.lifecycle.Observer {
+
+            bankDetailsStatus.observe(viewLifecycleOwner, Observer {
+                when (it.status) {
+                    ApiCallStatus.LOADING -> {
+                        //show loading
+                        dialog.show_dialog()
+                    }
+                    ApiCallStatus.SUCCESS -> {
+                        dialog.dismiss_dialog()
+                        viewModel.ibn=it.data?.data?.iBanNumber.toString()
+                        tv_iban.text="Iban :".plus(it.data?.data?.iBanNumber)
+                        tv_bank.text=it.data?.data?.branchName
+
+                        if(it.data?.data==null){
+                            ll_addBank.visibility=View.VISIBLE
+                            ll_bankDetails.visibility=View.GONE
+                            btn_convert_emcash.visibility=View.GONE
+
+                        }else{
+
+                            ll_addBank.visibility=View.GONE
+                            ll_bankDetails.visibility=View.VISIBLE
+                        }
+
+                    }
+                    ApiCallStatus.ERROR -> {
+                        dialog.dismiss_dialog()
+                        activity?.showShortToast(it.errorMessage)
+                    }
+                }
+            })
+
+            withDrawStatus.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
                 when (it.status) {
                     ApiCallStatus.LOADING -> {
                         dialog.show_dialog()

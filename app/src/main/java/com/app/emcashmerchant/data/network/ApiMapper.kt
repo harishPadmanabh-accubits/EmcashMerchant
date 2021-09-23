@@ -55,6 +55,7 @@ class ApiMapper<T>(var status: ApiCallStatus, val data: T?, val errorMessage: St
 /**
  * Class containing error response for the APIs.
  */
+
 data class ErrorResponse(
 
     @SerializedName("Message")

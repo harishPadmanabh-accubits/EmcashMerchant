@@ -13,8 +13,8 @@ import kotlinx.android.synthetic.main.item_wallet_activity.view.*
 import org.w3c.dom.CharacterData
 import timber.log.Timber
 
-class WalletTransactionAdapterV2() :
-    PagingDataAdapter<GroupedWalletTransactionResponse.Data.Row, WalletTransactionAdapterV2.ViewHolder>(
+class WalletTransactionAdapterV2() :PagingDataAdapter
+    <GroupedWalletTransactionResponse.Data.Row, WalletTransactionAdapterV2.ViewHolder>(
         DiffUtilCallBack()
     ) {
 
@@ -51,7 +51,7 @@ class WalletTransactionAdapterV2() :
             oldItem: GroupedWalletTransactionResponse.Data.Row,
             newItem: GroupedWalletTransactionResponse.Data.Row
         ): Boolean {
-            return oldItem.key == newItem.key
+            return oldItem== newItem
 
 
         }

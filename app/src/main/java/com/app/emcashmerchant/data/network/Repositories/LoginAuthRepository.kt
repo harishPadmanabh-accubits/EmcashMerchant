@@ -12,6 +12,22 @@ class LoginAuthRepository(val context: Context) {
     private val sessionStorage = SessionStorage(context)
     private val api = ApiManger(context).api
 
+
+    fun performLogout(
+
+        onApiCallback: (status: Boolean, message: String?, result: LogOutResponse?) -> Unit
+    ) {
+        api.performLogOut("Bearer ${sessionStorage.accesToken}").awaitResponse(
+            onFailure = {
+                onApiCallback(false, it, null)
+            }, onSuccess = {
+                val data = it
+                data?.let {
+                    onApiCallback(true, null, data)
+                }
+            })
+    }
+
     fun performLogin(
         loginRequestBody: LoginResquestBody,
         onApiCallback: (status: Boolean, message: String?, result: LoginResponse.Data?) -> Unit

@@ -257,7 +257,7 @@ interface ApiServices {
 
 
     @GET("v1/merchants/contacts/group")
-   suspend fun allGroupedContactsResponse(
+    suspend fun allGroupedContactsResponse(
         @Header("Authorization") authentication: String,
         @Query("page") page: Int,
         @Query("limit") limit: Int,
@@ -291,6 +291,14 @@ interface ApiServices {
         @Query("page") page: Int,
         @Query("limit") limit: Int
     ): Call<RecentTransactionResponse>
+
+
+    @GET("v1/merchants/transactions/recent")
+   suspend fun pagingAllTransaction(
+        @Header("Authorization") authentication: String,
+        @Query("page") page: Int,
+        @Query("limit") limit: Int
+    ): Response<RecentTransactionResponse>
 
 
     @POST("v1/merchants/payments/request")
@@ -342,8 +350,6 @@ interface ApiServices {
         @Query("page") page: Int,
         @Query("limit") limit: Int
     ): Call<GroupedChatHistoryResponse>
-
-
 
 
     @GET("v1/merchants/contacts/{user_id}/transactions/group")
@@ -405,6 +411,41 @@ interface ApiServices {
         @Header("Authorization") authentication: String,
         @Body paymentByExisitingCardRequest: PaymentByExisitingCardRequest
     ): Call<PaymentByExisitingCardResponse>
+
+
+    @POST("v1/merchants/bank/details")
+    fun addBankDetails(
+        @Header("Authorization") authentication: String,
+        @Body addBankDetailsRequest: AddBankDetailsRequest
+    ): Call<AddBankDetailsResponse>
+
+
+    @PUT("v1/merchants/bank/details")
+    fun editBankDetails(
+        @Header("Authorization") authentication: String,
+        @Body editBankDetailsRequest: EditBankDetailsRequest
+    ): Call<EditBankDetailsResponse>
+
+
+    @GET("v1/merchants/bank/details")
+    fun getBankDetails(
+        @Header("Authorization") authentication: String
+    ): Call<BankDetailsResponse>
+
+
+    @POST("v1/merchants/empay/payer-authentication")
+    fun payerAuthenticator(
+        @Header("Authorization") authentication: String,
+        @Body payerAuthenticatorRequest: PayerAuthenticatorRequest
+    ): Call<PayerAuthenticatorResponse>
+
+
+
+    @POST("v1/merchants/transactions/receipt")
+    fun generateReciept(
+        @Header("Authorization") authentication: String,
+        @Body recieptRequest: RecieptRequest
+    ): Call<RecieptResponse>
 
 
 }

@@ -28,7 +28,7 @@ import kotlinx.android.synthetic.main.fragment_perform_transfer_by_contact.*
 import kotlinx.android.synthetic.main.fragment_transfer_contact_list.*
 
 
-class PaymentRequestByContactFragment : Fragment() {
+class PaymentRequestByContactFragment : Fragment(R.layout.fragment_payment_request_by_contact) {
     private lateinit var viewModel: PaymentRequestViewModel
     private lateinit var dialog: AppDialog
     var userId: String = ""
@@ -37,11 +37,10 @@ class PaymentRequestByContactFragment : Fragment() {
     var userLevel: Int? = 0
     var roleId: Int? = 0
     var profileImage:String?=""
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
         val onBackPressedCallback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 findNavController().popBackStack()
@@ -50,8 +49,9 @@ class PaymentRequestByContactFragment : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(onBackPressedCallback)
 
 
-        return inflater.inflate(R.layout.fragment_payment_request_by_contact, container, false)
+
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -120,7 +120,7 @@ class PaymentRequestByContactFragment : Fragment() {
     fun observe(view: View) {
         viewModel.apply {
 
-            paymentRequestStatus.observe(requireActivity(), Observer {
+            paymentRequestStatus.observe(viewLifecycleOwner, Observer {
                 when (it.status) {
                     ApiCallStatus.LOADING -> {
                         dialog.show_dialog()

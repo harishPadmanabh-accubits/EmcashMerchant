@@ -40,9 +40,11 @@ class TransferPaymentViewModel(val app: Application) : AndroidViewModel(app) {
     val repository = TransferPaymentRepository(app)
     private val api = ApiManger(app).api
     private val sessionStorage = SessionStorage(app)
+    private var screen: String? = null
+
 
     val search = MutableLiveData<String>().default("")
-    val pagedContacts = Transformations.switchMap(search){
+    val pagedContacts = Transformations.switchMap(search) {
         Pager(PagingConfig(1)) {
             AllContactsPagingSource(
                 api,
@@ -217,5 +219,9 @@ class TransferPaymentViewModel(val app: Application) : AndroidViewModel(app) {
         }
     }
 
+}
 
+enum class Screens {
+    TRANSFER_CONTACT_LIST,
+    CHAT_SCREEN
 }

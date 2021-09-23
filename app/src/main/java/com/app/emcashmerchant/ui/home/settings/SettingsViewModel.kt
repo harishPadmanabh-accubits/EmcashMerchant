@@ -19,6 +19,9 @@ class SettingsViewModel(val app: Application) : AndroidViewModel(app) {
     val repository =
         SettingsRepository(app)
 
+   var isBankAccoutExists:Boolean = false
+
+
     fun performLogout(
     ) {
         initialLogOutResponseStatus.value = ApiMapper(ApiCallStatus.LOADING, null, null)
@@ -55,8 +58,9 @@ class SettingsViewModel(val app: Application) : AndroidViewModel(app) {
         }
     }
 
-    fun getProfileDetails(
+    fun getTermsConditions(
     ) {
+
         termsConditionsResponse.value = ApiMapper(ApiCallStatus.LOADING, null, null)
 
         repository.getTermsConditions() { status, message, result ->
@@ -73,7 +77,7 @@ class SettingsViewModel(val app: Application) : AndroidViewModel(app) {
         }
     }
 
-    fun getTermsConditions(
+    fun getProfileDetails(
     ) {
         profileDetails.value = ApiMapper(ApiCallStatus.LOADING, null, null)
 

@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.app.emcashmerchant.data.modelrequest.PayerAuthenticatorRequest
 import com.app.emcashmerchant.data.modelrequest.PaymentByExisitingCardRequest
 import com.app.emcashmerchant.data.modelrequest.PaymentByNewCardRequest
 import com.app.emcashmerchant.data.modelrequest.TopUpRequest
@@ -19,8 +20,15 @@ class LoadEmcashViewModel(val app: Application): AndroidViewModel(app)  {
     var bankCardStatus = MutableLiveData<ApiMapper<BankCardsListingResponse.Data>>()
     var paymentByExistingCardStatus = MutableLiveData<ApiMapper<PaymentByExisitingCardResponse>>()
     var paymentByNewCardStatus = MutableLiveData<ApiMapper<PaymentByNewCardResponse>>()
+    var payerAuthenticatorStatus = MutableLiveData<ApiMapper<PayerAuthenticatorResponse>>()
 
     val repository = LoadEmcashRepository(app)
+
+
+    var latitude: Double = 0.0
+    var longitude: Double = 0.0
+    var amount:String?=""
+    var description:String?=""
 
     fun topUp(topUpRequest: TopUpRequest) {
         topupStatus.value = ApiMapper(ApiCallStatus.LOADING, null, null)
@@ -77,6 +85,23 @@ class LoadEmcashViewModel(val app: Application): AndroidViewModel(app)  {
                 }
                 false -> {
                     paymentByNewCardStatus.value = ApiMapper(ApiCallStatus.ERROR, null, message)
+
+                }
+            }
+        }
+    }
+
+
+    fun payerAuthenticator(paymentAuthenticatorRequest: PayerAuthenticatorRequest) {
+        payerAuthenticatorStatus.value = ApiMapper(ApiCallStatus.LOADING, null, null)
+
+        repository.payerAuthenticator(paymentAuthenticatorRequest) { status, message, result ->
+            when (status) {
+                true -> {
+                    payerAuthenticatorStatus.value = ApiMapper(ApiCallStatus.SUCCESS, result, null)
+                }
+                false -> {
+                    payerAuthenticatorStatus.value = ApiMapper(ApiCallStatus.ERROR, null, message)
 
                 }
             }

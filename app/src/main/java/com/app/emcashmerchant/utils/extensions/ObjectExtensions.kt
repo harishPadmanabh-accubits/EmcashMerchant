@@ -1,6 +1,7 @@
 package com.app.emcashmerchant.utils.extensions
 
 
+import android.app.Activity
 import android.content.ContentResolver
 import android.content.Context
 import android.content.Context.LOCATION_SERVICE
@@ -661,11 +662,19 @@ fun checkNetwork(context: Context): Boolean {
         if (n != null) {
             val nc = cm.getNetworkCapabilities(n)
             //It will check for both wifi and cellular network
-            return nc!!.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) || nc.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)
+            return nc!!.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) || nc.hasTransport(
+                NetworkCapabilities.TRANSPORT_WIFI
+            )
         }
         return false
     } else {
         val netInfo = cm.activeNetworkInfo
         return netInfo != null && netInfo.isConnectedOrConnecting
+    }
+}
+fun hideSoftKeyboard(context: Context?, view: View?) {
+    if (context != null && view != null) {
+        val imm = context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 }

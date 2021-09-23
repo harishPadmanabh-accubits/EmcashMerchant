@@ -12,7 +12,6 @@ import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.app.emcashmerchant.R
-import com.app.emcashmerchant.ui.loadStateAdapter.HeaderFooterAdapter
 import com.app.emcashmerchant.ui.transaction_history.adapters.AllTransactionAdapter
 import com.app.emcashmerchant.utils.AppDialog
 import com.app.emcashmerchant.utils.extensions.obtainViewModel
@@ -25,9 +24,8 @@ import timber.log.Timber
 
 
 class AllTransactionsFragment : Fragment() {
-    private lateinit var dialog: AppDialog
 
-    val pagedAdapter by lazy {
+    private val pagedAdapter by lazy {
         AllTransactionAdapter()
     }
 
@@ -41,22 +39,13 @@ class AllTransactionsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        dialog = AppDialog(requireActivity())
 
-
-//
-//        pagedAdapter.withLoadStateFooter(
-//            footer = HeaderFooterAdapter()
-//        )
 
         pagedAdapter.addLoadStateListener { loadState ->
             if (loadState.refresh is LoadState.Loading) {
-                dialog.show_dialog()
+
             } else {
-                dialog.dismiss_dialog()
-//                iv_emptyTransaction.visibility=View.VISIBLE
-//                rv_all_transactions.visibility=View.GONE
-                // getting the error
+
                 val error = when {
                     loadState.prepend is LoadState.Error -> loadState.prepend as LoadState.Error
                     loadState.append is LoadState.Error -> loadState.append as LoadState.Error
@@ -78,8 +67,6 @@ class AllTransactionsFragment : Fragment() {
                 RecyclerView.VERTICAL, false
             )
         }
-
-
 
     }
 

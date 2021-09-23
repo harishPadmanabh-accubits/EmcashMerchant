@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import com.app.emcashmerchant.Authviewmodel.LoginViewModel
 import com.app.emcashmerchant.R
 import com.app.emcashmerchant.data.SessionStorage
 import com.app.emcashmerchant.data.network.ApiCallStatus
+import com.app.emcashmerchant.ui.introScreen.IntroActivity
 import com.app.emcashmerchant.utils.AppDialog
 import com.app.emcashmerchant.utils.extensions.obtainViewModel
 import com.app.emcashmerchant.utils.extensions.openActivity
@@ -87,6 +89,7 @@ class OtpActivity : AppCompatActivity() {
 
     private fun observe() {
         viewModel.apply {
+
             loginOtpStatus.observe(this@OtpActivity, androidx.lifecycle.Observer {
                 when (it.status) {
                     ApiCallStatus.LOADING -> {

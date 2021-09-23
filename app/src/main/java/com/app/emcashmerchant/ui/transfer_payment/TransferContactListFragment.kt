@@ -29,25 +29,23 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 
 
-class TransferContactListFragment : Fragment() {
+class TransferContactListFragment : Fragment(R.layout.fragment_transfer_contact_list) {
     private lateinit var viewModel: TransferPaymentViewModel
     private lateinit var dialog: AppDialog
     val pagedAdapter by lazy {
         AllContactsTransferAdapter()
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         val onBackPressedCallback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 findNavController().navigate(R.id.homeFragment)
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(onBackPressedCallback)
-        return inflater.inflate(R.layout.fragment_transfer_contact_list, container, false)
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -113,7 +111,7 @@ class TransferContactListFragment : Fragment() {
     fun observe(view: View) {
         viewModel.apply {
 
-            recentTransactions.observe(requireActivity(), Observer {
+            recentTransactions.observe(viewLifecycleOwner, Observer {
                 when (it.status) {
                     ApiCallStatus.LOADING -> {
                         dialog.show_dialog()

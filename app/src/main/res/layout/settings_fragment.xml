@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cl_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.home.settings.SettingsFragment">
 
     <androidx.appcompat.widget.AppCompatImageView
@@ -23,8 +24,8 @@
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_marginTop="24dp"
-        android:transitionName="shop_image_transition"
         android:scaleType="fitXY"
+        android:transitionName="shop_image_transition"
         app:layout_constraintStart_toStartOf="@+id/iv_back"
         app:layout_constraintTop_toBottomOf="@+id/iv_back"
         app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.RoundImageStyle" />
@@ -63,178 +64,288 @@
 
 
 
+
     <LinearLayout
-        android:id="@+id/lay_terms_conditions"
         android:layout_width="0dp"
-        android:layout_height="@dimen/dp48"
+        android:layout_height="wrap_content"
         android:layout_marginTop="44dp"
-        android:layout_marginRight="@dimen/dp40"
+        android:layout_marginRight="26dp"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/iv_shop_profile_image"
         app:layout_constraintTop_toBottomOf="@+id/ll_info"
-        android:orientation="vertical"
         >
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/grey"
-            />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            >
-            <ImageView
-                android:layout_width="@dimen/dp20"
-                android:layout_height="@dimen/dp20"
-                android:background="@drawable/terms_conditions"
-                />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/biennale_regular"
-                android:text="@string/terms_and_conditions"
-                android:textColor="@color/black"
-                android:layout_marginLeft="@dimen/dp24"
-                android:textSize="@dimen/sp14" />
+        <com.google.android.material.card.MaterialCardView
+            android:visibility="gone"
+            android:id="@+id/cv_editBankDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:cardBackgroundColor="@color/app_blue"
+            app:cardCornerRadius="12dp"
+            >
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/tv_bankStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="17dp"
+                    android:layout_marginBottom="17dp"
+                    android:fontFamily="@font/biennale_medium"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="30dp"
+                    android:tint="@color/white"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_bankStatus"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/tv_bankStatus"
+                    app:srcCompat="@drawable/arrow_forward" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+
+        <LinearLayout
+            android:id="@+id/lay_terms_conditions"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp48"
+            android:layout_marginTop="@dimen/dp40"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/iv_shop_profile_image"
+            app:layout_constraintTop_toBottomOf="@+id/cv_editBankDetails">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/grey" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="right|center_vertical"
-                >
+                android:layout_weight="1"
+                android:gravity="center_vertical">
+
                 <ImageView
-                    android:layout_width="@dimen/dp8"
-                    android:layout_height="@dimen/dp12"
-                    android:background="@drawable/right_arrow"
-                    android:layout_marginRight="@dimen/dp12"
-                    />
+                    android:layout_width="@dimen/dp20"
+                    android:layout_height="@dimen/dp20"
+                    android:background="@drawable/terms_conditions" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp24"
+                    android:fontFamily="@font/biennale_regular"
+                    android:text="@string/terms_and_conditions"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp14" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="right|center_vertical">
+
+                    <ImageView
+                        android:layout_width="@dimen/dp8"
+                        android:layout_height="@dimen/dp12"
+                        android:layout_marginRight="@dimen/dp12"
+                        android:background="@drawable/right_arrow" />
+                </LinearLayout>
             </LinearLayout>
+
+
         </LinearLayout>
 
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/lay_notifications"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/dp48"
-        android:layout_marginTop="@dimen/dp12"
-        android:layout_marginRight="@dimen/dp40"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/lay_terms_conditions"
-        app:layout_constraintTop_toBottomOf="@+id/lay_terms_conditions"
-        android:orientation="vertical"
-        >
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/grey"
-            />
         <LinearLayout
+            android:id="@+id/lay_notifications"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
+            android:layout_height="@dimen/dp48"
+            android:layout_marginTop="@dimen/dp12"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/lay_terms_conditions"
+            app:layout_constraintTop_toBottomOf="@+id/lay_terms_conditions">
 
-            >
-            <ImageView
-                android:layout_width="@dimen/dp20"
-                android:layout_height="@dimen/dp20"
-                android:background="@drawable/notifications"
-                />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/grey" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/biennale_regular"
-                android:text="@string/notifications"
-                android:textColor="@color/black"
-                android:layout_marginLeft="@dimen/dp24"
-                android:textSize="@dimen/sp14"  />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="right|center_vertical"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+
                 >
+
                 <ImageView
-                    android:layout_width="@dimen/dp8"
-                    android:layout_height="@dimen/dp12"
-                    android:background="@drawable/right_arrow"
-                    android:layout_marginRight="@dimen/dp12"
-                    />
+                    android:layout_width="@dimen/dp20"
+                    android:layout_height="@dimen/dp20"
+                    android:background="@drawable/notifications" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp24"
+                    android:fontFamily="@font/biennale_regular"
+                    android:text="@string/notifications"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp14" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="right|center_vertical">
+
+                    <ImageView
+                        android:layout_width="@dimen/dp8"
+                        android:layout_height="@dimen/dp12"
+                        android:layout_marginRight="@dimen/dp12"
+                        android:background="@drawable/right_arrow" />
+                </LinearLayout>
             </LinearLayout>
+
+
         </LinearLayout>
 
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/lay_logout"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/dp48"
-        android:layout_marginTop="@dimen/dp12"
-        android:layout_marginRight="@dimen/dp40"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/lay_notifications"
-        app:layout_constraintTop_toBottomOf="@+id/lay_notifications"
-        android:orientation="vertical"
-        >
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/grey"
-            />
         <LinearLayout
+
+            android:visibility="gone"
+            android:id="@+id/lay_editBank"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
+            android:layout_height="@dimen/dp48"
+            android:layout_marginTop="@dimen/dp12"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/lay_notifications"
+            app:layout_constraintTop_toBottomOf="@+id/lay_notifications">
 
-            >
-            <ImageView
-                android:layout_width="@dimen/dp20"
-                android:layout_height="@dimen/dp20"
-                android:background="@drawable/logout"
-                />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/grey" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/biennale_regular"
-                android:text="@string/logout"
-                android:textColor="@color/black"
-                android:layout_marginLeft="@dimen/dp24"
-                android:textSize="@dimen/sp14"  />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+
+                >
+
+                <ImageView
+                    android:layout_width="@dimen/dp20"
+                    android:layout_height="@dimen/dp20"
+                    android:background="@drawable/ic_editbank" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp24"
+                    android:fontFamily="@font/biennale_regular"
+                    android:text="Edit Bank Details"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp14" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="right|center_vertical">
+
+                    <ImageView
+                        android:layout_width="@dimen/dp8"
+                        android:layout_height="@dimen/dp12"
+                        android:layout_marginRight="@dimen/dp12"
+                        android:background="@drawable/right_arrow" />
+                </LinearLayout>
+            </LinearLayout>
+
+
         </LinearLayout>
 
 
+        <LinearLayout
+            android:id="@+id/lay_logout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp48"
+            android:layout_marginTop="@dimen/dp12"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/lay_editBank"
+            app:layout_constraintTop_toBottomOf="@+id/lay_editBank">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/grey" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+
+                >
+
+                <ImageView
+                    android:layout_width="@dimen/dp20"
+                    android:layout_height="@dimen/dp20"
+                    android:background="@drawable/logout" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp24"
+                    android:fontFamily="@font/biennale_regular"
+                    android:text="@string/logout"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp14" />
+            </LinearLayout>
+
+
+        </LinearLayout>
     </LinearLayout>
+
+
 
     <FrameLayout
-        android:visibility="gone"
         android:id="@+id/fl_logOut"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:background="@color/light_black_shade"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:background="@color/light_black_shade"
         app:layout_constraintTop_toTopOf="parent">
+
         <LinearLayout
             android:id="@+id/ll_type"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/white_top_edged"
             android:layout_gravity="bottom"
-            >
-            <include
-                layout="@layout/signoutlay"
-                />
+            android:background="@drawable/white_top_edged">
+
+            <include layout="@layout/signoutlay" />
 
         </LinearLayout>
 

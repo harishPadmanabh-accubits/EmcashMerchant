@@ -7,11 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.addCallback
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.app.emcashmerchant.R
+import com.app.emcashmerchant.ui.PaymentChatHistory.PaymentChatHistoryViewModel
 import com.app.emcashmerchant.utils.*
 import com.app.emcashmerchant.utils.extensions.gpsEnabled
 import com.app.emcashmerchant.utils.extensions.showKeyboard
@@ -21,31 +24,28 @@ import kotlinx.android.synthetic.main.fragment_load_emcash.*
 import timber.log.Timber
 
 
-class LoadEmcashFragment : Fragment() {
+  class LoadEmcashFragment : Fragment(R.layout.fragment_load_emcash) {
 
-    var latitude: Double = 0.0
-    var longitude: Double = 0.0
     lateinit var dialog: AppDialog
+    lateinit var loadEmcashViewModel: LoadEmcashViewModel
 
     companion object {
         fun newInstance() =
             LoadEmcashFragment()
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+        requireActivity().onBackPressedDispatcher.addCallback(this){
+            //                findNavController().navigate(R.id.walletFragment)
 
-        val onBackPressedCallback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.walletFragment)
-            }
+            findNavController().popBackStack()
+
         }
-        requireActivity().onBackPressedDispatcher.addCallback(onBackPressedCallback)
-        return inflater.inflate(R.layout.fragment_load_emcash, container, false)
+
     }
+
 
     override fun onResume() {
         super.onResume()
@@ -58,23 +58,23 @@ class LoadEmcashFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
+        loadEmcashViewModel = ViewModelProvider(this).get(LoadEmcashViewModel::class.java)
 
         fetchLocation()
 
         iv_back.setOnClickListener {
-            Navigation.findNavController(view).navigate(R.id.walletFragment)
+//            Navigation.findNavController(view).navigate(R.id.walletFragment)
+            findNavController().popBackStack()
+
         }
         fbtn_convert.setOnClickListener {
-            val amount: String = et_cash.text.toString()
-            val description: String = et_description.text.toString()
+            loadEmcashViewModel.amount = et_cash.text.toString()
+            loadEmcashViewModel.description = et_description.text.toString()
             if (gpsEnabled(requireActivity())) {
-                if (amount.isEmpty()) {
+                if (loadEmcashViewModel.amount.toString().isEmpty()) {
                     requireActivity().showShortToast(getString(R.string.enter_valid_amount))
-                } else if (description.isEmpty()) {
-                    requireActivity().showShortToast(getString(R.string.please_enter_description))
-
-                } else {
-                    topUp(amount.toInt(), description, view)
+                }else {
+                    topUp(loadEmcashViewModel.amount.toString().toInt(), loadEmcashViewModel.description.toString(), view)
                 }
             } else {
                 requireActivity().showShortToast("Gps Off")
@@ -88,9 +88,11 @@ class LoadEmcashFragment : Fragment() {
             requireActivity(),
             object : LocationHelper.MyLocationListener {
                 override fun onLocationChanged(location: Location) {
-                    // Here you got user location :)
-                    latitude = location.latitude
-                    longitude = location.longitude
+                    loadEmcashViewModel.latitude = location.latitude
+                    loadEmcashViewModel.longitude = location.longitude
+
+
+
                 }
             })
     }
@@ -100,15 +102,10 @@ class LoadEmcashFragment : Fragment() {
         val bundle = bundleOf(
             KEY_AMOUNT to amount,
             KEY_DESCRIPTION to description,
-            KEY_LATITUDE to latitude,
-            KEY_LONGITUDE to longitude
+            KEY_LATITUDE to loadEmcashViewModel.latitude,
+            KEY_LONGITUDE to loadEmcashViewModel.longitude
         )
         Navigation.findNavController(view).navigate(R.id.transactionFragment, bundle)
-
-    }
-
-    override fun onPause() {
-        super.onPause()
 
     }
 

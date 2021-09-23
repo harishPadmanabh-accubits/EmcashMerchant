@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.app.emcashmerchant.R
 import com.app.emcashmerchant.ui.transaction_history.adapters.AllTransactionAdapter
-import com.app.emcashmerchant.utils.AppDialog
 import com.app.emcashmerchant.utils.extensions.obtainViewModel
 import com.app.emcashmerchant.utils.extensions.showShortToast
 import kotlinx.android.synthetic.main.fragment_inbound_transactions.*
@@ -24,8 +23,7 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class OutBoundTransactionsFragment : Fragment() {
-    private lateinit var dialog: AppDialog
-    val pagedAdapter by lazy {
+    private val pagedAdapter by lazy {
         AllTransactionAdapter()
     }
     override fun onCreateView(
@@ -39,7 +37,6 @@ class OutBoundTransactionsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        dialog= AppDialog(requireActivity())
 
         pagedAdapter.addLoadStateListener {loadState ->
             if (loadState.refresh is LoadState.Loading){

@@ -13,6 +13,7 @@ import com.app.emcashmerchant.data.models.GroupedTransactionHistoryResponse
 import com.app.emcashmerchant.data.models.PaymentChatResponse
 import com.app.emcashmerchant.utils.extensions.getCurrentDate
 import kotlinx.android.synthetic.main.payment_transaction_chat_item.view.*
+import timber.log.Timber
 
 class PaymentChatHistoryAdapter(
     private val clickListener: ChatItemClickListener
@@ -33,8 +34,6 @@ class PaymentChatHistoryAdapter(
 
             val transactions = getItem(position)
 
-
-//            tv_date.text = transactions[position].key
             transactions?.let {
                 if (getCurrentDate().equals(it.key)) {
                     tv_date.text = "Today"
@@ -44,9 +43,13 @@ class PaymentChatHistoryAdapter(
                 }
 
                 rv_chat_details.apply {
+
                     adapter = PaymentChatHistoryDetailsAdapter(
                         it.transactions, clickListener
+
                     )
+
+
                 }
             }
 
@@ -66,9 +69,7 @@ class PaymentChatHistoryAdapter(
             oldItem: GroupedChatHistoryResponse.Data.Row,
             newItem: GroupedChatHistoryResponse.Data.Row
         ): Boolean {
-            return oldItem.key == newItem.key
-
-
+            return oldItem == newItem
         }
 
     }

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -26,7 +27,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 
-class WalletFragment : Fragment() {
+class WalletFragment : Fragment(R.layout.walletv2) {
 
     companion object {
         fun newInstance() = WalletFragment()
@@ -40,26 +41,14 @@ class WalletFragment : Fragment() {
 
     lateinit var dialog: AppDialog
 
-    var balance: String? = null
     lateinit var mLayoutManager: LinearLayoutManager
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val backPressedCallback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.homeFragment)
-            }
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        requireActivity().onBackPressedDispatcher.addCallback(this) {
+            findNavController().navigate(R.id.homeFragment)
         }
-        requireActivity().onBackPressedDispatcher.addCallback(backPressedCallback)
-
-        return inflater.inflate(R.layout.walletv2, container, false)
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -76,7 +65,6 @@ class WalletFragment : Fragment() {
 
         observe()
         viewModel.walletTransactions(1, 10)
-//        viewModel.groupedWalletTransactions(page, limit)
 
         btn_convert.setOnClickListener {
             Navigation.findNavController(view).navigate(R.id.convertToCashFragment)
@@ -95,11 +83,7 @@ class WalletFragment : Fragment() {
             if (loadState.refresh is LoadState.Loading) {
                 dialog.show_dialog()
             }
-//            else if (loadState.refresh is LoadState.NotLoading && pagedAdapter.itemCount < 1) {
-//                dialog.dismiss_dialog()
-//                iv_emptyTransaction.visibility=View.VISIBLE
-//                rv_wallet_transaction.visibility=View.GONE
-//            }
+
             else {
                 dialog.dismiss_dialog()
 
@@ -135,7 +119,7 @@ class WalletFragment : Fragment() {
     private fun observe() {
         viewModel.apply {
 
-            walletTransactionStatus.observe(requireActivity(), androidx.lifecycle.Observer {
+            walletTransactionStatus.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
                 when (it.status) {
                     ApiCallStatus.LOADING -> {
                         dialog.show_dialog()
@@ -151,9 +135,6 @@ class WalletFragment : Fragment() {
                         }
                         tv_safe_box_id.text =
                             "Wallet ID : ".plus(trimID(it.data?.wallet?.id.toString()))
-                        //transactionData= it.data
-
-
                     }
 
                     ApiCallStatus.ERROR -> {

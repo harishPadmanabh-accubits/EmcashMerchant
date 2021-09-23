@@ -12,11 +12,9 @@
     <string name="enter_otp">Enter OTP</string>
     <string name="otp_desc"><![CDATA[OTP verification is only a one-time activity & further logins only require a PIN login.]]></string>
     <string name="resend_otp">Resend OTP</string>
-    <string name="didn_t_recieve_the_code">Didn\'t Recieve the code?</string>
     <string name="enter_pin_number">Enter PIN Number*</string>
     <string name="enter_pin_desc">Please enter your 6-digit PIN number to securely login to your account.</string>
     <string name="pin">PIN</string>
-    <string name="ENTER_PIN">Enter PIN number*</string>
     <string name="forgot_password">Forgot Password</string>
     <string name="security_ques_desc">Complete the security question to reset the password.</string>
     <string name="forget_pswd_enteremail_desc">Please enter your email address, an OTP will be sent to your address.</string>
@@ -38,7 +36,6 @@
     <string name="change_profile_image">Change Profile Image</string>
     <string name="transaction_history">Transaction History</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="all">All</string>
     <string name="inbound">Inbound</string>
     <string name="outbound">Outbound</string>
@@ -46,7 +43,6 @@
     <string name="business_name">Business Name*</string>
 
     <string name="contact_person_name">Contact Person Name*</string>
-    <string name="business_registered_name">Registered Name of Business*</string>
     <string name="trade_license_number">Trade License Number*</string>
     <string name="trade_license_authority">Trade License Issuing Authority*</string>
     <string name="service_description">Service Description</string>
@@ -63,14 +59,12 @@
     <string name="create_password">Create Password</string>
     <string name="enter_password">Enter password</string>
     <string name="create_6_digit">Create a new 6-digit pin number  for your account</string>
-    <string name="mobile_number_error">Please enter you mobile number</string>
     <string name="please_enter_otp">Please enter the OTP sent to your registered mobile number (406) 555-0120</string>
     <string name="didnt_recieve_the_code">Didn\'t Recieve the Code?</string>
     <string name="confirm_pin_number">Confirm PIN number*</string>
     <string name="next">Next</string>
     <string name="security_questions">Security Questions</string>
     <string name="please_answer_security_question">Please answer the following security questions to improve your payment security</string>
-    <string name="enter_your_answer">Enter your answer</string>
     <string name="your_answer_hint">Ans. Your answer goes here</string>
     <string name="upload_documents">Upload Documents</string>
     <string name="head_uplaod_documents">Please upload these documents to finish up the sign up process.</string>
@@ -117,14 +111,10 @@
     <string name="load_emcash">Load Emcash</string>
     <string name="emcashbalance">EmCashBalance</string>
     <string name="valid_address">Please enter a valid Address</string>
-    <string name="bankdoc_empty">\"Please Select Bank Document \"</string>
-    <string name="commercial_doc_empty">\"Please Select a Commercial Registration Document \"</string>
-    <string name="trade_lisc_doc_empty">\"Please Select a Trade License Document \"</string>
     <string name="incorrect_password">Incorrect Password</string>
     <string name="please_select_any_question">Please select any question</string>
     <string name="profile_pic_updated">Profile Picture Updated</string>
     <string name="convert_emcash_to_cash">Convert EmCash to Cash</string>
-    <string name="emcash">Emcash</string>
     <string name="enter_iban">Enter IBAN*</string>
     <string name="aed_equals_emcash">1 AED = 1 EmCash</string>
     <string name="convert">Convert</string>
@@ -142,20 +132,15 @@
     <string name="or">or</string>
     <string name="valid_qr">Please Scan a valid QR</string>
     <string name="emcash_pin">Emcash Pin</string>
-    <string name="enter_your_phone_number">Enter Your Phone Number</string>
     <string name="enter_mobile_number_of_verified_user">Please enter the mobile number of the verified user</string>
-    <string name="enter_number_hint">Enter phone number</string>
     <string name="payment_success">Payment Success</string>
     <string name="payment_inprogress">Payment In-progress</string>
     <string name="payment_failed">Payment Failed</string>
     <string name="payment_recieved">Payment Received</string>
     <string name="payment_converted">Payment Converted</string>
     <string name="scan_qr">[ ] Scan QR</string>
-    <string name="cancel">Cancel</string>
-    <string name="okay">Okay</string>
     <string name="view_all">View All</string>
-    <string name="enough_bal">You Don\'t have enough balance</string>
-    <string name="enter_Valid_pin">Please enter a valid Pin</string>
+    <string name="enough_bal">You don\'t have enough balance</string>
     <string name="enter_valid_pin_">Please enter a valid PIN</string>
     <string name="payment_rejected">Payment Rejected</string>
     <string name="pay_with_new_card">Pay with New Card</string>
@@ -163,12 +148,7 @@
     <string name="reupload_in_progress">Your Documents are sucessfully submitted. Your account is under review. Please wait while the process is done.</string>
     <string name="please_enter_description">Please enter description</string>
     <string name="no_internet">No internet connection</string>
-
-    <string-array name="security_question">
-        <item>Select your Question</item>
-        <item>In what town or city was your first full time","In what town or city was your first full time</item>
-        <item>In what town or city was your first full time","In what town or city was your first full time</item>
-
-    </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

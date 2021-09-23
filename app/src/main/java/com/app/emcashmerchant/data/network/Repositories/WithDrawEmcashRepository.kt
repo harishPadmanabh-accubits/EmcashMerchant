@@ -4,6 +4,7 @@ import android.content.Context
 import com.app.emcashmerchant.data.SessionStorage
 import com.app.emcashmerchant.data.modelrequest.TopUpRequest
 import com.app.emcashmerchant.data.modelrequest.WithDrawRequest
+import com.app.emcashmerchant.data.models.BankDetailsResponse
 import com.app.emcashmerchant.data.models.TopUpResponse
 import com.app.emcashmerchant.data.models.WithDrawResponse
 import com.app.emcashmerchant.data.network.ApiManger
@@ -33,6 +34,20 @@ class WithDrawEmcashRepository(val context: Context) {
         }
     )
 }
+    fun getBankDetails(
+        onApiCallback: (status: Boolean, message: String?, result: BankDetailsResponse?) -> Unit
+    ) {
+        api.getBankDetails("Bearer ${sessionStorage.accesToken}").awaitResponse(
+            onFailure = {
+                onApiCallback(false, it, null)
+            }, onSuccess = {
+                val data = it
+                data?.let {
+                    onApiCallback(true, null, data)
+                }
+            })
+    }
+
 
 
 }

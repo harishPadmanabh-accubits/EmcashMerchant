@@ -15,6 +15,8 @@ class HomeViewModel(val app: Application) : AndroidViewModel(app) {
     var recentTransactions = MutableLiveData<ApiMapper<RecentTransactionResponse.Data>>()
 
     val repository = HomeRepository(app)
+    var balance: String? = null
+
 
     fun getWalletDetails() {
         walletDetails.value = ApiMapper(ApiCallStatus.LOADING, null, null)

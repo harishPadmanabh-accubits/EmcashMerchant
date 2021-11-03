@@ -9,9 +9,7 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.app.emcashmerchant.R
-import com.app.emcashmerchant.data.models.GroupedWalletTransactionResponse
 import com.app.emcashmerchant.data.models.RecentTransactionResponse
-import com.app.emcashmerchant.ui.wallet.adapter.WalletTransactionAdapterV2
 import com.app.emcashmerchant.utils.BUCKET_URL
 import com.app.emcashmerchant.utils.KEY_USERID
 import com.app.emcashmerchant.utils.widget.LevelProfileImageView
@@ -19,6 +17,7 @@ import kotlinx.android.synthetic.main.fragment_perform_transfer_by_contact.view.
 import kotlinx.android.synthetic.main.item_recent_payment.view.*
 import kotlinx.android.synthetic.main.layout_item_recent_payment.view.*
 import kotlinx.android.synthetic.main.layout_item_recent_payment.view.fl_user_level
+import kotlinx.android.synthetic.main.layout_item_recent_payment.view.ll_tvHolder
 
 class ViewAllTransactionsAdapterV2(): PagingDataAdapter
 <RecentTransactionResponse.Data.Row, ViewAllTransactionsAdapterV2.ViewHolder>(
@@ -41,18 +40,23 @@ class ViewAllTransactionsAdapterV2(): PagingDataAdapter
             holder.itemView.apply {
                 lpi_imageView.setProfileName(it.name)
                 if(it.profileImage!=null){
-                    lpi_imageView.setProfileImage(BUCKET_URL +it.profileImage.toString())
+                    lpi_imageView.setProfileImage(BUCKET_URL+it.profileImage.toString())
                     iv_user_image.visibility=View.VISIBLE
                     tv_user_name_letter.visibility=View.INVISIBLE
+                    ll_tvHolder.visibility=View.INVISIBLE
 
 
-                }else{
+
+                }
+                else{
                     lpi_imageView.setFirstLetter(it.name[0].toString())
                     iv_user_image.visibility=View.INVISIBLE
                     tv_user_name_letter.visibility=View.VISIBLE
-                    lpi_imageView.setLevel(LevelProfileImageView.UserProfileLevel.BLACK)
+                    ll_tvHolder.visibility=View.VISIBLE
+                    ll_tvHolder.setBackgroundResource(R.drawable.greyfilled_round)
 
                 }
+
                 lpi_imageView.setProfileName(it.name)
                 if (it.roleId == 3) {
                     lpi_imageView.fl_user_level.visibility = View.VISIBLE

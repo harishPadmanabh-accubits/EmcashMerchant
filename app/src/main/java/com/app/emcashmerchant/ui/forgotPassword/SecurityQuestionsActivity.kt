@@ -1,77 +1,62 @@
 package com.app.emcashmerchant.ui.forgotPassword
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.app.emcashmerchant.R
-import com.app.emcashmerchant.ui.register.adapter.SecurityQuestionAdapter
 import com.app.emcashmerchant.data.SessionStorage
 import com.app.emcashmerchant.data.models.SecurityQuestionsResponse
 import com.app.emcashmerchant.data.network.ApiCallStatus
+import com.app.emcashmerchant.ui.register.adapter.SecurityQuestionAdapter
+import com.app.emcashmerchant.ui.register.viewModel.RegisterViewModel
 import com.app.emcashmerchant.utils.*
-import com.app.emcashmerchant.utils.extensions.obtainViewModel
 import com.app.emcashmerchant.utils.extensions.openActivity
 import com.app.emcashmerchant.utils.extensions.showLongToast
 import com.app.emcashmerchant.utils.extensions.showShortToast
-import com.app.emcashmerchant.Authviewmodel.RegisterViewModel
 import kotlinx.android.synthetic.main.activity_security_questions.*
 
 class SecurityQuestionsActivity : AppCompatActivity() {
-    private lateinit var viewModel: RegisterViewModel
-    private lateinit var sessionStorage: SessionStorage
+    private val viewModel: RegisterViewModel by viewModels()
+
     private lateinit var securityQuestionAdapter: SecurityQuestionAdapter
+
     var questionOneId: String? = null
     var questionTwoId: String? = null
 
-    var answerOne: String=""
-    var answerTwo: String =""
+    var answerOne: String = ""
+    var answerTwo: String = ""
 
-    lateinit var dialog: AppDialog
+    private val dialog by lazy { AppDialog(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_security_questions)
-        initViews()
-        initViewModel()
-        setupObservers()
-        dialog= AppDialog(this)
 
+        setupObservers()
         viewModel.getSecurityQuestions()
     }
 
 
-
     fun onClick(view: View) {
-        when(view.id){
-            R.id.iv_back->{
+        when (view.id) {
+            R.id.iv_back -> {
                 onBackPressed()
             }
-            R.id.btn_next->{
+            R.id.btn_next -> {
                 goToEmailActivity()
             }
         }
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-    }
-
-    private fun initViews() {
-        sessionStorage = SessionStorage(this)
-    }
-
-    private fun initViewModel() {
-        viewModel = obtainViewModel(RegisterViewModel::class.java)
-    }
 
     private fun setupObservers() {
         viewModel.apply {
             securityQuestionStatus.observe(this@SecurityQuestionsActivity, Observer {
                 when (it.status) {
                     ApiCallStatus.LOADING -> {
-                        //show loading
                         dialog.show_dialog()
                     }
                     ApiCallStatus.SUCCESS -> {
@@ -96,7 +81,7 @@ class SecurityQuestionsActivity : AppCompatActivity() {
             val arrayList = ArrayList(questionsList)
             arrayList.add(
                 0, SecurityQuestionsResponse.Data(
-                    "0", "0", "Select your Question", false, "0"
+                    "0", "0", getString(R.string.select_your_question), false, "0"
                 )
             )
             securityQuestionAdapter = SecurityQuestionAdapter(this, arrayList)
@@ -155,11 +140,11 @@ class SecurityQuestionsActivity : AppCompatActivity() {
 
         } else {
 
-            openActivity(ObtainEmailActivity::class.java){
-                putString(KEY_QUESTION_ID_1,questionOneId)
-                putString(KEY_QUESTION_ID_2,questionTwoId)
-                putString(KEY_ANSWER_1,answerOne)
-                putString(KEY_ANSWER_2,answerTwo)
+            openActivity(ObtainEmailActivity::class.java) {
+                putString(KEY_QUESTION_ID_1, questionOneId)
+                putString(KEY_QUESTION_ID_2, questionTwoId)
+                putString(KEY_ANSWER_1, answerOne)
+                putString(KEY_ANSWER_2, answerTwo)
             }
 
         }

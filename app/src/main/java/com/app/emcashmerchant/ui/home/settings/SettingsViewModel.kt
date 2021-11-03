@@ -11,15 +11,15 @@ import timber.log.Timber
 import java.io.File
 
 class SettingsViewModel(val app: Application) : AndroidViewModel(app) {
-    var initialLogOutResponseStatus = MutableLiveData<ApiMapper<LogOutResponse>>()
-    var updateStatus = MutableLiveData<ApiMapper<ProfileUpdateResponse>>()
-    var profileDetails = MutableLiveData<ApiMapper<ProfileDetailsResponse.Data>>()
-    var termsConditionsResponse = MutableLiveData<ApiMapper<TermsConditionsResponse>>()
+    val initialLogOutResponseStatus = MutableLiveData<ApiMapper<LogOutResponse>>()
+    val updateStatus = MutableLiveData<ApiMapper<ProfileUpdateResponse>>()
+    val profileDetails = MutableLiveData<ApiMapper<ProfileDetailsResponse.Data>>()
+    val termsConditionsResponse = MutableLiveData<ApiMapper<TermsConditionsResponse>>()
 
-    val repository =
+   private val repository =
         SettingsRepository(app)
 
-   var isBankAccoutExists:Boolean = false
+    var isBankAccoutExists: Boolean = false
 
 
     fun performLogout(
@@ -30,15 +30,18 @@ class SettingsViewModel(val app: Application) : AndroidViewModel(app) {
             Timber.e("error $message")
             when (status) {
                 true -> {
-                    initialLogOutResponseStatus.value = ApiMapper(ApiCallStatus.SUCCESS, result, null)
+                    initialLogOutResponseStatus.value =
+                        ApiMapper(ApiCallStatus.SUCCESS, result, null)
                 }
                 false -> {
-                    initialLogOutResponseStatus.value = ApiMapper(ApiCallStatus.ERROR, null, message)
+                    initialLogOutResponseStatus.value =
+                        ApiMapper(ApiCallStatus.ERROR, null, message)
 
                 }
             }
         }
     }
+
     fun performUpdateProfile(
         file: File
     ) {
@@ -94,7 +97,6 @@ class SettingsViewModel(val app: Application) : AndroidViewModel(app) {
             }
         }
     }
-
 
 
 }

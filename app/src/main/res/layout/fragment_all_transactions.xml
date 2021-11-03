@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.transaction_history.AllTransactionsFragment">
+    tools:context=".ui.transactionHistory.AllTransactionsFragment">
 
 
 
@@ -24,9 +24,8 @@
 
     <ImageView
         android:id="@+id/iv_emptyTransaction"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_margin="@dimen/dp32"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:src="@drawable/ic_emptytransaction"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"

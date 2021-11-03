@@ -20,8 +20,8 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 #
-
-
+#
+#
 ##------------------retrofit2------------
 ## Platform calls Class.forName on types which do not exist on Android to determine platform.
 #-dontnote retrofit2.Platform
@@ -37,6 +37,11 @@
 #
 #-keep class com.app.emcashmerchant.data.modelrequest** { *; }
 #-keep class com.app.emcashmerchant.data.models** { *; }
+#-keep class com.app.emcashmerchant.data.models** { *; }
+#-keep class com.app.emcashmerchant.ui.transactionHistory.model** { *; }
+#-keep public enum com.app.emcashmerchant.ui.transactionHistory.screenEnumHandler.**{
+#    *;
+#}
 #
 ##------------------Glide------------
 #
@@ -53,4 +58,10 @@
 #}
 #
 ##------------------Glide------------
+#
+##------------------corutines------------
+#-keep class kotlinx.coroutines.android.AndroidExceptionPreHandler
+#-keep class kotlinx.coroutines.android.AndroidDispatcherFactory
+##------------------corutines------------
+
 

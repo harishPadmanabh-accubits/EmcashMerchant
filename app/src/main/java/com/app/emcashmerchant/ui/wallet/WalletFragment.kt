@@ -1,10 +1,7 @@
 package com.app.emcashmerchant.ui.wallet
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -18,10 +15,13 @@ import com.app.emcashmerchant.R
 import com.app.emcashmerchant.data.SessionStorage
 import com.app.emcashmerchant.data.network.ApiCallStatus
 import com.app.emcashmerchant.ui.wallet.adapter.WalletTransactionAdapterV2
+import com.app.emcashmerchant.ui.wallet.viewModel.WalletViewModel
 import com.app.emcashmerchant.utils.AppDialog
+import com.app.emcashmerchant.utils.extensions.checkNetwork
 import com.app.emcashmerchant.utils.extensions.loadImageWithUrlUser
 import com.app.emcashmerchant.utils.extensions.showShortToast
 import com.app.emcashmerchant.utils.extensions.trimID
+import kotlinx.android.synthetic.main.fragment_out_bound_transactions.*
 import kotlinx.android.synthetic.main.walletv2.*
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -36,6 +36,7 @@ class WalletFragment : Fragment(R.layout.walletv2) {
     val pagedAdapter by lazy {
         WalletTransactionAdapterV2()
     }
+
     private lateinit var viewModel: WalletViewModel
     private lateinit var sessionStorage: SessionStorage
 
@@ -63,55 +64,47 @@ class WalletFragment : Fragment(R.layout.walletv2) {
             RecyclerView.VERTICAL, false
         )
 
+        /**method to observe the liveData**/
         observe()
+
+
         viewModel.walletTransactions(1, 10)
 
-        btn_convert.setOnClickListener {
-            Navigation.findNavController(view).navigate(R.id.convertToCashFragment)
 
-        }
+        /**Setting up of WalletTransactions Paging Adapter & recyclerView**/
+        if (checkNetwork(requireContext())) {
 
-        btn_load_emcash.setOnClickListener {
-            Navigation.findNavController(view).navigate(R.id.loadEmcashFragment)
-        }
-        iv_back.setOnClickListener {
-            Navigation.findNavController(view).navigate(R.id.homeFragment)
+            pagedAdapter.addLoadStateListener { loadState ->
 
-        }
-
-        pagedAdapter.addLoadStateListener { loadState ->
-            if (loadState.refresh is LoadState.Loading) {
-                dialog.show_dialog()
-            }
-
-            else {
-                dialog.dismiss_dialog()
-
-                // getting the error
-                val error = when {
-                    loadState.prepend is LoadState.Error -> loadState.prepend as LoadState.Error
-                    loadState.append is LoadState.Error -> loadState.append as LoadState.Error
-                    loadState.refresh is LoadState.Error -> loadState.refresh as LoadState.Error
-                    else -> null
-                }
-
-                error?.let {
-                    requireActivity().showShortToast(it.error.message)
+                if (loadState.source.refresh is LoadState.NotLoading && loadState.append.endOfPaginationReached && pagedAdapter.itemCount < 1) {
+                    iv_emptyTransaction.visibility = View.VISIBLE
+                    rv_wallet_transaction.visibility = View.GONE
+                } else {
+                    iv_emptyTransaction.visibility = View.GONE
+                    rv_wallet_transaction.visibility = View.VISIBLE
                 }
             }
-        }
 
-        rv_wallet_transaction.apply {
-            adapter = pagedAdapter
-            layoutManager = mLayoutManager
-        }
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.walletActivities.collect {
-                pagedAdapter.submitData(it)
+            rv_wallet_transaction.apply {
+                adapter = pagedAdapter
+                layoutManager = mLayoutManager
             }
 
+            viewLifecycleOwner.lifecycleScope.launch {
+                viewModel.walletActivities.collect {
+                    pagedAdapter.submitData(it)
+                }
+
+            }
+
+        } else {
+            requireActivity().showShortToast(getString(R.string.no_internet))
+
         }
+
+        /**Method to handle Button Clicks **/
+        setupButtonClicks(view)
 
 
     }
@@ -149,5 +142,19 @@ class WalletFragment : Fragment(R.layout.walletv2) {
         }
     }
 
+    private fun setupButtonClicks(view: View) {
+        btn_convert.setOnClickListener {
+            Navigation.findNavController(view).navigate(R.id.convertToCashFragment)
+
+        }
+
+        btn_load_emcash.setOnClickListener {
+            Navigation.findNavController(view).navigate(R.id.loadEmcashFragment)
+        }
+        iv_back.setOnClickListener {
+            Navigation.findNavController(view).navigate(R.id.homeFragment)
+
+        }
+    }
 
 }

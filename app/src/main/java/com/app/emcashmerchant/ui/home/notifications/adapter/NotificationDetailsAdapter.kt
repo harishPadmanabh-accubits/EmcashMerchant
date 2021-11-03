@@ -1,29 +1,23 @@
 package com.app.emcashmerchant.ui.home.notifications.adapter
 
-import android.content.res.ColorStateList
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.app.NotificationCompat.getColor
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
-import androidx.core.widget.ImageViewCompat
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.app.emcashmerchant.R
-import com.app.emcashmerchant.data.models.DemoNotificationResponse
 import com.app.emcashmerchant.data.models.GroupedNotificationResponse
-import com.app.emcashmerchant.data.models.NotificationResponse
-import com.app.emcashmerchant.data.models.PaymentChatResponse
-import com.app.emcashmerchant.utils.KEY_ACTION
-import com.app.emcashmerchant.utils.KEY_PAGE
-import com.app.emcashmerchant.utils.KEY_REF_ID
 import com.app.emcashmerchant.utils.KEY_USERID
-import com.app.emcashmerchant.utils.extensions.timeformat
+import com.app.emcashmerchant.utils.NotificationTYPE.MERCHANT_DOCUMENTS_REJECTED_NOTIFICATION
+import com.app.emcashmerchant.utils.NotificationTYPE.MERCHANT_DOCUMENTS_VERIFIED_NOTIFICATION
+import com.app.emcashmerchant.utils.NotificationTYPE.PENDING_NOTIFICATION
+import com.app.emcashmerchant.utils.NotificationTYPE.REGISTRATION_COMPLETED
+import com.app.emcashmerchant.utils.NotificationTYPE.REJECTED_NOTIFICATION
+import com.app.emcashmerchant.utils.NotificationTYPE.SUCCESS_NOTIFICATION
+import com.app.emcashmerchant.utils.extensions.timeFormat
 import kotlinx.android.synthetic.main.item_notification_details.view.*
-import kotlinx.android.synthetic.main.layout_payment_reciept_top.*
 
 class NotificationDetailsAdapter(val data: List<GroupedNotificationResponse.Data.Row.Notification>) :
     RecyclerView.Adapter<NotificationDetailsAdapter.ViewHolder>() {
@@ -32,25 +26,26 @@ class NotificationDetailsAdapter(val data: List<GroupedNotificationResponse.Data
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): NotificationDetailsAdapter.ViewHolder {
+    ): ViewHolder {
         val view: View =
             LayoutInflater.from(parent.context)
                 .inflate(R.layout.item_notification_details, parent, false)
-        return NotificationDetailsAdapter.ViewHolder(view)
+        return ViewHolder(view)
     }
 
     override fun getItemCount(): Int {
         return data.size
     }
 
-    override fun onBindViewHolder(holder: NotificationDetailsAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.itemView.apply {
             tv_notification.text = data[position].message
-            tv_time.text = timeformat(data[position].createdAt)
-            var type = data[position].type
+            tv_time.text = timeFormat(data[position].createdAt)
+            val type = data[position].type
             ll_notifications.setOnClickListener {
-                if (type != 5 || type != 6) {
-                    var bundle = bundleOf(
+
+                if (type == PENDING_NOTIFICATION || type == SUCCESS_NOTIFICATION || type == REJECTED_NOTIFICATION) {
+                    val bundle = bundleOf(
                         KEY_USERID to data[position].contactUserId.toString()
                     )
 
@@ -59,22 +54,28 @@ class NotificationDetailsAdapter(val data: List<GroupedNotificationResponse.Data
                         bundle
                     )
 
-
                 }
 
             }
-            if (type == 1) {//pending
-                iv_point.setColorFilter(ContextCompat.getColor(context, R.color.orange));
-            } else if (type == 2) {//success
-                iv_point.setColorFilter(ContextCompat.getColor(context, R.color.green));
-            } else if (type == 3) {//rejected
-                iv_point.setColorFilter(ContextCompat.getColor(context, R.color.red));
-            } else if (type == 4) {//documents verified
-                iv_point.setColorFilter(ContextCompat.getColor(context, R.color.green));
-            } else if (type == 6) {//registration completed
-                iv_point.setColorFilter(ContextCompat.getColor(context, R.color.sky_blue));
-            } else if (type == 5) {//rejected from merchant side
-                iv_point.setColorFilter(ContextCompat.getColor(context, R.color.red));
+            when (type) {
+                PENDING_NOTIFICATION -> {
+                    iv_point.setColorFilter(ContextCompat.getColor(context, R.color.orange))
+                }
+                SUCCESS_NOTIFICATION -> {
+                    iv_point.setColorFilter(ContextCompat.getColor(context, R.color.green))
+                }
+                REJECTED_NOTIFICATION -> {
+                    iv_point.setColorFilter(ContextCompat.getColor(context, R.color.red))
+                }
+                MERCHANT_DOCUMENTS_VERIFIED_NOTIFICATION -> {
+                    iv_point.setColorFilter(ContextCompat.getColor(context, R.color.green))
+                }
+                REGISTRATION_COMPLETED -> {
+                    iv_point.setColorFilter(ContextCompat.getColor(context, R.color.sky_blue))
+                }
+                MERCHANT_DOCUMENTS_REJECTED_NOTIFICATION -> {
+                    iv_point.setColorFilter(ContextCompat.getColor(context, R.color.red))
+                }
             }
 
 

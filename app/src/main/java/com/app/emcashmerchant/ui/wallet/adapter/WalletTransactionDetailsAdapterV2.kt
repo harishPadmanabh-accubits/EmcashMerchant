@@ -12,7 +12,7 @@ import com.app.emcashmerchant.utils.TransactionUtils.Companion.TRANSACTION_TYPE_
 import com.app.emcashmerchant.utils.TransactionUtils.Companion.TRANSACTION_TYPE_TOPUP
 import com.app.emcashmerchant.utils.TransactionUtils.Companion.TRANSACTION_TYPE_TRANSFER
 import com.app.emcashmerchant.utils.TransactionUtils.Companion.TRANSACTION_TYPE_WITHDRAW
-import com.app.emcashmerchant.utils.extensions.timeformat
+import com.app.emcashmerchant.utils.extensions.timeFormat
 import kotlinx.android.synthetic.main.item_inner_activity_details.view.*
 
 class WalletTransactionDetailsAdapterV2(
@@ -28,7 +28,7 @@ class WalletTransactionDetailsAdapterV2(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentTransaction =transactions[position]
         holder.itemView.apply {
-            tv_time.text= timeformat(transactions[position].updatedAt)
+            tv_time.text= timeFormat(transactions[position].updatedAt)
             val type=transactions[position].transactionInfo.type
 
             if(type==TRANSACTION_TYPE_TRANSFER){ // Show corresponding icon in image view

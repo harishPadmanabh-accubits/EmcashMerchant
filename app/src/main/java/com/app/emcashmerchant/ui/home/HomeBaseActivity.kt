@@ -1,13 +1,8 @@
 package com.app.emcashmerchant.ui.home
 
-import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.navigation.findNavController
 import com.app.emcashmerchant.R
-import com.app.emcashmerchant.data.SessionStorage
-import com.app.emcashmerchant.ui.home.home_screen.HomeViewModel
 import com.app.emcashmerchant.utils.DESTINATION
 import com.app.emcashmerchant.utils.KEY_USER_ID_FROM_DEEPLINK
 

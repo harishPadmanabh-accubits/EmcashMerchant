@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.app.emcashmerchant.ui.home.home_screen.HomeFragment"
+        android:name="com.app.emcashmerchant.ui.home.homeScreen.HomeFragment"
         android:label="home_fragment"
         tools:layout="@layout/home_fragment" >
         <action
@@ -103,9 +103,13 @@
     </fragment>
     <fragment
         android:id="@+id/transactionHistoryFragment"
-        android:name="com.app.emcashmerchant.ui.transaction_history.TransactionHistoryFragment"
+        android:name="com.app.emcashmerchant.ui.transactionHistory.TransactionHistoryFragment"
         android:label="transaction_history_fragment"
-        tools:layout="@layout/transaction_history_fragment" />
+        tools:layout="@layout/transaction_history_fragment" >
+        <action
+            android:id="@+id/action_transactionHistoryFragment_to_transferpaymentRecieptFragment"
+            app:destination="@id/transferpaymentRecieptFragment" />
+    </fragment>
 
 
     <fragment
@@ -132,7 +136,7 @@
 
     <fragment
         android:id="@+id/paymentRequestFragment"
-        android:name="com.app.emcashmerchant.ui.payment_request.PaymentRequestFragment"
+        android:name="com.app.emcashmerchant.ui.paymentRequest.PaymentRequestFragment"
         android:label="fragment_payment_request"
         tools:layout="@layout/fragment_payment_request" >
         <action
@@ -141,7 +145,7 @@
     </fragment>
     <fragment
         android:id="@+id/paymentRequestQrCodeFragment"
-        android:name="com.app.emcashmerchant.ui.payment_request.PaymentRequestQrCodeFragment"
+        android:name="com.app.emcashmerchant.ui.paymentRequest.PaymentRequestQrCodeFragment"
         android:label="fragment_payment_request_qr_code"
         tools:layout="@layout/fragment_payment_request_qr_code" >
         <action
@@ -150,7 +154,7 @@
     </fragment>
     <fragment
         android:id="@+id/qrCodeScannerFragment"
-        android:name="com.app.emcashmerchant.ui.transfer_payment.QrCodeScannerFragment"
+        android:name="com.app.emcashmerchant.ui.transferPayment.QrCodeScannerFragment"
         android:label="fragment_qr_code_scanner"
         tools:layout="@layout/fragment_qr_code_scanner" >
         <action
@@ -159,7 +163,7 @@
     </fragment>
     <fragment
         android:id="@+id/performTransferPaymentFragment"
-        android:name="com.app.emcashmerchant.ui.transfer_payment.PerformTransferPaymentFragment"
+        android:name="com.app.emcashmerchant.ui.transferPayment.TransferPaymentFragment"
         android:label="fragment_perform_transfer_payment"
         tools:layout="@layout/fragment_perform_transfer_payment" >
         <action
@@ -168,7 +172,7 @@
     </fragment>
     <fragment
         android:id="@+id/paymentPinNumberFragment"
-        android:name="com.app.emcashmerchant.ui.transfer_payment.TransferPaymentPinNumberFragment"
+        android:name="com.app.emcashmerchant.ui.transferPayment.PinNumberFragment"
         android:label="PaymentPinNumberFragment" >
         <action
             android:id="@+id/action_paymentPinNumberFragment_to_paymentRecieptFragment"
@@ -185,7 +189,7 @@
     </fragment>
     <fragment
         android:id="@+id/paymentChatHistoryFragment"
-        android:name="com.app.emcashmerchant.ui.PaymentChatHistory.PaymentChatHistoryFragment"
+        android:name="com.app.emcashmerchant.ui.paymentChatHistory.PaymentChatHistoryFragment"
         android:label="fragment_payment_chat_history"
         tools:layout="@layout/fragment_payment_chat_history">
         <action
@@ -207,7 +211,7 @@
     </fragment>
     <fragment
         android:id="@+id/requestContactListFragment"
-        android:name="com.app.emcashmerchant.ui.payment_request.RequestContactListFragment"
+        android:name="com.app.emcashmerchant.ui.paymentRequest.RequestContactListFragment"
         android:label="fragment_request_contact_list"
         tools:layout="@layout/fragment_request_contact_list" >
         <action
@@ -216,10 +220,13 @@
         <action
             android:id="@+id/action_requestContactListFragment_to_paymentChatHistoryFragment"
             app:destination="@id/paymentChatHistoryFragment" />
+        <action
+            android:id="@+id/action_requestContactListFragment_to_paymentRequestQrCodeFragment"
+            app:destination="@id/paymentRequestQrCodeFragment" />
     </fragment>
     <fragment
         android:id="@+id/transferContactListFragment"
-        android:name="com.app.emcashmerchant.ui.transfer_payment.TransferContactListFragment"
+        android:name="com.app.emcashmerchant.ui.transferPayment.TransferContactListFragment"
         android:label="fragment_transfer_contact_list"
         tools:layout="@layout/fragment_transfer_contact_list" >
         <action
@@ -228,7 +235,7 @@
     </fragment>
     <fragment
         android:id="@+id/performTransferByContactFragment"
-        android:name="com.app.emcashmerchant.ui.transfer_payment.PerformTransferByContactFragment"
+        android:name="com.app.emcashmerchant.ui.transferPayment.TransferByContactFragment"
         android:label="fragment_perform_transfer_by_contact"
         tools:layout="@layout/fragment_perform_transfer_by_contact" />
     <fragment
@@ -242,7 +249,7 @@
     </fragment>
     <fragment
         android:id="@+id/paymentRequestByContactFragment"
-        android:name="com.app.emcashmerchant.ui.payment_request.PaymentRequestByContactFragment"
+        android:name="com.app.emcashmerchant.ui.paymentRequest.PaymentRequestByContactFragment"
         android:label="fragment_payment_request_by_contact"
         tools:layout="@layout/fragment_payment_request_by_contact" >
         <action

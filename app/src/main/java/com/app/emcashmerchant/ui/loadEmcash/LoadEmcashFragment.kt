@@ -3,10 +3,7 @@ package com.app.emcashmerchant.ui.loadEmcash
 import android.content.pm.ActivityInfo
 import android.location.Location
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
@@ -14,7 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.app.emcashmerchant.R
-import com.app.emcashmerchant.ui.PaymentChatHistory.PaymentChatHistoryViewModel
+import com.app.emcashmerchant.ui.loadEmcash.viewModel.LoadEmcashViewModel
 import com.app.emcashmerchant.utils.*
 import com.app.emcashmerchant.utils.extensions.gpsEnabled
 import com.app.emcashmerchant.utils.extensions.showKeyboard

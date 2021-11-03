@@ -1,28 +1,26 @@
 package com.app.emcashmerchant.ui.introScreen
 
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
+import android.os.Looper
+import androidx.appcompat.app.AppCompatActivity
 import com.app.emcashmerchant.R
 import com.app.emcashmerchant.data.SessionStorage
-import com.app.emcashmerchant.ui.ReUploadDocuments.ReUploadDocumentsActivity
 import com.app.emcashmerchant.ui.login.PinNumberActivity
+import com.app.emcashmerchant.ui.reUploadDocuments.ReUploadDocumentsActivity
 import com.app.emcashmerchant.utils.IS_FROM_DEEPLINK
 import com.app.emcashmerchant.utils.KEY_DEEPLINK
 import com.app.emcashmerchant.utils.KEY_REUPLOAD_TOKEN
 import com.app.emcashmerchant.utils.KEY_TYPE
 import com.app.emcashmerchant.utils.extensions.openActivity
-import com.app.emcashmerchant.utils.extensions.showShortToast
+
 
 class SplashActivity : AppCompatActivity() {
     var type: String? = null
     private var deepLink: String? = null
 
-    private val isFromDeeplink by lazy {
-        intent.getBooleanExtra(IS_FROM_DEEPLINK, false)
-    }
+    private var isFromDeepLink = false
 
     lateinit var sessionStorage: SessionStorage
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,17 +30,25 @@ class SplashActivity : AppCompatActivity() {
 
         type = intent.getStringExtra(KEY_TYPE)
         deepLink = intent.getStringExtra(KEY_DEEPLINK)
-        deepLink?.let { Log.d("KEY_DEEPLINK_SPLASH", it) }
+        isFromDeepLink = intent.getBooleanExtra(IS_FROM_DEEPLINK, false)
+
+
+        if (intent.extras?.getString("deepLink") != null) {
+            deepLink = intent.extras!!.getString("deepLink")
+            isFromDeepLink = true
+        }
 
         pageDirection()
+
 
     }
 
 
+
     private fun pageDirection() {
-        Handler().postDelayed({
+        Handler(Looper.getMainLooper()).postDelayed({
             if (sessionStorage.isLoggedIn) {
-                if (isFromDeeplink) {
+                if (isFromDeepLink) {
 
                     if (deepLink?.isNotEmpty() == true) {
                         if (Uri.parse(deepLink.toString()).pathSegments[1].equals("ReUpload")) {
@@ -67,14 +73,12 @@ class SplashActivity : AppCompatActivity() {
                     openActivity(PinNumberActivity::class.java)
 
                 }
-            }
-            else {
-                if(type=="6"){
+            } else {
+                if (type == "6") {
 
                     openActivity(IntroActivity::class.java)
 
-                }
-               else if (isFromDeeplink) {
+                } else if (isFromDeepLink) {
                     if (deepLink?.isNotEmpty() == true) {
                         if (Uri.parse(deepLink.toString()).pathSegments[1].equals("ReUpload")) {
                             openActivity(ReUploadDocumentsActivity::class.java) {
@@ -89,8 +93,7 @@ class SplashActivity : AppCompatActivity() {
 
                     }
 
-                }
-                else {
+                } else {
                     openActivity(IntroActivity::class.java)
 
                 }

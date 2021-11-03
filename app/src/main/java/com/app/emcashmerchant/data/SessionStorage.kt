@@ -18,9 +18,9 @@ class SessionStorage(var _context: Context) {
     var PRIVATE_MODE = 0
     private val prefName = "EmCashMerchant"
     private val keyReferenceId = "REFERENCE_ID"
-    private val keyReferenceInitial= "REFERENCE_ID_INITIAL"
-    private val keyReferenceOTP= "REFERENCE_ID_OTP"
-    private val keyReferenceSecurityQuestion= "REFERENCE_ID_SECURITY_QUESTION"
+    private val keyReferenceInitial = "REFERENCE_ID_INITIAL"
+    private val keyReferenceOTP = "REFERENCE_ID_OTP"
+    private val keyReferenceSecurityQuestion = "REFERENCE_ID_SECURITY_QUESTION"
 
     private val keyAccessToken = "ACCESS_TOKEN"
     private val keyRefreshToken = "REFRESH_TOKEN"
@@ -28,26 +28,26 @@ class SessionStorage(var _context: Context) {
     private val keyMerchantNumber = "MERCHANT_NUMBER"
     private val keyMerchantName = "MERCHANT_NAME"
     private val keyBalance = "MERCHANT_BALANCE"
+    private val keyProfileImage = "ProfileImage"
 
 
-
-    var referenceIdInitial:String?
+    var referenceIdInitial: String?
         get() = pref.getString(keyReferenceInitial, null)
         set(value) = editor.putString(keyReferenceInitial, value).apply()
 
 
-    var referenceIdOtp:String?
+    var referenceIdOtp: String?
         get() = pref.getString(keyReferenceOTP, null)
         set(value) = editor.putString(keyReferenceOTP, value).apply()
 
 
-    var referenceIdSecurity:String?
+    var referenceIdSecurity: String?
         get() = pref.getString(keyReferenceSecurityQuestion, null)
         set(value) = editor.putString(keyReferenceSecurityQuestion, value).apply()
 
-    var referenceId:String?
-    get() = pref.getString(keyReferenceId, null)
-    set(value) = editor.putString(keyReferenceId, value).apply()
+    var referenceId: String?
+        get() = pref.getString(keyReferenceId, null)
+        set(value) = editor.putString(keyReferenceId, value).apply()
 
     var accesToken: String?
         get() = pref.getString(keyAccessToken, null)
@@ -78,6 +78,9 @@ class SessionStorage(var _context: Context) {
         get() = pref.getBoolean(keyMerchantNumber, false)
         set(value) = editor.putBoolean(keyMerchantNumber, value).apply()
 
+    var profileImage: String?
+        get() = pref.getString(keyProfileImage, null)
+        set(value) = editor.putString(keyProfileImage, value).apply()
 
 
     fun logoutUser() {
@@ -94,17 +97,14 @@ class SessionStorage(var _context: Context) {
         editor.commit()
     }
 
-    var pendingDeeplink:String?
-    get() = try {
-         pref.getString(KEY_DEEPLINK, null)
-    }catch (e:Exception){
-        Timber.e("Deeplink Exc $e")
-        null
-    }
-    set(value) = editor.putString(KEY_DEEPLINK, value).apply()
-
-
-
+    var pendingDeeplink: String?
+        get() = try {
+            pref.getString(KEY_DEEPLINK, null)
+        } catch (e: Exception) {
+            Timber.e("Deeplink Exc $e")
+            null
+        }
+        set(value) = editor.putString(KEY_DEEPLINK, value).apply()
 
 
     init {

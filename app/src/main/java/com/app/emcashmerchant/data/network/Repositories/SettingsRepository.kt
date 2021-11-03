@@ -25,8 +25,7 @@ class SettingsRepository(val context: Context) {
         api.performLogOut("Bearer ${sessionStorage.accesToken}").awaitResponse(
             onFailure = {
                 onApiCallback(false, it, null)
-            }, onSuccess = {
-                val data = it
+            }, onSuccess = {data ->
                 data?.let {
                     onApiCallback(true, null, data)
                 }

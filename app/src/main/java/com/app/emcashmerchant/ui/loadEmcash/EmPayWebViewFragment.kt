@@ -6,7 +6,6 @@ import android.view.View
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -14,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.app.emcashmerchant.R
 import com.app.emcashmerchant.data.modelrequest.PayerAuthenticatorRequest
 import com.app.emcashmerchant.data.network.ApiCallStatus
+import com.app.emcashmerchant.ui.loadEmcash.viewModel.LoadEmcashViewModel
 import com.app.emcashmerchant.utils.*
 import com.app.emcashmerchant.utils.extensions.showShortToast
 import kotlinx.android.synthetic.main.fragment_em_pay_web_view.*

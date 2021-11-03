@@ -20,8 +20,7 @@ class LoginAuthRepository(val context: Context) {
         api.performLogOut("Bearer ${sessionStorage.accesToken}").awaitResponse(
             onFailure = {
                 onApiCallback(false, it, null)
-            }, onSuccess = {
-                val data = it
+            }, onSuccess = {data ->
                 data?.let {
                     onApiCallback(true, null, data)
                 }
@@ -36,10 +35,9 @@ class LoginAuthRepository(val context: Context) {
         api.performLogin(loginRequestBody).awaitResponse(
             onFailure = {
                 onApiCallback(false, it, null)
-            }, onSuccess = {
-                val data = it?.data
-                data?.let {
-                    onApiCallback(true, null, data)
+            }, onSuccess = { response ->
+                response?.data?.let {
+                    onApiCallback(true, null, it)
                 }
             }
         )
@@ -70,8 +68,7 @@ class LoginAuthRepository(val context: Context) {
         api.performPinNumberVerification("Bearer ${sessionStorage.accesToken}",pinNumberVerifyRequest).awaitResponse(
             onFailure = {
                 onApiCallback(false, it, null)
-            }, onSuccess = {
-                val data = it
+            }, onSuccess = {data ->
                 data?.let {
                     onApiCallback(true, null, data)
                 }
@@ -86,8 +83,8 @@ class LoginAuthRepository(val context: Context) {
         api.performLoginResendOTP(resendOtpRequest).awaitResponse(
             onFailure = {
                 onApiCallback(false, it, null)
-            }, onSuccess = {
-                it?.data?.let {
+            }, onSuccess = { response ->
+                response?.data?.let {
                     sessionStorage.referenceId=it.referenceId
                     onApiCallback(true, null, it)
                 }

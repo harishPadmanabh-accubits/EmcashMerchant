@@ -1,39 +1,37 @@
 package com.app.emcashmerchant.ui.forgotPassword
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.app.emcashmerchant.R
 import com.app.emcashmerchant.data.SessionStorage
 import com.app.emcashmerchant.data.network.ApiCallStatus
-import com.app.emcashmerchant.utils.extensions.obtainViewModel
+import com.app.emcashmerchant.ui.forgotPassword.viewModel.ForgotPasswordViewModel
+import com.app.emcashmerchant.utils.AppDialog
 import com.app.emcashmerchant.utils.extensions.openActivity
 import com.app.emcashmerchant.utils.extensions.showLongToast
 import com.app.emcashmerchant.utils.extensions.showShortToast
-import com.app.emcashmerchant.Authviewmodel.ForgotPasswordViewModel
-import com.app.emcashmerchant.utils.AppDialog
-import kotlinx.android.synthetic.main.activity_verify_otp.otp_layout
+import kotlinx.android.synthetic.main.activity_verify_otp.*
 
 
 class VerifyOtpActivity : AppCompatActivity() {
 
-    private lateinit var viewModel: ForgotPasswordViewModel
-    private lateinit var sessionStorage: SessionStorage
-    lateinit var dialog: AppDialog
+    private val viewModel: ForgotPasswordViewModel by viewModels()
+    private val sessionStorage by lazy { SessionStorage(this) }
+    private val dialog by lazy { AppDialog(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_verify_otp)
-        initViews()
-        initViewModel()
+
         setupObservers()
-        dialog= AppDialog(this)
 
     }
 
     fun onClick(view: View) {
-        var otp = otp_layout.obtainOTP()
+        val otp = otp_layout.obtainOTP()
 
         when (view.id) {
             R.id.iv_back -> {
@@ -44,21 +42,9 @@ class VerifyOtpActivity : AppCompatActivity() {
                 verifyOtp(otp)
             }
             R.id.ll_resend_otp -> {
-                viewModel.performForgotPasswordOtpResend( sessionStorage.referenceId.toString())
+                viewModel.performForgotPasswordOtpResend(sessionStorage.referenceId.toString())
             }
         }
-    }
-
-    private fun initViews() {
-        sessionStorage = SessionStorage(this)
-    }
-
-    override fun onBackPressed() {
-        super.onBackPressed()
-    }
-
-    private fun initViewModel() {
-        viewModel = obtainViewModel(ForgotPasswordViewModel::class.java)
     }
 
     private fun setupObservers() {
@@ -66,13 +52,11 @@ class VerifyOtpActivity : AppCompatActivity() {
             performForgotPasswordOtpStatus.observe(this@VerifyOtpActivity, Observer {
                 when (it.status) {
                     ApiCallStatus.LOADING -> {
-                        //show loading
                         dialog.show_dialog()
                     }
                     ApiCallStatus.SUCCESS -> {
                         dialog.dismiss_dialog()
-                        val data = it.data
-                        sessionStorage.referenceId=data?.referenceId
+                        sessionStorage.referenceId = it.data?.referenceId
                         openActivity(ResetPasswordActivity::class.java)
 
                     }
@@ -87,12 +71,10 @@ class VerifyOtpActivity : AppCompatActivity() {
             performForgotPasswordOtpResendStatus.observe(this@VerifyOtpActivity, Observer {
                 when (it.status) {
                     ApiCallStatus.LOADING -> {
-                        //show loading
                         dialog.show_dialog()
                     }
                     ApiCallStatus.SUCCESS -> {
                         dialog.dismiss_dialog()
-                        val data = it.data
                         showLongToast(getString(R.string.otp_resend_msg))
 
                     }

@@ -36,8 +36,7 @@ class PaymentChatRepository(val context: Context) {
             onFailure = {
                 onApiCallback(false, it, null)
 
-            }, onSuccess = {
-                var data = it
+            }, onSuccess = {data ->
                 data.let {
                     onApiCallback(true, null, data)
 
@@ -54,8 +53,7 @@ class PaymentChatRepository(val context: Context) {
             onFailure = {
                 onApiCallback(false, it, null)
 
-            }, onSuccess = {
-                var data = it
+            }, onSuccess = {data ->
                 data.let {
                     onApiCallback(true, null, data)
 

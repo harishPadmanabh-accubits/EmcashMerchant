@@ -82,7 +82,7 @@
             android:maxLength="16"
             android:background="@drawable/grey_8dp"
             android:fontFamily="@font/biennale_regular"
-            android:hint="0000 0000 0000 0000 0000 "
+            android:hint="0000 0000 0000 0000"
             android:inputType="number"
             android:paddingStart="@dimen/dp16"
             android:textSize="@dimen/sp14"

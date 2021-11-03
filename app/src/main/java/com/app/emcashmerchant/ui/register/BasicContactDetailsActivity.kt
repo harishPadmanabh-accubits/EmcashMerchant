@@ -3,20 +3,25 @@ package com.app.emcashmerchant.ui.register
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.app.emcashmerchant.R
 import com.app.emcashmerchant.data.SessionStorage
 import com.app.emcashmerchant.data.network.ApiCallStatus
 import com.app.emcashmerchant.utils.*
 import com.app.emcashmerchant.utils.extensions.*
-import com.app.emcashmerchant.Authviewmodel.RegisterViewModel
+import com.app.emcashmerchant.ui.register.viewModel.RegisterViewModel
 import kotlinx.android.synthetic.main.activity_basic_contact_details.*
 
 class BasicContactDetailsActivity : AppCompatActivity() {
 
-    private lateinit var viewModel: RegisterViewModel
-    private lateinit var sessionStorage: SessionStorage
-    lateinit var dialog: AppDialog
+    private val viewModel: RegisterViewModel by viewModels()
+    private val sessionStorage by lazy {
+        SessionStorage(this)
+    }
+    private val dialog by lazy {
+        AppDialog(this)
+    }
 
     private val businessName by lazy {
         intent.getStringExtra(KEY_BUISINESS_NAME)
@@ -41,10 +46,8 @@ class BasicContactDetailsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_basic_contact_details)
-        initViews()
-        initViewModel()
+
         setupObservers()
-        dialog = AppDialog(this)
 
 
     }
@@ -56,7 +59,6 @@ class BasicContactDetailsActivity : AppCompatActivity() {
             initialSignupStatus.observe(this@BasicContactDetailsActivity, Observer {
                 when (it.status) {
                     ApiCallStatus.LOADING -> {
-                        //show loading
                         dialog.show_dialog()
                     }
                     ApiCallStatus.SUCCESS -> {
@@ -76,15 +78,12 @@ class BasicContactDetailsActivity : AppCompatActivity() {
         }
     }
 
-    private fun initViewModel() {
-        viewModel = obtainViewModel(RegisterViewModel::class.java)
-    }
 
     fun onClick(view: View) {
-        var address = et_address.text.toString()
-        var email = et_email.text.toString()
-        var phoneNumber = et_phone_num.obtainPhoneNumber().toString()
-        var pincode = et_pin.text.toString()
+        val address = et_address.text.toString()
+        val email = et_email.text.toString()
+        val phoneNumber = et_phone_num.obtainPhoneNumber().toString()
+        var pinCode = et_pin.text.toString()
 
         when (view.id) {
             R.id.btn_confirm -> {
@@ -100,10 +99,11 @@ class BasicContactDetailsActivity : AppCompatActivity() {
                 } else if (address.length < 5) {
                     showShortToast(getString(R.string.valid_address))
                 } else {
-                    if (pincode.isEmpty()) {
-                        pincode = ""
+                    if (pinCode.isEmpty()) {
+                        pinCode = ""
                     }
-                    performInitialSignup(
+
+                    viewModel.performInitialSignup(
                         address,
                         businessName.toString(),
                         email,
@@ -113,8 +113,9 @@ class BasicContactDetailsActivity : AppCompatActivity() {
                         serviceDesc.toString(),
                         tradeLicenseAuthority.toString(),
                         tradeLicenceNumber.toString(),
-                        pincode
+                        pinCode, sessionStorage.referenceIdInitial
                     )
+
                 }
             }
             R.id.iv_back -> {
@@ -123,39 +124,5 @@ class BasicContactDetailsActivity : AppCompatActivity() {
         }
     }
 
-    private fun performInitialSignup(
-        address: String,
-        businessName: String,
-        email: String,
-        contactPersonName: String,
-        phoneNumber: String,
-        registeredNameOfBusiness: String,
-        serviceDescription: String,
-        tradeLicenseIssuingAuthority: String,
-        tradeLicenseNumber: String,
-        zipCode: String
-    ) {
 
-
-        viewModel.performInitialSignup(
-            address,
-            businessName,
-            email,
-            contactPersonName.toString(),
-            phoneNumber,
-            registeredNameOfBusiness,
-            serviceDescription,
-            tradeLicenseIssuingAuthority,
-            tradeLicenseNumber,
-            zipCode, sessionStorage.referenceIdInitial
-        )
-    }
-
-    override fun onBackPressed() {
-        super.onBackPressed()
-    }
-
-    private fun initViews() {
-        sessionStorage = SessionStorage(this)
-    }
 }

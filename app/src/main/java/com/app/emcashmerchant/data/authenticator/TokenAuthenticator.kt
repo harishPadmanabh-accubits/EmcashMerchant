@@ -25,7 +25,22 @@ import retrofit2.converter.gson.GsonConverterFactory
 class TokenAuthenticator(val context: Context) : Authenticator {
     private val appContext: Context = context.applicationContext
     private val sessionStorage = SessionStorage(appContext)
-//    var api = ApiManger(context).api
+
+    fun client(): OkHttpClient {
+        val loggingInterceptor = HttpLoggingInterceptor()
+        loggingInterceptor.level =
+            if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
+
+        val okHttpClient = OkHttpClient.Builder()
+            .addInterceptor(NetworkConnectionInterceptor(appContext))
+            .addInterceptor(loggingInterceptor)
+            .build()
+
+
+        return okHttpClient
+
+
+    }
 
     val restAdapter = Retrofit.Builder()
         .baseUrl(BASE_URL)
@@ -71,25 +86,12 @@ class TokenAuthenticator(val context: Context) : Authenticator {
 
                 }
             })
+
         return responseAuth.request.newBuilder()
             .header("Authorization", "Bearer ${sessionStorage.accesToken}")
             .build()
 
     }
 
-    fun client(): OkHttpClient {
-        val loggingInterceptor = HttpLoggingInterceptor()
-        loggingInterceptor.level =
-            if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
 
-        val okHttpClient = OkHttpClient.Builder()
-            .addInterceptor(NetworkConnectionInterceptor(appContext))
-            .addInterceptor(loggingInterceptor)
-            .build()
-
-
-        return okHttpClient
-
-
-    }
 }

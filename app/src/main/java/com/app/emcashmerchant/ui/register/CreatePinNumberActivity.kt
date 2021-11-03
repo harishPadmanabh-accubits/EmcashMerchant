@@ -7,9 +7,7 @@ import com.app.emcashmerchant.R
 import com.app.emcashmerchant.utils.*
 import com.app.emcashmerchant.utils.extensions.openActivity
 import com.app.emcashmerchant.utils.extensions.showLongToast
-import kotlinx.android.synthetic.main.activity_create_password.*
 import kotlinx.android.synthetic.main.activity_create_pin_number.*
-import kotlinx.android.synthetic.main.activity_pin_number.*
 
 class CreatePinNumberActivity : AppCompatActivity() {
 
@@ -38,25 +36,21 @@ class CreatePinNumberActivity : AppCompatActivity() {
         }
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-    }
-
     private fun fetchPinNumber() {
-        val pinnumber = fet_pin_number.getInput()
+        val pinNumber = fet_pin_number.getInput()
         val confirmPinNumber: String = fet_confirm_pin_number.getInput()
 
-        if (pinnumber != confirmPinNumber) {
+        if (pinNumber != confirmPinNumber) {
             showLongToast(getString(R.string.same_pin_number_validation))
-        } else if (pinnumber.isEmpty() || confirmPinNumber.isEmpty()) {
+        } else if (pinNumber.isEmpty() || confirmPinNumber.isEmpty()) {
             showLongToast(getString(R.string.please_fill_all_fields))
         }
-        else if(pinnumber.length<6 || confirmPinNumber.length<6){
+        else if(pinNumber.length<6 || confirmPinNumber.length<6){
             showLongToast(getString(R.string.enter_6_digit_pin_number))
         }
         else {
             openActivity(SecurityQuestionRegisterActivity::class.java) {
-                putString(KEY_PIN, pinnumber)
+                putString(KEY_PIN, pinNumber)
                 putString(KEY_CONFIRM_PIN, confirmPinNumber)
                 putString(KEY_PASSWORD, password)
                 putString(KEY_CONFIRM_PASSWORD, confirmPassword)

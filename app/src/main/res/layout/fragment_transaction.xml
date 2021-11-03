@@ -110,7 +110,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp60"
                 android:layout_marginEnd="@dimen/dp12"
-                android:background="@drawable/blue_stroke_light_blue_fill_round_bg"
+                android:background="@drawable/grey_rounded_bg"
                 android:fontFamily="@font/biennale_book"
                 android:gravity="center"
                 android:paddingStart="34dp"
@@ -129,7 +129,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp12"
                 android:layout_marginTop="@dimen/dp60"
-                android:background="@drawable/grey_rounded_bg"
+                android:background="@drawable/blue_stroke_light_blue_fill_round_bg"
                 android:fontFamily="@font/biennale_book"
                 android:gravity="center"
                 android:paddingStart="24dp"
@@ -143,6 +143,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/ll_input" />
 
             <androidx.appcompat.widget.AppCompatImageView
+                android:visibility="gone"
                 android:id="@+id/iv_empay_selected"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -157,7 +158,6 @@
                 android:id="@+id/iv_bank_selected"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
                 app:layout_constraintBottom_toTopOf="@+id/tab_bank_card"
                 app:layout_constraintEnd_toEndOf="@+id/tab_bank_card"
                 app:layout_constraintStart_toEndOf="@+id/tab_bank_card"

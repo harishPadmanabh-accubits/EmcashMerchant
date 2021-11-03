@@ -21,7 +21,7 @@ class NotificationAdapter :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view: View =
             LayoutInflater.from(parent.context).inflate(R.layout.item_notification, parent, false)
-        return NotificationAdapter.ViewHolder(view)
+        return ViewHolder(view)
     }
 
 
@@ -53,7 +53,7 @@ class NotificationAdapter :
             oldItem: GroupedNotificationResponse.Data.Row,
             newItem: GroupedNotificationResponse.Data.Row
         ): Boolean {
-            return oldItem.key == newItem.key
+            return oldItem == newItem
 
 
         }

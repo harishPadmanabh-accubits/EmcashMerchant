@@ -84,7 +84,8 @@ class ReUploadDocumentsRepository(val context: Context) {
         val newFile: String = file.toString().replace("\\s".toRegex(), "")
         val extension = MimeTypeMap.getFileExtensionFromUrl(newFile.toString())
         val document = file.asRequestBody(getMediaType(extension).toMediaTypeOrNull())
-        val filePart = MultipartBody.Part.createFormData("commercialRegistrationDoc", file.name, document)
+        val filePart =
+            MultipartBody.Part.createFormData("commercialRegistrationDoc", file.name, document)
         val finalSubmit = finalSubmit.toRequestBody("text/plain".toMediaTypeOrNull())
 
 
@@ -166,7 +167,7 @@ class ReUploadDocumentsRepository(val context: Context) {
         onApiCallback: (status: Boolean, message: String?, result: ReUploadUserDeatilsResponse.Data?) -> Unit
     ) {
         api.reUploadUserDetails(
-            token
+            "Bearer ${token}"
         ).awaitResponse(
             onFailure = {
                 onApiCallback(false, it, null)

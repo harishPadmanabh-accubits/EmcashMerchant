@@ -1,18 +1,14 @@
 package com.app.emcashmerchant.ui.convert_to_cash
 
 import android.app.Dialog
-import android.content.pm.ActivityInfo
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.location.Location
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.view.Window
-import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
@@ -21,14 +17,13 @@ import com.app.emcashmerchant.R
 import com.app.emcashmerchant.data.SessionStorage
 import com.app.emcashmerchant.data.modelrequest.WithDrawRequest
 import com.app.emcashmerchant.data.network.ApiCallStatus
-import com.app.emcashmerchant.ui.convertEmcashTocash.ConvertEmcashViewModel
+import com.app.emcashmerchant.ui.convertEmcashTocash.viewModel.ConvertEmcashViewModel
 import com.app.emcashmerchant.utils.AppDialog
 import com.app.emcashmerchant.utils.extensions.*
 import com.app.emcashmerchant.utils.locationhelper.LocationHelper
 import kotlinx.android.synthetic.main.convert_to_cash_fragment.*
 import kotlinx.android.synthetic.main.convert_to_cash_fragment.iv_back
 import kotlinx.android.synthetic.main.dialog_emcash_successful.*
-import kotlinx.android.synthetic.main.fragment_edit_bank_details.*
 import timber.log.Timber
 
 class ConvertToCashFragment : Fragment(R.layout.convert_to_cash_fragment) {
@@ -62,7 +57,6 @@ class ConvertToCashFragment : Fragment(R.layout.convert_to_cash_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewModel = ViewModelProvider(this).get(ConvertEmcashViewModel::class.java)
         sessionStorage=SessionStorage(requireActivity())
-        activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
         dialog = AppDialog(requireActivity())
 
         fetchLocation()

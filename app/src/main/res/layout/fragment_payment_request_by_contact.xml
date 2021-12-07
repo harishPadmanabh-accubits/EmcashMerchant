@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.payment_request.PaymentRequestByContactFragment">
+    tools:context=".ui.paymentRequest.PaymentRequestByContactFragment">
 
 
     <androidx.appcompat.widget.AppCompatImageView
@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/biennale_regular"
-        android:text="Request Emcash"
+        android:text="New Payment Request"
         android:textColor="@color/black"
         android:textSize="@dimen/sp18"
         app:layout_constraintBottom_toBottomOf="@+id/iv_back"
@@ -59,16 +59,26 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/guideline28">
-            <TextView
-                android:id="@+id/tv_firstLetter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:fontFamily="@font/biennale_medium"
-                android:textColor="@color/black"
-                android:textSize="@dimen/sp20"
 
-                />
+            <LinearLayout
+                android:id="@+id/ll_tvHolder"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_margin="@dimen/dp4"
+                >
+                <TextView
+                    android:id="@+id/tv_firstLetter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/biennale_medium"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp20"
+                    />
+            </LinearLayout>
+
+
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/iv_user_dp"
                 android:layout_width="80dp"
@@ -109,7 +119,13 @@
             android:layout_marginTop="@dimen/dp48"
             android:textColor="@color/black"
             android:textSize="@dimen/dp48" />
-
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/biennale_bold"
+            android:text="Emcash"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp18" />
     </LinearLayout>
 
     <EditText

@@ -1,34 +1,40 @@
 package com.app.emcashmerchant.ui.register
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.app.emcashmerchant.R
-import com.app.emcashmerchant.ui.register.adapter.SecurityQuestionAdapter
 import com.app.emcashmerchant.data.SessionStorage
 import com.app.emcashmerchant.data.modelrequest.SignupSecurityRequestBody
 import com.app.emcashmerchant.data.models.SecurityQuestionsResponse
 import com.app.emcashmerchant.data.network.ApiCallStatus
+import com.app.emcashmerchant.ui.register.adapter.SecurityQuestionAdapter
+import com.app.emcashmerchant.ui.register.viewModel.RegisterViewModel
 import com.app.emcashmerchant.utils.*
-import com.app.emcashmerchant.utils.extensions.obtainViewModel
 import com.app.emcashmerchant.utils.extensions.openActivity
 import com.app.emcashmerchant.utils.extensions.showLongToast
 import com.app.emcashmerchant.utils.extensions.showShortToast
-import com.app.emcashmerchant.Authviewmodel.RegisterViewModel
 import kotlinx.android.synthetic.main.activity_security_question__register.*
 
 class SecurityQuestionRegisterActivity : AppCompatActivity() {
-    private lateinit var viewModel: RegisterViewModel
-    private lateinit var sessionStorage: SessionStorage
+    private val viewModel: RegisterViewModel by viewModels()
+    private val sessionStorage by lazy {
+        SessionStorage(this)
+    }
+
     private lateinit var securityQuestionAdapter: SecurityQuestionAdapter
+
     var questionOneId: String? = null
     var questionTwoId: String? = null
 
-    var answerOne: String = ""
-    var answerTwo: String = ""
-    lateinit var dialog:AppDialog
+    private var answerOne: String = ""
+    private var answerTwo: String = ""
+
+    lateinit var dialog: AppDialog
+
     private val password by lazy {
         intent.getStringExtra(KEY_PASSWORD)
     }
@@ -41,10 +47,9 @@ class SecurityQuestionRegisterActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_security_question__register)
-        initViews()
-        initViewModel()
+
         setupObservers()
-        dialog= AppDialog(this)
+        dialog = AppDialog(this)
         viewModel.getSecurityQuestions()
 
 
@@ -53,7 +58,7 @@ class SecurityQuestionRegisterActivity : AppCompatActivity() {
     fun onClick(view: View) {
         when (view.id) {
             R.id.btn_next -> {
-                gotoUploadDocument()
+                validateSecurityQuestions()
             }
             R.id.iv_back -> {
                 onBackPressed()
@@ -61,17 +66,6 @@ class SecurityQuestionRegisterActivity : AppCompatActivity() {
         }
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-    }
-
-    private fun initViews() {
-        sessionStorage = SessionStorage(this)
-    }
-
-    private fun initViewModel() {
-        viewModel = obtainViewModel(RegisterViewModel::class.java)
-    }
 
     private fun setupObservers() {
         viewModel.apply {
@@ -83,8 +77,7 @@ class SecurityQuestionRegisterActivity : AppCompatActivity() {
                     }
                     ApiCallStatus.SUCCESS -> {
                         dialog.dismiss_dialog()
-                        var responseData = it.data
-                        loadDataToSpinner(responseData?.data)
+                        loadDataToSpinner(it.data?.data)
                     }
                     ApiCallStatus.ERROR -> {
                         dialog.dismiss_dialog()
@@ -101,8 +94,7 @@ class SecurityQuestionRegisterActivity : AppCompatActivity() {
                     }
                     ApiCallStatus.SUCCESS -> {
                         dialog.dismiss_dialog()
-                        var responseData = it.data
-                        sessionStorage.referenceIdSecurity=responseData?.data?.referenceId
+                        sessionStorage.referenceIdSecurity = it.data?.data?.referenceId
                         openActivity(UploadDocumentsActivity::class.java)
                     }
                     ApiCallStatus.ERROR -> {
@@ -121,7 +113,7 @@ class SecurityQuestionRegisterActivity : AppCompatActivity() {
             val arrayList = ArrayList(questionsList)
             arrayList.add(
                 0, SecurityQuestionsResponse.Data(
-                    "0", "0", "Select your Question", false, "0"
+                    "0", "0", getString(R.string.select_your_question), false, "0"
                 )
             )
             securityQuestionAdapter = SecurityQuestionAdapter(this, arrayList)
@@ -163,43 +155,40 @@ class SecurityQuestionRegisterActivity : AppCompatActivity() {
 
     }
 
-    private fun gotoUploadDocument() {
+    private fun validateSecurityQuestions() {
         answerOne = et_ans_1.text.toString()
         answerTwo = et_ans_2.text.toString()
 
 
-        if (questionOneId == questionTwoId && !questionOneId.equals("0")  &&  !questionTwoId.equals("0")) {
+        if (questionOneId == questionTwoId && !questionOneId.equals("0") && !questionTwoId.equals("0")) {
             showLongToast(getString(R.string.select_different))
 
-        } else if (questionOneId == null|| questionTwoId == null) {
+        } else if (questionOneId == null || questionTwoId == null) {
             showLongToast(getString(R.string.please_select_any_question))
 
-        }
-        else if( questionOneId.equals("0") ||  questionTwoId.equals("0")){
+        } else if (questionOneId.equals("0") || questionTwoId.equals("0")) {
             showLongToast(getString(R.string.please_select_any_question))
-        }
-        else if (answerOne.isEmpty()  || answerTwo.isEmpty() || answerOne.length<3 || answerOne.length<3) {
+        } else if (answerOne.isEmpty() || answerTwo.isEmpty() || answerOne.length < 3 || answerOne.length < 3) {
             showLongToast(getString(R.string.please_answer_both_question))
 
-        }
-        else {
+        } else {
 
-            SecuritySignUp()
+            performSecuritySignup()
 
 
         }
     }
 
-    private fun SecuritySignUp() {
+    private fun performSecuritySignup() {
         val signupRequestBody =
             SignupSecurityRequestBody(
                 sessionStorage.referenceIdOtp.toString(),
                 password.toString(),
                 pinNumber.toString(),
                 questionOneId.toString(),
-                answerOne.toString(),
+                answerOne,
                 questionTwoId.toString(),
-                answerTwo.toString()
+                answerTwo
             )
         viewModel.performSecuritySignup(
             signupRequestBody

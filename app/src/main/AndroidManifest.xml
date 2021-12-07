@@ -22,15 +22,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EmcashMerchant"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.register.AddBankDetailsActivity"></activity>
         <activity
-            android:name=".ui.ReUploadDocuments.ReUploadDocumentsActivity"
+            android:name=".ui.reUploadDocuments.ReUploadDocumentsActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name=".ui.webView.WebViewActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize" />
+
         <activity
             android:name=".ui.introScreen.SplashActivity"
             android:screenOrientation="portrait">

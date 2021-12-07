@@ -63,6 +63,7 @@ const val KEY_ROLEID = "ROLEID"
 const val KEY_URL3D = "URL3D"
 const val KEY_ORDERID = "ORDER_ID"
 const val KEY_SESSIONID = "SESSION_ID"
+const val REUPLOAD = "REUPLOAD"
 
 
 const val DESTINATION = "source"
@@ -70,3 +71,9 @@ const val IS_FROM_DEEPLINK = "deeplink_sourced"
 const val KEY_USER_ID_FROM_DEEPLINK = "user_id_deeplink"
 
 const val SCREEN_CHAT = "ChatScreen"
+const val SCREEN_PROFILE = "ProfileScreen"
+const val SCREEN_HOME = "HomeScreen"
+const val SCREEN_TRANSACTION_HISTORY = "TransactionHistory"
+
+const val REJECT = "reject"
+const val ACCEPT = "accept"

@@ -218,11 +218,11 @@
 
         <ImageView
             android:id="@+id/iv_emptyTransaction"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
             android:layout_margin="@dimen/dp32"
-            android:src="@drawable/ic_emptytransaction"
             android:visibility="gone"
+            android:src="@drawable/ic_emptytransaction"
             app:layout_constraintBottom_toTopOf="@+id/btn_load_emcash"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

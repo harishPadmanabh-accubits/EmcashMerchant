@@ -3,37 +3,29 @@ package com.app.emcashmerchant.ui.introScreen
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
 import com.app.emcashmerchant.R
 import com.app.emcashmerchant.data.SessionStorage
 import com.app.emcashmerchant.ui.login.LoginActivity
 import com.app.emcashmerchant.ui.register.BasicDetailsActivity
-import com.app.emcashmerchant.utils.KEY_DEEPLINK
-import com.app.emcashmerchant.utils.KEY_TYPE
-import com.app.emcashmerchant.utils.extensions.obtainViewModel
 import com.app.emcashmerchant.utils.extensions.openActivity
 
 
 class IntroActivity : AppCompatActivity() {
-    private lateinit var viewmodel: IntroScreenViewModel
-    private lateinit var sessionStorage: SessionStorage
 
+
+    private val  sessionStorage by lazy {
+        SessionStorage(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_acitivity)
 
-        sessionStorage=SessionStorage(this)
         sessionStorage.referenceIdInitial=null
 
-        getViewModel()
-
 
     }
 
-    private fun getViewModel() {
-        viewmodel = obtainViewModel(IntroScreenViewModel::class.java)
-    }
 
     fun onClick(view: View) {
         when (view.id) {
@@ -45,7 +37,7 @@ class IntroActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        ActivityCompat.finishAffinity(this)
+       finishAffinity()
     }
 
 }

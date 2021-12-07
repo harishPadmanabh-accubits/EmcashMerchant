@@ -17,8 +17,7 @@ import com.app.emcashmerchant.R
 import com.app.emcashmerchant.data.SessionStorage
 import com.app.emcashmerchant.data.network.ApiCallStatus
 import com.app.emcashmerchant.ui.introScreen.IntroActivity
-import com.app.emcashmerchant.utils.AppDialog
-import com.app.emcashmerchant.utils.REQUEST_CODE_PICK_IMAGE_PROFILE
+import com.app.emcashmerchant.utils.*
 import com.app.emcashmerchant.utils.extensions.*
 import kotlinx.android.synthetic.main.settings_fragment.*
 import kotlinx.android.synthetic.main.settings_fragment.iv_back
@@ -38,7 +37,7 @@ class SettingsFragment : Fragment(R.layout.settings_fragment) {
     private lateinit var viewModel: SettingsViewModel
     private lateinit var sessionStorage: SessionStorage
     lateinit var dialog: AppDialog
-    var termsConditions: String? = null
+    private var termsConditions: String? = null
     private var selectedImageUri: Uri? = null
 
 
@@ -53,7 +52,7 @@ class SettingsFragment : Fragment(R.layout.settings_fragment) {
         }
 
         requireActivity().onBackPressedDispatcher.addCallback {
-           findNavController().navigate(R.id.homeFragment)
+            findNavController().navigate(R.id.homeFragment)
 
 
         }
@@ -76,11 +75,15 @@ class SettingsFragment : Fragment(R.layout.settings_fragment) {
         observe()
 
         iv_back.setOnClickListener {
-            Navigation.findNavController(view).popBackStack()
+            findNavController().navigate(R.id.homeFragment)
         }
 
         lay_notifications.setOnClickListener {
-            Navigation.findNavController(view).navigate(R.id.goto_notifications_fragment)
+            val bundle = bundleOf(
+                KEY_PAGE to SCREEN_PROFILE
+
+            )
+            Navigation.findNavController(view).navigate(R.id.goto_notifications_fragment, bundle)
         }
 
         cv_editBankDetails.setOnClickListener {
@@ -113,6 +116,7 @@ class SettingsFragment : Fragment(R.layout.settings_fragment) {
         }
 
         lay_editBank.setOnClickListener {
+
             findNavController().navigate(R.id.action_settingsFragment_to_editBankDetailsFragment)
 
 
@@ -135,7 +139,7 @@ class SettingsFragment : Fragment(R.layout.settings_fragment) {
         }
     }
 
-    fun viewModels(){
+    fun viewModels() {
         viewModel.getProfileDetails()
         viewModel.getTermsConditions()
     }
@@ -151,6 +155,7 @@ class SettingsFragment : Fragment(R.layout.settings_fragment) {
                     ApiCallStatus.SUCCESS -> {
                         dialog.dismiss_dialog()
                         sessionStorage.logoutUser()
+
                         activity?.openActivity(IntroActivity::class.java)
                     }
                     ApiCallStatus.ERROR -> {
@@ -159,18 +164,21 @@ class SettingsFragment : Fragment(R.layout.settings_fragment) {
                     }
                 }
             })
-            profileDetails.observe(viewLifecycleOwner, Observer {
-                when (it.status) {
+            profileDetails.observe(viewLifecycleOwner, Observer { response ->
+                when (response.status) {
                     ApiCallStatus.LOADING -> {
                         dialog.show_dialog()
                     }
                     ApiCallStatus.SUCCESS -> {
                         dialog.dismiss_dialog()
 
-                        it.data?.let {
+                        response.data?.let {
                             sessionStorage.merchantName = it.name
                             tv_name.text = sessionStorage.merchantName
                             iv_shop_profile_image.loadImageWithUrlUser(it.profileImage)
+
+                            sessionStorage.profileImage = it.profileImage
+
                             isBankAccoutExists = it.isBankAccoutExists
                             if (isBankAccoutExists) {
 
@@ -179,7 +187,7 @@ class SettingsFragment : Fragment(R.layout.settings_fragment) {
 
                             } else {
 
-                                tv_bankStatus.text = "Add Bank Account"
+                                tv_bankStatus.text = getString(R.string.addbankaccount)
                                 lay_editBank.visibility = View.GONE
                                 cv_editBankDetails.visibility = View.VISIBLE
 
@@ -192,7 +200,7 @@ class SettingsFragment : Fragment(R.layout.settings_fragment) {
                         dialog.dismiss_dialog()
                         cl_main.visibility = View.GONE
 
-                        activity?.showShortToast(it.errorMessage)
+                        activity?.showShortToast(response.errorMessage)
 
                     }
                 }

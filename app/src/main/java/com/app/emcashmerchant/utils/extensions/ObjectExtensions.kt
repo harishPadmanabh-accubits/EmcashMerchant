@@ -330,15 +330,15 @@ fun ImageView.loadImageWithUrl(imageUrl: String?) {
 
 
 }
+
 fun ImageView.loadImageWithUrlUser(imageUrl: String?) {
     try {
-            if (context != null) {
-                Glide.with(context)
-                    .load(BUCKET_URL.plus(imageUrl))
-                    .error(R.drawable.sample_shop_profile)
-                    .into(this)
-            }
-
+        if (context != null) {
+            Glide.with(context)
+                .load(BUCKET_URL.plus(imageUrl))
+                .error(R.drawable.sample_shop_profile)
+                .into(this)
+        }
 
 
     } catch (e: Exception) {
@@ -586,21 +586,57 @@ fun gpsEnabled(context: Context): Boolean {
 
 
 fun dateFormat(dateStr: String): String {
-    val sdfInput = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX", Locale.getDefault())
+//    val sdfInput = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX", Locale.getDefault())
+//    val date = sdfInput.parse(dateStr)
+//    val sdfOutput = SimpleDateFormat("dd MMM yyyy")
+//    sdfOutput.timeZone = TimeZone.getTimeZone("Etc/UTC")
+//    val formatted = sdfOutput.format(date)
+//    return formatted
+    val sdfInput = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSS")
+    sdfInput.timeZone = TimeZone.getTimeZone("UTC")
     val date = sdfInput.parse(dateStr)
     val sdfOutput = SimpleDateFormat("dd MMM yyyy")
-    sdfOutput.timeZone = TimeZone.getTimeZone("Etc/UTC")
+    sdfOutput.timeZone = TimeZone.getDefault()
     val formatted = sdfOutput.format(date)
     return formatted
+
+
 }
 
-fun timeformat(dateStr: String): String? {
-    val sdfInput = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX", Locale.getDefault())
+fun timeFormat(dateStr: String): String? {
+//    val sdfInput = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX", Locale.getDefault())
+//    val date = sdfInput.parse(dateStr)
+//    val sdfOutput = SimpleDateFormat("hh:mm a")
+//    val formatted = sdfOutput.format(date)
+//    return formatted
+    val sdfInput = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSS")
+    sdfInput.timeZone = TimeZone.getTimeZone("UTC")
     val date = sdfInput.parse(dateStr)
     val sdfOutput = SimpleDateFormat("hh:mm a")
+    sdfOutput.timeZone = TimeZone.getDefault()
     val formatted = sdfOutput.format(date)
     return formatted
 
+
+}
+
+fun dateFormatFromCalender(dateStr: String): String {
+    val utc = TimeZone.getTimeZone("UTC")
+    val sourceFormat = SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy")
+    val destFormat = SimpleDateFormat("dd-MMM-YYYY")
+    sourceFormat.timeZone = utc
+    val convertedDate = sourceFormat.parse(dateStr)
+    return destFormat.format(convertedDate)
+}
+
+fun getCurrentDate(): String {
+    val sdfInput = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX", Locale.getDefault())
+    val sdfOutput = SimpleDateFormat("dd MMM yyyy")
+    sdfOutput.timeZone = TimeZone.getTimeZone("Etc/UTC")
+    val formatted = sdfOutput.format(Date())
+
+
+    return formatted
 }
 
 fun trimID(string: String): String? {
@@ -615,26 +651,6 @@ fun trimID(string: String): String? {
 
 }
 
-fun dateFormatFromCalender(dateStr: String): String {
-    val utc = TimeZone.getTimeZone("UTC")
-    val sourceFormat = SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy")
-    val destFormat = SimpleDateFormat("dd-MMM-YYYY")
-    sourceFormat.timeZone = utc
-    val convertedDate = sourceFormat.parse(dateStr)
-    return destFormat.format(convertedDate)
-}
-
-
-//get todays date
-fun getCurrentDate(): String {
-    val sdfInput = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX", Locale.getDefault())
-    val sdfOutput = SimpleDateFormat("dd MMM yyyy")
-    sdfOutput.timeZone = TimeZone.getTimeZone("Etc/UTC")
-    val formatted = sdfOutput.format(Date())
-
-
-    return formatted
-}
 
 fun EditText.onDeletePressed(function: () -> Unit) {
     this.setOnKeyListener { view, i, keyEvent ->
@@ -651,7 +667,6 @@ fun getDaysAgo(daysAgo: Int): Date {
     calendar.add(Calendar.DAY_OF_YEAR, -daysAgo)
     return calendar.time
 }
-
 
 
 fun checkNetwork(context: Context): Boolean {
@@ -672,6 +687,7 @@ fun checkNetwork(context: Context): Boolean {
         return netInfo != null && netInfo.isConnectedOrConnecting
     }
 }
+
 fun hideSoftKeyboard(context: Context?, view: View?) {
     if (context != null && view != null) {
         val imm = context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager

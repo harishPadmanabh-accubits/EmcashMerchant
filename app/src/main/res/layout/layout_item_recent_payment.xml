@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
     android:id="@+id/cl_root"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -28,40 +27,50 @@
             android:layout_width="47dp"
             android:layout_height="47dp"
             android:scaleType="fitXY"
+            android:src="@drawable/ic_use_icon"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/fl_user_level"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:src="@drawable/ic_use_icon"
             app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.RoundImageStyle" />
 
-        <TextView
-            android:id="@+id/tv_user_name_letter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/biennale_semi_bold"
-            android:text="K"
-            android:visibility="gone"
-            android:textColor="@color/black"
-            android:textSize="@dimen/sp14"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_user_image"
-            app:layout_constraintEnd_toEndOf="@+id/iv_user_image"
-            app:layout_constraintStart_toStartOf="@+id/iv_user_image"
-            app:layout_constraintTop_toTopOf="@+id/iv_user_image" />
+        <LinearLayout
+            android:id="@+id/ll_tvHolder"
+            android:layout_width="47dp"
+            android:layout_height="47dp"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="@+id/fl_user_level"
+            app:layout_constraintEnd_toEndOf="@+id/fl_user_level"
+            app:layout_constraintStart_toStartOf="@+id/fl_user_level"
+            app:layout_constraintTop_toTopOf="@+id/fl_user_level"
+
+            >
+
+            <TextView
+                android:id="@+id/tv_user_name_letter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/biennale_medium"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp20" />
+        </LinearLayout>
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
         android:id="@+id/tv_user_name_"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="12sp"
+        android:ellipsize="end"
         android:fontFamily="@font/biennale_regular"
+        android:singleLine="true"
         android:text="Puma"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="@dimen/sp12"
-        android:layout_marginTop="12sp"
-        android:singleLine="true"
-        android:ellipsize="end"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cl_profile" />

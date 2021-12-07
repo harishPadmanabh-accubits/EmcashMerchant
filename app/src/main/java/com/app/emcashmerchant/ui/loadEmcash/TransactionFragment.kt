@@ -3,7 +3,6 @@ package com.app.emcashmerchant.ui.loadEmcash
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
-import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
@@ -15,6 +14,7 @@ import com.app.emcashmerchant.data.models.BankCardsListingResponse
 import com.app.emcashmerchant.data.models.CardResponse
 import com.app.emcashmerchant.data.network.ApiCallStatus
 import com.app.emcashmerchant.ui.loadEmcash.adapter.CardsAdapter
+import com.app.emcashmerchant.ui.loadEmcash.viewModel.LoadEmcashViewModel
 import com.app.emcashmerchant.utils.*
 import com.app.emcashmerchant.utils.extensions.showShortToast
 import kotlinx.android.synthetic.main.fragment_transaction.*
@@ -69,8 +69,16 @@ class TransactionFragment : Fragment(R.layout.fragment_transaction), CardsAdapte
 
     fun performAction(view: View, amount: Double) {
 
-        rv_Empaycards.isVisible = true
-        ll_bankCards.isVisible = false
+        rv_Empaycards.isVisible = false
+        ll_bankCards.isVisible = true
+        tab_bank_card.setBackgroundResource(R.drawable.blue_stroke_light_blue_fill_round_bg)
+        tab_empay.setBackgroundResource(R.drawable.grey_rounded_bg)
+        iv_bank_selected.isVisible = true
+        iv_empay_selected.isVisible = false
+
+//
+//        rv_Empaycards.isVisible = false
+//        ll_bankCards.isVisible = true
 
         viewModel.description = requireArguments().getString(KEY_DESCRIPTION)
         viewModel.latitude = requireArguments().getDouble(KEY_LATITUDE)

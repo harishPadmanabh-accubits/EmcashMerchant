@@ -2,28 +2,21 @@ package com.app.emcashmerchant.ui.viewAllTransaction
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.app.emcashmerchant.R
-import com.app.emcashmerchant.data.network.ApiCallStatus
-import com.app.emcashmerchant.ui.viewAllTransaction.adapter.ViewAllTransactionsAdapter
 import com.app.emcashmerchant.ui.viewAllTransaction.adapter.ViewAllTransactionsAdapterV2
-import com.app.emcashmerchant.ui.wallet.adapter.WalletTransactionAdapterV2
+import com.app.emcashmerchant.ui.viewAllTransaction.viewModel.AllTransactionsViewModel
 import com.app.emcashmerchant.utils.AppDialog
 import com.app.emcashmerchant.utils.extensions.showShortToast
 import kotlinx.android.synthetic.main.fragment_view_all_transactions.*
 import kotlinx.android.synthetic.main.fragment_view_all_transactions.iv_back
-import kotlinx.android.synthetic.main.walletv2.*
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -55,7 +48,6 @@ class ViewAllTransactionsFragment : Fragment(R.layout.fragment_view_all_transact
         dialog = AppDialog(requireActivity())
 
         mLayoutManager = GridLayoutManager(requireContext(), 5)
-
 
 
         pagedAdapter.addLoadStateListener { loadState ->

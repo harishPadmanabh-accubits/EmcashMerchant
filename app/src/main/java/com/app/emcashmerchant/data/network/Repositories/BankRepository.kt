@@ -21,30 +21,30 @@ class BankRepository(val context: Context) {
         addBankDetailsRequest: AddBankDetailsRequest,
         onApiCallback: (status: Boolean, message: String?, result: AddBankDetailsResponse?) -> Unit
     ) {
-        api.addBankDetails("Bearer ${sessionStorage.accesToken}",addBankDetailsRequest).awaitResponse(
-            onFailure = {
-                onApiCallback(false, it, null)
-            }, onSuccess = {
-                val data = it
-                data?.let {
-                    onApiCallback(true, null, data)
-                }
-            })
+        api.addBankDetails("Bearer ${sessionStorage.accesToken}", addBankDetailsRequest)
+            .awaitResponse(
+                onFailure = {
+                    onApiCallback(false, it, null)
+                }, onSuccess = { data ->
+                    data?.let {
+                        onApiCallback(true, null, data)
+                    }
+                })
     }
 
     fun editDetails(
         editBankDetailsRequest: EditBankDetailsRequest,
         onApiCallback: (status: Boolean, message: String?, result: EditBankDetailsResponse?) -> Unit
     ) {
-        api.editBankDetails("Bearer ${sessionStorage.accesToken}",editBankDetailsRequest).awaitResponse(
-            onFailure = {
-                onApiCallback(false, it, null)
-            }, onSuccess = {
-                val data = it
-                data?.let {
-                    onApiCallback(true, null, data)
-                }
-            })
+        api.editBankDetails("Bearer ${sessionStorage.accesToken}", editBankDetailsRequest)
+            .awaitResponse(
+                onFailure = {
+                    onApiCallback(false, it, null)
+                }, onSuccess = {data ->
+                    data?.let {
+                        onApiCallback(true, null, data)
+                    }
+                })
     }
 
 

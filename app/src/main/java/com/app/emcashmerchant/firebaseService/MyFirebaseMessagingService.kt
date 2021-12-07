@@ -47,8 +47,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             Notificationtype = remoteMessage.data["type"]
             rejectContent = remoteMessage.data["rejectContent"]
 
-            Log.d("deepLink",deepLink.toString())
-            Log.d("type",Notificationtype.toString())
+            Log.d("deepLinkNotfication",deepLink.toString())
+            Log.d("typeNotification",Notificationtype.toString())
 
             showNotification(title, message)
 
@@ -70,7 +70,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         var notificationIntent = Intent(applicationContext, SplashActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            putExtra(KEY_DEEPLINK, deepLink?.toString())
+            putExtra(KEY_DEEPLINK, deepLink)
             putExtra(KEY_TYPE, Notificationtype.toString())
             putExtra(IS_FROM_DEEPLINK,true)
         }

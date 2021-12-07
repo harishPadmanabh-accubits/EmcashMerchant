@@ -25,8 +25,7 @@ class WithDrawEmcashRepository(val context: Context) {
         onFailure = {
             onApiCallback(false, it, null)
 
-        }, onSuccess = {
-            var data = it
+        }, onSuccess = {data ->
             data.let {
                 onApiCallback(true, null, data)
 
@@ -40,8 +39,7 @@ class WithDrawEmcashRepository(val context: Context) {
         api.getBankDetails("Bearer ${sessionStorage.accesToken}").awaitResponse(
             onFailure = {
                 onApiCallback(false, it, null)
-            }, onSuccess = {
-                val data = it
+            }, onSuccess = {data ->
                 data?.let {
                     onApiCallback(true, null, data)
                 }

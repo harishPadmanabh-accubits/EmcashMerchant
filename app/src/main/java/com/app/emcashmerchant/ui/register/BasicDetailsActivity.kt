@@ -32,7 +32,7 @@ class BasicDetailsActivity : AppCompatActivity() {
         val tradeLicenceNumber = et_trade_license_number.text.toString()
         val tradeLicenseAuthority = et_license_issue_authority.text.toString()
         var serviceDesc = et_service_description.text.toString()
-        var registeredBusinesName: String = et_reg_business_name.text.toString()
+        val registeredBussinesName: String = et_reg_business_name.text.toString()
 
         if (businessName.isEmpty() || businessName.length < 3) {
 
@@ -47,7 +47,7 @@ class BasicDetailsActivity : AppCompatActivity() {
         } else if (tradeLicenseAuthority.isEmpty() || tradeLicenseAuthority.length < 3) {
             showShortToast(getString(R.string.valid_trade_lic_auth))
 
-        } else if (registeredBusinesName.isEmpty() || registeredBusinesName.length < 3) {
+        } else if (registeredBussinesName.isEmpty() || registeredBussinesName.length < 3) {
             showShortToast(getString(R.string.registered_name_validaiton))
 
         } else {
@@ -56,7 +56,7 @@ class BasicDetailsActivity : AppCompatActivity() {
             }
             openActivity(BasicContactDetailsActivity::class.java) {
                 putString(KEY_BUISINESS_NAME, businessName)
-                putString(KEY_REGISTERED_BUISINESS_NAME, registeredBusinesName)
+                putString(KEY_REGISTERED_BUISINESS_NAME, registeredBussinesName)
                 putString(KEY_CONTACT_PERSON, contactPersonName)
                 putString(KEY_TRADE_LICENSE_NUM, tradeLicenceNumber)
                 putString(KEY_LICENSE_AUTHORITY, tradeLicenseAuthority)
@@ -67,7 +67,5 @@ class BasicDetailsActivity : AppCompatActivity() {
 
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-    }
+
 }

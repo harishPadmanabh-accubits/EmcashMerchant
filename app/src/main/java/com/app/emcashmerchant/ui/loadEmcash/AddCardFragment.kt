@@ -3,7 +3,6 @@ package com.app.emcashmerchant.ui.loadEmcash
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
-import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
 import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
@@ -11,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.app.emcashmerchant.R
 import com.app.emcashmerchant.data.modelrequest.PaymentByNewCardRequest
 import com.app.emcashmerchant.data.network.ApiCallStatus
+import com.app.emcashmerchant.ui.loadEmcash.viewModel.LoadEmcashViewModel
 import com.app.emcashmerchant.utils.*
 import com.app.emcashmerchant.utils.extensions.showShortToast
 import com.emcash.customerapp.utils.BankCardExpiryDateFormatter

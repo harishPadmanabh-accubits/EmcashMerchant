@@ -143,12 +143,20 @@
     <string name="enough_bal">You don\'t have enough balance</string>
     <string name="enter_valid_pin_">Please enter a valid PIN</string>
     <string name="payment_rejected">Payment Rejected</string>
-    <string name="pay_with_new_card">Pay with New Card</string>
+    <string name="pay_with_new_card">Pay With New Card</string>
     <string name="reupload_documents">ReUpload Documents</string>
     <string name="reupload_in_progress">Your Documents are sucessfully submitted. Your account is under review. Please wait while the process is done.</string>
     <string name="please_enter_description">Please enter description</string>
     <string name="no_internet">No internet connection</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="account_in_review">Your account is under review</string>
+    <string name="account_rejected">Your account is rejected</string>
+    <string name="account_blocked">Your account is blocked</string>
+    <string name="pleaseEnterTheOtp">"Please enter the OTP sent to your registered mobile number "</string>
+    <string name="okay">Okay</string>
+    <string name="select_your_question">Select your Question</string>
+    <string name="walletId">Wallet ID : </string>
+    <string name="addbankaccount">Add Bank Account</string>
 
 </resources>

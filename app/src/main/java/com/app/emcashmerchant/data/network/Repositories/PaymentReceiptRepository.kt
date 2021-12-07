@@ -2,9 +2,7 @@ package com.app.emcashmerchant.data.network.Repositories
 
 import android.content.Context
 import com.app.emcashmerchant.data.SessionStorage
-import com.app.emcashmerchant.data.modelrequest.LoginResquestBody
 import com.app.emcashmerchant.data.modelrequest.RecieptRequest
-import com.app.emcashmerchant.data.models.LoginResponse
 import com.app.emcashmerchant.data.models.PaymentReceiptResponse
 import com.app.emcashmerchant.data.models.RecieptResponse
 import com.app.emcashmerchant.data.network.ApiManger
@@ -33,15 +31,14 @@ class PaymentReceiptRepository (val context: Context) {
     }
 
     fun generateReciept(
-        recieptRequest: RecieptRequest,
+        receiptRequest: RecieptRequest,
         onApiCallback: (status: Boolean, message: String?, result: RecieptResponse?) -> Unit
     ) {
 
-        api.generateReciept("Bearer ${sessionStorage.accesToken}",recieptRequest).awaitResponse(
+        api.generateReciept("Bearer ${sessionStorage.accesToken}",receiptRequest).awaitResponse(
             onFailure = {
                 onApiCallback(false, it, null)
-            }, onSuccess = {
-                val data = it
+            }, onSuccess = {data ->
                 data?.let {
                     onApiCallback(true, null, data)
                 }

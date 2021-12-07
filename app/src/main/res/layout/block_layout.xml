@@ -29,16 +29,24 @@
         app:layout_constraintStart_toEndOf="@+id/tv_block"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_block">
-        <TextView
-            android:id="@+id/tv_firstLetter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:fontFamily="@font/biennale_medium"
-            android:textColor="@color/black"
-            android:textSize="@dimen/sp20"
-            />
 
+        <LinearLayout
+            android:id="@+id/ll_tvHolderchatdialog"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_margin="@dimen/dp4"
+            >
+            <TextView
+                android:id="@+id/tv_firstLetter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/biennale_medium"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp20"
+                />
+        </LinearLayout>
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/iv_user_dp"
             android:layout_width="match_parent"

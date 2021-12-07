@@ -7,7 +7,7 @@
     android:gravity="center"
     android:id="@+id/cl_lay"
     android:orientation="vertical"
-    tools:context=".ui.home.home_screen.HomeFragment">
+    tools:context=".ui.home.homeScreen.HomeFragment">
 
     <LinearLayout
         android:layout_width="match_parent"

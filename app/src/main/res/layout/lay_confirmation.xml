@@ -36,18 +36,24 @@
             android:layout_height="80dp"
             android:layout_gravity="center"
             android:src="@drawable/ic_use_icon" />
+        <LinearLayout
+            android:id="@+id/ll_tvHolderconfirmation"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_margin="@dimen/dp4"
+            >
+            <TextView
+                android:id="@+id/tv_firstLetterr_confirmation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/biennale_medium"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp20"
+                />
+        </LinearLayout>
 
-        <TextView
-            android:visibility="gone"
-            android:id="@+id/tv_firstLetterr_confirmation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="A"
-            android:fontFamily="@font/biennale_medium"
-            android:textColor="@color/black"
-            android:textSize="@dimen/sp20"
-            />
 
     </FrameLayout>
 

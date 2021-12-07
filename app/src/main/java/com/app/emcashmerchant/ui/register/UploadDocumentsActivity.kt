@@ -4,8 +4,8 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.app.emcashmerchant.R
@@ -13,50 +13,59 @@ import com.app.emcashmerchant.data.SessionStorage
 import com.app.emcashmerchant.data.network.ApiCallStatus
 import com.app.emcashmerchant.utils.*
 import com.app.emcashmerchant.utils.extensions.*
-import com.app.emcashmerchant.Authviewmodel.RegisterViewModel
+import com.app.emcashmerchant.ui.register.viewModel.RegisterViewModel
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.android.synthetic.main.lay_documents_upload.*
+import timber.log.Timber
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.lang.Exception
 
 class UploadDocumentsActivity : AppCompatActivity() {
+
     private var selectedImageUriTrade: Uri? = null
     private var selectedImageUriComm: Uri? = null
     private var selectedImageUriBank: Uri? = null
-    private lateinit var viewModel: RegisterViewModel
-    private var fcmToken:String?=null
-    private lateinit var sessionStorage: SessionStorage
-    lateinit var dialog: AppDialog
+
+    private val viewModel: RegisterViewModel by viewModels()
+
+    private val sessionStorage by lazy {
+        SessionStorage(this)
+    }
+
+    private val dialog by lazy {
+        AppDialog(this)
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_upload_documents)
-        initViews()
-        initViewModel()
-        setupObservers()
-        dialog = AppDialog(this)
-
 
         try {
             FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
                 if (!task.isSuccessful) {
-                    Log.e("fcmError", "Fetching FCM registration token failed", task.exception)
+                    Timber.e(task.exception, "Fetching FCM registration token failed")
+
                     return@OnCompleteListener
                 }
 
-                // Get new FCM registration token
-                fcmToken = task.result.toString()
-                Log.d("fcmToken007", fcmToken.toString())
+                /**Get new FCM registration token**/
+                viewModel.fcmToken = task.result.toString()
+                Timber.d(viewModel.fcmToken.toString())
             })
 
-        }catch (exception: Exception){
-            Log.d("exception", exception.toString())
+        }catch (exception: Exception) {
+            Timber.d(exception.toString())
 
         }
+
+        setupObservers()
+
+
+
 
     }
 
@@ -72,11 +81,9 @@ class UploadDocumentsActivity : AppCompatActivity() {
                 selectBankDetailsDoc()
             }
             R.id.btn_next -> {
-                if (selectedImageUriBank == null || selectedImageUriComm == null || selectedImageUriTrade == null) {
-                    showLongToast(getString(R.string.upload_all_documents))
-                } else {
-                    finalSignup()
-                }
+
+                doFinalSignUp()
+
             }
             R.id.iv_back -> {
                 onBackPressed()
@@ -84,9 +91,7 @@ class UploadDocumentsActivity : AppCompatActivity() {
         }
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-    }
+
 
     private fun selectTradeLicenceDoc() {
         iv_trade_file.apply {
@@ -102,13 +107,7 @@ class UploadDocumentsActivity : AppCompatActivity() {
                 REQUEST_CODE_PICK_IMAGE_TRADEFILE
             )
         }
-//
-//        Intent(Intent.ACTION_PICK).also {
-//            it.type = "*/*"
-//            val mimeTypes = arrayOf("image/jpeg", "image/png", "application/pdf")
-//            it.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes)
-//            startActivityForResult(it, REQUEST_CODE_PICK_IMAGE_TRADEFILE)
-//        }
+
     }
 
     private fun selectCommRegistrationDoc() {
@@ -125,13 +124,7 @@ class UploadDocumentsActivity : AppCompatActivity() {
                 REQUEST_CODE_PICK_IMAGE_COMM
             )
         }
-//
-//        Intent(Intent.ACTION_PICK).also {
-//            it.type = "*/*"
-//            val mimeTypes = arrayOf("image/jpeg", "image/png", "application/pdf")
-//            it.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes)
-//            startActivityForResult(it, REQUEST_CODE_PICK_IMAGE_COMM)
-//        }
+
     }
 
     private fun selectBankDetailsDoc() {
@@ -149,12 +142,6 @@ class UploadDocumentsActivity : AppCompatActivity() {
             )
         }
 
-//        Intent(Intent.ACTION_PICK).also {
-//            it.type = "*/*"
-//            val mimeTypes = arrayOf("image/jpeg", "image/png", "application/pdf")
-//            it.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes)
-//            startActivityForResult(it, REQUEST_CODE_PICK_IMAGE_BANK)
-//        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -175,8 +162,6 @@ class UploadDocumentsActivity : AppCompatActivity() {
                 }
                 REQUEST_CODE_PICK_IMAGE_COMM -> {
                     selectedImageUriComm = data?.data
-
-
 
                     if (!FileSizeCheck(fetchFile(selectedImageUriComm))) {
                         viewModel.uploadCommercialRegistrationDoc(fetchFile(selectedImageUriComm))
@@ -204,13 +189,9 @@ class UploadDocumentsActivity : AppCompatActivity() {
         }
     }
 
-    private fun initViews() {
-        sessionStorage = SessionStorage(this)
-    }
 
-    private fun initViewModel() {
-        viewModel = obtainViewModel(RegisterViewModel::class.java)
-    }
+
+
 
     private fun setupObservers() {
         viewModel.apply {
@@ -243,11 +224,7 @@ class UploadDocumentsActivity : AppCompatActivity() {
                     }
                     ApiCallStatus.SUCCESS -> {
                         dialog.dismiss_dialog()
-                        val responseData = it.data
-                        iv_commReg_file.apply {
-                            setImageResource(R.drawable.ic_check)
-                        }
-
+                        iv_commReg_file.setImageResource(R.drawable.ic_check)
                     }
                     ApiCallStatus.ERROR -> {
                         dialog.dismiss_dialog()
@@ -263,12 +240,7 @@ class UploadDocumentsActivity : AppCompatActivity() {
                     }
                     ApiCallStatus.SUCCESS -> {
                         dialog.dismiss_dialog()
-                        val responseData = it.data
-
-                        iv_trade_file.apply {
-                            setImageResource(R.drawable.ic_check)
-                        }
-
+                        iv_trade_file.setImageResource(R.drawable.ic_check)
                     }
                     ApiCallStatus.ERROR -> {
                         dialog.dismiss_dialog()
@@ -279,16 +251,12 @@ class UploadDocumentsActivity : AppCompatActivity() {
             bankDetailsDocumentStatus.observe(this@UploadDocumentsActivity, Observer {
                 when (it.status) {
                     ApiCallStatus.LOADING -> {
-                        //show loading
                         dialog.show_dialog()
                     }
                     ApiCallStatus.SUCCESS -> {
                         dialog.dismiss_dialog()
-                        val responseData = it.data
+                        iv_bankStatement_file.setImageResource(R.drawable.ic_check)
 
-                        iv_bankStatement_file.apply {
-                            setImageResource(R.drawable.ic_check)
-                        }
                     }
                     ApiCallStatus.ERROR -> {
                         dialog.dismiss_dialog()
@@ -300,9 +268,14 @@ class UploadDocumentsActivity : AppCompatActivity() {
         }
     }
 
-    private fun finalSignup() {
+    private fun doFinalSignUp() {
+        if (selectedImageUriBank == null || selectedImageUriComm == null || selectedImageUriTrade == null) {
+            showLongToast(getString(R.string.upload_all_documents))
+        }else
+        {
+            viewModel.finalSignup(viewModel.fcmToken.toString())
 
-    viewModel.finalSignup(fcmToken.toString())
+        }
 
     }
 

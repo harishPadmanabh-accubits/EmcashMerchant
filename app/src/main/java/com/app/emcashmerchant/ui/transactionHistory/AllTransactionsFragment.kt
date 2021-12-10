@@ -2,33 +2,21 @@ package com.app.emcashmerchant.ui.transactionHistory
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.app.emcashmerchant.R
-import com.app.emcashmerchant.data.models.GroupedTransactionHistoryResponse
 import com.app.emcashmerchant.ui.transactionHistory.adapters.AllTransactionAdapter
-import com.app.emcashmerchant.ui.transactionHistory.adapters.AllTransactionsDetailsAdapter
 import com.app.emcashmerchant.ui.transactionHistory.screenEnumHandler.HistoryScreens
 import com.app.emcashmerchant.ui.transactionHistory.model.HistoryFilter
-import com.app.emcashmerchant.utils.KEY_PAGE
-import com.app.emcashmerchant.utils.KEY_REF_ID
-import com.app.emcashmerchant.utils.SCREEN_TRANSACTION_HISTORY
-import com.app.emcashmerchant.utils.extensions.checkNetwork
-import com.app.emcashmerchant.utils.extensions.showShortToast
 import kotlinx.android.synthetic.main.fragment_all_transactions.*
 import timber.log.Timber
 
 
-class AllTransactionsFragment : Fragment(R.layout.fragment_all_transactions)
-   {
+class AllTransactionsFragment : Fragment(R.layout.fragment_all_transactions) {
 
     private val pagedAdapter by lazy {
         AllTransactionAdapter()
@@ -71,7 +59,9 @@ class AllTransactionsFragment : Fragment(R.layout.fragment_all_transactions)
         transactionHistoryViewModel.apply {
             sendType(true)
             setScreenFlag(HistoryScreens.ALL)
-            filter.value = HistoryFilter()
+            if (!transactionHistoryViewModel.isFromFilter)
+                filter.value = HistoryFilter()
+
             pagedTransactions.observe(viewLifecycleOwner, Observer {
                 pagedAdapter.submitData(lifecycle, it)
                 Timber.e("Observing ${it}")
@@ -79,8 +69,6 @@ class AllTransactionsFragment : Fragment(R.layout.fragment_all_transactions)
 
         }
     }
-
-
 
 
 }

@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.app.emcashmerchant.R
-import com.app.emcashmerchant.data.modelrequest.PayerAuthenticatorRequest
+import com.app.emcashmerchant.data.model.request.PayerAuthenticatorRequest
 import com.app.emcashmerchant.data.network.ApiCallStatus
 import com.app.emcashmerchant.ui.loadEmcash.viewModel.LoadEmcashViewModel
 import com.app.emcashmerchant.utils.*

@@ -3,32 +3,39 @@ package com.app.emcashmerchant.ui.home.notifications
 import android.os.Bundle
 import android.view.View
 import androidx.activity.addCallback
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.app.emcashmerchant.R
+import com.app.emcashmerchant.data.model.response.GroupedNotificationResponse
+import com.app.emcashmerchant.data.network.ApiCallStatus
 import com.app.emcashmerchant.ui.home.notifications.adapter.NotificationAdapter
-import com.app.emcashmerchant.utils.AppDialog
-import com.app.emcashmerchant.utils.KEY_PAGE
-import com.app.emcashmerchant.utils.SCREEN_PROFILE
+import com.app.emcashmerchant.ui.home.notifications.adapter.NotificationItemClickListener
+import com.app.emcashmerchant.utils.*
 import com.app.emcashmerchant.utils.extensions.checkNetwork
 import com.app.emcashmerchant.utils.extensions.showShortToast
 import kotlinx.android.synthetic.main.notifications_fragment.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 /**
 Fragment to display the notification
  **/
-class NotificationsFragment : Fragment(R.layout.notifications_fragment) {
+class NotificationsFragment : Fragment(R.layout.notifications_fragment),
+    NotificationItemClickListener {
 
 
     private val pagedAdapter by lazy {
-        NotificationAdapter()
+        NotificationAdapter(this)
     }
 
 
@@ -56,6 +63,8 @@ class NotificationsFragment : Fragment(R.layout.notifications_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+        observer()
 
         iv_back.setOnClickListener {
 
@@ -117,6 +126,49 @@ class NotificationsFragment : Fragment(R.layout.notifications_fragment) {
         }
 
 
+    }
+
+    private fun observer() {
+        viewModel.apply {
+            markNotificationAsRead.observe(viewLifecycleOwner, Observer {
+                when (it.status) {
+                    ApiCallStatus.LOADING -> {
+
+                    }
+                    ApiCallStatus.SUCCESS -> {
+
+                    }
+                    ApiCallStatus.ERROR -> {
+
+                    }
+
+                }
+            })
+        }
+
+
+    }
+
+    override fun onNotificationClicked(notification: GroupedNotificationResponse.Data.Row.Notification) {
+        val type = notification.type
+
+        lifecycleScope.async {
+            viewModel.onNotificationClick(notification.id.toString())
+
+        }
+
+        if (type == NotificationTYPE.PENDING_NOTIFICATION || type == NotificationTYPE.SUCCESS_NOTIFICATION || type == NotificationTYPE.REJECTED_NOTIFICATION) {
+            val bundle = bundleOf(
+                KEY_USERID to notification.contactUserId.toString(),
+                KEY_NOTIFICATION_ID to notification.id.toString()
+            )
+
+            findNavController().navigate(
+                R.id.action_notificationsFragment_to_paymentChatHistoryFragment,
+                bundle
+            )
+
+        }
     }
 
 }

@@ -3,11 +3,11 @@ package com.app.emcashmerchant.ui.forgotPassword.viewModel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import com.app.emcashmerchant.data.modelrequest.*
-import com.app.emcashmerchant.data.models.*
+import com.app.emcashmerchant.data.model.request.*
+import com.app.emcashmerchant.data.model.response.*
 import com.app.emcashmerchant.data.network.ApiCallStatus
 import com.app.emcashmerchant.data.network.ApiMapper
-import com.app.emcashmerchant.data.network.Repositories.ForgotPasswordRepository
+import com.app.emcashmerchant.data.Repositories.ForgotPasswordRepository
 import timber.log.Timber
 
 class ForgotPasswordViewModel(val app: Application) : AndroidViewModel(app) {

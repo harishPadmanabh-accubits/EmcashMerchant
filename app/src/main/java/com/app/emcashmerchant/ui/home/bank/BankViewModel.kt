@@ -3,12 +3,12 @@ package com.app.emcashmerchant.ui.home.bank
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import com.app.emcashmerchant.data.modelrequest.AddBankDetailsRequest
-import com.app.emcashmerchant.data.modelrequest.EditBankDetailsRequest
-import com.app.emcashmerchant.data.models.*
+import com.app.emcashmerchant.data.model.request.AddBankDetailsRequest
+import com.app.emcashmerchant.data.model.request.EditBankDetailsRequest
+import com.app.emcashmerchant.data.model.response.*
 import com.app.emcashmerchant.data.network.ApiCallStatus
 import com.app.emcashmerchant.data.network.ApiMapper
-import com.app.emcashmerchant.data.network.Repositories.BankRepository
+import com.app.emcashmerchant.data.Repositories.BankRepository
 import timber.log.Timber
 
 class BankViewModel(val app: Application) : AndroidViewModel(app) {

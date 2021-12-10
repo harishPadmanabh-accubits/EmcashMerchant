@@ -77,3 +77,7 @@ const val SCREEN_TRANSACTION_HISTORY = "TransactionHistory"
 
 const val REJECT = "reject"
 const val ACCEPT = "accept"
+
+const val KEY_NOTIFICATION_ID = "NOTIFICATION_ID"
+
+

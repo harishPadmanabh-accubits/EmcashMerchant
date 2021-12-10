@@ -3,17 +3,14 @@ package com.app.emcashmerchant.ui.loadEmcash.viewModel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.app.emcashmerchant.data.modelrequest.PayerAuthenticatorRequest
-import com.app.emcashmerchant.data.modelrequest.PaymentByExisitingCardRequest
-import com.app.emcashmerchant.data.modelrequest.PaymentByNewCardRequest
-import com.app.emcashmerchant.data.modelrequest.TopUpRequest
-import com.app.emcashmerchant.data.models.*
+import com.app.emcashmerchant.data.model.request.PayerAuthenticatorRequest
+import com.app.emcashmerchant.data.model.request.PaymentByExistingCardRequest
+import com.app.emcashmerchant.data.model.request.PaymentByNewCardRequest
+import com.app.emcashmerchant.data.model.request.TopUpRequest
+import com.app.emcashmerchant.data.model.response.*
 import com.app.emcashmerchant.data.network.ApiCallStatus
 import com.app.emcashmerchant.data.network.ApiMapper
-import com.app.emcashmerchant.data.network.Repositories.HomeRepository
-import com.app.emcashmerchant.data.network.Repositories.LoadEmcashRepository
-import timber.log.Timber
+import com.app.emcashmerchant.data.Repositories.LoadEmcashRepository
 
 class LoadEmcashViewModel(val app: Application): AndroidViewModel(app)  {
     var topupStatus = MutableLiveData<ApiMapper<TopUpResponse>>()
@@ -60,10 +57,10 @@ class LoadEmcashViewModel(val app: Application): AndroidViewModel(app)  {
             }
         }
     }
-    fun paymentByExistingCard(paymentByExisitingCardRequest: PaymentByExisitingCardRequest) {
+    fun paymentByExistingCard(paymentByExistingCardRequest: PaymentByExistingCardRequest) {
         paymentByExistingCardStatus.value = ApiMapper(ApiCallStatus.LOADING, null, null)
 
-        repository.paymentByExistingCard(paymentByExisitingCardRequest) { status, message, result ->
+        repository.paymentByExistingCard(paymentByExistingCardRequest) { status, message, result ->
             when (status) {
                 true -> {
                     paymentByExistingCardStatus.value = ApiMapper(ApiCallStatus.SUCCESS, result, null)
@@ -95,7 +92,7 @@ class LoadEmcashViewModel(val app: Application): AndroidViewModel(app)  {
     fun payerAuthenticator(paymentAuthenticatorRequest: PayerAuthenticatorRequest) {
         payerAuthenticatorStatus.value = ApiMapper(ApiCallStatus.LOADING, null, null)
 
-        repository.payerAuthenticator(paymentAuthenticatorRequest) { status, message, result ->
+        repository.authenticatePayer(paymentAuthenticatorRequest) { status, message, result ->
             when (status) {
                 true -> {
                     payerAuthenticatorStatus.value = ApiMapper(ApiCallStatus.SUCCESS, result, null)

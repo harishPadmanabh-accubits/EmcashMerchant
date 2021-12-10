@@ -15,7 +15,7 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.app.emcashmerchant.R
 import com.app.emcashmerchant.data.SessionStorage
-import com.app.emcashmerchant.data.modelrequest.WithDrawRequest
+import com.app.emcashmerchant.data.model.request.WithDrawRequest
 import com.app.emcashmerchant.data.network.ApiCallStatus
 import com.app.emcashmerchant.ui.convertEmcashTocash.viewModel.ConvertEmcashViewModel
 import com.app.emcashmerchant.utils.AppDialog

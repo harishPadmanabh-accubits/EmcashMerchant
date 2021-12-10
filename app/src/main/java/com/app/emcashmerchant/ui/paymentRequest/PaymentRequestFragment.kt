@@ -11,7 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.app.emcashmerchant.R
-import com.app.emcashmerchant.data.modelrequest.GenerateQrCodeRequest
+import com.app.emcashmerchant.data.model.request.GenerateQrCodeRequest
 import com.app.emcashmerchant.data.network.ApiCallStatus
 import com.app.emcashmerchant.ui.paymentRequest.viewModel.PaymentRequestViewModel
 import com.app.emcashmerchant.utils.*

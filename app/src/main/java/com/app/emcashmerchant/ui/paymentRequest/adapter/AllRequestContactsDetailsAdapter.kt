@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.RecyclerView
 import com.app.emcashmerchant.R
-import com.app.emcashmerchant.data.models.GroupedContactsResponse
+import com.app.emcashmerchant.data.model.response.GroupedContactsResponse
 import com.app.emcashmerchant.utils.KEY_LEVEL_COLOUR
 import com.app.emcashmerchant.utils.KEY_USERID
 import com.app.emcashmerchant.utils.extensions.loadImageWithUrl

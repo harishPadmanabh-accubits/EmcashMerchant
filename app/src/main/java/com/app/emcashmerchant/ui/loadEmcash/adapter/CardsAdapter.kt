@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.app.emcashmerchant.R
-import com.app.emcashmerchant.data.models.BankCardsListingResponse
+import com.app.emcashmerchant.data.model.response.BankCardsListingResponse
 import kotlinx.android.synthetic.main.item_bankcard.view.*
 
 

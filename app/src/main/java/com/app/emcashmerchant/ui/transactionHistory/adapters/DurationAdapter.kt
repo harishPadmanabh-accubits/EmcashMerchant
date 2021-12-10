@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.app.emcashmerchant.R
-import com.app.emcashmerchant.data.models.FilterDurationResponse
+import com.app.emcashmerchant.data.model.response.FilterDurationResponse
 import kotlinx.android.synthetic.main.item_duration.view.*
 
 class DurationAdapter(

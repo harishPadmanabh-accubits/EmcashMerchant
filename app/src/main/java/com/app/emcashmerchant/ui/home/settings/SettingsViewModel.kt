@@ -3,10 +3,10 @@ package com.app.emcashmerchant.ui.home.settings
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import com.app.emcashmerchant.data.models.*
+import com.app.emcashmerchant.data.model.response.*
 import com.app.emcashmerchant.data.network.ApiCallStatus
 import com.app.emcashmerchant.data.network.ApiMapper
-import com.app.emcashmerchant.data.network.Repositories.SettingsRepository
+import com.app.emcashmerchant.data.Repositories.SettingsRepository
 import timber.log.Timber
 import java.io.File
 

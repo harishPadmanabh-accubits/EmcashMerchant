@@ -7,9 +7,7 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.app.emcashmerchant.R
-import com.app.emcashmerchant.data.models.GroupedChatHistoryResponse
-import com.app.emcashmerchant.data.models.GroupedTransactionHistoryResponse
-import com.app.emcashmerchant.ui.paymentChatHistory.adapter.ChatItemClickListener
+import com.app.emcashmerchant.data.model.response.GroupedTransactionHistoryResponse
 import kotlinx.android.synthetic.main.item_wallet_activity.view.*
 
 class AllTransactionAdapter:

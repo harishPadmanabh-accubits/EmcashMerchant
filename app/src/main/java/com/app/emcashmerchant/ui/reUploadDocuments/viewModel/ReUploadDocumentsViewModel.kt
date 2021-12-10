@@ -3,10 +3,10 @@ package com.app.emcashmerchant.ui.reUploadDocuments.viewModel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import com.app.emcashmerchant.data.models.*
+import com.app.emcashmerchant.data.model.response.*
 import com.app.emcashmerchant.data.network.ApiCallStatus
 import com.app.emcashmerchant.data.network.ApiMapper
-import com.app.emcashmerchant.data.network.Repositories.ReUploadDocumentsRepository
+import com.app.emcashmerchant.data.Repositories.ReUploadDocumentsRepository
 import java.io.File
 
 class ReUploadDocumentsViewModel(val app: Application) : AndroidViewModel(app) {

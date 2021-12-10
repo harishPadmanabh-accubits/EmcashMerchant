@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.app.emcashmerchant.R
-import com.app.emcashmerchant.data.models.GroupedWalletTransactionResponse
+import com.app.emcashmerchant.data.model.response.GroupedWalletTransactionResponse
 import com.app.emcashmerchant.utils.TransactionUtils.Companion.TRANSACTION_MODE_CREDIT
 import com.app.emcashmerchant.utils.TransactionUtils.Companion.TRANSACTION_TYPE_REQUEST
 import com.app.emcashmerchant.utils.TransactionUtils.Companion.TRANSACTION_TYPE_TOPUP

@@ -12,8 +12,8 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.app.emcashmerchant.R
 import com.app.emcashmerchant.data.SessionStorage
-import com.app.emcashmerchant.data.modelrequest.RejectAcceptRequest
-import com.app.emcashmerchant.data.modelrequest.TransferAmountRequest
+import com.app.emcashmerchant.data.model.request.RejectAcceptRequest
+import com.app.emcashmerchant.data.model.request.TransferAmountRequest
 import com.app.emcashmerchant.data.network.ApiCallStatus
 import com.app.emcashmerchant.utils.*
 import com.app.emcashmerchant.utils.extensions.afterTextChanged

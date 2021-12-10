@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.app.emcashmerchant.R
-import com.app.emcashmerchant.data.models.GroupedTransactionHistoryResponse
+import com.app.emcashmerchant.data.model.response.GroupedTransactionHistoryResponse
 import com.app.emcashmerchant.utils.TransactionUtils.Companion.TRANSACTION_STATUS_FAILED
 import com.app.emcashmerchant.utils.TransactionUtils.Companion.TRANSACTION_STATUS_PENDING
 import com.app.emcashmerchant.utils.TransactionUtils.Companion.TRANSACTION_STATUS_REJECTED

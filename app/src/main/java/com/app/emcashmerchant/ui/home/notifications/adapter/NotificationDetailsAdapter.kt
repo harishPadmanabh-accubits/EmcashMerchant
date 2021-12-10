@@ -8,7 +8,9 @@ import androidx.core.os.bundleOf
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.app.emcashmerchant.R
-import com.app.emcashmerchant.data.models.GroupedNotificationResponse
+import com.app.emcashmerchant.data.model.response.GroupedChatHistoryResponse
+import com.app.emcashmerchant.data.model.response.GroupedNotificationResponse
+import com.app.emcashmerchant.ui.paymentChatHistory.adapter.ChatItemClickListener
 import com.app.emcashmerchant.utils.KEY_USERID
 import com.app.emcashmerchant.utils.NotificationTYPE.MERCHANT_DOCUMENTS_REJECTED_NOTIFICATION
 import com.app.emcashmerchant.utils.NotificationTYPE.MERCHANT_DOCUMENTS_VERIFIED_NOTIFICATION
@@ -19,7 +21,10 @@ import com.app.emcashmerchant.utils.NotificationTYPE.SUCCESS_NOTIFICATION
 import com.app.emcashmerchant.utils.extensions.timeFormat
 import kotlinx.android.synthetic.main.item_notification_details.view.*
 
-class NotificationDetailsAdapter(val data: List<GroupedNotificationResponse.Data.Row.Notification>) :
+class NotificationDetailsAdapter(
+    val data: List<GroupedNotificationResponse.Data.Row.Notification>,
+    private val clickListener: NotificationItemClickListener
+) :
     RecyclerView.Adapter<NotificationDetailsAdapter.ViewHolder>() {
     open class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
@@ -44,17 +49,7 @@ class NotificationDetailsAdapter(val data: List<GroupedNotificationResponse.Data
             val type = data[position].type
             ll_notifications.setOnClickListener {
 
-                if (type == PENDING_NOTIFICATION || type == SUCCESS_NOTIFICATION || type == REJECTED_NOTIFICATION) {
-                    val bundle = bundleOf(
-                        KEY_USERID to data[position].contactUserId.toString()
-                    )
-
-                    findNavController().navigate(
-                        R.id.action_notificationsFragment_to_paymentChatHistoryFragment,
-                        bundle
-                    )
-
-                }
+                clickListener.onNotificationClicked(data[position])
 
             }
             when (type) {
@@ -81,4 +76,9 @@ class NotificationDetailsAdapter(val data: List<GroupedNotificationResponse.Data
 
         }
     }
+}
+
+interface NotificationItemClickListener {
+    fun onNotificationClicked(notification: GroupedNotificationResponse.Data.Row.Notification)
+
 }

@@ -7,15 +7,15 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
 import androidx.paging.*
 import com.app.emcashmerchant.data.SessionStorage
-import com.app.emcashmerchant.data.modelrequest.GenerateQrCodeRequest
-import com.app.emcashmerchant.data.modelrequest.PaymentRequest
-import com.app.emcashmerchant.data.models.AllContactResponse
-import com.app.emcashmerchant.data.models.GenerateQrCodeResponse
-import com.app.emcashmerchant.data.models.PaymentRequestResponse
+import com.app.emcashmerchant.data.model.request.GenerateQrCodeRequest
+import com.app.emcashmerchant.data.model.request.PaymentRequest
+import com.app.emcashmerchant.data.model.response.AllContactResponse
+import com.app.emcashmerchant.data.model.response.GenerateQrCodeResponse
+import com.app.emcashmerchant.data.model.response.PaymentRequestResponse
 import com.app.emcashmerchant.data.network.ApiCallStatus
 import com.app.emcashmerchant.data.network.ApiManger
 import com.app.emcashmerchant.data.network.ApiMapper
-import com.app.emcashmerchant.data.network.Repositories.RequestPaymentRepository
+import com.app.emcashmerchant.data.Repositories.RequestPaymentRepository
 import com.app.emcashmerchant.ui.transferPayment.PagingSource.AllContactsPagingSource
 import com.app.emcashmerchant.utils.extensions.default
 

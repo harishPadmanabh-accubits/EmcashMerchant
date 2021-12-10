@@ -9,9 +9,9 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.app.emcashmerchant.R
-import com.app.emcashmerchant.data.modelrequest.PaymentByExisitingCardRequest
-import com.app.emcashmerchant.data.models.BankCardsListingResponse
-import com.app.emcashmerchant.data.models.CardResponse
+import com.app.emcashmerchant.data.model.request.PaymentByExistingCardRequest
+import com.app.emcashmerchant.data.model.response.BankCardsListingResponse
+import com.app.emcashmerchant.data.model.response.CardResponse
 import com.app.emcashmerchant.data.network.ApiCallStatus
 import com.app.emcashmerchant.ui.loadEmcash.adapter.CardsAdapter
 import com.app.emcashmerchant.ui.loadEmcash.viewModel.LoadEmcashViewModel
@@ -124,10 +124,10 @@ class TransactionFragment : Fragment(R.layout.fragment_transaction), CardsAdapte
 
         btn_continue.setOnClickListener {
 
-            var customer = PaymentByExisitingCardRequest.Customer("540000010", 1)
-            var amount = PaymentByExisitingCardRequest.Amount("AED",  String.format("%.2f", amount))
+            var customer = PaymentByExistingCardRequest.Customer("540000010", 1)
+            var amount = PaymentByExistingCardRequest.Amount("AED",  String.format("%.2f", amount))
             var paymentByExisitingCardRequest =
-                PaymentByExisitingCardRequest(
+                PaymentByExistingCardRequest(
                     amount,
                     "9000001",
                     null,

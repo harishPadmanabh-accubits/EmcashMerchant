@@ -7,7 +7,7 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.app.emcashmerchant.R
-import com.app.emcashmerchant.data.models.GroupedChatHistoryResponse
+import com.app.emcashmerchant.data.model.response.GroupedChatHistoryResponse
 import com.app.emcashmerchant.utils.extensions.getCurrentDate
 import kotlinx.android.synthetic.main.payment_transaction_chat_item.view.*
 

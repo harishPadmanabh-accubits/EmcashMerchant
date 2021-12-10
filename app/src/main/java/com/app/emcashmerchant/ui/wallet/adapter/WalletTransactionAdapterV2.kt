@@ -7,10 +7,8 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.app.emcashmerchant.R
-import com.app.emcashmerchant.data.models.GroupedWalletTransactionResponse
-import com.app.emcashmerchant.utils.extensions.dateFormat
+import com.app.emcashmerchant.data.model.response.GroupedWalletTransactionResponse
 import kotlinx.android.synthetic.main.item_wallet_activity.view.*
-import org.w3c.dom.CharacterData
 import timber.log.Timber
 
 class WalletTransactionAdapterV2() :PagingDataAdapter

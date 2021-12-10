@@ -8,10 +8,12 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.app.emcashmerchant.R
-import com.app.emcashmerchant.data.models.*
+import com.app.emcashmerchant.data.model.response.*
 import kotlinx.android.synthetic.main.item_notification.view.*
 
-class NotificationAdapter :
+class NotificationAdapter(
+    private val clickListener: NotificationItemClickListener
+) :
     PagingDataAdapter<GroupedNotificationResponse.Data.Row, NotificationAdapter.ViewHolder>(
         DiffUtilCallBack()
     ) {
@@ -34,7 +36,7 @@ class NotificationAdapter :
                 tv_notification_date.text = it.key
                 rv_notification_details.apply {
                     layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-                    adapter = NotificationDetailsAdapter(it.notifications)
+                    adapter = NotificationDetailsAdapter(it.notifications,clickListener)
                 }
             }
         }

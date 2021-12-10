@@ -28,12 +28,13 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
 import com.app.emcashmerchant.BuildConfig
 import com.app.emcashmerchant.R
-import com.app.emcashmerchant.data.models.BaseResponse
+import com.app.emcashmerchant.data.model.response.BaseResponse
 import com.app.emcashmerchant.utils.BUCKET_URL
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
@@ -462,13 +463,20 @@ fun <T : Any> Call<T>.awaitResponse(
             if (response.isSuccessful) {
                 onSuccess.invoke(response.body())
             } else {
-                val gson = Gson()
-                val (error, message, status) = gson.fromJson(
-                    response.errorBody()!!.charStream(),
-                    BaseResponse::class.java
-                ).also {
-                    onFailure.invoke(it.message)
+                if (response.code() != 401) {
+                    val gson = Gson()
+                    val (error, message, status) = gson.fromJson(
+                        response.errorBody()!!.charStream(),
+                        BaseResponse::class.java
+                    ).also {
+                        onFailure.invoke(it.message)
+                    }
+                } else {
+                    onFailure.invoke("Session Time Out")
+
+
                 }
+
             }
         }
 
@@ -620,6 +628,7 @@ fun timeFormat(dateStr: String): String? {
 
 }
 
+@RequiresApi(Build.VERSION_CODES.N)
 fun dateFormatFromCalender(dateStr: String): String {
     val utc = TimeZone.getTimeZone("UTC")
     val sourceFormat = SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy")

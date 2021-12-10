@@ -2,11 +2,11 @@ package com.app.emcashmerchant.ui.transactionHistory.PagingSource
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.app.emcashmerchant.data.models.GroupedTransactionHistoryResponse
-import com.app.emcashmerchant.data.network.ApiServices
+import com.app.emcashmerchant.data.model.response.GroupedTransactionHistoryResponse
+import com.app.emcashmerchant.data.network.EmCashApiServices
 
 class AllTransactionsPagingSource(
-    val api: ApiServices,
+    val api: EmCashApiServices,
     val accesToken: String,
     val mode: String,
     var startDate: String,
@@ -22,8 +22,7 @@ class AllTransactionsPagingSource(
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, GroupedTransactionHistoryResponse.Data.Row> {
         val nextPage = params.key ?: FIRST_PAGE_INDEX
-        val response = api.allGroupedTransactionHistoryReponse(
-            "Bearer ${accesToken}",
+        val response = api.getTransactionHistory(
             nextPage,
             10,
             mode,
@@ -31,7 +30,7 @@ class AllTransactionsPagingSource(
             endDate, status,
             type
         ).body()
-        var groupedActivities= listOf<GroupedTransactionHistoryResponse.Data.Row>()
+        var groupedActivities = listOf<GroupedTransactionHistoryResponse.Data.Row>()
         response?.data?.rows.let {
             if (it != null) {
                 groupedActivities = it
@@ -51,7 +50,7 @@ class AllTransactionsPagingSource(
 
                 }
             )
-        }else
+        } else
             return LoadResult.Error(Error("null response error"))
     }
 

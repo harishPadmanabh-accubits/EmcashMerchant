@@ -35,9 +35,9 @@
 #
 ##------------------retrofit model class------------
 #
-#-keep class com.app.emcashmerchant.data.modelrequest** { *; }
-#-keep class com.app.emcashmerchant.data.models** { *; }
-#-keep class com.app.emcashmerchant.data.models** { *; }
+#-keep class com.app.emcashmerchant.data.model.modelrequest** { *; }
+#-keep class com.app.emcashmerchant.data.model.models** { *; }
+#-keep class com.app.emcashmerchant.data.model.models** { *; }
 #-keep class com.app.emcashmerchant.ui.transactionHistory.model** { *; }
 #-keep public enum com.app.emcashmerchant.ui.transactionHistory.screenEnumHandler.**{
 #    *;

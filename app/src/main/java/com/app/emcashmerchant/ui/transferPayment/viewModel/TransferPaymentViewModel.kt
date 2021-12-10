@@ -7,19 +7,18 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
 import androidx.paging.*
 import com.app.emcashmerchant.data.SessionStorage
-import com.app.emcashmerchant.data.modelrequest.CheckQrCodeRequest
-import com.app.emcashmerchant.data.modelrequest.IntiateContactPaymentRequest
-import com.app.emcashmerchant.data.modelrequest.RejectAcceptRequest
-import com.app.emcashmerchant.data.modelrequest.TransferAmountRequest
-import com.app.emcashmerchant.data.models.*
+import com.app.emcashmerchant.data.model.request.CheckQrCodeRequest
+import com.app.emcashmerchant.data.model.request.InitiateContactPaymentRequest
+import com.app.emcashmerchant.data.model.request.RejectAcceptRequest
+import com.app.emcashmerchant.data.model.request.TransferAmountRequest
+import com.app.emcashmerchant.data.model.response.*
 import com.app.emcashmerchant.data.network.ApiCallStatus
 import com.app.emcashmerchant.data.network.ApiManger
 import com.app.emcashmerchant.data.network.ApiMapper
-import com.app.emcashmerchant.data.network.Repositories.TransferPaymentRepository
+import com.app.emcashmerchant.data.Repositories.TransferPaymentRepository
 import com.app.emcashmerchant.ui.transferPayment.PagingSource.AllContactsPagingSource
 import com.app.emcashmerchant.utils.extensions.default
 import timber.log.Timber
-import kotlin.collections.ArrayList
 
 
 class TransferPaymentViewModel(val app: Application) : AndroidViewModel(app) {
@@ -134,10 +133,10 @@ class TransferPaymentViewModel(val app: Application) : AndroidViewModel(app) {
     }
 
 
-    fun initiatePayment(intiateContactPaymentRequest: IntiateContactPaymentRequest) {
+    fun initiatePayment(initiateContactPaymentRequest: InitiateContactPaymentRequest) {
         intiatePaymentStatus.value = ApiMapper(ApiCallStatus.LOADING, null, null)
 
-        repository.intiatePayment(intiateContactPaymentRequest) { status, message, result ->
+        repository.intiatePayment(initiateContactPaymentRequest) { status, message, result ->
             when (status) {
                 true -> {
                     intiatePaymentStatus.value = ApiMapper(ApiCallStatus.SUCCESS, result, null)

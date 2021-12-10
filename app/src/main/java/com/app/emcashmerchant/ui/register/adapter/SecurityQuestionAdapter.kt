@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 import com.app.emcashmerchant.R
-import com.app.emcashmerchant.data.models.SecurityQuestionsResponse
+import com.app.emcashmerchant.data.model.response.SecurityQuestionsResponse
 
 class SecurityQuestionAdapter (private val context: Context, private val arrayList: ArrayList<SecurityQuestionsResponse.Data>) : BaseAdapter() {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {

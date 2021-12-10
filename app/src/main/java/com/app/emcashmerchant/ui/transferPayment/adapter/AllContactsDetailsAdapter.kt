@@ -7,7 +7,7 @@ import androidx.core.os.bundleOf
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.app.emcashmerchant.R
-import com.app.emcashmerchant.data.models.GroupedContactsResponse
+import com.app.emcashmerchant.data.model.response.GroupedContactsResponse
 import com.app.emcashmerchant.utils.KEY_LEVEL_COLOUR
 import com.app.emcashmerchant.utils.KEY_USERID
 import com.app.emcashmerchant.utils.extensions.loadImageWithUrl
@@ -15,7 +15,6 @@ import kotlinx.android.synthetic.main.contact_item_list.view.*
 import kotlinx.android.synthetic.main.contact_item_list.view.fl_user_level
 import kotlinx.android.synthetic.main.contact_item_list.view.iv_user_image
 import kotlinx.android.synthetic.main.contact_item_list.view.ll_tvHolder
-import kotlinx.android.synthetic.main.layout_item_recent_payment.view.*
 
 
 class AllContactsDetailsAdapter(val contacts: List<GroupedContactsResponse.Data.Row.Contact>) :

@@ -9,7 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.app.emcashmerchant.R
-import com.app.emcashmerchant.data.modelrequest.PaymentRequest
+import com.app.emcashmerchant.data.model.request.PaymentRequest
 import com.app.emcashmerchant.data.network.ApiCallStatus
 import com.app.emcashmerchant.ui.paymentRequest.viewModel.PaymentRequestViewModel
 import com.app.emcashmerchant.utils.*

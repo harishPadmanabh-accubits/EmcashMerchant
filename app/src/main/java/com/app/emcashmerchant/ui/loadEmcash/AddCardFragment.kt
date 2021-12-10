@@ -8,7 +8,7 @@ import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.app.emcashmerchant.R
-import com.app.emcashmerchant.data.modelrequest.PaymentByNewCardRequest
+import com.app.emcashmerchant.data.model.request.PaymentByNewCardRequest
 import com.app.emcashmerchant.data.network.ApiCallStatus
 import com.app.emcashmerchant.ui.loadEmcash.viewModel.LoadEmcashViewModel
 import com.app.emcashmerchant.utils.*

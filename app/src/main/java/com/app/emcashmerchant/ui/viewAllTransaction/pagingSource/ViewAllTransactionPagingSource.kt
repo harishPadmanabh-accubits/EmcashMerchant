@@ -1,15 +1,11 @@
 package com.app.emcashmerchant.ui.viewAllTransaction.pagingSource
 
-import android.content.Context
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.app.emcashmerchant.data.SessionStorage
-import com.app.emcashmerchant.data.models.GroupedWalletTransactionResponse
-import com.app.emcashmerchant.data.models.RecentTransactionResponse
-import com.app.emcashmerchant.data.network.ApiServices
-import java.lang.Exception
+import com.app.emcashmerchant.data.model.response.RecentTransactionResponse
+import com.app.emcashmerchant.data.network.EmCashApiServices
 
-class ViewAllTransactionPagingSource(val api: ApiServices, val accesToken:String) :
+class ViewAllTransactionPagingSource(val api: EmCashApiServices, val accesToken:String) :
     PagingSource<Int, RecentTransactionResponse.Data.Row>() {
     override fun getRefreshKey(state: PagingState<Int, RecentTransactionResponse.Data.Row>): Int? {
         return state.anchorPosition
@@ -17,7 +13,7 @@ class ViewAllTransactionPagingSource(val api: ApiServices, val accesToken:String
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, RecentTransactionResponse.Data.Row> {
         val nextPage = params.key ?: FIRST_PAGE_INDEX
-        val response = api.pagingAllTransaction("Bearer $accesToken",nextPage,10).body()
+        val response = api.getAllTransactedUsers(nextPage,10).body()
         var groupedActivities= listOf<RecentTransactionResponse.Data.Row>()
         response?.data?.rows.let {
             if (it != null) {

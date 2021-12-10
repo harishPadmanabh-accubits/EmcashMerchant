@@ -12,8 +12,8 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.app.emcashmerchant.R
 import com.app.emcashmerchant.data.SessionStorage
-import com.app.emcashmerchant.data.modelrequest.RecieptRequest
-import com.app.emcashmerchant.data.models.PaymentReceiptResponse
+import com.app.emcashmerchant.data.model.request.RecieptRequest
+import com.app.emcashmerchant.data.model.response.PaymentReceiptResponse
 import com.app.emcashmerchant.data.network.ApiCallStatus
 import com.app.emcashmerchant.ui.paymentReciept.viewModel.PaymentRecieptViewModel
 import com.app.emcashmerchant.utils.*
@@ -29,7 +29,6 @@ import kotlinx.android.synthetic.main.layout_payment_reciept_middle.*
 import kotlinx.android.synthetic.main.layout_payment_reciept_top.*
 import kotlinx.android.synthetic.main.layout_payment_reciept_top.fl_user_level
 import kotlinx.android.synthetic.main.layout_payment_reciept_top.tv_firstLetterr
-import timber.log.Timber
 
 
 class PaymentRecieptFragment : Fragment(R.layout.fragment_transfer_payment_reciept) {

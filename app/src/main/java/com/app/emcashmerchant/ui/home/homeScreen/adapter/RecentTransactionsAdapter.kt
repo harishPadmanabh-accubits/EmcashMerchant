@@ -7,7 +7,7 @@ import androidx.core.os.bundleOf
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.app.emcashmerchant.R
-import com.app.emcashmerchant.data.models.RecentTransactionResponse
+import com.app.emcashmerchant.data.model.response.RecentTransactionResponse
 import com.app.emcashmerchant.utils.*
 import com.app.emcashmerchant.utils.widget.LevelProfileImageView
 import kotlinx.android.synthetic.main.fragment_perform_transfer_by_contact.view.fl_user_level
@@ -15,7 +15,6 @@ import kotlinx.android.synthetic.main.item_recent_payment.view.ll_contact
 import kotlinx.android.synthetic.main.item_recent_payment.view.lpi_imageView
 import kotlinx.android.synthetic.main.item_view_all.view.*
 import kotlinx.android.synthetic.main.layout_item_recent_payment.view.*
-import timber.log.Timber
 import java.lang.IllegalStateException
 
 class RecentTransactionsAdapter(val transactions: List<RecentTransactionResponse.Data.Row>) :

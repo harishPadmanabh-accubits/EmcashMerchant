@@ -7,11 +7,10 @@ import androidx.core.os.bundleOf
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.app.emcashmerchant.R
-import com.app.emcashmerchant.data.models.RecentTransactionResponse
+import com.app.emcashmerchant.data.model.response.RecentTransactionResponse
 import com.app.emcashmerchant.utils.BUCKET_URL
 import com.app.emcashmerchant.utils.KEY_USERID
 import com.app.emcashmerchant.utils.widget.LevelProfileImageView
-import kotlinx.android.synthetic.main.item_recent_payment.view.*
 import kotlinx.android.synthetic.main.item_recent_payment_contacts.view.ll_contact
 import kotlinx.android.synthetic.main.item_recent_payment_contacts.view.lpi_imageView
 import kotlinx.android.synthetic.main.layout_item_recent_payment.view.*

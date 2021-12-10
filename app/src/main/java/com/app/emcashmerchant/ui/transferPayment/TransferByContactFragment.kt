@@ -11,7 +11,7 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.app.emcashmerchant.R
 import com.app.emcashmerchant.data.SessionStorage
-import com.app.emcashmerchant.data.modelrequest.IntiateContactPaymentRequest
+import com.app.emcashmerchant.data.model.request.InitiateContactPaymentRequest
 import com.app.emcashmerchant.data.network.ApiCallStatus
 import com.app.emcashmerchant.utils.*
 import com.app.emcashmerchant.utils.extensions.loadImageWithUrl
@@ -78,7 +78,7 @@ class TransferByContactFragment : Fragment(R.layout.fragment_perform_transfer_by
                 requireActivity().showShortToast(getString(R.string.enough_bal))
 
             } else {
-                var intiateContactPaymentRequest = IntiateContactPaymentRequest(
+                var intiateContactPaymentRequest = InitiateContactPaymentRequest(
                     amount.toInt(),
                     description,
                     userId.toString().toInt()

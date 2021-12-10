@@ -3,14 +3,14 @@ package com.app.emcashmerchant.ui.login.viewModel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import com.app.emcashmerchant.data.modelrequest.LoginResquestBody
-import com.app.emcashmerchant.data.modelrequest.PinNumberVerifyRequest
-import com.app.emcashmerchant.data.modelrequest.ResendOtpRequest
-import com.app.emcashmerchant.data.modelrequest.VerifyOtpRequest
-import com.app.emcashmerchant.data.models.*
+import com.app.emcashmerchant.data.model.request.LoginResquestBody
+import com.app.emcashmerchant.data.model.request.PinNumberVerifyRequest
+import com.app.emcashmerchant.data.model.request.ResendOtpRequest
+import com.app.emcashmerchant.data.model.request.VerifyOtpRequest
+import com.app.emcashmerchant.data.model.response.*
 import com.app.emcashmerchant.data.network.ApiCallStatus
 import com.app.emcashmerchant.data.network.ApiMapper
-import com.app.emcashmerchant.data.network.Repositories.LoginAuthRepository
+import com.app.emcashmerchant.data.Repositories.LoginAuthRepository
 
 class LoginViewModel(val app: Application) : AndroidViewModel(app) {
 

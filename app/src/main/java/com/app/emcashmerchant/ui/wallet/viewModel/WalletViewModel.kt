@@ -8,12 +8,12 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
 import com.app.emcashmerchant.data.SessionStorage
-import com.app.emcashmerchant.data.models.GroupedWalletTransactionResponse
-import com.app.emcashmerchant.data.models.WalletTransactionResponse
+import com.app.emcashmerchant.data.model.response.GroupedWalletTransactionResponse
+import com.app.emcashmerchant.data.model.response.WalletTransactionResponse
 import com.app.emcashmerchant.data.network.ApiCallStatus
 import com.app.emcashmerchant.data.network.ApiManger
 import com.app.emcashmerchant.data.network.ApiMapper
-import com.app.emcashmerchant.data.network.Repositories.WalletRepository
+import com.app.emcashmerchant.data.Repositories.WalletRepository
 import com.app.emcashmerchant.ui.wallet.PagingSource.WalletTransactionPagingSource
 
 

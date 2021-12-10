@@ -5,9 +5,11 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import androidx.security.crypto.EncryptedSharedPreferences
+import com.app.emcashmerchant.data.model.RequestRetryModel
 import com.app.emcashmerchant.ui.introScreen.IntroActivity
 import com.app.emcashmerchant.utils.KEY_DEEPLINK
 import com.app.emcashmerchant.utils.masterKeyAlias
+import com.google.gson.Gson
 import timber.log.Timber
 import java.lang.Exception
 
@@ -105,6 +107,18 @@ class SessionStorage(var _context: Context) {
             null
         }
         set(value) = editor.putString(KEY_DEEPLINK, value).apply()
+
+    var routeRetryCount: Int
+        get() = try {
+            pref.getInt("retry_count", 0)
+//
+        } catch (e: Exception) {
+            e.printStackTrace()
+            0
+        }
+        set(value) {
+            editor.putInt("retry_count", value).apply()
+        }
 
 
     init {

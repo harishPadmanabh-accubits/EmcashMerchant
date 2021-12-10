@@ -8,11 +8,11 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
 import com.app.emcashmerchant.data.SessionStorage
-import com.app.emcashmerchant.data.models.RecentTransactionResponse
+import com.app.emcashmerchant.data.model.response.RecentTransactionResponse
 import com.app.emcashmerchant.data.network.ApiCallStatus
 import com.app.emcashmerchant.data.network.ApiManger
 import com.app.emcashmerchant.data.network.ApiMapper
-import com.app.emcashmerchant.data.network.Repositories.AllTransactionRespository
+import com.app.emcashmerchant.data.Repositories.AllTransactionRespository
 import com.app.emcashmerchant.ui.viewAllTransaction.pagingSource.ViewAllTransactionPagingSource
 import timber.log.Timber
 

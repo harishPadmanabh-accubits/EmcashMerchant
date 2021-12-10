@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 
 import androidx.recyclerview.widget.RecyclerView
 import com.app.emcashmerchant.R
-import com.app.emcashmerchant.data.models.GroupedContactsResponse
+import com.app.emcashmerchant.data.model.response.GroupedContactsResponse
 import kotlinx.android.synthetic.main.contact_item.view.*
 import timber.log.Timber
 

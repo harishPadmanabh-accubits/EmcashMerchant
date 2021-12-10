@@ -7,11 +7,11 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
 import androidx.paging.*
 import com.app.emcashmerchant.data.SessionStorage
-import com.app.emcashmerchant.data.models.*
+import com.app.emcashmerchant.data.model.response.*
 import com.app.emcashmerchant.data.network.ApiCallStatus
 import com.app.emcashmerchant.data.network.ApiManger
 import com.app.emcashmerchant.data.network.ApiMapper
-import com.app.emcashmerchant.data.network.Repositories.PaymentChatRepository
+import com.app.emcashmerchant.data.Repositories.PaymentChatRepository
 import com.app.emcashmerchant.ui.paymentChatHistory.PagingSource.ChatPagingSource
 
 class PaymentChatHistoryViewModel(val app: Application) : AndroidViewModel(app) {
@@ -62,6 +62,7 @@ class PaymentChatHistoryViewModel(val app: Application) : AndroidViewModel(app) 
             }
         }
     }
+
 
     fun unBlockUser(userId: Int) {
         unblockStatus.value = ApiMapper(ApiCallStatus.LOADING, null, null)

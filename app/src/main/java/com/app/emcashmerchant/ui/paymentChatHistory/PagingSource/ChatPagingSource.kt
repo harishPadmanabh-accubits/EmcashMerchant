@@ -2,11 +2,11 @@ package com.app.emcashmerchant.ui.paymentChatHistory.PagingSource
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.app.emcashmerchant.data.models.GroupedChatHistoryResponse
-import com.app.emcashmerchant.data.network.ApiServices
+import com.app.emcashmerchant.data.model.response.GroupedChatHistoryResponse
+import com.app.emcashmerchant.data.network.EmCashApiServices
 
 class ChatPagingSource(
-    val api: ApiServices,
+    val api: EmCashApiServices,
     val accesToken: String,
     val userId: String
 ) :
@@ -19,7 +19,7 @@ class ChatPagingSource(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, GroupedChatHistoryResponse.Data.Row> {
         val nextPage = params.key ?: FIRST_PAGE_INDEX
         val response = api.getPagingGroupedChatResponse(
-            "Bearer ${accesToken}", userId.toInt(),
+            userId.toInt(),
             nextPage,
             10
         ).body()

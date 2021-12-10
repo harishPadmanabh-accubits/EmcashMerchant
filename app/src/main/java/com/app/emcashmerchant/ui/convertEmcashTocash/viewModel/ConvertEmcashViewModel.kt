@@ -2,14 +2,13 @@ package com.app.emcashmerchant.ui.convertEmcashTocash.viewModel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.app.emcashmerchant.data.modelrequest.WithDrawRequest
-import com.app.emcashmerchant.data.models.BankDetailsResponse
-import com.app.emcashmerchant.data.models.WithDrawResponse
+import com.app.emcashmerchant.data.model.request.WithDrawRequest
+import com.app.emcashmerchant.data.model.response.BankDetailsResponse
+import com.app.emcashmerchant.data.model.response.WithDrawResponse
 import com.app.emcashmerchant.data.network.ApiCallStatus
 import com.app.emcashmerchant.data.network.ApiMapper
-import com.app.emcashmerchant.data.network.Repositories.WithDrawEmcashRepository
+import com.app.emcashmerchant.data.Repositories.WithDrawEmcashRepository
 import timber.log.Timber
 
 class ConvertEmcashViewModel(val app: Application): AndroidViewModel(app) {

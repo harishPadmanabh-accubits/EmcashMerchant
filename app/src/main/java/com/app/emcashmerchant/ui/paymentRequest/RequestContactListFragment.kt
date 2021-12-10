@@ -14,8 +14,8 @@ import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.app.emcashmerchant.R
-import com.app.emcashmerchant.data.modelrequest.PaymentRequest
-import com.app.emcashmerchant.data.models.GroupedContactsResponse
+import com.app.emcashmerchant.data.model.request.PaymentRequest
+import com.app.emcashmerchant.data.model.response.GroupedContactsResponse
 import com.app.emcashmerchant.data.network.ApiCallStatus
 import com.app.emcashmerchant.ui.paymentRequest.adapter.AllContactsRequestsAdapter
 import com.app.emcashmerchant.ui.paymentRequest.adapter.ContactsItemClickListener

@@ -7,7 +7,7 @@ import androidx.core.os.bundleOf
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.app.emcashmerchant.R
-import com.app.emcashmerchant.data.models.GroupedChatHistoryResponse
+import com.app.emcashmerchant.data.model.response.GroupedChatHistoryResponse
 import com.app.emcashmerchant.utils.*
 import com.app.emcashmerchant.utils.TransactionUtils.Companion.TRANSACTION_MODE_DEBIT
 import com.app.emcashmerchant.utils.TransactionUtils.Companion.TRANSACTION_STATUS_FAILED

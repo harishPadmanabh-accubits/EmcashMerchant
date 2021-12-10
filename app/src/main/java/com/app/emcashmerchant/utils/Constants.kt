@@ -3,8 +3,8 @@ package com.app.emcashmerchant.utils
 import androidx.security.crypto.MasterKeys
 
 
-//const val BASE_URL : String = "https://emcash-api-dev.devtomaster.com/"//dev
-const val BASE_URL : String = "https://emcash-api-stg.devtomaster.com"
+const val BASE_URL : String = "https://emcash-api-dev.devtomaster.com/"//dev
+//const val BASE_URL : String = "https://emcash-api-stg.devtomaster.com"
 //const val BASE_URL : String = "https://2fe5-117-216-229-80.ngrok.io"
 const val BUCKET_URL : String = "https://stemcashmerchantdocstest.blob.core.windows.net"
 
@@ -77,3 +77,7 @@ const val SCREEN_TRANSACTION_HISTORY = "TransactionHistory"
 
 const val REJECT = "reject"
 const val ACCEPT = "accept"
+
+const val KEY_NOTIFICATION_ID = "NOTIFICATION_ID"
+
+

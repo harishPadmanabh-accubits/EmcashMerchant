@@ -9,11 +9,10 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.app.emcashmerchant.R
-import com.app.emcashmerchant.data.models.RecentTransactionResponse
+import com.app.emcashmerchant.data.model.response.RecentTransactionResponse
 import com.app.emcashmerchant.utils.BUCKET_URL
 import com.app.emcashmerchant.utils.KEY_USERID
 import com.app.emcashmerchant.utils.widget.LevelProfileImageView
-import kotlinx.android.synthetic.main.fragment_perform_transfer_by_contact.view.*
 import kotlinx.android.synthetic.main.item_recent_payment.view.*
 import kotlinx.android.synthetic.main.layout_item_recent_payment.view.*
 import kotlinx.android.synthetic.main.layout_item_recent_payment.view.fl_user_level

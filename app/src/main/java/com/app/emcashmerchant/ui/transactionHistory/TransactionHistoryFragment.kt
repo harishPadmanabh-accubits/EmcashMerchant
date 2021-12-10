@@ -12,7 +12,7 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.app.emcashmerchant.R
-import com.app.emcashmerchant.data.models.FilterDurationResponse
+import com.app.emcashmerchant.data.model.response.FilterDurationResponse
 import com.app.emcashmerchant.ui.transactionHistory.adapters.DurationAdapter
 import com.app.emcashmerchant.ui.transactionHistory.adapters.DurationItemClickListener
 import com.app.emcashmerchant.ui.transactionHistory.adapters.TransactionsTabAdapter

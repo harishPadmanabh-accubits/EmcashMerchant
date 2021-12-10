@@ -43,6 +43,7 @@ class ApiMapper<T>(var status: ApiCallStatus, val data: T?, val errorMessage: St
             msg: String, data: T?, callback: Call<T>?,
             errorMessage: String?
         ): ApiMapper<T> {
+
             return ApiMapper(ApiCallStatus.ERROR, data,errorMessage)
         }
 

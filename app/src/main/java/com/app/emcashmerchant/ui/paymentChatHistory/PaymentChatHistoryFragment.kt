@@ -19,7 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.app.emcashmerchant.R
 import com.app.emcashmerchant.data.SessionStorage
-import com.app.emcashmerchant.data.models.GroupedChatHistoryResponse
+import com.app.emcashmerchant.data.model.response.GroupedChatHistoryResponse
 import com.app.emcashmerchant.data.network.ApiCallStatus
 import com.app.emcashmerchant.ui.paymentChatHistory.ViewModel.PaymentChatHistoryViewModel
 import com.app.emcashmerchant.ui.paymentChatHistory.adapter.ChatItemClickListener

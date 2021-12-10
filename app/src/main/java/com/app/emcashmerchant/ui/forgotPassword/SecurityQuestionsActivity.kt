@@ -7,8 +7,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.app.emcashmerchant.R
-import com.app.emcashmerchant.data.SessionStorage
-import com.app.emcashmerchant.data.models.SecurityQuestionsResponse
+import com.app.emcashmerchant.data.model.response.SecurityQuestionsResponse
 import com.app.emcashmerchant.data.network.ApiCallStatus
 import com.app.emcashmerchant.ui.register.adapter.SecurityQuestionAdapter
 import com.app.emcashmerchant.ui.register.viewModel.RegisterViewModel

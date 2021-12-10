@@ -6,17 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
-import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.app.emcashmerchant.R
 import com.app.emcashmerchant.data.SessionStorage
-import com.app.emcashmerchant.data.modelrequest.AddBankDetailsRequest
-import com.app.emcashmerchant.data.modelrequest.EditBankDetailsRequest
+import com.app.emcashmerchant.data.model.request.EditBankDetailsRequest
 import com.app.emcashmerchant.data.network.ApiCallStatus
 import com.app.emcashmerchant.utils.AppDialog
-import com.app.emcashmerchant.utils.KEY_USERID
 import com.app.emcashmerchant.utils.extensions.showShortToast
 import kotlinx.android.synthetic.main.fragment_edit_bank_details.*
 

@@ -16,8 +16,7 @@ import kotlinx.android.synthetic.main.fragment_all_transactions.*
 import timber.log.Timber
 
 
-class AllTransactionsFragment : Fragment(R.layout.fragment_all_transactions)
-   {
+class AllTransactionsFragment : Fragment(R.layout.fragment_all_transactions) {
 
     private val pagedAdapter by lazy {
         AllTransactionAdapter()
@@ -60,7 +59,9 @@ class AllTransactionsFragment : Fragment(R.layout.fragment_all_transactions)
         transactionHistoryViewModel.apply {
             sendType(true)
             setScreenFlag(HistoryScreens.ALL)
-            filter.value = HistoryFilter()
+            if (!transactionHistoryViewModel.isFromFilter)
+                filter.value = HistoryFilter()
+
             pagedTransactions.observe(viewLifecycleOwner, Observer {
                 pagedAdapter.submitData(lifecycle, it)
                 Timber.e("Observing ${it}")
@@ -68,8 +69,6 @@ class AllTransactionsFragment : Fragment(R.layout.fragment_all_transactions)
 
         }
     }
-
-
 
 
 }

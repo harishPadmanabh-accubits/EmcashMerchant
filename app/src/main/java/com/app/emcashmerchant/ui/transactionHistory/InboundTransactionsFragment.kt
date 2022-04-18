@@ -63,7 +63,7 @@ class InboundTransactionsFragment : Fragment(R.layout.fragment_inbound_transacti
 
             pagedInboundTransactions.observe(viewLifecycleOwner, Observer {
                 pagedAdapter.submitData(lifecycle, it)
-                Timber.e("Observing ${it}")
+
             })
 
 

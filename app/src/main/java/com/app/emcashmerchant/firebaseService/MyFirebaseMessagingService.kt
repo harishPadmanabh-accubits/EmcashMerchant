@@ -47,8 +47,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             Notificationtype = remoteMessage.data["type"]
             rejectContent = remoteMessage.data["rejectContent"]
 
-            Log.d("deepLinkNotfication",deepLink.toString())
-            Log.d("typeNotification",Notificationtype.toString())
+            Log.d("deepLinkNotfication", deepLink.toString())
+            Log.d("typeNotification", Notificationtype.toString())
 
             showNotification(title, message)
 
@@ -72,7 +72,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             putExtra(KEY_DEEPLINK, deepLink)
             putExtra(KEY_TYPE, Notificationtype.toString())
-            putExtra(IS_FROM_DEEPLINK,true)
+            putExtra(IS_FROM_DEEPLINK, true)
         }
 
         val stackBuilder = TaskStackBuilder.create(this).also {

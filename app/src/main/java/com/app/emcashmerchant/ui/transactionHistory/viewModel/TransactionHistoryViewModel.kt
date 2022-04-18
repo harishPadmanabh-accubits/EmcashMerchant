@@ -21,7 +21,7 @@ class TransactionHistoryViewModel(val app: Application) : AndroidViewModel(app) 
     val endDate = MutableLiveData<String>()
     val filter = MutableLiveData<HistoryFilter>().default(HistoryFilter())
     val _screen = MutableLiveData<HistoryScreens>()
-
+    var isFromFilter = false
 
 
     fun setScreenFlag(screen: HistoryScreens): LiveData<HistoryScreens> {
@@ -36,13 +36,11 @@ class TransactionHistoryViewModel(val app: Application) : AndroidViewModel(app) 
 
     fun sendStatus(s_status: String) {
         status.value = s_status
+
+        Timber.d("value from viewModel : $s_status")
+
         filter.value = HistoryFilter(
-            status = s_status, mode = when (_screen.value) {
-                HistoryScreens.ALL -> "0"
-                HistoryScreens.INBOUND -> "1"
-                HistoryScreens.OUTBOUND -> "2"
-                else -> "0"
-            }
+            status = s_status
         )
 
     }

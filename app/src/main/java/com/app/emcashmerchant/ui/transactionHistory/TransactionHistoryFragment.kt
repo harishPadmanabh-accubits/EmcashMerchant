@@ -33,7 +33,6 @@ import kotlin.collections.ArrayList
 class TransactionHistoryFragment : Fragment(), DurationItemClickListener {
 
 
-
     private lateinit var transactionHistoryViewModel: TransactionHistoryViewModel
     private var startDate: String = ""
     private var endDate: String = ""
@@ -59,7 +58,8 @@ class TransactionHistoryFragment : Fragment(), DurationItemClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        transactionHistoryViewModel = ViewModelProvider(requireActivity()).get(TransactionHistoryViewModel::class.java)
+        transactionHistoryViewModel =
+            ViewModelProvider(requireActivity()).get(TransactionHistoryViewModel::class.java)
 
         durationData()
         setupTabs()
@@ -85,9 +85,6 @@ class TransactionHistoryFragment : Fragment(), DurationItemClickListener {
 
 
 
-
-
-
         iv_back_type.setOnClickListener {
             fl_holder.visibility = View.GONE
 
@@ -105,7 +102,7 @@ class TransactionHistoryFragment : Fragment(), DurationItemClickListener {
                 } else {
 
                     dateArray.add(0, startDate)
-                    dateArray.add(1,  getDaysAgo(0).toString())
+                    dateArray.add(1, getDaysAgo(0).toString())
 
                     transactionHistoryViewModel.sendDate(dateArray)
                     fl_holder.visibility = View.GONE
@@ -139,6 +136,7 @@ class TransactionHistoryFragment : Fragment(), DurationItemClickListener {
 
         rg_type.setOnCheckedChangeListener { group, checkedId ->
 
+
             rb_emcashSent.setOnClickListener {
                 viewpager_tabs.currentItem = 2
                 fl_holder.visibility = View.GONE
@@ -150,21 +148,29 @@ class TransactionHistoryFragment : Fragment(), DurationItemClickListener {
 
             }
             rb_rejected.setOnClickListener {
+                transactionHistoryViewModel.isFromFilter = true
+                viewpager_tabs.currentItem = 0
                 transactionHistoryViewModel.sendStatus("4")
                 fl_holder.visibility = View.GONE
 
             }
             rb_failed.setOnClickListener {
+                transactionHistoryViewModel.isFromFilter = true
+                viewpager_tabs.currentItem = 0
                 transactionHistoryViewModel.sendStatus("3")
                 fl_holder.visibility = View.GONE
 
             }
             rb_pending.setOnClickListener {
+                transactionHistoryViewModel.isFromFilter = true
+                viewpager_tabs.currentItem = 0
                 transactionHistoryViewModel.sendStatus("2")
                 fl_holder.visibility = View.GONE
 
             }
             rb_success.setOnClickListener {
+                transactionHistoryViewModel.isFromFilter = true
+                viewpager_tabs.currentItem = 0
                 transactionHistoryViewModel.sendStatus("1")
                 fl_holder.visibility = View.GONE
 
@@ -177,10 +183,10 @@ class TransactionHistoryFragment : Fragment(), DurationItemClickListener {
         }
 
         transactionHistoryViewModel.type.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-            if(it==true){
+            if (it == true) {
                 rg_type.clearCheck()
-                tv_fromDate.text=""
-                tv_toDate.text=""
+                tv_fromDate.text = ""
+                tv_toDate.text = ""
                 calenderView.clearSelectedDates()
 
             }
@@ -188,7 +194,6 @@ class TransactionHistoryFragment : Fragment(), DurationItemClickListener {
         })
 
     }
-
 
 
     private fun setupViews(view: View) {
@@ -206,7 +211,7 @@ class TransactionHistoryFragment : Fragment(), DurationItemClickListener {
 
             }
         }
-        calenderView.setOnDateSelectedListener(object :CalendarPickerView.OnDateSelectedListener{
+        calenderView.setOnDateSelectedListener(object : CalendarPickerView.OnDateSelectedListener {
             override fun onDateSelected(date: Date?) {
                 updateUIwithCalendar(calenderView.selectedDates)
             }
@@ -259,7 +264,7 @@ class TransactionHistoryFragment : Fragment(), DurationItemClickListener {
             ll_holder.visibility = View.VISIBLE
             calenderView.visibility = View.VISIBLE
             startDate = ""
-            endDate=""
+            endDate = ""
 
             durationFilterCustom = 1
 
@@ -267,7 +272,7 @@ class TransactionHistoryFragment : Fragment(), DurationItemClickListener {
             ll_holder.visibility = View.GONE
             calenderView.visibility = View.GONE
             startDate = getDaysAgo(30).toString()
-            endDate=""
+            endDate = ""
 
             durationFilterCustom = 0
 
@@ -279,11 +284,12 @@ class TransactionHistoryFragment : Fragment(), DurationItemClickListener {
         } else if (duration.id == 1) {
             ll_holder.visibility = View.GONE
             calenderView.visibility = View.GONE
-            endDate=""
+            endDate = ""
             startDate = getDaysAgo(2).toString()
             durationFilterCustom = 0
         }
     }
+
     fun dateFormatFromCalender(dateFormat: String, dateStr: String): String {
         val utc = TimeZone.getTimeZone("UTC")
         val sourceFormat = SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy")
@@ -292,6 +298,7 @@ class TransactionHistoryFragment : Fragment(), DurationItemClickListener {
         val convertedDate = sourceFormat.parse(dateStr)
         return destFormat.format(convertedDate)
     }
+
     private fun updateUIwithCalendar(selectedDates: List<Date>) {
 
         tv_toDate.text = dateFormatFromCalender("dd-MMM-YYYY", selectedDates.last().toString())

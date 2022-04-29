@@ -55,6 +55,10 @@ class SessionStorage(var _context: Context) {
         get() = pref.getString(keyAccessToken, null)
         set(value) = editor.putString(keyAccessToken, value).apply()
 
+    var reuploadToken: String?
+        get() = pref.getString("reupload_token", null)
+        set(value) = editor.putString("reupload_token", value).apply()
+
     var refreshToken: String?
         get() = pref.getString(keyRefreshToken, null)
         set(value) = editor.putString(keyRefreshToken, value).apply()

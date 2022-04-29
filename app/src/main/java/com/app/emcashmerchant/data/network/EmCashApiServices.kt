@@ -55,6 +55,7 @@ interface EmCashApiServices {
     ): Call<SignupFinalResponse>
 
 
+    @Headers("isReUpload:true")
     @Multipart
     @POST("v1/admin/merchants/additional-documents")
     fun reUploadCommercialDoc(
@@ -62,6 +63,7 @@ interface EmCashApiServices {
         @Part commercialRegistrationDoc: MultipartBody.Part
     ): Call<ReUploadResponse>
 
+    @Headers("isReUpload:true")
     @Multipart
     @POST("v1/admin/merchants/additional-documents")
     fun reUploadBankDetailsDoc(
@@ -69,6 +71,7 @@ interface EmCashApiServices {
         @Part bankDetailsDoc: MultipartBody.Part
     ): Call<ReUploadResponse>
 
+    @Headers("isReUpload:true")
     @Multipart
     @POST("v1/admin/merchants/additional-documents")
     fun reUploadSignupTradeLicenseDoc(
@@ -77,6 +80,7 @@ interface EmCashApiServices {
     ): Call<ReUploadResponse>
 
 
+    @Headers("isReUpload:true")
     @Multipart
     @POST("v1/admin/merchants/additional-documents")
     fun submitForReview(

@@ -9,12 +9,14 @@ import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.app.emcashmerchant.R
+import com.app.emcashmerchant.data.SessionStorage
 import com.app.emcashmerchant.data.network.ApiCallStatus
 import com.app.emcashmerchant.ui.reUploadDocuments.viewModel.ReUploadDocumentsViewModel
 import com.app.emcashmerchant.ui.register.AccountUnderProcessActivity
 import com.app.emcashmerchant.utils.*
 import com.app.emcashmerchant.utils.extensions.*
 import kotlinx.android.synthetic.main.lay_documents_upload.*
+import timber.log.Timber
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
@@ -36,8 +38,13 @@ class ReUploadDocumentsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_re_upload_documents)
+        if(!token.isNullOrEmpty()){
+            SessionStorage(this).reuploadToken = token
+        }else{
+            Timber.e("hhp upload token empty")
+        }
         viewModel = ViewModelProvider(this).get(ReUploadDocumentsViewModel::class.java)
-        viewModel.reUploadUserDetails(token.toString())
+      //  viewModel.reUploadUserDetails(token.toString())
         dialog = AppDialog(this)
 
         observer()
@@ -148,8 +155,6 @@ class ReUploadDocumentsActivity : AppCompatActivity() {
                     }
                     ApiCallStatus.SUCCESS -> {
                         dialog.dismiss_dialog()
-
-
                     }
                     ApiCallStatus.ERROR -> {
                         showShortToast(it.errorMessage)

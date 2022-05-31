@@ -6,6 +6,7 @@ import com.app.emcashmerchant.data.network.authenticator.TokenAuthenticatorV2
 import com.app.emcashmerchant.data.network.interceptors.NetworkConnectionInterceptor
 import com.app.emcashmerchant.data.network.interceptors.TokenInterceptor
 import com.app.emcashmerchant.utils.BASE_URL
+import com.app.emcashmerchant.utils.RELEASE_URL
 import com.google.gson.GsonBuilder
 import okhttp3.Authenticator
 import okhttp3.OkHttpClient
@@ -34,7 +35,7 @@ class ApiManger(appContext: Context) {
 
 
         val restAdapter = Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(RELEASE_URL)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .client(okHttpClient)
             .build()
@@ -64,7 +65,7 @@ class ApiManger(appContext: Context) {
 
     private fun buildTokenApi(): TokenRefreshApi {
         return Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(RELEASE_URL)
             .client(getOkHttpClient())
             .addConverterFactory(GsonConverterFactory.create())
             .build()

@@ -7,12 +7,15 @@ import com.app.emcashmerchant.data.network.interceptors.NetworkConnectionInterce
 import com.app.emcashmerchant.data.network.interceptors.TokenInterceptor
 import com.app.emcashmerchant.utils.BASE_URL
 import com.app.emcashmerchant.utils.RELEASE_URL
+import com.bumptech.glide.util.Util
 import com.google.gson.GsonBuilder
 import okhttp3.Authenticator
 import okhttp3.OkHttpClient
+import okhttp3.Protocol
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.*
 import java.util.concurrent.TimeUnit
 
 
@@ -25,6 +28,7 @@ class ApiManger(appContext: Context) {
         loggingInterceptor.level = if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
         val gson = GsonBuilder().serializeNulls().create()
         val okHttpClient = OkHttpClient.Builder()
+            .protocols(Arrays.asList( Protocol.HTTP_1_1))
             .connectTimeout(4000, TimeUnit.SECONDS)
             .readTimeout(4000, TimeUnit.SECONDS)
             .authenticator(TokenAuthenticatorV2(appContext,buildTokenApi()))

@@ -70,7 +70,7 @@ fun getextension(file: File): String {
 
 
 fun FileSizeCheck(file: File): Boolean {
-    val maxFileSize = 8 * 1024 * 1024
+    val maxFileSize = 2 * 1024 * 1024
     val l = file.length()
     val fileSize = l.toString()
     val finalFileSize = fileSize.toInt()
@@ -469,7 +469,11 @@ fun <T : Any> Call<T>.awaitResponse(
                         response.errorBody()!!.charStream(),
                         BaseResponse::class.java
                     ).also {
-                        onFailure.invoke(it.message)
+                        try {
+                            onFailure.invoke(it.message)
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
                     }
                 } else {
                     onFailure.invoke("Session Time Out")

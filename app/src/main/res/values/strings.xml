@@ -73,7 +73,7 @@
     <string name="accepted_document_formats">Accepted document formats :</string>
     <string name="pdf_jpeg_or_png">PDF, JPEG or PNG.</string>
     <string name="max_file_size">Max file size per file:</string>
-    <string name="_8mb">8mb</string>
+    <string name="_8mb">2mb</string>
     <string name="trade_licence_document">Trade Licence Document</string>
     <string name="commercial_reg_doc">Commercial Registration Document</string>
     <string name="reg_request_completed">Registration request submitted successfully. Your account is under review. Please wait while the process is done.</string>

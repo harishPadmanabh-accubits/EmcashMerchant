@@ -160,22 +160,27 @@ class SecurityQuestionRegisterActivity : AppCompatActivity() {
         answerTwo = et_ans_2.text.toString()
 
 
-        if (questionOneId == questionTwoId && !questionOneId.equals("0") && !questionTwoId.equals("0")) {
-            showLongToast(getString(R.string.select_different))
+        when {
+            questionOneId == questionTwoId && !questionOneId.equals("0") && !questionTwoId.equals("0") -> {
+                showLongToast(getString(R.string.select_different))
 
-        } else if (questionOneId == null || questionTwoId == null) {
-            showLongToast(getString(R.string.please_select_any_question))
+            }
+            questionOneId == null || questionTwoId == null -> {
+                showLongToast(getString(R.string.please_select_any_question))
 
-        } else if (questionOneId.equals("0") || questionTwoId.equals("0")) {
-            showLongToast(getString(R.string.please_select_any_question))
-        } else if (answerOne.isEmpty() || answerTwo.isEmpty() || answerOne.length < 3 || answerOne.length < 3) {
-            showLongToast(getString(R.string.please_answer_both_question))
-
-        } else {
-
-            performSecuritySignup()
-
-
+            }
+            questionOneId.equals("0") || questionTwoId.equals("0") -> {
+                showLongToast(getString(R.string.please_select_any_question))
+            }
+            answerOne.isEmpty() || answerTwo.isEmpty() -> {
+                showLongToast(getString(R.string.please_answer_both_question))
+            }
+            answerOne.length < 3 || answerOne.length < 3 -> {
+                showLongToast(getString(R.string.answer_length_validation_error))
+            }
+            else -> {
+                performSecuritySignup()
+            }
         }
     }
 

@@ -158,5 +158,6 @@
     <string name="select_your_question">Select your Question</string>
     <string name="walletId">Wallet ID : </string>
     <string name="addbankaccount">Add Bank Account</string>
+    <string name="answer_length_validation_error">Answer Should Not Be Less Than 3 Letters</string>
 
 </resources>

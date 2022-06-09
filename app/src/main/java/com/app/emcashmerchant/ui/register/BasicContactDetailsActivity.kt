@@ -83,13 +83,14 @@ class BasicContactDetailsActivity : AppCompatActivity() {
         val address = et_address.text.toString()
         val email = et_email.text.toString()
         val phoneNumber = et_phone_num.obtainPhoneNumber().toString()
+        val phoneNumberWithoutCode = et_phone_num.getPhoneNumberWithoutCode()
         var pinCode = et_pin.text.toString()
 
         when (view.id) {
             R.id.btn_confirm -> {
                 if (!email.isEmailValidity()) {
                     showShortToast(getString(R.string.enter_valid_email))
-                } else if (phoneNumber.length < 8) {
+                } else if (phoneNumberWithoutCode?.isValidPhoneNumber() != true) {
                     showShortToast(getString(R.string.enter_valid_number))
                 } else if (phoneNumber.isEmpty() ||
                     et_email.text.toString().isEmpty() ||

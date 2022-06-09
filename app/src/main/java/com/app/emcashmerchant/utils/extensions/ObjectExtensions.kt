@@ -588,6 +588,12 @@ fun String.isEmailValidity(): Boolean {
     return !TextUtils.isEmpty(this) && android.util.Patterns.EMAIL_ADDRESS.matcher(this).matches()
 }
 
+/* validating phone number within the range 6 to 15
+* */
+fun String.isValidPhoneNumber() =
+    length in 6..15 && all { it.isDigit() }
+
+
 //gps enabled
 fun gpsEnabled(context: Context): Boolean {
 

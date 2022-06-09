@@ -30,5 +30,12 @@ class PhoneNumberEditText(context: Context, attrs: AttributeSet) : LinearLayout(
 
     }
 
+    fun getPhoneNumberWithoutCode(): String?{
+        val phone = et_number.text.toString()
+        return phone.ifEmpty {
+            null
+        }
+    }
+
 
 }

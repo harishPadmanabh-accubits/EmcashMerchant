@@ -11,9 +11,9 @@ import androidx.lifecycle.Observer
 import com.app.emcashmerchant.R
 import com.app.emcashmerchant.data.SessionStorage
 import com.app.emcashmerchant.data.network.ApiCallStatus
+import com.app.emcashmerchant.ui.register.viewModel.RegisterViewModel
 import com.app.emcashmerchant.utils.*
 import com.app.emcashmerchant.utils.extensions.*
-import com.app.emcashmerchant.ui.register.viewModel.RegisterViewModel
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.android.synthetic.main.lay_documents_upload.*
@@ -21,7 +21,7 @@ import timber.log.Timber
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
-import java.lang.Exception
+
 
 class UploadDocumentsActivity : AppCompatActivity() {
 
@@ -97,16 +97,8 @@ class UploadDocumentsActivity : AppCompatActivity() {
         iv_trade_file.apply {
             setImageResource(R.drawable.ic_upload_docs)
         }
-
-        Intent(Intent.ACTION_PICK).also {
-            val intent = Intent()
-            intent.type = "*/*"
-            intent.action = Intent.ACTION_GET_CONTENT
-            startActivityForResult(
-                Intent.createChooser(intent, "Select File"),
-                REQUEST_CODE_PICK_IMAGE_TRADEFILE
-            )
-        }
+        val intent = fileChooserIntent(IMAGE, PDF)
+        startActivityForResult(intent, REQUEST_CODE_PICK_IMAGE_TRADEFILE)
 
     }
 
@@ -115,15 +107,8 @@ class UploadDocumentsActivity : AppCompatActivity() {
             setImageResource(R.drawable.ic_upload_docs)
         }
 
-        Intent(Intent.ACTION_PICK).also {
-            val intent = Intent()
-            intent.type = "*/*"
-            intent.action = Intent.ACTION_GET_CONTENT
-            startActivityForResult(
-                Intent.createChooser(intent, "Select File"),
-                REQUEST_CODE_PICK_IMAGE_COMM
-            )
-        }
+        val intent = fileChooserIntent(IMAGE, PDF)
+        startActivityForResult(intent, REQUEST_CODE_PICK_IMAGE_COMM)
 
     }
 
@@ -131,17 +116,17 @@ class UploadDocumentsActivity : AppCompatActivity() {
         iv_bankStatement_file.apply {
             setImageResource(R.drawable.ic_upload_docs)
         }
+        val intent = fileChooserIntent(IMAGE, PDF)
+        startActivityForResult(intent, REQUEST_CODE_PICK_IMAGE_BANK)
 
-        Intent(Intent.ACTION_PICK).also {
-            val intent = Intent()
-            intent.type = "*/*"
-            intent.action = Intent.ACTION_GET_CONTENT
-            startActivityForResult(
-                Intent.createChooser(intent, "Select File"),
-                REQUEST_CODE_PICK_IMAGE_BANK
-            )
-        }
+    }
 
+    private fun fileChooserIntent(vararg types: String?): Intent? {
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+        intent.addCategory(Intent.CATEGORY_OPENABLE)
+        intent.type = "*/*"
+        intent.putExtra(Intent.EXTRA_MIME_TYPES, types)
+        return intent
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -286,5 +271,10 @@ class UploadDocumentsActivity : AppCompatActivity() {
         val outputStream = FileOutputStream(file)
         inputStream.copyTo(outputStream)
         return file
+    }
+
+    companion object {
+        private const val IMAGE = "image/*"
+        private const val PDF = "application/pdf"
     }
 }

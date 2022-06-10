@@ -202,14 +202,26 @@ class PaymentChatHistoryFragment : Fragment(R.layout.fragment_payment_chat_histo
                         isBlockedContactUser = it.data?.contact?.isLoggedInUserBlockedContactUser
                         isBlockedLoggedInUser = it.data?.contact?.isContactUserBlockedLoggedInUser
 
-                        if (isBlockedContactUser == false) {
-                            ll_button_holder.visibility = View.VISIBLE
+                        when {
+                            isBlockedContactUser == false -> {
+                                ll_button_holder.visibility = View.VISIBLE
 
 
-                        } else {
-                            ll_button_holder.visibility = View.GONE
+                            }
+                            else -> {
+                                ll_button_holder.visibility = View.GONE
 
 
+                            }
+                        }
+
+                        when (isBlockedLoggedInUser) {
+                            false -> {
+                                ll_button_holder.visibility = View.VISIBLE
+                            }
+                            else -> {
+                                ll_button_holder.visibility = View.GONE
+                            }
                         }
 
                     }

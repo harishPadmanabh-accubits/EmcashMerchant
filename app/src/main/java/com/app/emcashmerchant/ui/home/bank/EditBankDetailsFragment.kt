@@ -14,8 +14,19 @@ import com.app.emcashmerchant.data.SessionStorage
 import com.app.emcashmerchant.data.model.request.EditBankDetailsRequest
 import com.app.emcashmerchant.data.network.ApiCallStatus
 import com.app.emcashmerchant.utils.AppDialog
+import com.app.emcashmerchant.utils.extensions.isNull
+import com.app.emcashmerchant.utils.extensions.setInputFilter
 import com.app.emcashmerchant.utils.extensions.showShortToast
+import kotlinx.android.synthetic.main.fragment_add_bank_details.*
 import kotlinx.android.synthetic.main.fragment_edit_bank_details.*
+import kotlinx.android.synthetic.main.fragment_edit_bank_details.bt_submit
+import kotlinx.android.synthetic.main.fragment_edit_bank_details.et_benficiaryName
+import kotlinx.android.synthetic.main.fragment_edit_bank_details.et_branchCode
+import kotlinx.android.synthetic.main.fragment_edit_bank_details.et_branchName
+import kotlinx.android.synthetic.main.fragment_edit_bank_details.et_ibanNumber
+import kotlinx.android.synthetic.main.fragment_edit_bank_details.et_nickName
+import kotlinx.android.synthetic.main.fragment_edit_bank_details.et_swiftCode
+import kotlinx.android.synthetic.main.fragment_edit_bank_details.iv_back
 
 /**
 Fragment to edit the bank details
@@ -51,6 +62,7 @@ class EditBankDetailsFragment : Fragment() {
         dialog = AppDialog(requireContext())
         observe()
         viewModel.bankDetails()
+        setInputFiltersForEditText()
 
 
         iv_back.setOnClickListener {
@@ -66,8 +78,13 @@ class EditBankDetailsFragment : Fragment() {
             var branchCode: String = et_branchCode.text.toString()
             var swiftCode: String = et_swiftCode.text.toString()
 
-            if (benficiaryName.isEmpty() && ibanNumber.isEmpty() && branchName.isEmpty() && branchCode.isEmpty() && swiftCode.isEmpty()) {
-                requireActivity().showShortToast("Please enter all the fields")
+
+            if (benficiaryName.isBlank()
+                || ibanNumber.isBlank()
+                || branchName.isBlank()
+                || branchCode.isBlank()
+                || swiftCode.isBlank()) {
+                requireActivity().showShortToast("Please enter valid field names")
 
             } else {
                 var editBankDetailsRequest = EditBankDetailsRequest(
@@ -82,6 +99,14 @@ class EditBankDetailsFragment : Fragment() {
 
         }
 
+    }
+    private fun setInputFiltersForEditText(){
+        et_benficiaryName.setInputFilter()
+        et_nickName.setInputFilter()
+        et_ibanNumber.setInputFilter()
+        et_branchName.setInputFilter()
+        et_branchCode.setInputFilter()
+        et_swiftCode.setInputFilter()
     }
 
     fun observe() {

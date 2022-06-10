@@ -14,6 +14,7 @@ import com.app.emcashmerchant.data.SessionStorage
 import com.app.emcashmerchant.data.model.request.AddBankDetailsRequest
 import com.app.emcashmerchant.data.network.ApiCallStatus
 import com.app.emcashmerchant.utils.AppDialog
+import com.app.emcashmerchant.utils.extensions.setInputFilter
 import com.app.emcashmerchant.utils.extensions.showShortToast
 import kotlinx.android.synthetic.main.fragment_add_bank_details.*
 
@@ -50,6 +51,7 @@ class AddBankDetailsFragment : Fragment() {
         sessionStorage = SessionStorage(requireContext())
         dialog = AppDialog(requireContext())
         observe()
+        setInputFiltersForEditText()
 
         iv_back.setOnClickListener{
             findNavController().popBackStack()
@@ -64,7 +66,11 @@ class AddBankDetailsFragment : Fragment() {
             var branchCode: String = et_branchCode.text.toString()
             var swiftCode: String = et_swiftCode.text.toString()
 
-            if (benficiaryName.isEmpty() && ibanNumber.isEmpty() && branchName.isEmpty() && branchCode.isEmpty() && swiftCode.isEmpty()) {
+            if ( benficiaryName.isBlank()
+                || ibanNumber.isBlank()
+                || branchName.isBlank()
+                || branchCode.isBlank()
+                || swiftCode.isBlank()) {
                 requireActivity().showShortToast("Please enter all the fields")
 
             }else{
@@ -83,6 +89,14 @@ class AddBankDetailsFragment : Fragment() {
 
     }
 
+    private fun setInputFiltersForEditText(){
+        et_benficiaryName.setInputFilter()
+        et_nickName.setInputFilter()
+        et_ibanNumber.setInputFilter()
+        et_branchName.setInputFilter()
+        et_branchCode.setInputFilter()
+        et_swiftCode.setInputFilter()
+    }
     fun observe() {
         viewModel.apply {
             addBankDetailsStatus.observe(viewLifecycleOwner, Observer {

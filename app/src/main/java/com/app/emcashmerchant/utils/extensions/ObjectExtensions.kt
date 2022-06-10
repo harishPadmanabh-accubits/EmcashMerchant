@@ -16,6 +16,7 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.OpenableColumns
 import android.text.Editable
+import android.text.InputFilter
 import android.text.TextUtils
 import android.text.TextWatcher
 import android.util.DisplayMetrics
@@ -668,6 +669,20 @@ fun trimID(string: String): String? {
 
     return output
 
+}
+
+var filter =
+    InputFilter { source, start, end, dest, dstart, dend ->
+        for (i in start until end) {
+            if (!Character.isLetterOrDigit(source[i]) && !Character.isWhitespace(source[i])) {
+                return@InputFilter ""
+            }
+        }
+        null
+    }
+
+fun EditText.setInputFilter(){
+    this.filters = arrayOf(filter)
 }
 
 

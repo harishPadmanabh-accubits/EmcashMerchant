@@ -140,7 +140,7 @@ class UploadDocumentsActivity : AppCompatActivity() {
                         viewModel.uploadTradeLicenseDoc(fetchFile(selectedImageUriTrade))
 
                     } else {
-                        showLongToast(getString(R.string.trade_doc_size))
+                        showLongToast(getString(R.string.doc_size_general_warning_message))
 
                     }
 
@@ -152,7 +152,7 @@ class UploadDocumentsActivity : AppCompatActivity() {
                         viewModel.uploadCommercialRegistrationDoc(fetchFile(selectedImageUriComm))
 
                     } else {
-                        showLongToast(getString(R.string.commercial_doc_size))
+                        showLongToast(getString(R.string.doc_size_general_warning_message))
 
                     }
 
@@ -165,7 +165,7 @@ class UploadDocumentsActivity : AppCompatActivity() {
                         viewModel.uploadBankDetailsDoc(fetchFile(selectedImageUriBank))
 
                     } else {
-                        showLongToast(getString(R.string.bank_doc_size))
+                        showLongToast(getString(R.string.doc_size_general_warning_message))
                     }
                 }
 

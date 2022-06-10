@@ -267,7 +267,7 @@ class ReUploadDocumentsActivity : AppCompatActivity() {
                         )
 
                     } else {
-                        showLongToast(getString(R.string.trade_doc_size))
+                        showLongToast(getString(R.string.doc_size_general_warning_message))
 
                     }
 
@@ -284,7 +284,7 @@ class ReUploadDocumentsActivity : AppCompatActivity() {
 
 
                     } else {
-                        showLongToast(getString(R.string.commercial_doc_size))
+                        showLongToast(getString(R.string.doc_size_general_warning_message))
 
                     }
 
@@ -300,7 +300,7 @@ class ReUploadDocumentsActivity : AppCompatActivity() {
 
 
                     } else {
-                        showLongToast(getString(R.string.bank_doc_size))
+                        showLongToast(getString(R.string.doc_size_general_warning_message))
                     }
                 }
 

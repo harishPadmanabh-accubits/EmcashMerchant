@@ -86,9 +86,7 @@
     <string name="select_different">Please select different question</string>
     <string name="please_answer_both_question">Please answer both question</string>
     <string name="upload_all_documents">Please upload all the documents</string>
-    <string name="bank_doc_size">Bank Document size is above 2MB</string>
-    <string name="commercial_doc_size">Commercial Registration Document size is above 2MB</string>
-    <string name="trade_doc_size">Trade License Document size is above 2MB</string>
+    <string name="doc_size_general_warning_message">The uploading file should be of size less than 2MB</string>
     <string name="no_question">No Question,s Found</string>
     <string name="min_length_password">Password should contain minimum 8 letters</string>
     <string name="special_char_password">Password should contain atleast 1 special character</string>

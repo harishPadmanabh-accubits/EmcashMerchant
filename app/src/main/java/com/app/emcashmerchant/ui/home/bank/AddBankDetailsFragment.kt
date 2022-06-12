@@ -14,7 +14,6 @@ import com.app.emcashmerchant.data.SessionStorage
 import com.app.emcashmerchant.data.model.request.AddBankDetailsRequest
 import com.app.emcashmerchant.data.network.ApiCallStatus
 import com.app.emcashmerchant.utils.AppDialog
-import com.app.emcashmerchant.utils.extensions.setInputFilter
 import com.app.emcashmerchant.utils.extensions.showShortToast
 import kotlinx.android.synthetic.main.fragment_add_bank_details.*
 
@@ -90,12 +89,12 @@ class AddBankDetailsFragment : Fragment() {
     }
 
     private fun setInputFiltersForEditText(){
-        et_benficiaryName.setInputFilter()
-        et_nickName.setInputFilter()
-        et_ibanNumber.setInputFilter()
-        et_branchName.setInputFilter()
-        et_branchCode.setInputFilter()
-        et_swiftCode.setInputFilter()
+        et_benficiaryName
+        et_nickName
+        et_ibanNumber
+        et_branchName
+        et_branchCode
+        et_swiftCode
     }
     fun observe() {
         viewModel.apply {

@@ -8,7 +8,6 @@ import com.app.emcashmerchant.R
 import com.app.emcashmerchant.databinding.ActivityBasicDetailsBinding
 import com.app.emcashmerchant.utils.*
 import com.app.emcashmerchant.utils.extensions.openActivity
-import com.app.emcashmerchant.utils.extensions.setInputFilter
 import com.app.emcashmerchant.utils.extensions.showShortToast
 import kotlinx.android.synthetic.main.activity_basic_details.*
 
@@ -34,13 +33,13 @@ class BasicDetailsActivity : AppCompatActivity() {
         }
     }
 
-    private fun setInputFilters(){
-        binding.etBusinessName.setInputFilter()
-        binding.etContactPersonName.setInputFilter()
-        binding.etTradeLicenseNumber.setInputFilter()
-        binding.etLicenseIssueAuthority.setInputFilter()
-        binding.etServiceDescription.setInputFilter()
-        binding.etRegBusinessName.setInputFilter()
+    private fun setInputFilters() {
+        binding.etBusinessName
+        binding.etContactPersonName
+        binding.etTradeLicenseNumber
+        binding.etLicenseIssueAuthority
+        binding.etServiceDescription
+        binding.etRegBusinessName
     }
 
     private fun gotoContactDetails() {
@@ -53,25 +52,19 @@ class BasicDetailsActivity : AppCompatActivity() {
 
         when {
             businessName.isEmpty() || businessName.isBlank() || businessName.length < 3 -> {
-
                 showShortToast(getString(R.string.valid_business_name))
-
             }
             contactPersonName.isEmpty() || contactPersonName.isBlank() || contactPersonName.length < 3 -> {
                 showShortToast(getString(R.string.valid_contact_personname))
-
             }
             registeredBussinesName.isEmpty() || registeredBussinesName.isBlank() || registeredBussinesName.length < 3 -> {
                 showShortToast(getString(R.string.registered_name_validaiton))
-
             }
             tradeLicenceNumber.isEmpty() || tradeLicenceNumber.isBlank() || tradeLicenceNumber.length < 3 -> {
                 showShortToast(getString(R.string.valid_tradeliscencenumber))
-
             }
             tradeLicenseAuthority.isEmpty() || tradeLicenseAuthority.isBlank() || tradeLicenseAuthority.length < 3 -> {
                 showShortToast(getString(R.string.valid_trade_lic_auth))
-
             }
             else -> {
                 if (serviceDesc.isEmpty()) {

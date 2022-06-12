@@ -671,21 +671,6 @@ fun trimID(string: String): String? {
 
 }
 
-var filter =
-    InputFilter { source, start, end, dest, dstart, dend ->
-        for (i in start until end) {
-            if (!Character.isLetterOrDigit(source[i]) && !Character.isWhitespace(source[i])) {
-                return@InputFilter ""
-            }
-        }
-        null
-    }
-
-fun EditText.setInputFilter(){
-    this.filters = arrayOf(filter)
-}
-
-
 fun EditText.onDeletePressed(function: () -> Unit) {
     this.setOnKeyListener { view, i, keyEvent ->
         if (i == KeyEvent.KEYCODE_DEL && keyEvent.action == KeyEvent.ACTION_DOWN) {

@@ -73,7 +73,7 @@
     <string name="accepted_document_formats">Accepted document formats :</string>
     <string name="pdf_jpeg_or_png">PDF, JPEG or PNG.</string>
     <string name="max_file_size">Max file size per file:</string>
-    <string name="_2mb">2mb</string>
+    <string name="_2mb">2 MB</string>
     <string name="trade_licence_document">Trade Licence Document</string>
     <string name="commercial_reg_doc">Commercial Registration Document</string>
     <string name="reg_request_completed">Registration request submitted successfully. Your account is under review. Please wait while the process is done.</string>
@@ -86,7 +86,7 @@
     <string name="select_different">Please select different question</string>
     <string name="please_answer_both_question">Please answer both question</string>
     <string name="upload_all_documents">Please upload all the documents</string>
-    <string name="doc_size_general_warning_message">The uploading file should be of size less than 2MB</string>
+    <string name="doc_size_general_warning_message">The maximum file size allowed is 2 MB</string>
     <string name="no_question">No Question,s Found</string>
     <string name="min_length_password">Password should contain minimum 8 letters</string>
     <string name="special_char_password">Password should contain atleast 1 special character</string>

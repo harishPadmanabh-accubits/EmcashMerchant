@@ -17,12 +17,11 @@ import com.app.emcashmerchant.data.network.ApiCallStatus
 import com.app.emcashmerchant.ui.wallet.adapter.WalletTransactionAdapterV2
 import com.app.emcashmerchant.ui.wallet.viewModel.WalletViewModel
 import com.app.emcashmerchant.utils.AppDialog
-import com.app.emcashmerchant.utils.extensions.checkNetwork
-import com.app.emcashmerchant.utils.extensions.loadImageWithUrlUser
-import com.app.emcashmerchant.utils.extensions.showShortToast
-import com.app.emcashmerchant.utils.extensions.trimID
+import com.app.emcashmerchant.utils.extensions.*
 import kotlinx.android.synthetic.main.fragment_out_bound_transactions.*
+import kotlinx.android.synthetic.main.settings_fragment.*
 import kotlinx.android.synthetic.main.walletv2.*
+import kotlinx.android.synthetic.main.walletv2.iv_back
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -120,7 +119,9 @@ class WalletFragment : Fragment(R.layout.walletv2) {
                     ApiCallStatus.SUCCESS -> {
                         dialog.dismiss_dialog()
                         balance = it.data?.wallet?.amount.toString()
-                        appCompatImageView.loadImageWithUrlUser(it.data?.wallet?.user?.profileImage)
+                        appCompatImageView.loadImageWithErrorCallback(it.data?.wallet?.user?.profileImage, onError = {
+                            tv_user_name_letter.text = generateDisplayPicText(sessionStorage.merchantName)
+                        })
 
                         if (balance != null) {
                             sessionStorage.balance = balance

@@ -22,10 +22,7 @@ import com.app.emcashmerchant.ui.home.homeScreen.adapter.RecentTransactionsAdapt
 import com.app.emcashmerchant.utils.AppDialog
 import com.app.emcashmerchant.utils.KEY_PAGE
 import com.app.emcashmerchant.utils.SCREEN_HOME
-import com.app.emcashmerchant.utils.extensions.checkNetwork
-import com.app.emcashmerchant.utils.extensions.loadImageWithUrlUser
-import com.app.emcashmerchant.utils.extensions.showShortToast
-import com.app.emcashmerchant.utils.extensions.trimID
+import com.app.emcashmerchant.utils.extensions.*
 import kotlinx.android.synthetic.main.home_fragment.*
 import kotlinx.android.synthetic.main.layout_home_info_card.*
 import kotlinx.android.synthetic.main.layout_notification_with_badge_view.*
@@ -182,7 +179,9 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
                         dialog.dismiss_dialog()
                         it?.data?.let {
                             val notificationCounts = it.notificationCount
-                            iv_shop_profile_image.loadImageWithUrlUser(it.profileImage)
+                            iv_shop_profile_image.loadImageWithErrorCallback(it.profileImage, onError = {
+                                tv_user_name_letter.text = generateDisplayPicText(sessionStorage.merchantName) }
+                            )
                             sessionStorage.profileImage = it.profileImage
 
                             if (notificationCounts.toString().toInt() >= 10) {

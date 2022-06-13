@@ -39,7 +39,23 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.RoundImageStyle" />
-
+                <TextView
+                    android:id="@+id/tv_user_name_letter"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:fontFamily="@font/biennale_semi_bold"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp14"
+                    android:textAllCaps="true"
+                    android:maxLines="1"
+                    android:maxLength="2"
+                    android:transitionName="name"
+                    android:gravity="center"
+                    app:layout_constraintBottom_toBottomOf="@+id/iv_shop_profile_image"
+                    app:layout_constraintEnd_toEndOf="@+id/iv_shop_profile_image"
+                    app:layout_constraintStart_toStartOf="@+id/iv_shop_profile_image"
+                    app:layout_constraintTop_toTopOf="@+id/iv_shop_profile_image"
+                    tools:text="A" />
                 <com.app.emcashmerchant.utils.widget.BadgeNotificationView
                     android:id="@+id/iv_notification_badge_view"
                     android:layout_width="wrap_content"

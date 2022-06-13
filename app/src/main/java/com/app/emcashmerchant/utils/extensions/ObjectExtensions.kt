@@ -16,7 +16,6 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.OpenableColumns
 import android.text.Editable
-import android.text.InputFilter
 import android.text.TextUtils
 import android.text.TextWatcher
 import android.util.DisplayMetrics
@@ -46,6 +45,7 @@ import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import timber.log.Timber
 import java.io.File
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -423,6 +423,40 @@ fun ImageView.loadImageWithError(imageUrl: String?, errorResId: Int) = try {
     e.printStackTrace()
 }
 
+fun ImageView.loadImageWithErrorCallback(
+    url: String?, onError: () -> Unit = {}
+) {
+
+    Timber.e("Image Url ${BUCKET_URL.plus(url)}")
+    Glide.with(this.context)
+        .load(BUCKET_URL.plus(url))
+        .listener(object : RequestListener<Drawable> {
+            override fun onLoadFailed(
+                e: GlideException?,
+                model: Any?,
+                target: Target<Drawable>?,
+                isFirstResource: Boolean
+            ): Boolean {
+                onError()
+                return false
+            }
+
+            override fun onResourceReady(
+                resource: Drawable?,
+                model: Any?,
+                target: Target<Drawable>?,
+                dataSource: DataSource?,
+                isFirstResource: Boolean
+            ): Boolean {
+                return false
+            }
+
+        })
+        .placeholder(R.color.ash_dark)
+        .into(this)
+
+}
+
 
 //load imageView with image url  and @NON-NULL placeholder
 fun ImageView.loadImageWithPlaceHolder(imageUrl: String?, placeHolderResId: Int) = try {
@@ -594,6 +628,14 @@ fun String.isEmailValidity(): Boolean {
 fun String.isValidPhoneNumber() =
     length in 6..15 && all { it.isDigit() }
 
+fun generateDisplayPicText(merchantName: String?): String {
+    val subString1 = merchantName?.let { it1 ->
+        it1.first()
+    }
+    val subString2 = merchantName?.substringAfter(" ")?.first()
+
+    return subString1.toString() + subString2?.toString()
+}
 
 //gps enabled
 fun gpsEnabled(context: Context): Boolean {

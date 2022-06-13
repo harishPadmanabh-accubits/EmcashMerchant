@@ -175,7 +175,9 @@ class SettingsFragment : Fragment(R.layout.settings_fragment) {
                         response.data?.let {
                             sessionStorage.merchantName = it.name
                             tv_name.text = sessionStorage.merchantName
-                            iv_shop_profile_image.loadImageWithUrlUser(it.profileImage)
+                            iv_shop_profile_image.loadImageWithErrorCallback(it.profileImage, onError = {
+                                tv_user_name_letter.text = generateDisplayPicText(sessionStorage.merchantName)
+                            })
 
                             sessionStorage.profileImage = it.profileImage
 

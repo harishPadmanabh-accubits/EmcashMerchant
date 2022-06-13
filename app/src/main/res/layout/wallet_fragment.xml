@@ -89,6 +89,23 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_info_my_safe_box"
         app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.RoundImageStyle" />
 
+    <TextView
+        android:id="@+id/tv_user_name_letter"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fontFamily="@font/biennale_semi_bold"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp14"
+        android:textAllCaps="true"
+        android:maxLines="1"
+        android:maxLength="2"
+        android:transitionName="name"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="@+id/appCompatImageView"
+        app:layout_constraintEnd_toEndOf="@+id/appCompatImageView"
+        app:layout_constraintStart_toStartOf="@+id/appCompatImageView"
+        app:layout_constraintTop_toTopOf="@+id/appCompatImageView"
+        tools:text="A" />
 
     <TextView
         android:id="@+id/tv_balance"
